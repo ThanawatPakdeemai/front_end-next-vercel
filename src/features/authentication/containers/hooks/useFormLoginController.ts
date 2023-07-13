@@ -1,7 +1,6 @@
 import _ from "lodash"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
-import { TwitterAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
 import { useSession } from "next-auth/react"
 import { initializeApp, getApps } from "@firebase/app"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
@@ -54,8 +53,6 @@ const useFormLoginController = () => {
   if (!getApps().length) {
     initializeApp(firebaseConfig)
   }
-
-  const auth = getAuth()
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -148,47 +145,31 @@ const useFormLoginController = () => {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorToast, mutateLoginProvider, successToast])
+  }, [errorToast, mutateLoginProvider, successToast, session])
 
   /**
    * @description Login with Twitter
    */
   const twitterLogin = useCallback(async () => {
-    const provider = new TwitterAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
+    if (session && session?.user?.email && session?.user?.id) {
+      mutateLoginProvider({
+        _email: session.user.email,
+        _provider: "google",
+        _prevPath: "/",
+        _providerUUID: session.user.id,
+        _referral: ""
       })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
+        .then((_res) => {
+          if (_res) {
+            successToast(MESSAGES.logged_in_successfully)
+          }
+        })
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+        })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorToast, mutateLoginProvider, successToast])
+  }, [errorToast, mutateLoginProvider, successToast, session])
 
   /**
    * @description Login with Twitter
@@ -212,7 +193,7 @@ const useFormLoginController = () => {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorToast, mutateLoginProvider, successToast])
+  }, [errorToast, mutateLoginProvider, successToast, session])
 
   /**
    * @description Login with Metamask

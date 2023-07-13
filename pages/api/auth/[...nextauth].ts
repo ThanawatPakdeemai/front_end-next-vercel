@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import DiscordProvider from "next-auth/providers/discord"
+import TwitterProvider from "next-auth/providers/twitter"
 import { ISessionCallBack } from "@src/types/nextauth"
 
 export const authOptions: any = {
@@ -13,6 +14,11 @@ export const authOptions: any = {
     DiscordProvider({
       clientId: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID,
       clientSecret: process.env.NEXT_PUBLIC_DISCORD_CLIENT_SECRET
+    }),
+    TwitterProvider({
+      clientId: process.env.NEXT_PUBLIC_TWITTER_ID,
+      clientSecret: process.env.NEXT_PUBLIC_TWITTER_SECRET
+      // version: "2.0" // opt-in to Twitter OAuth 2.0
     })
   ],
   callbacks: {
@@ -23,7 +29,7 @@ export const authOptions: any = {
       return Promise.resolve(session.session)
     }
   },
-  secret: process.env.NEXT_PUBLIC_NEXT_AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt"
   }

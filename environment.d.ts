@@ -81,6 +81,8 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_DISCORD_CLIENT_ID: string
     readonly NEXT_PUBLIC_DISCORD_CLIENT_SECRET: string
     readonly NEXT_PUBLIC_NEXT_AUTH_SECRET: string
+    readonly NEXT_PUBLIC_TWITTER_ID: string
+    readonly NEXT_PUBLIC_TWITTER_SECRET: string
   }
 }
 

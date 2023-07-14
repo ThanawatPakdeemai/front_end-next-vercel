@@ -19,6 +19,8 @@ import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 import { useToast } from "@feature/toast/containers"
 import { useInventoryProvider } from "@providers/InventoryProvider"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
+import useProfileStore from "@stores/profileStore"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
 
@@ -41,7 +43,8 @@ const useMarketNFTInstall = () => {
   const { utils } = ethers
   const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
+  const { profile } = useProfileStore()
   const { marketType } = useGlobal()
   const marketNFTInstallContract = useMarketplaceNFTInstall(
     signer,
@@ -69,6 +72,7 @@ const useMarketNFTInstall = () => {
     // fetchInvenItemDataById,
     fetchInvenNFTItemDataById
   } = useInventoryProvider()
+  const { validationAccount } = useMiddlewareWeb3()
 
   const { errorToast } = useToast()
 
@@ -129,14 +133,15 @@ const useMarketNFTInstall = () => {
     _amount: number
   ) => {
     let _status: boolean = false
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate && profile.data?.address) {
       const [_checkNFTOwner, _checkChain, _checkApproveForAll] =
         await Promise.all([
           onCheckOwnerNFT(_NFTtype, _token),
           onCheckPolygonChain(marketNFTInstallContract),
           onCheckNFTIsApproveForAll(
-            address,
+            profile.data.address,
             CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL,
             _NFTtype
           )
@@ -232,8 +237,9 @@ const useMarketNFTInstall = () => {
     _idOrder: string
   ) => {
     let _status: boolean = false
+    const _validate: boolean = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain] = await Promise.all([
         getBillById(_idSeller, _idOrder),
         onCheckPolygonChain(marketNFTInstallContract)
@@ -322,8 +328,9 @@ const useMarketNFTInstall = () => {
     _amountItem: number
   ) => {
     let _status: boolean = false
+    const _validate: boolean = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
         [
           getBillById(_sellerId, _orderId),
@@ -442,8 +449,9 @@ const useMarketNFTInstall = () => {
     _price: number,
     _period?: number
   ) => {
+    const _validate: boolean = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
         [
           getBillByBillId(_buyerId, _billId),

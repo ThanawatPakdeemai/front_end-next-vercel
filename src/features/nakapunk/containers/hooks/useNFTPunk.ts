@@ -8,6 +8,7 @@ import {
 import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTPunk from "./useMutateNFTPunk"
 
 const useNFTPunk = () => {
@@ -19,6 +20,7 @@ const useNFTPunk = () => {
   const { successToast } = useToast()
   const { setOpen, setClose } = useLoadingStore()
   const { mutateTransferNFTPunk } = useMutateNFTPunk()
+  const { validationAccount } = useMiddlewareWeb3()
 
   // check owner naka-punk
   const isPunkOwner = (_tokenId: string) =>
@@ -64,15 +66,18 @@ const useNFTPunk = () => {
     _address: string,
     _status: boolean
   ) => {
+    const _validate = validationAccount()
     let _isApproved: boolean = false
-    _isApproved = await isPunkApprovedForAll(_owner, _address)
-    if (!_isApproved) {
-      await ApprovalPunkForAll(_address, _status)
-        .then(() => {
-          _isApproved = true
-          successToast("approval success")
-        })
-        .catch((error) => console.error(error))
+    if (_validate) {
+      _isApproved = await isPunkApprovedForAll(_owner, _address)
+      if (!_isApproved) {
+        await ApprovalPunkForAll(_address, _status)
+          .then(() => {
+            _isApproved = true
+            successToast("approval success")
+          })
+          .catch((error) => console.error(error))
+      }
     }
     return { isApproved: _isApproved }
   }
@@ -91,26 +96,32 @@ const useNFTPunk = () => {
     })
 
   const onTransferPunk = async (
+    _fromAddress: string | undefined,
+
     _toAddress: string,
     _nftToken: string,
     _tokenId: string
   ) => {
-    if (address) {
+    const _validate = validationAccount()
+    let _status: boolean = false
+    if (_validate && _fromAddress) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferPunk(address, _toAddress, _nftToken)
+      await transferPunk(_fromAddress, _toAddress, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
           const data = {
             _id: _tokenId,
             _to: _toAddress,
-            _from: address,
+            _from: _fromAddress,
             _txHash: _res.transactionHash
           }
           await mutateTransferNFTPunk(data)
+          _status = true
         })
         .catch((error) => console.error(error))
     }
     setClose()
+    return _status
   }
 
   return {

@@ -75,23 +75,38 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
     }
 
   const handleOnTransfer = useCallback(async () => {
-    if (marketType) {
+    if (marketType && profile) {
       switch (marketType) {
         case "nft_material":
           if (onTransferMaterial)
             await onTransferMaterial(address, _nftToken, transAmount)
           break
         case "nft_land":
-          await onTransferLand(address, _nftToken, _tokenId)
+          await onTransferLand(profile?.address, address, _nftToken, _tokenId)
           break
         case "nft_building":
-          await onTransferBuilding(address, _nftToken, _tokenId)
+          await onTransferBuilding(
+            profile?.address,
+            address,
+            _nftToken,
+            _tokenId
+          )
           break
         case "nft_game":
-          await onTransferArcGame(address, _nftToken, _tokenId)
+          await onTransferArcGame(
+            profile?.address,
+            address,
+            _nftToken,
+            _tokenId
+          )
           break
         case "nft_naka_punk":
-          await onTransferPunk(address, _nftToken, _tokenId).catch(() => {})
+          await onTransferPunk(
+            profile?.address,
+            address,
+            _nftToken,
+            _tokenId
+          ).catch(() => {})
           break
         default:
           break

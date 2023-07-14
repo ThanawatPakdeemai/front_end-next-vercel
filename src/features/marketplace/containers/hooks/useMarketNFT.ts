@@ -18,6 +18,8 @@ import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 import { useToast } from "@feature/toast/containers"
 import { useInventoryProvider } from "@providers/InventoryProvider"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
+import useProfileStore from "@stores/profileStore"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
 
@@ -34,6 +36,7 @@ const useMarketNFT = () => {
   const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
+  const { profile } = useProfileStore()
   const { marketType } = useGlobal()
   const marketNFTContract = useMarketplaceNFT(
     signer,
@@ -42,6 +45,7 @@ const useMarketNFT = () => {
   const marketNFTContractNoAcc = useMarketplaceNFTNoAccount(
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
   )
+  const { validationAccount } = useMiddlewareWeb3()
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
@@ -105,14 +109,15 @@ const useMarketNFT = () => {
     _amount: number
   ) => {
     let _status: boolean = false
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate && profile.data?.address) {
       const [_checkNFTOwner, _checkChain, _checkApproveForAll] =
         await Promise.all([
           onCheckOwnerNFT(_NFTtype, _token),
           onCheckPolygonChain(marketNFTContract),
           onCheckNFTIsApproveForAll(
-            address,
+            profile.data.address,
             CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT,
             _NFTtype
           )
@@ -218,8 +223,9 @@ const useMarketNFT = () => {
     _idOrder: string
   ) => {
     let _status: boolean = false
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain] = await Promise.all([
         getNFTOrderById(_idSeller, _idOrder),
         onCheckPolygonChain(marketNFTContract)
@@ -312,8 +318,9 @@ const useMarketNFT = () => {
     _amountItem: number
   ) => {
     let _status: boolean = false
+    const _validate: boolean = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
         [
           getNFTOrderById(_idSeller, _idOrder),

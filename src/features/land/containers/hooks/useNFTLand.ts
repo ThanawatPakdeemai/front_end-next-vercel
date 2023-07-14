@@ -10,6 +10,8 @@ import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import { BigNumberish } from "ethers"
+import { useCallback } from "react"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTLand from "./useMutateNFTLand"
 
 const useNFTLand = () => {
@@ -22,6 +24,7 @@ const useNFTLand = () => {
   const landAllContract = useGetAllLandofAddrs(
     CONFIGS.CONTRACT_ADDRESS.GET_LANDOFADDRESS
   )
+  const { validationAccount } = useMiddlewareWeb3()
 
   const { successToast } = useToast()
   const { setOpen, setClose } = useLoadingStore()
@@ -71,19 +74,20 @@ const useNFTLand = () => {
     _status: boolean
   ) => {
     let _isApproved: boolean = false
-    _isApproved = await isLandApprovedForAll(_owner, _address)
-    if (!_isApproved) {
-      await ApprovalLandForAll(_address, _status)
-        .then(() => {
-          _isApproved = true
-          successToast("approval success")
-        })
-        .catch((error) => console.error(error))
+    const _validate: boolean = validationAccount()
+    if (_validate) {
+      _isApproved = await isLandApprovedForAll(_owner, _address)
+      if (!_isApproved) {
+        await ApprovalLandForAll(_address, _status)
+          .then(() => {
+            _isApproved = true
+            successToast("approval success")
+          })
+          .catch((error) => console.error(error))
+      }
     }
     return { isApproved: _isApproved }
   }
-
-  // get All Land
 
   // transfer owner
   const transferLand = (_from: string, _to: string, _nftToken: string) =>
@@ -98,28 +102,39 @@ const useNFTLand = () => {
         })
     })
 
-  const onTransferLand = async (
-    _toAddress: string,
-    _nftToken: string,
-    _tokenId: string
-  ) => {
-    if (signer && address) {
-      setOpen(MESSAGES.transaction_processing_order)
-      await transferLand(address, _toAddress, _nftToken)
-        .then(async (response) => {
-          const _res = await response.wait()
-          const data = {
-            _id: _tokenId,
-            _to: _toAddress,
-            _from: address,
-            _txHash: _res.transactionHash
-          }
-          await mutateTransferNFTLand(data)
-        })
-        .catch((error) => console.error(error))
-    }
-    setClose()
-  }
+  const onTransferLand = useCallback(
+    async (
+      _fromAddress: string | undefined,
+      _toAddress: string,
+      _nftToken: string,
+      _tokenId: string
+    ) => {
+      const _validate: boolean = validationAccount()
+      let _status: boolean = false
+      if (_validate && _fromAddress) {
+        setOpen(MESSAGES.transaction_processing_order)
+        await transferLand(_fromAddress, _toAddress, _nftToken)
+          .then(async (response) => {
+            const _res = await response.wait()
+            const data = {
+              _id: _tokenId,
+              _to: _toAddress,
+              _from: _fromAddress,
+              _txHash: _res.transactionHash
+            }
+            await mutateTransferNFTLand(data)
+            _status = true
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      }
+      setClose()
+      return _status
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [address, signer]
+  )
 
   const getLandsOfAddress = async (
     _nftAddress: string,

@@ -25,7 +25,7 @@ const useGlobalMarket = () => {
   const { signer, address } = useWeb3Provider()
   const { WeiToNumber, toWei } = Helper
   const { utils } = ethers
-  const profile = useProfileStore()
+  const { profile } = useProfileStore()
   const { errorToast } = useToast()
   const erc20Contract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
   const erc20ContractNoAcc = useERC20NoAcc(CONFIGS.CONTRACT_ADDRESS.ERC20)
@@ -421,41 +421,54 @@ const useGlobalMarket = () => {
   const onCheckOwnerNFT = useCallback(
     async (_type: TNFTType, _token: string) => {
       let _status: boolean = false
-      switch (_type) {
-        case "nft_land":
-          await isLandOwner(_token)
-            .then((_res) => {
-              _status = _res.toLowerCase() === profile.address?.toLowerCase()
-            })
-            .catch(() => {})
-          break
-        case "nft_building":
-          await isBuildingOwner(_token)
-            .then((_res) => {
-              _status = _res.toLowerCase() === profile.address?.toLowerCase()
-            })
-            .catch(() => {})
-          break
-        case "nft_game":
-          await isArcGameOwner(_token)
-            .then((_res) => {
-              _status = _res.toLowerCase() === profile.address?.toLowerCase()
-            })
-            .catch(() => {})
-          break
-        case "nft_naka_punk":
-          await isPunkOwner(_token)
-            .then((_res) => {
-              _status = _res.toLowerCase() === profile.address?.toLowerCase()
-            })
-            .catch(() => {})
-          break
-        default:
-          break
-      }
+      if (signer && address)
+        switch (_type) {
+          case "nft_land":
+            await isLandOwner(_token)
+              .then((_res) => {
+                _status =
+                  _res.toLowerCase() === profile.data?.address?.toLowerCase()
+              })
+              .catch(() => {})
+            break
+          case "nft_building":
+            await isBuildingOwner(_token)
+              .then((_res) => {
+                _status =
+                  _res.toLowerCase() === profile.data?.address.toLowerCase()
+              })
+              .catch(() => {})
+            break
+          case "nft_game":
+            await isArcGameOwner(_token)
+              .then((_res) => {
+                _status =
+                  _res.toLowerCase() === profile.data?.address.toLowerCase()
+              })
+              .catch(() => {})
+            break
+          case "nft_naka_punk":
+            await isPunkOwner(_token)
+              .then((_res) => {
+                _status =
+                  _res.toLowerCase() === profile.data?.address.toLowerCase()
+              })
+              .catch(() => {})
+            break
+          default:
+            break
+        }
       return _status
     },
-    [isArcGameOwner, isBuildingOwner, isLandOwner, isPunkOwner, profile.address]
+    [
+      isArcGameOwner,
+      isBuildingOwner,
+      isLandOwner,
+      isPunkOwner,
+      profile.address,
+      signer,
+      address
+    ]
   )
 
   return {

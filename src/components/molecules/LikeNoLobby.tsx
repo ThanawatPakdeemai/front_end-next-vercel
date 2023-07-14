@@ -48,7 +48,7 @@ const LikeNoLobby = ({
           </div>
           <div className="col-span-2 flex flex-col items-center text-center text-[8px]">
             <span className="w-[60%] rounded-[8px] border-[1px]  border-neutral-700 bg-black-100  text-[10px] text-neutral-300">
-              {value} %
+              {parseFloat(value.toString()).toFixed(2)} %
             </span>
             <span className="w-full  text-white-default">
               Did you like this game ?

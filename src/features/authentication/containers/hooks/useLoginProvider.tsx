@@ -1,6 +1,7 @@
 import useProfileStore from "@stores/profileStore"
 import { useMutation } from "@tanstack/react-query"
 import useLoadingStore from "@stores/loading"
+import _ from "lodash"
 import { loginProvider } from "../services/auth.service"
 
 const useLoginProvider = () => {
@@ -23,7 +24,7 @@ const useLoginProvider = () => {
       onSetProfileData(res)
       onSetProfileAddress("")
       onSetProfileJWT(res.jwtToken)
-      setClose()
+      !_.isEmpty(res) && setClose()
     }
   })
 

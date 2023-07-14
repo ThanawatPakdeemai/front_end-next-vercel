@@ -44,7 +44,8 @@ import useFormLoginController from "@feature/authentication/containers/hooks/use
 import useLoginTypeStore from "@stores/loginTypes"
 
 const Home = () => {
-  const { googleLogin, discordLogin, twitterLogin } = useFormLoginController()
+  const { googleLogin, discordLogin, twitterLogin, facebookLogin } =
+    useFormLoginController()
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
@@ -137,6 +138,9 @@ const Home = () => {
           break
         case "twitter":
           twitterLogin()
+          break
+        case "facebook":
+          facebookLogin()
           break
         default:
           // Handle unknown login type

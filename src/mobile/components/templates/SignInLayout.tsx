@@ -13,7 +13,7 @@ import LoginModal from "../organisms/modal/LoginModal"
 import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
-  const { googleLogin, twitterLogin } = useFormLoginController()
+  const { twitterLogin } = useFormLoginController()
   const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
@@ -21,7 +21,7 @@ const SignInLayout = () => {
     useState<boolean>(false)
 
   const handleLogin = (_typeLogin: string) => {
-    // setLoginTypes(_typeLogin)
+    setLoginTypes(_typeLogin)
     signIn(_typeLogin)
   }
 

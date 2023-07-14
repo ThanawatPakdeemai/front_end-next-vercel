@@ -1,4 +1,3 @@
-import { ELocalKey } from "@interfaces/ILocal"
 import configZustandDevTools from "@utils/configDevtools"
 import { create } from "zustand"
 import { devtools, persist } from "zustand/middleware"
@@ -21,7 +20,7 @@ const useLoginTypeStore = create<ILoginTypesStore>()(
           )
         }
       }),
-      configZustandDevTools(ELocalKey.loginWith)
+      configZustandDevTools("loginWith")
     )
   )
 )

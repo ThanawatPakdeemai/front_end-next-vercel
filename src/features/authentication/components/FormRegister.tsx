@@ -13,6 +13,7 @@ import {
   Checkbox,
   IconButton
 } from "@mui/material"
+import { signIn } from "next-auth/react"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { motion } from "framer-motion"
@@ -30,11 +31,10 @@ import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
 // import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
 import ICheckMark from "@components/icons/CheckMark"
-import FacebookLogin from "react-facebook-login"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
-import CONFIGS from "@configs/index"
+import useRegisterTypeStore from "@stores/registerTypes"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -51,9 +51,6 @@ const FormRegister = () => {
     onClickGetCode,
     isNumber,
     isCharacters,
-    facebookLogin,
-    twitterLogin,
-    googleRegister,
     // metaMarkLogin,
     passwordCorrect,
     errors,
@@ -66,11 +63,10 @@ const FormRegister = () => {
   } = useFormRegisterController()
   const { isEmail, patternCode, emailCorrect } = useFormController()
 
-  const {
-    setSubmitClickRegister: onSubmitRegisterForm,
-    getClickRegisterFacebook: toggleFacebookRegister,
-    setClickRegisterFacebook: setToggleFacebookRegister
-  } = useRegisterAvatarStore()
+  const { setSubmitClickRegister: onSubmitRegisterForm } =
+    useRegisterAvatarStore()
+
+  const { setClickRegisterTypes: setRegisterTypes } = useRegisterTypeStore()
 
   const checkSizeFormRegister = () => {
     if (
@@ -85,6 +81,13 @@ const FormRegister = () => {
     }
   }
   const { t } = useTranslation()
+
+  const handleRegister = async (_typeRegister: string) => {
+    // eslint-disable-next-line no-console
+    console.log("test-register", _typeRegister)
+    await setRegisterTypes(_typeRegister)
+    await signIn(_typeRegister)
+  }
 
   return (
     <>
@@ -581,27 +584,9 @@ const FormRegister = () => {
                     stiffness: 400,
                     damping: 4
                   }}
-                  onClick={() => setToggleFacebookRegister(true)}
-                  icon={
-                    toggleFacebookRegister ? (
-                      <FacebookLogin
-                        appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                        autoLoad={false}
-                        fields="name,email,picture"
-                        callback={(e: any) =>
-                          facebookLogin(e, watch("referralId"))
-                        }
-                        cssClass="my-facebook-button-class"
-                        icon={<FacebookIcon />}
-                        textButton="Register with Facebook"
-                      />
-                    ) : (
-                      <FacebookIcon />
-                    )
-                  }
-                  className={`m-1 flex h-[40px] w-[75px] justify-center rounded-lg border border-neutral-700 bg-neutral-800 ${
-                    toggleFacebookRegister ? "items-end" : "items-center"
-                  }`}
+                  onClick={() => handleRegister("facebook")}
+                  icon={<FacebookIcon />}
+                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />
                 <ButtonIcon
                   whileHover="hover"
@@ -610,7 +595,7 @@ const FormRegister = () => {
                     stiffness: 400,
                     damping: 4
                   }}
-                  onClick={() => twitterLogin(watch("referralId"))}
+                  onClick={() => handleRegister("twitter")}
                   icon={<TwitterIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />
@@ -621,7 +606,8 @@ const FormRegister = () => {
                     stiffness: 400,
                     damping: 4
                   }}
-                  onClick={() => googleRegister(watch("referralId"))}
+                  // onClick={() => googleRegister(watch("referralId"))}
+                  onClick={() => handleRegister("google")}
                   icon={<GoogleIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />

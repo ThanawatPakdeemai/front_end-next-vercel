@@ -6,7 +6,7 @@ import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import useFormRegisterController from "@feature/authentication/containers/hooks/useFormRegisterController"
 
 const MoreLoginMobile = () => {
-  const { googleRegister, watch } = useFormRegisterController()
+  const { googleRegister } = useFormRegisterController()
 
   return (
     <Box
@@ -22,7 +22,7 @@ const MoreLoginMobile = () => {
       <Button
         variant="outlined"
         className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
-        onClick={() => googleRegister(watch("referralId"))}
+        onClick={() => googleRegister("")}
       >
         <GoogleColorIcon />
       </Button>

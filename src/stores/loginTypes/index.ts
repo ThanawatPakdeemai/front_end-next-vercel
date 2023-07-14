@@ -1,21 +1,27 @@
 import configZustandDevTools from "@utils/configDevtools"
 import { create } from "zustand"
-import { devtools } from "zustand/middleware"
+import { devtools, persist } from "zustand/middleware"
 
 interface ILoginTypesStore {
-  getClickLoginFacebook: boolean
-  setClickLoginFacebook: (_toggle: boolean) => void
+  getClickLoginTypes: string
+  setClickLoginTypes: (_toggle: string) => void
 }
 
 const useLoginTypeStore = create<ILoginTypesStore>()(
   devtools(
-    (set) => ({
-      getClickLoginFacebook: false,
-      setClickLoginFacebook: (_toggle: boolean) => {
-        set(() => ({ getClickLoginFacebook: _toggle }))
-      }
-    }),
-    configZustandDevTools("LoginTypes-Store")
+    persist(
+      (set) => ({
+        getClickLoginTypes: "",
+        setClickLoginTypes: (_types: string) => {
+          set(
+            () => ({ getClickLoginTypes: _types })
+            // false,
+            // "TypeStores/UseTypesStore"
+          )
+        }
+      }),
+      configZustandDevTools("loginWith")
+    )
   )
 )
 

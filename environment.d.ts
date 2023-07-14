@@ -66,7 +66,6 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CONTRACT_P2P_BINANCE: string
     readonly NEXT_PUBLIC_CONTRACT_P2P_POLYGON: string
     readonly NEXT_PUBLIC_CONTRACT_ESCAPE_URL: string
-    readonly NEXT_PUBLIC_FACEBOOK_APPID: string
     readonly NEXT_PUBLIC_FIREBASE_APIKEY: string
     readonly NEXT_PUBLIC_FIREBASE_AUTHDOMAIN: string
     readonly NEXT_PUBLIC_FIREBASE_PROJECT_Id: string
@@ -76,6 +75,15 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string
     readonly NEXT_PUBLIC_ICON_NAKA: string
     readonly NEXT_PUBLIC_CONTRACT_REEF_PAY: string
+    readonly NEXT_PUBLIC_GOOGLE_CLIENT_ID: string
+    readonly NEXT_PUBLIC_GOOGLE_CLIENT_SECRET: string
+    readonly NEXT_PUBLIC_DISCORD_CLIENT_ID: string
+    readonly NEXT_PUBLIC_DISCORD_CLIENT_SECRET: string
+    readonly NEXT_PUBLIC_NEXT_AUTH_SECRET: string
+    readonly NEXT_PUBLIC_TWITTER_ID: string
+    readonly NEXT_PUBLIC_TWITTER_SECRET: string
+    readonly NEXT_PUBLIC_FACEBOOK_CLIENT_ID: string
+    readonly NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET: string
   }
 }
 

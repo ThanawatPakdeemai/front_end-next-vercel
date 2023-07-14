@@ -2,7 +2,6 @@ export type TLocalKey =
   | "token"
   | "email"
   | "address"
-  | "loginWith"
   | "time"
   | "wallet-connector"
   | "shareToEarn-ExpireTime"
@@ -16,7 +15,6 @@ export enum ELocalKey {
   token = "token",
   email = "email",
   address = "address",
-  loginWith = "loginWith",
   time = "time",
   walletConnector = "wallet-connector",
   shareToEarn = "shareToEarn-ExpireTime",

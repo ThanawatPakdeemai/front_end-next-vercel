@@ -113,7 +113,7 @@ class MyDocument extends Document {
           {/* facebook */}
           <meta
             property="fb:app_id"
-            content="364510622370887"
+            content={`${CONFIGS.FACEBOOK_APP_ID}`}
           />
           <meta
             property="og:locale"

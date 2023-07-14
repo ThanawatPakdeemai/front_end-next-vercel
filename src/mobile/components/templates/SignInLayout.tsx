@@ -2,25 +2,28 @@ import React, { useState } from "react"
 import { Box, Button, Divider, Typography } from "@mui/material"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import useLoginTypeStore from "@stores/loginTypes"
-import FacebookLogin from "react-facebook-login"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-import CONFIGS from "@configs/index"
+import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import { signIn } from "next-auth/react"
+import useLoginTypeStore from "@stores/loginTypes"
 import LoginModal from "../organisms/modal/LoginModal"
 import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
-  const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
-
-  const { setClickLoginFacebook: setToggleFacebookLogin } = useLoginTypeStore()
+  const { twitterLogin } = useFormLoginController()
+  const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
     useState<boolean>(false)
+
+  const handleLogin = (_typeLogin: string) => {
+    setLoginTypes(_typeLogin)
+    signIn(_typeLogin)
+  }
 
   return (
     <>
@@ -41,20 +44,13 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={() => setToggleFacebookLogin(true)}
+            // onClick={googleLogin}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <FacebookLogin
-                  appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  callback={facebookLogin}
-                  cssClass="my-facebook-button-class flex gap-2"
-                  icon={<FacebookColorIcon />}
-                  textButton="Sign in with Facebook"
-                />
+                <FacebookColorIcon />
               </span>
+              <span>Sign in with Facebook</span>
             </div>
           </Button>
         </Box>
@@ -62,7 +58,7 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={googleLogin}
+            onClick={() => handleLogin("google")}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">

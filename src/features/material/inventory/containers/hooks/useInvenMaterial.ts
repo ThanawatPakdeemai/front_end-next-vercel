@@ -138,6 +138,7 @@ const useInvenMaterial = () => {
     _materialId: string,
     _materialAmount: number = 1
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     await transferMaterial(_to, _materialId, _materialAmount)
       .then(async (response) => {
@@ -160,11 +161,13 @@ const useInvenMaterial = () => {
             Number(_resultEvent[3].toString())
           )
         }
+        _status = true
       })
       .catch((error) => console.error(error))
       .finally(() => {
         setTimeout(() => setClose(), 1000)
       })
+    return _status
   }
 
   return {

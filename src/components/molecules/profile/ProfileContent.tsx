@@ -27,10 +27,16 @@ import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByE
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
-import EditProfileModal from "./EditProfileModal"
-import SliderBadges from "./SliderBadges"
-import SideSocialShare from "../SideSocialShare"
+import CONFIGS from "@configs/index"
+import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
+import FacebookLogin from "react-facebook-login"
+import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import TotalCardContent from "./TotalCardContent"
+import SideSocialShare from "../SideSocialShare"
+import SliderBadges from "./SliderBadges"
+import EditProfileModal from "./EditProfileModal"
 
 const ProfileContent = () => {
   const { profile: pro } = useProfileStore()
@@ -48,6 +54,8 @@ const ProfileContent = () => {
   const { errorToast } = useToast()
   const { player_id } = router.query
   const { t } = useTranslation()
+  const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
+  const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
 
   const {
     getProfileInfo: profileDataFromQuery,
@@ -220,13 +228,23 @@ const ProfileContent = () => {
               </div>
             </div>
 
-            <Image
-              src={Helper.convertAvatar(getProfileInfo.data.avatar)}
-              width={150}
-              height={150}
-              alt="profile-avatar"
-              className="absolute !h-full rounded-3xl"
-            />
+            {getProfileInfo.data && getProfileInfo.data.avatar ? (
+              <Image
+                src={Helper.convertAvatar(getProfileInfo.data.avatar)}
+                width={150}
+                height={150}
+                alt="profile-avatar"
+                className="absolute !h-full rounded-3xl object-cover object-center"
+              />
+            ) : (
+              <Image
+                src="/images/common/no_login_avatar.png"
+                width={150}
+                height={150}
+                alt="profile-avatar"
+                className="absolute !h-full rounded-3xl object-cover object-center"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -295,6 +313,24 @@ const ProfileContent = () => {
           )}
         </div>
       </div>
+      {/* Sync Button */}
+      {isShowSyncTelegram() && (
+        <TelegramWidget
+          dataOnAuth={handleSyncTelegramId}
+          botName="NakaGameBot"
+        />
+      )}
+      {isShowSyncFacebook() && (
+        <FacebookLogin
+          appId={`${CONFIGS.FACEBOOK_APP_ID}`}
+          autoLoad={false}
+          fields="name,email,picture"
+          callback={handleSyncFacebookId}
+          cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
+          icon={<FacebookColorIcon />}
+          textButton="Sync with Facebook"
+        />
+      )}
       <SliderBadges _playerId={profileFetched.id} />
       <GameStatOverview
         key={uuidv4()}

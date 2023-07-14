@@ -17,6 +17,7 @@ import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
+import { signOut } from "next-auth/react"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
@@ -392,6 +393,7 @@ const useGlobal = (
     setQtyItemOfRoom(0)
     onResetNotification()
     onReset()
+    signOut({ redirect: false })
     await router.push("/")
   }
 
@@ -447,6 +449,15 @@ const useGlobal = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
 
+  const getURLWithEmailToken = useCallback(() => {
+    if (typeof window !== "undefined") {
+      if (profile) {
+        return `/${Helper.encodeURILink(profile.email, profile.jwtToken)}`
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile])
+
   return {
     onHandleClick,
     onClickLink,
@@ -480,7 +491,8 @@ const useGlobal = (
     isPokerGame,
     goldProfile,
     goldProfileComma,
-    handleClickScroll
+    handleClickScroll,
+    getURLWithEmailToken
   }
 }
 

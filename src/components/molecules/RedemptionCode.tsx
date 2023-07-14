@@ -137,9 +137,7 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
             }}
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
-              if (e.target.value.length <= 6) {
-                isCharactersCoupon(e.target.value)
-              }
+              isCharactersCoupon(e.target.value)
             }}
             id="redeem-field"
             placeholder="e.g. naka12345"

@@ -56,7 +56,7 @@ const MarketplaceOwnerDetail = () => {
         <div className="flex h-full w-full flex-col">
           <RightDetailsMarketplace
             type={invenItemData.type}
-            id={invenItemData.tokenId}
+            id={invenItemData.id}
             token={invenItemData.tokenId}
             title={invenItemData.name}
             position={invenItemData.position}

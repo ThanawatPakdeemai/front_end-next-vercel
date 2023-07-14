@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useState } from "react"
 import { Box, Button, Divider, Typography } from "@mui/material"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
@@ -7,15 +6,24 @@ import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import { signIn } from "next-auth/react"
+import useLoginTypeStore from "@stores/loginTypes"
 import LoginModal from "../organisms/modal/LoginModal"
 import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
-  const { googleLogin, twitterLogin } = useFormLoginController()
+  const { twitterLogin } = useFormLoginController()
+  const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
     useState<boolean>(false)
+
+  const handleLogin = (_typeLogin: string) => {
+    setLoginTypes(_typeLogin)
+    signIn(_typeLogin)
+  }
 
   return (
     <>
@@ -32,32 +40,25 @@ const SignInLayout = () => {
         <Typography className="my-8 text-center font-urbanist text-3xl font-bold uppercase text-red-card">
           Welcome Back
         </Typography>
-        {/* <Box component="div">
-          <Button
-            variant="contained"
-            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={() => setToggleFacebookLogin(true)}
-          >
-            <div className="flex items-center font-urbanist text-base font-medium">
-              <span className="pr-2">
-                <FacebookLogin
-                  appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  callback={facebookLogin}
-                  cssClass="my-facebook-button-class flex gap-2"
-                  icon={<FacebookColorIcon />}
-                  textButton="Sign in with Facebook"
-                />
-              </span>
-            </div>
-          </Button>
-        </Box> */}
         <Box component="div">
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={googleLogin}
+            // onClick={googleLogin}
+          >
+            <div className="flex items-center font-urbanist text-base font-medium">
+              <span className="pr-2">
+                <FacebookColorIcon />
+              </span>
+              <span>Sign in with Facebook</span>
+            </div>
+          </Button>
+        </Box>
+        <Box component="div">
+          <Button
+            variant="contained"
+            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
+            onClick={() => handleLogin("google")}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">

@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import React, { memo, useState } from "react"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -236,7 +237,7 @@ const FormLogin = () => {
             onClick={() => handleLogin("facebook")}
             icon={<FacebookIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          /> */}
+          />
           <ButtonIcon
             whileHover="hover"
             transition={{
@@ -269,7 +270,7 @@ const FormLogin = () => {
             onClick={() => handleLogin("discord")}
             icon={<DiscordIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          />
+          /> */}
           {!isMobile && (
             <ButtonIcon
               whileHover="hover"

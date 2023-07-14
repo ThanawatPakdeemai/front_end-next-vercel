@@ -33,6 +33,7 @@ import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/us
 import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 import FacebookLogin from "react-facebook-login"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import CrumbCustom from "@components/atoms/CrumbCustom"
 import TotalCardContent from "./TotalCardContent"
 import SideSocialShare from "../SideSocialShare"
 import SliderBadges from "./SliderBadges"
@@ -313,24 +314,34 @@ const ProfileContent = () => {
           )}
         </div>
       </div>
-      {/* Sync Button */}
-      {isShowSyncTelegram() && (
-        <TelegramWidget
-          dataOnAuth={handleSyncTelegramId}
-          botName="NakaGameBot"
-        />
-      )}
-      {isShowSyncFacebook() && (
-        <FacebookLogin
-          appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-          autoLoad={false}
-          fields="name,email,picture"
-          callback={handleSyncFacebookId}
-          cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
-          icon={<FacebookColorIcon />}
-          textButton="Sync with Facebook"
-        />
-      )}
+      <div className="mt-8 flex flex-col gap-4">
+        {(isShowSyncTelegram() || isShowSyncTelegram()) && (
+          <div className="flex">
+            <CrumbCustom
+              text="Sync account to complete your profile"
+              className="mr-4 w-auto cursor-default border border-solid border-neutral-700 p-[20px] text-neutral-400"
+            />
+          </div>
+        )}
+        {/* Sync Button */}
+        {isShowSyncTelegram() && (
+          <TelegramWidget
+            dataOnAuth={handleSyncTelegramId}
+            botName="NakaGameBot"
+          />
+        )}
+        {isShowSyncFacebook() && (
+          <FacebookLogin
+            appId={`${CONFIGS.FACEBOOK_APP_ID}`}
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={handleSyncFacebookId}
+            cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
+            icon={<FacebookColorIcon />}
+            textButton="Sync with Facebook"
+          />
+        )}
+      </div>
       <SliderBadges _playerId={profileFetched.id} />
       <GameStatOverview
         key={uuidv4()}

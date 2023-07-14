@@ -577,7 +577,7 @@ const FormRegister = () => {
               justifyContent="center"
             >
               <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
-                <ButtonIcon
+                {/* <ButtonIcon
                   whileHover="hover"
                   transition={{
                     type: "spring",
@@ -587,7 +587,7 @@ const FormRegister = () => {
                   onClick={() => handleRegister("facebook")}
                   icon={<FacebookIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                />
+                /> */}
                 <ButtonIcon
                   whileHover="hover"
                   transition={{

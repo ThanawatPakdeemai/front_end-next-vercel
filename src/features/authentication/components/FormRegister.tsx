@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { memo } from "react"
 import {
   Box,
@@ -25,10 +24,8 @@ import ILock from "@components/icons/Lock"
 import IEdit from "@components/icons/Edit"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
-// import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
 import ICheckMark from "@components/icons/CheckMark"
 import useRegisterAvatarStore from "@stores/registerAvater"

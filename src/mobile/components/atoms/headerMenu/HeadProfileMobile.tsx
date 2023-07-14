@@ -48,16 +48,16 @@ const HeadProfileMobile = () => {
         >
           <div className="head-profile__info--avatar">
             <ImageCustom
-              src={profile?.avatar || "/images/avatar.png"}
+              src={profile?.avatar || "/images/common/no_login_avatar.png"}
               alt="avatar"
               width={55}
               height={55}
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="head-profile__info--welcome flex flex-col">
+          <div className="head-profile__info--welcome flex max-w-[230px] flex-col">
             <p className="font-urbanist text-[14px]">Welcome Back! 👋</p>
-            <p className="font-urbanist text-[20px] font-bold">
+            <p className="truncate font-urbanist text-[20px] font-bold">
               {profile?.username}
             </p>
           </div>

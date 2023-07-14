@@ -8,10 +8,11 @@ import {
 import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTArcGame from "./useMutateNFTArcGame"
 
 const useNFTArcGame = () => {
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
   const arcadeGameContract = useArcGameNFT(
     signer,
     CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT
@@ -22,6 +23,8 @@ const useNFTArcGame = () => {
   const { successToast } = useToast()
   const { setOpen, setClose } = useLoadingStore()
   const { mutateTransferNFTArcGame } = useMutateNFTArcGame()
+
+  const { validationAccount } = useMiddlewareWeb3()
 
   // check owner naka-punk
   const isArcGameOwner = (_tokenId: string) =>
@@ -68,14 +71,17 @@ const useNFTArcGame = () => {
     _status: boolean
   ) => {
     let _isApproved: boolean = false
-    _isApproved = await isArcGameApprovedForAll(_owner, _address)
-    if (!_isApproved) {
-      await ApprovalArcGameForAll(_address, _status)
-        .then(() => {
-          _isApproved = true
-          successToast("approval success")
-        })
-        .catch((error) => console.error(error))
+    const _validate = validationAccount()
+    if (_validate) {
+      _isApproved = await isArcGameApprovedForAll(_owner, _address)
+      if (!_isApproved) {
+        await ApprovalArcGameForAll(_address, _status)
+          .then(() => {
+            _isApproved = true
+            successToast("approval success")
+          })
+          .catch((error) => console.error(error))
+      }
     }
     return { isApproved: _isApproved }
   }
@@ -94,26 +100,31 @@ const useNFTArcGame = () => {
     })
 
   const onTransferArcGame = async (
+    _fromAddress: string | undefined,
     _toAddrs: string,
     _nftToken: string,
     _tokenId: string
   ) => {
-    if (signer && address) {
+    const _validate = validationAccount()
+    let _status: boolean = false
+    if (_validate && _fromAddress) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferArcGame(address, _toAddrs, _nftToken)
+      await transferArcGame(_fromAddress, _toAddrs, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
           const data = {
             _id: _tokenId,
             _to: _toAddrs,
-            _from: address,
+            _from: _fromAddress,
             _txHash: _res.transactionHash
           }
           await mutateTransferNFTArcGame(data)
+          _status = true
         })
         .catch((error) => console.error(error))
     }
     setClose()
+    return _status
   }
 
   return {

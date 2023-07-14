@@ -84,7 +84,12 @@ const MarketplaceButton = ({
     let _action: TMarketAction
     if (!profile.data) {
       _action = "login"
-    } else if (!curAccount) {
+    } else if (
+      !curAccount ||
+      (profile.data &&
+        profile.data.address &&
+        profile.data.address.toLowerCase() !== curAccount?.toLowerCase())
+    ) {
       _action = "connect_wallet"
     } else if (marketplaces_data) {
       if (marketplaces_data.seller_type === "user") {
@@ -100,7 +105,7 @@ const MarketplaceButton = ({
       _action = "sell"
     }
     return _action
-  }, [profile, curAccount, marketplaces_data])
+  }, [profile.data, curAccount, marketplaces_data])
 
   const handleStyle = useMemo(() => {
     let _color: string
@@ -233,7 +238,9 @@ const MarketplaceButton = ({
         >
           {textBtn}
         </Button>
-        {showRentBtn ? (
+        {showRentBtn &&
+        actionValue !== "login" &&
+        actionValue !== "connect_wallet" ? (
           <Button
             type="button"
             variant="contained"

@@ -59,7 +59,7 @@ const CardWriterDetails = ({
           {link && (
             <div className="flex">
               <Chip
-                label={link}
+                label={Helper.textWithDots(link, 6)}
                 variant="outlined"
                 size="small"
                 className="max-w-[129px] cursor-pointer uppercase"

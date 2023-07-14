@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import DiscordProvider from "next-auth/providers/discord"
 import TwitterProvider from "next-auth/providers/twitter"
+import FacebookProvider from "next-auth/providers/facebook"
 import { ISessionCallBack } from "@src/types/nextauth"
 
 export const authOptions: any = {
@@ -19,6 +20,10 @@ export const authOptions: any = {
       clientId: process.env.NEXT_PUBLIC_TWITTER_ID,
       clientSecret: process.env.NEXT_PUBLIC_TWITTER_SECRET
       // version: "2.0" // opt-in to Twitter OAuth 2.0
+    }),
+    FacebookProvider({
+      clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET
     })
   ],
   callbacks: {

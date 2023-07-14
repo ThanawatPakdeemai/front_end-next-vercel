@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import * as yup from "yup"
 import _ from "lodash"
 
@@ -7,18 +7,13 @@ import { useToast } from "@feature/toast/containers"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import useVerifyCode from "@feature/authentication/containers/hooks/useVerifyCode"
 import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
-import {
-  TwitterAuthProvider,
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup
-} from "firebase/auth"
-import { initializeApp, getApps, getApp } from "@firebase/app"
+import { initializeApp, getApps } from "@firebase/app"
 import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { IProfileFaceBook } from "@feature/profile/interfaces/IProfileService"
+import { useSession } from "next-auth/react"
+import { IError } from "@src/types/contract"
 import useFormController from "./useFormController"
 
 export interface TFormData {
@@ -39,6 +34,8 @@ const useFormRegisterController = () => {
   const { patternPasswordUppercase, emailCorrect } = useFormController()
   const router = useRouter()
   const { referral } = router.query
+
+  const { data: session }: any = useSession()
 
   const SignUpSchema = yup
     .object({
@@ -153,115 +150,111 @@ const useFormRegisterController = () => {
     })()
   }
 
-  const facebookLogin = async (
-    response: IProfileFaceBook,
-    referralId: string | string[]
-  ) => {
-    if (
-      response.email !== null &&
-      response.email !== undefined &&
-      response.userID !== null &&
-      response.userID !== undefined
-    ) {
-      mutateLoginProvider({
-        _email: response.email,
-        _provider: "facebook",
-        _prevPath: "/",
-        _providerUUID: response.userID,
-        _referral: referralId
-      })
-        .then((_res) => {
-          if (_res) {
-            successToast(MESSAGES.create_successful_user)
-          }
-        })
-        .catch((_error) => {
-          errorToast(MESSAGES.create_not_successful_user)
-        })
-    }
-  }
+  // const facebookLogin = async (
+  //   response: IProfileFaceBook,
+  //   referralId: string | string[]
+  // ) => {
+  //   if (
+  //     response.email !== null &&
+  //     response.email !== undefined &&
+  //     response.userID !== null &&
+  //     response.userID !== undefined
+  //   ) {
+  //     mutateLoginProvider({
+  //       _email: response.email,
+  //       _provider: "facebook",
+  //       _prevPath: "/",
+  //       _providerUUID: response.userID,
+  //       _referral: referralId
+  //     })
+  //       .then((_res) => {
+  //         if (_res) {
+  //           successToast(MESSAGES.create_successful_user)
+  //         }
+  //       })
+  //       .catch((_error) => {
+  //         errorToast(MESSAGES.create_not_successful_user)
+  //       })
+  //   }
+  // }
 
-  const twitterLogin = async (referralId: string | string[]) => {
-    const provider = new TwitterAuthProvider()
-    provider.addScope("email")
-    // const app = initializeApp(firebaseConfig)
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
-    const auth = getAuth(app)
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "twitter",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: referralId
+  const facebookRegister = useCallback(
+    async (referralId?: string) => {
+      if (session && session?.user?.email && session?.user?.id) {
+        mutateLoginProvider({
+          _email: session.user.email,
+          _provider: "facebook",
+          _prevPath: "/",
+          _providerUUID: session.user.id,
+          _referral: referralId || ""
+        })
+          .then((_res) => {
+            if (_res) {
+              successToast(MESSAGES.create_successful_user)
+            }
           })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.create_successful_user)
-              }
-            })
-            .catch((_error) => {
-              errorToast(MESSAGES.create_not_successful_user)
-            })
-        } else {
-          errorToast(MESSAGES.create_not_successful_user)
-        }
-      })
-      .catch((error) => {
-        if (error.code) {
-          errorToast(MESSAGES.auth_popup_closed_by_user)
-        }
-      })
-  }
+          .catch((_error: IError) => {
+            errorToast(MESSAGES.create_not_successful_user || _error.message)
+          })
+      } else {
+        errorToast(MESSAGES.create_not_successful_user)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [errorToast, mutateLoginProvider, successToast, session]
+  )
 
-  const googleRegister = async (referralId: string | string[]) => {
-    const provider = new GoogleAuthProvider()
-    provider.addScope("email")
-    // const app = initializeApp(firebaseConfig)
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
-    const auth = getAuth(app)
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: referralId
+  const twitterRegister = useCallback(
+    async (referralId?: string) => {
+      if (session && session?.user?.email && session?.user?.id) {
+        mutateLoginProvider({
+          _email: session.user.email,
+          _provider: "twitter",
+          _prevPath: "/",
+          _providerUUID: session.user.id,
+          _referral: referralId || ""
+        })
+          .then((_res) => {
+            if (_res) {
+              successToast(MESSAGES.create_successful_user)
+            }
           })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.create_successful_user)
-              }
-            })
-            .catch((_error) => {
-              errorToast(MESSAGES.create_not_successful_user)
-            })
-        } else {
-          errorToast(MESSAGES.create_not_successful_user)
-        }
-      })
-      .catch((error) => {
-        if (error.code) {
-          errorToast(MESSAGES.auth_popup_closed_by_user)
-        }
-      })
-  }
+          .catch((_error: IError) => {
+            errorToast(MESSAGES.create_not_successful_user || _error.message)
+          })
+      } else {
+        errorToast(MESSAGES.create_not_successful_user)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [errorToast, mutateLoginProvider, successToast, session]
+  )
+
+  const googleRegister = useCallback(
+    async (referralId?: string) => {
+      if (session && session?.user?.email && session?.user?.id) {
+        mutateLoginProvider({
+          _email: session.user.email,
+          _provider: "google",
+          _prevPath: "/",
+          _providerUUID: session.user.id,
+          _referral: referralId || ""
+        })
+          .then((_res) => {
+            if (_res) {
+              successToast(MESSAGES.create_successful_user)
+            }
+          })
+          .catch((_error: IError) => {
+            errorToast(MESSAGES.create_not_successful_user || _error.message)
+          })
+      } else {
+        errorToast(MESSAGES.create_not_successful_user)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [errorToast, mutateLoginProvider, successToast, session]
+  )
 
   const metaMarkLogin = async () => {
     errorToast("This feature is unavailable.")
@@ -318,8 +311,8 @@ const useFormRegisterController = () => {
     isNumber,
     isCharacters,
     isConfirmPassword,
-    facebookLogin,
-    twitterLogin,
+    facebookRegister,
+    twitterRegister,
     googleRegister,
     metaMarkLogin,
     passwordCorrect,

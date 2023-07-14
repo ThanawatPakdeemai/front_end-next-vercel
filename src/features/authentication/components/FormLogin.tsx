@@ -11,10 +11,9 @@ import {
   Typography,
   CircularProgress,
   Grid,
-  Alert,
-  Button
+  Alert
 } from "@mui/material"
-import { signIn, signOut } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import LoginIcon from "@mui/icons-material/Login"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import LockOpenIcon from "@mui/icons-material/LockOpen"
@@ -63,9 +62,9 @@ const FormLogin = () => {
     }
   })
 
-  const handleLogin = (_typeLogin: string) => {
-    setLoginTypes(_typeLogin)
-    signIn(_typeLogin)
+  const handleLogin = async (_typeLogin: string) => {
+    await setLoginTypes(_typeLogin)
+    await signIn(_typeLogin)
   }
 
   return (
@@ -234,25 +233,9 @@ const FormLogin = () => {
               stiffness: 400,
               damping: 4
             }}
-            onClick={() => setToggleFacebookLogin(true)}
-            icon={
-              toggleFacebookLogin ? (
-                <FacebookLogin
-                  appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  callback={facebookLogin}
-                  cssClass="button-facebook-login"
-                  textButton="Login with Facebook"
-                  icon={<FacebookIcon />}
-                />
-              ) : (
-                <FacebookIcon />
-              )
-            }
-            className={`flex h-[40px] w-[75px] justify-center rounded-lg border border-neutral-700 bg-neutral-800 ${
-              toggleFacebookLogin ? "items-end" : "items-center"
-            }`}
+            onClick={() => handleLogin("facebook")}
+            icon={<FacebookIcon />}
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           /> */}
           <ButtonIcon
             whileHover="hover"
@@ -300,7 +283,6 @@ const FormLogin = () => {
               className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
             />
           )}
-          <Button onClick={() => signOut()}>signOut</Button>
         </div>
       </Grid>
     </>

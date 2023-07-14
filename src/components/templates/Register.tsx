@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import _ from "lodash"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
@@ -15,6 +15,9 @@ import useRegisterAvatarStore from "@stores/registerAvater"
 import FormRegister from "@feature/authentication/components/FormRegister"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
+import { useSession } from "next-auth/react"
+import useRegisterTypeStore from "@stores/registerTypes"
+import useFormRegisterController from "../../features/authentication/containers/hooks/useFormRegisterController"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -64,6 +67,8 @@ const RegisterLayout = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const { referral } = router.query
+  const { data: session, status } = useSession()
+  const { googleRegister, twitterRegister } = useFormRegisterController()
 
   // eslint-disable-next-line no-unused-vars
   const { formState } = useForm<TFormData>({
@@ -73,8 +78,40 @@ const RegisterLayout = () => {
     }
   })
 
+  const { getClickRegisterTypes: registerTypes } = useRegisterTypeStore()
+
   const { getSubmitClickRegister: submitRegisterForm } =
     useRegisterAvatarStore()
+
+  const handleLogin = () => {
+    if (session && status === "authenticated" && registerTypes !== "") {
+      switch (registerTypes) {
+        case "google":
+          googleRegister(referral as string)
+          break
+        case "discord":
+          // discordLogin()
+          break
+        case "twitter":
+          twitterRegister(referral as string)
+          break
+        default:
+          // Handle unknown login type
+          break
+      }
+    }
+  }
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      handleLogin()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, status, registerTypes])
 
   return (
     <Box component="div">

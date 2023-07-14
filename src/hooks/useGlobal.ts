@@ -393,7 +393,7 @@ const useGlobal = (
     setQtyItemOfRoom(0)
     onResetNotification()
     onReset()
-    signOut()
+    signOut({ redirect: false })
     await router.push("/")
   }
 

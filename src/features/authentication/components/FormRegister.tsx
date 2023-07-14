@@ -574,17 +574,6 @@ const FormRegister = () => {
               justifyContent="center"
             >
               <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
-                {/* <ButtonIcon
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  onClick={() => handleRegister("facebook")}
-                  icon={<FacebookIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                /> */}
                 <ButtonIcon
                   whileHover="hover"
                   transition={{
@@ -608,17 +597,6 @@ const FormRegister = () => {
                   icon={<GoogleIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />
-                {/* <ButtonIcon
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  onClick={metaMarkLogin}
-                  icon={<MetaMarkIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                /> */}
                 {isMobile && (
                   <div className="absolute pt-14">
                     <Typography className="text-sm uppercase text-neutral-700">

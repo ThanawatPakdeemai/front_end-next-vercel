@@ -14,28 +14,19 @@ const useGlobalControllerMobile = () => {
    * @description Variable to hide sync telegram button
    *
    */
-  const isShowSyncTelegram = useCallback(
-    () =>
-      // TODO: display when ready
-      // if (profile && profile.telegram_id) return false
-      // return true
-      false,
+  const isShowSyncTelegram = useCallback(() => {
+    if (profile?.telegram_id) return false
+    return true
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profile]
-  )
+  }, [profile])
 
   /**
    * @description Variable to hide sync facebook button
    */
-  const isShowSyncFacebook = useCallback(
-    () =>
-      // TODO: display when ready
-      // if (profile && profile.facebook_id) return false
-      // return true
-      false,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profile]
-  )
+  const isShowSyncFacebook = useCallback(() => {
+    if (profile?.facebook_id) return false
+    return true
+  }, [profile])
 
   const handleClickOpenLoading = useCallback(() => {
     // do something

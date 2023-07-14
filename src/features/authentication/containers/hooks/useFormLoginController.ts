@@ -139,7 +139,7 @@ const useFormLoginController = () => {
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
           if (_error.response.status === 404) {
-            signOut()
+            signOut({ redirect: false })
           }
         })
     } else {
@@ -168,7 +168,7 @@ const useFormLoginController = () => {
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
           if (_error.response.status === 404) {
-            signOut()
+            signOut({ redirect: false })
           }
         })
     } else {
@@ -197,7 +197,7 @@ const useFormLoginController = () => {
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
           if (_error.response.status === 404) {
-            signOut()
+            signOut({ redirect: false })
           }
         })
     } else {
@@ -226,7 +226,7 @@ const useFormLoginController = () => {
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
           if (_error.response.status === 404) {
-            signOut()
+            signOut({ redirect: false })
           }
         })
     } else {

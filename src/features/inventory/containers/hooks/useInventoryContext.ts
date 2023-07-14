@@ -175,15 +175,17 @@ const useInventoryContext = () => {
 
   const onTransferMaterial = useCallback(
     async (_to: string, _materialId: string, _materialAmount: number = 1) => {
+      let _status: boolean = false
       if (materialList)
-        await sendTransferMaterial(
+        _status = await sendTransferMaterial(
           materialList,
           _to,
           _materialId,
           _materialAmount
         )
-          .then(() => successToast("Transfer material successfully"))
-          .catch(() => errorToast("Transfer material failed"))
+      if (_status) successToast("Transfer material successfully")
+      else errorToast("Transfer material failed")
+      return _status
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [materialList, sendTransferMaterial]

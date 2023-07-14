@@ -8,10 +8,11 @@ import {
 import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTBuilding from "./useMutateNFTBuilding"
 
 const useNFTBuilding = () => {
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
   const { successToast } = useToast()
   const buildingContract = useBuildingNFT(
     signer,
@@ -22,6 +23,7 @@ const useNFTBuilding = () => {
   )
   const { setOpen, setClose } = useLoadingStore()
   const { mutateTransferNFTBuilding } = useMutateNFTBuilding()
+  const { validationAccount } = useMiddlewareWeb3()
 
   // check owner building
   const isBuildingOwner = (_tokenId: string) =>
@@ -68,14 +70,17 @@ const useNFTBuilding = () => {
     _status: boolean
   ) => {
     let _isApproved: boolean = false
-    _isApproved = await isBuildingApprovedForAll(_owner, _address)
-    if (!_isApproved) {
-      await ApprovalBuildingForAll(_address, _status)
-        .then(() => {
-          _isApproved = true
-          successToast("approval success")
-        })
-        .catch((error) => console.error(error))
+    const _validate: boolean = validationAccount()
+    if (_validate) {
+      _isApproved = await isBuildingApprovedForAll(_owner, _address)
+      if (!_isApproved) {
+        await ApprovalBuildingForAll(_address, _status)
+          .then(() => {
+            _isApproved = true
+            successToast("approval success")
+          })
+          .catch((error) => console.error(error))
+      }
     }
     return { isApproved: _isApproved }
   }
@@ -94,26 +99,33 @@ const useNFTBuilding = () => {
     })
 
   const onTransferBuilding = async (
+    _fromAddress: string | undefined,
     _toAddrs: string,
     _nftToken: string,
     _tokenId: string
   ) => {
-    if (signer && address) {
+    const _validate: boolean = validationAccount()
+    let _status: boolean = false
+    if (_validate && _fromAddress) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferฺBuilding(address, _toAddrs, _nftToken)
+      await transferฺBuilding(_fromAddress, _toAddrs, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
           const data = {
             _id: _tokenId,
             _to: _toAddrs,
-            _from: address,
+            _from: _fromAddress,
             _txHash: _res.transactionHash
           }
           await mutateTransferNFTBuilding(data)
+          _status = true
         })
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          console.error(error)
+        })
     }
     setClose()
+    return _status
   }
 
   return {

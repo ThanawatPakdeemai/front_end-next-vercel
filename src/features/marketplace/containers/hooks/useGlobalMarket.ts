@@ -460,12 +460,13 @@ const useGlobalMarket = () => {
         }
       return _status
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       isArcGameOwner,
       isBuildingOwner,
       isLandOwner,
       isPunkOwner,
-      profile.address,
+      profile.data,
       signer,
       address
     ]

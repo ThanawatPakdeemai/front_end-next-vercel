@@ -12,7 +12,7 @@ import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTBuilding from "./useMutateNFTBuilding"
 
 const useNFTBuilding = () => {
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
   const { successToast } = useToast()
   const buildingContract = useBuildingNFT(
     signer,

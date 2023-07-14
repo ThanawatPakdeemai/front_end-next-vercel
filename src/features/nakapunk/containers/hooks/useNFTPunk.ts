@@ -12,7 +12,7 @@ import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTPunk from "./useMutateNFTPunk"
 
 const useNFTPunk = () => {
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
   const punkContract = usePunkNFT(signer, CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT)
   const punkContractNoAcc = usePunkNFTNoAccount(
     CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT

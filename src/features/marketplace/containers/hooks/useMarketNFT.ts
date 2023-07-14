@@ -35,7 +35,7 @@ const useMarketNFT = () => {
   const { utils } = ethers
   const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
   const { profile } = useProfileStore()
   const { marketType } = useGlobal()
   const marketNFTContract = useMarketplaceNFT(

@@ -12,7 +12,7 @@ import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMutateNFTArcGame from "./useMutateNFTArcGame"
 
 const useNFTArcGame = () => {
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
   const arcadeGameContract = useArcGameNFT(
     signer,
     CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT

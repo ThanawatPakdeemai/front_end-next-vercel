@@ -23,7 +23,6 @@ import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMateri
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
-import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
@@ -83,7 +82,6 @@ const useInventoryContext = () => {
   const { mutateMarketOrderById } = useMutateMarketplace()
   const { convertNFTTypeToUrl } = Helper
   const { errorToast, successToast } = useToast()
-  const { validationAccount } = useMiddlewareWeb3()
 
   const [gameItemList, setGameItemList] = useState<
     Array<IGameItemListData & { amount?: number }> | undefined

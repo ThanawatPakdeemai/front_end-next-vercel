@@ -393,7 +393,7 @@ const useGlobal = (
     setQtyItemOfRoom(0)
     onResetNotification()
     onReset()
-    signOut()
+    signOut({ redirect: false })
     await router.push("/")
   }
 
@@ -449,6 +449,15 @@ const useGlobal = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
 
+  const getURLWithEmailToken = useCallback(() => {
+    if (typeof window !== "undefined") {
+      if (profile) {
+        return `/${Helper.encodeURILink(profile.email, profile.jwtToken)}`
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile])
+
   return {
     onHandleClick,
     onClickLink,
@@ -482,7 +491,8 @@ const useGlobal = (
     isPokerGame,
     goldProfile,
     goldProfileComma,
-    handleClickScroll
+    handleClickScroll,
+    getURLWithEmailToken
   }
 }
 

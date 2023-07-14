@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { memo } from "react"
 import {
   Box,
@@ -25,10 +24,8 @@ import ILock from "@components/icons/Lock"
 import IEdit from "@components/icons/Edit"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-// import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
-// import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
 import ICheckMark from "@components/icons/CheckMark"
 import useRegisterAvatarStore from "@stores/registerAvater"
@@ -577,17 +574,6 @@ const FormRegister = () => {
               justifyContent="center"
             >
               <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
-                {/* <ButtonIcon
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  onClick={() => handleRegister("facebook")}
-                  icon={<FacebookIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                /> */}
                 <ButtonIcon
                   whileHover="hover"
                   transition={{
@@ -611,17 +597,6 @@ const FormRegister = () => {
                   icon={<GoogleIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />
-                {/* <ButtonIcon
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  onClick={metaMarkLogin}
-                  icon={<MetaMarkIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                /> */}
                 {isMobile && (
                   <div className="absolute pt-14">
                     <Typography className="text-sm uppercase text-neutral-700">

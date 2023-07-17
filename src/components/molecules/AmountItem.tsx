@@ -12,7 +12,6 @@ interface IProps {
   helperText?: string
   max?: number
   min?: number
-  value: number
   setValue: (_value: number) => void
   resetValue?: boolean
 }
@@ -22,7 +21,6 @@ const AmountItem = ({
   helperText,
   max = 999999,
   min = 0,
-  value,
   setValue,
   resetValue
 }: IProps) => {

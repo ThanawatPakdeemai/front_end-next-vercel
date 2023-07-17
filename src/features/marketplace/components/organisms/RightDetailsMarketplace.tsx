@@ -80,7 +80,6 @@ const RightDetailsMarketplace = ({
   const getPathnameType = router.pathname.includes("inventory")
     ? router.asPath.split("/")[3]
     : router.asPath.split("/")[2]
-  const { onSubmitRedeemByType } = useRedeem()
 
   const handleType = () => {
     const pathMap = {

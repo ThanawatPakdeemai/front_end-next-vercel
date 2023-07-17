@@ -10,6 +10,7 @@ import CONFIGS from "@configs/index"
 import MiniMap from "@feature/map/components/organisms/MiniMap"
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Video from "@components/atoms/Video"
+import useRedeem from "@feature/marketplace/hooks/useRedeem"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
@@ -79,6 +80,7 @@ const RightDetailsMarketplace = ({
   const getPathnameType = router.pathname.includes("inventory")
     ? router.asPath.split("/")[3]
     : router.asPath.split("/")[2]
+  const { onSubmitRedeemByType } = useRedeem()
 
   const handleType = () => {
     const pathMap = {
@@ -244,7 +246,12 @@ const RightDetailsMarketplace = ({
         </div>
         <main className="h-auto w-full px-4">{children}</main>
       </div>
-      {redemption && checkRedreemMobile && <RedemptionCode />}
+      {redemption && checkRedreemMobile && (
+        <RedemptionCode
+          type={type}
+          token={id ? (id as string) : undefined}
+        />
+      )}
       <div className="flex flex-row items-center" />
     </div>
   )

@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 import React, { memo } from "react"
 import {
   Box,
@@ -556,7 +554,7 @@ const FormRegister = () => {
                 />
               </Grid>
             </Grid>
-            {/* <Grid
+            <Grid
               item
               container
               justifyContent="space-between"
@@ -569,8 +567,8 @@ const FormRegister = () => {
               <Grid item>
                 <hr className="w-[208px] border border-solid border-neutral-800" />
               </Grid>
-            </Grid> */}
-            {/* <Grid
+            </Grid>
+            <Grid
               item
               container
               justifyContent="center"
@@ -607,7 +605,7 @@ const FormRegister = () => {
                   </div>
                 )}
               </div>
-            </Grid> */}
+            </Grid>
             {!isMobile && (
               <Box
                 component="div"

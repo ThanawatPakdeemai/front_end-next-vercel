@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 import React, { memo, useState } from "react"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -30,6 +28,7 @@ import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
+import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
@@ -227,7 +226,7 @@ const FormLogin = () => {
         container
       >
         <div className="flex w-full flex-row flex-wrap justify-between gap-2">
-          {/* <ButtonIcon
+          <ButtonIcon
             whileHover="hover"
             transition={{
               type: "spring",
@@ -270,7 +269,7 @@ const FormLogin = () => {
             onClick={() => handleLogin("discord")}
             icon={<DiscordIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          /> */}
+          />
           {!isMobile && (
             <ButtonIcon
               whileHover="hover"

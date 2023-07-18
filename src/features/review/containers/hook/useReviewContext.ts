@@ -1,6 +1,6 @@
 import { IReviewList } from "@feature/review/interfaces/IReviewGame"
 import { IInfo } from "@interfaces/IHelper"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getAllGameReview } from "@feature/review/containers/services/review.services"
 import useProfileStore from "@stores/profileStore"
@@ -10,15 +10,17 @@ const useReviewContext = (_id: string) => {
   const { profile } = useProfileStore()
   const { mutateCheckOwnerReview } = useMutateReview()
   const [reviewLoading, setReviewLoading] = useState<boolean>(false)
-  const [limit, setLimit] = useState<number>(5)
+  const [limit, setLimit] = useState<number>(10)
   const [page, setPage] = useState<number>(1)
   const [reviewList, setReviewList] = useState<Array<IReviewList>>([])
+  const [previewList, setPreviewList] = useState<Array<IReviewList>>([])
   const [reviewInfo, setReviewInfo] = useState<
     (IInfo & { avarage: number }) | undefined
   >(undefined)
   const [ownerReview, setOwnerReview] = useState<IReviewList | undefined>(
     undefined
   )
+  const [reviewOwnerStatus, setReviewOwnerStatus] = useState<boolean>(false)
 
   const getReviewListById = async (_checkOwner: boolean) => {
     setReviewLoading(true)
@@ -61,9 +63,12 @@ const useReviewContext = (_id: string) => {
             avatar: checkData.player_id.avatar
           }
         })
+        setReviewOwnerStatus(true)
       }
     }
-    setReviewList(_list)
+    if (page <= 1 && previewList.length <= 0) {
+      setPreviewList(_list)
+    }
     setReviewInfo(_info)
     setReviewLoading(false)
     return _list
@@ -106,7 +111,7 @@ const useReviewContext = (_id: string) => {
     } else setOwnerReview(_review)
   }
 
-  const { refetch: reFetchReviewList } = useQuery({
+  const { refetch: reFetchReviewList, data } = useQuery({
     queryKey: ["getGameReviewById", limit, page, _id],
     queryFn: () => getReviewListById(true),
     keepPreviousData: true,
@@ -115,8 +120,19 @@ const useReviewContext = (_id: string) => {
     retry: false
   })
 
+  useEffect(() => {
+    let load = false
+    if (!load && data) {
+      setReviewList(data)
+    }
+    return () => {
+      load = true
+    }
+  }, [data])
+
   return {
     gameId: _id,
+    previewList,
     limit,
     setLimit,
     page,
@@ -126,7 +142,8 @@ const useReviewContext = (_id: string) => {
     ownerReview,
     reFetchReviewList,
     reviewLoading,
-    updateReviewList
+    updateReviewList,
+    reviewOwnerStatus
   }
 }
 

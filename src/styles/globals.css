@@ -332,3 +332,13 @@ input:checked {
   opacity: 0;
   display: none;
 }
+
+.text-shadow-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 25%, transparent 100%);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.text-shadow-bottom::-webkit-scrollbar {
+  display: none;
+}

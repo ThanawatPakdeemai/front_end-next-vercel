@@ -211,7 +211,6 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
             //   _addItem={onIncreaseAmount}
             // />
             <AmountItem
-              value={transAmount}
               setValue={setTransAmount}
               helperText={`Total Amount: ${maxAmount}`}
               label="transfer amount"

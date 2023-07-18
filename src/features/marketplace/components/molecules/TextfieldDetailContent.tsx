@@ -117,7 +117,6 @@ const TextfieldDetailContent = ({
       type !== "nft_building" &&
       type !== "nft_game" ? (
         <AmountItem
-          value={_count || 0}
           setValue={onCountChange}
           helperText={count.helperText}
           label={count.label}

@@ -10,7 +10,6 @@ import CONFIGS from "@configs/index"
 import MiniMap from "@feature/map/components/organisms/MiniMap"
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Video from "@components/atoms/Video"
-import useRedeem from "@feature/marketplace/hooks/useRedeem"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 

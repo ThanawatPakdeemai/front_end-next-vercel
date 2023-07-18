@@ -1,12 +1,12 @@
 import { useToast } from "@feature/toast/containers"
-import { useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import { useReviewProvider } from "@feature/review/containers/providers/ReviewProvider"
+import useLoadingStore from "@stores/loading"
 import useMutateReview from "./useMutateReview"
 
 const useReview = () => {
   const { updateReviewList } = useReviewProvider()
-  const [loading, setLoading] = useState<boolean>(false)
+  const { setOpen, setClose } = useLoadingStore()
   const { mutateAddReview, mutateUpdateReview, mutateDeleteReview } =
     useMutateReview()
   const { errorToast, successToast } = useToast()
@@ -25,7 +25,7 @@ const useReview = () => {
     }
     const _captcha = await executeRecaptcha("addReview")
     if (_id && _captcha) {
-      setLoading(true)
+      setOpen()
       await mutateAddReview({
         _recaptcha: _captcha,
         _message: _review,
@@ -55,7 +55,7 @@ const useReview = () => {
         })
         .finally(() =>
           setTimeout(() => {
-            setLoading(false)
+            setClose()
           }, 1000)
         )
     }
@@ -71,7 +71,7 @@ const useReview = () => {
     }
     const _captcha = await executeRecaptcha("addReview")
     if (_captcha) {
-      setLoading(true)
+      setOpen()
       await mutateUpdateReview({
         _recaptcha: _captcha,
         _reviewId: _id,
@@ -101,14 +101,14 @@ const useReview = () => {
         })
         .finally(() =>
           setTimeout(() => {
-            setLoading(false)
+            setClose()
           }, 1000)
         )
     }
   }
 
   const onSubmitDeleteReview = async (_id: string) => {
-    setLoading(true)
+    setOpen()
     await mutateDeleteReview(_id)
       .then((res) => {
         successToast(res.message)
@@ -131,7 +131,7 @@ const useReview = () => {
       })
       .finally(() =>
         setTimeout(() => {
-          setLoading(false)
+          setClose()
         }, 1000)
       )
   }
@@ -140,9 +140,7 @@ const useReview = () => {
     // handleInputMessage,
     onSubmitComment,
     onSubmitUpdateReview,
-    onSubmitDeleteReview,
-    setLoading,
-    loading
+    onSubmitDeleteReview
   }
 }
 

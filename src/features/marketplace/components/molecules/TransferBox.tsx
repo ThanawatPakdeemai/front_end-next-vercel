@@ -7,7 +7,7 @@ import {
   Button
 } from "@mui/material"
 import { useRouter } from "next/router"
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect } from "react"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
@@ -15,11 +15,12 @@ import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
 import useNFTBuilding from "@feature/building/containers/hooks/useNFTBuilding"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcGame"
-import NumpadIcon from "@components/icons/NumpadIcon"
-import CountItem from "@components/molecules/CountItem"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import Helper from "@utils/helper"
-import { addressPattern } from "@constants/regex"
+import AmountItem from "@components/molecules/AmountItem"
+import { useToast } from "@feature/toast/containers"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import { MESSAGES } from "@constants/messages"
 
 interface IProp {
   _tokenId: string
@@ -28,21 +29,12 @@ interface IProp {
 }
 
 const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
+  const { address: connectAddrs } = useWeb3Provider()
   const [expanded, setExpanded] = React.useState<string | false>()
   const [address, setAddress] = React.useState<string>("")
-  const MIN_AMOUNT = useMemo(() => {
-    let _min: number = 0
-    if (_nftToken === "game_item" || _nftToken === "nft_material") {
-      if (_maxAmount && _maxAmount > 0) {
-        _min = 1
-      }
-    } else {
-      _min = 1
-    }
-    return _min
-  }, [_nftToken, _maxAmount])
-  const MAX_AMOUNT: number = _maxAmount || 1
-  const [transAmount, setTransAmount] = React.useState<number>(MIN_AMOUNT)
+  const [maxAmount, setMaxAmount] = React.useState<number>(_maxAmount || 1)
+  const [clearAmount, setClearAmount] = React.useState<boolean>(false)
+  const [transAmount, setTransAmount] = React.useState<number>(0)
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { marketType } = useGlobal()
@@ -52,22 +44,7 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
   const { onTransferArcGame } = useNFTArcGame()
   const { onTransferMaterial } = useInventoryProvider()
   const { convertNFTTypeToTType } = Helper
-
-  const onDecreaseAmount = () => {
-    if (transAmount && transAmount <= MIN_AMOUNT) {
-      setTransAmount(MIN_AMOUNT)
-    } else {
-      setTransAmount((prev: number) => prev - 1)
-    }
-  }
-
-  const onIncreaseAmount = () => {
-    if (transAmount && transAmount >= MAX_AMOUNT) {
-      setTransAmount(MAX_AMOUNT)
-    } else {
-      setTransAmount((prev: number) => prev + 1)
-    }
-  }
+  const { errorToast } = useToast()
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -75,17 +52,32 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
     }
 
   const handleOnTransfer = useCallback(async () => {
-    if (marketType && profile) {
+    if (!profile) return errorToast(MESSAGES.please_login)
+    if (!connectAddrs) return errorToast(MESSAGES.please_connect_wallet)
+    if (!address) return errorToast("transfer address is required!")
+    if (profile.address.toLowerCase() === address.toLowerCase())
+      return errorToast(
+        "Your wallet address and transfer address must not be the same."
+      )
+    if (transAmount <= 0)
+      return errorToast("transfer amount must be more than 0.")
+    let _status: boolean = false
+    if (marketType) {
       switch (marketType) {
         case "nft_material":
           if (onTransferMaterial)
-            await onTransferMaterial(address, _nftToken, transAmount)
+            _status = await onTransferMaterial(address, _nftToken, transAmount)
           break
         case "nft_land":
-          await onTransferLand(profile?.address, address, _nftToken, _tokenId)
+          _status = await onTransferLand(
+            profile?.address,
+            address,
+            _nftToken,
+            _tokenId
+          )
           break
         case "nft_building":
-          await onTransferBuilding(
+          _status = await onTransferBuilding(
             profile?.address,
             address,
             _nftToken,
@@ -93,7 +85,7 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
           )
           break
         case "nft_game":
-          await onTransferArcGame(
+          _status = await onTransferArcGame(
             profile?.address,
             address,
             _nftToken,
@@ -101,15 +93,21 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
           )
           break
         case "nft_naka_punk":
-          await onTransferPunk(
+          _status = await onTransferPunk(
             profile?.address,
             address,
             _nftToken,
             _tokenId
-          ).catch(() => {})
+          )
           break
         default:
           break
+      }
+      if (_status) {
+        setAddress("")
+        setMaxAmount(maxAmount - transAmount)
+        setClearAmount((prev: boolean) => !prev)
+        setTransAmount(0)
       }
       if (marketType !== "nft_material")
         setTimeout(
@@ -184,12 +182,15 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
         <div className="flex w-full flex-col items-center gap-y-5">
           <TextField
             required
-            className="!w-full"
             type="text"
             value={address}
             variant="outlined"
             id="username-create"
-            helperText="Transfer to (Address)"
+            helperText={
+              <span className={address.length < 2 ? "text-error-main" : ""}>
+                Transfer to (Address)
+              </span>
+            }
             placeholder="0x0000000000000"
             size="medium"
             onChange={(e) => {
@@ -197,32 +198,27 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
-                paddingLeft: 1
+                paddingLeft: 1,
+                border: address.length < 2 ? "1px solid #F42728" : ""
+              },
+              "& .MuiOutlinedInput-root:hover": {
+                border: address.length < 2 ? "1px solid #F42728" : ""
               }
             }}
+            autoComplete="off"
+            spellCheck="false"
+            className="!w-ful"
           />
           {marketType === "game_item" || marketType === "nft_material" ? (
-            <CountItem
-              endIcon={<NumpadIcon />}
-              helperText={`Total Amount: ${MAX_AMOUNT}`}
+            <AmountItem
+              setValue={setTransAmount}
+              helperText={`Total Amount: ${maxAmount}`}
               label="transfer amount"
-              min={MIN_AMOUNT}
-              max={MAX_AMOUNT}
-              count={transAmount}
-              setItemCount={setTransAmount}
-              _minusItem={onDecreaseAmount}
-              _addItem={onIncreaseAmount}
+              max={maxAmount}
+              resetValue={clearAmount}
             />
           ) : null}
           <Button
-            disabled={
-              !profile ||
-              !address ||
-              (["game_item", "nft_material"].includes(String(marketType)) &&
-                transAmount <= 0) ||
-              !addressPattern.test(address) ||
-              profile.address.toLowerCase() === address.toLowerCase()
-            }
             sx={{ fontFamily: "neueMachina" }}
             color="success"
             className="w-1/3 text-sm font-bold text-primary-main"

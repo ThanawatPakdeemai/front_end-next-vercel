@@ -16,6 +16,8 @@ interface IProp {
   register: any
 }
 
+//Pretier Fixes
+
 export const StyledFormLabel = {
   "&.MuiFormLabel-root, &.MuiTypography-root": {
     color: "#70727B",
@@ -82,7 +84,7 @@ const DropdownListCategories = ({
                   style={{ width: "200px" }}
                 >
                   <ButtonDropdown
-                    className={`${className} uppercase w-full`}
+                    className={`${className} w-full uppercase `}
                     isOpen={popupState.isOpen}
                     leftContent={
                       <div className="flex items-center">

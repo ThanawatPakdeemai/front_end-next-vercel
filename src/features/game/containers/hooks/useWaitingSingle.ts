@@ -210,9 +210,10 @@ const useWaitingSingle = () => {
         const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${data.path}/summary/${roomId}`
 
         if (data.type_code === "survival_01") {
+          // When using itemSelected?._id sometime send wrong ticket size
           if (ip) {
             const data_game = `${roomId}:|:${profile.id}:|:${
-              itemSelected?._id
+              playerGameSingle?.item_id
             }:|:${profile.email}:|:${Helper.getLocalStorage(
               "token"
             )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
@@ -267,7 +268,8 @@ const useWaitingSingle = () => {
     profile,
     roomId,
     router?.query?.typeGame,
-    detectDevice
+    detectDevice,
+    playerGameSingle
   ])
 
   const checkRoomTimeout = useCallback(() => {

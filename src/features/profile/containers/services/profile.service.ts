@@ -172,3 +172,20 @@ export const linkToFacebook = (data: {
         reject(error)
       })
   })
+
+export const linkToDiscord = (data: {
+  player_id: string
+  discord_id: string
+}) =>
+  new Promise<IProfile>((resolve, reject) => {
+    services
+      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-discord-profile/`, {
+        ...data
+      })
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })

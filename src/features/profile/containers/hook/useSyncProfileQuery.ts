@@ -1,4 +1,5 @@
 import {
+  linkToDiscord,
   linkToFacebook,
   linkToTelegram
 } from "@feature/profile/containers/services/profile.service"
@@ -39,5 +40,25 @@ export const useLinkToFacebook = () => {
     isLoadingLinkToFacebook,
     isErrorLinkToFacebook,
     mutateLinkToFacebook
+  }
+}
+
+export const useLinkToDiscord = () => {
+  const {
+    data: dataLinkToDiscord,
+    error: errorLinkToDiscord,
+    isLoading: isLoadingLinkToDiscord,
+    isError: isErrorLinkToDiscord,
+    mutateAsync: mutateLinkToDiscord
+  } = useMutation(linkToDiscord, {
+    mutationKey: ["linkToDiscord"]
+  })
+
+  return {
+    dataLinkToDiscord,
+    errorLinkToDiscord,
+    isLoadingLinkToDiscord,
+    isErrorLinkToDiscord,
+    mutateLinkToDiscord
   }
 }

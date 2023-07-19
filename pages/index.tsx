@@ -14,6 +14,9 @@ const HomeMobile = dynamic(() => import("@mobile/features/pages/HomeMobile"), {
 })
 
 const Home = () => {
+  // eslint-disable-next-line no-console
+  console.log("test-env", process.env.NEXT_PUBLIC_MODE_TEST)
+
   const renderContent = () => {
     if (isMobile) {
       return <HomeMobile />

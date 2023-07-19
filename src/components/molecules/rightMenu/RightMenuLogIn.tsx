@@ -125,9 +125,9 @@ const RightMenuLogIn = () => {
                 <div
                   className={`${
                     isMarketplace ? "ml-4" : "ml-0"
-                  } flex-1 flex-col items-center`}
+                  } max-w-[100px] flex-1 flex-col items-center`}
                 >
-                  <Typography className="text-sm font-bold">
+                  <Typography className="truncate text-sm font-bold">
                     {profile?.username}
                   </Typography>
                   {profile?.address && (
@@ -146,13 +146,23 @@ const RightMenuLogIn = () => {
                   )}
                 </div>
                 <Link href={`/profile/${profile?.id}`}>
-                  <Image
-                    src={profile?.avatar || "/images/avatar.png"}
-                    alt="avatar"
-                    width={40}
-                    height={40}
-                    className="mr-[5px] rounded-lg"
-                  />
+                  {profile && profile.avatar ? (
+                    <Image
+                      src={profile.avatar}
+                      alt="avatar"
+                      width={40}
+                      height={40}
+                      className="mr-[5px] rounded-lg"
+                    />
+                  ) : (
+                    <Image
+                      src="/images/common/no_login_avatar.png"
+                      alt="avatar"
+                      width={40}
+                      height={40}
+                      className="mr-[5px] rounded-lg"
+                    />
+                  )}
                 </Link>
                 {/* expand button */}
                 <IconButtonCustom

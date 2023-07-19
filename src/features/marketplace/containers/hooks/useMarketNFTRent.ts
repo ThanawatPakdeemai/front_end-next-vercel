@@ -18,6 +18,8 @@ import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 import { useToast } from "@feature/toast/containers"
 import { useInventoryProvider } from "@providers/InventoryProvider"
+import useMiddlewareWeb3 from "@hooks/useMiddlewareWeb3"
+import useProfileStore from "@stores/profileStore"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
 
@@ -40,7 +42,8 @@ const useMarketNFTRent = () => {
   const { utils } = ethers
   const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
-  const { signer, address } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
+  const { profile } = useProfileStore()
   const { marketType } = useGlobal()
   const marketNFTRentContract = useMarketplaceNFTRent(
     signer,
@@ -69,6 +72,7 @@ const useMarketNFTRent = () => {
     fetchInvenNFTItemDataById
   } = useInventoryProvider()
   const { errorToast } = useToast()
+  const { validationAccount } = useMiddlewareWeb3()
 
   // get rent detail by rentId
   const getRentDetailById = (_orderId: string) =>
@@ -117,14 +121,15 @@ const useMarketNFTRent = () => {
     _period: number
   ) => {
     let _status: boolean = false
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate && profile.data?.address) {
       const [_checkNFTOwner, _checkChain, _checkApproveForAll] =
         await Promise.all([
           onCheckOwnerNFT(_NFTtype, _token),
           onCheckPolygonChain(marketNFTRentContract),
           onCheckNFTIsApproveForAll(
-            address,
+            profile.data.address,
             CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL,
             _NFTtype
           )
@@ -229,8 +234,9 @@ const useMarketNFTRent = () => {
     _orderId: string
   ) => {
     let _status: boolean = false
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain] = await Promise.all([
         getRentDetailById(_orderId),
         onCheckPolygonChain(marketNFTRentContract)
@@ -323,8 +329,9 @@ const useMarketNFTRent = () => {
     _amountItem: number
   ) => {
     let _status: boolean = false
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
         [
           getRentDetailById(_orderId),
@@ -431,8 +438,9 @@ const useMarketNFTRent = () => {
     })
 
   const onClaimNFTRentOrder = async (_NFTtype: TNFTType, _orderId: string) => {
+    const _validate = validationAccount()
     setOpen(MESSAGES.transaction_processing_order)
-    if (signer && address) {
+    if (_validate) {
       const _checkChain = await onCheckPolygonChain(marketNFTRentContract)
       if (!_checkChain._pass) {
         setClose()

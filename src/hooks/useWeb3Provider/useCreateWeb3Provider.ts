@@ -133,6 +133,7 @@ const useCreateWeb3Provider = () => {
         profile.address !== "" &&
         profile.address.toLocaleLowerCase() === _accounts[0].toLocaleLowerCase()
       ) {
+        setAddress(_accounts[0])
         setStatusWalletConnected({
           responseStatus: true,
           errorMsg: `${_accounts[0]} ${MESSAGES.wallet_is_correct}`,
@@ -151,6 +152,7 @@ const useCreateWeb3Provider = () => {
           // eslint-disable-next-line react-hooks/exhaustive-deps
           count = false
         }
+        setAddress(undefined)
         setStatusWalletConnected({
           responseStatus: false,
           errorMsg: `${_accounts[0]} ${MESSAGES.wallet_is_incorrect}`,

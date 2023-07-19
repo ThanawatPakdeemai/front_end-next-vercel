@@ -1,4 +1,3 @@
-import { IGetType } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useState } from "react"
 
@@ -6,7 +5,6 @@ const useGlobalControllerMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   // State
-  const [activeMenu, setActiveMenu] = useState<IGetType>("free-to-play")
   const [limit, setLimit] = useState<number>(10)
   const iOS =
     typeof navigator !== "undefined" &&
@@ -17,16 +15,16 @@ const useGlobalControllerMobile = () => {
    *
    */
   const isShowSyncTelegram = useCallback(() => {
-    // Hide to re-test
-    if (profile && profile.telegram_id) return false
+    if (profile?.telegram_id) return false
     return true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile])
 
   /**
    * @description Variable to hide sync facebook button
    */
   const isShowSyncFacebook = useCallback(() => {
-    if (profile && profile.facebook_id) return false
+    if (profile?.facebook_id) return false
     return true
   }, [profile])
 
@@ -36,8 +34,6 @@ const useGlobalControllerMobile = () => {
   }, [])
 
   return {
-    setActiveMenu,
-    activeMenu,
     limit,
     setLimit,
     iOS,

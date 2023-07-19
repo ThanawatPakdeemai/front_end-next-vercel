@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   IPayloadGameFilter,
   IGame,
@@ -17,6 +17,7 @@ import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
+import { signOut } from "next-auth/react"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
@@ -72,8 +73,6 @@ const useGlobal = (
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
   const [marketType, setMarketType] = useState<TNFTType>()
-  /** This is only temporary code for hide marketplace in production */
-  const [isShowMarket, setIsShowMarket] = useState<boolean>(false)
 
   /**
    * @description check if url is in marketplace
@@ -394,6 +393,7 @@ const useGlobal = (
     setQtyItemOfRoom(0)
     onResetNotification()
     onReset()
+    signOut({ redirect: false })
     await router.push("/")
   }
 
@@ -436,41 +436,6 @@ const useGlobal = (
     }
   }, [router.asPath])
 
-  /** This is only temporary code for hide marketplace in production */
-  const _mode = process.env.NEXT_PUBLIC_MODE
-
-  const redirectionDone = useRef(false)
-
-  useEffect(() => {
-    const redirectIfNecessary = () => {
-      if (
-        router.asPath.includes("marketplace") &&
-        _mode === "production" &&
-        !redirectionDone.current
-      ) {
-        router.replace("/404", undefined, { shallow: true })
-        setIsShowMarket(false)
-        redirectionDone.current = true
-      } else if (
-        router.asPath.includes("marketplace") &&
-        _mode === "development" &&
-        !redirectionDone.current
-      ) {
-        router.replace(router.asPath, undefined, { shallow: true })
-        setIsShowMarket(true)
-        redirectionDone.current = true
-      }
-    }
-
-    const intervalId = setInterval(redirectIfNecessary, 0)
-
-    return () => {
-      clearInterval(intervalId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath, _mode])
-  /** This is only temporary code for hide marketplace in production */
-
   /**
    * @description Fetch all token supported
    */
@@ -483,6 +448,15 @@ const useGlobal = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
+
+  const getURLWithEmailToken = useCallback(() => {
+    if (typeof window !== "undefined") {
+      if (profile) {
+        return `/${Helper.encodeURILink(profile.email, profile.jwtToken)}`
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile])
 
   return {
     onHandleClick,
@@ -500,7 +474,6 @@ const useGlobal = (
     pager,
     isMarketplace,
     isDeveloperPage,
-    isShowMarket,
     getGamePokerModeURL,
     openInNewTab,
     getGameMode,
@@ -518,7 +491,8 @@ const useGlobal = (
     isPokerGame,
     goldProfile,
     goldProfileComma,
-    handleClickScroll
+    handleClickScroll,
+    getURLWithEmailToken
   }
 }
 

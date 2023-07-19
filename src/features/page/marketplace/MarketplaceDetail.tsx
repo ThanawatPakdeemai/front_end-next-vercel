@@ -14,7 +14,6 @@ import useGlobal from "@hooks/useGlobal"
 import { Typography } from "@mui/material"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import useMarketCategTypes from "@stores/marketCategTypes"
-import Helper from "@utils/helper"
 
 const MarketplaceButton = dynamic(
   () => import("@components/molecules/MarketplaceButton"),
@@ -37,7 +36,6 @@ const MarketplaceDetail = () => {
   } = useMarketplaceProvider()
   const { marketType } = useGlobal()
   const { NFTMintAble, fetchStatus } = useMarketCategTypes()
-  const { textWithDots } = Helper
 
   const _hiddenMarketbtn = useMemo(() => {
     let _disable: boolean = false
@@ -104,14 +102,14 @@ const MarketplaceDetail = () => {
                   textHead="create by"
                   name="nakamoto.games"
                   date={String(marketOrder.created_at)}
-                  link={textWithDots(CONFIGS.CONTRACT_ADDRESS.NAKA, 6)}
+                  link={CONFIGS.CONTRACT_ADDRESS.NAKA}
                 />
                 {marketOrder.seller_id && (
                   <CardWriterDetails
                     textHead="Owned by"
                     name={marketOrder.land_data?.name}
                     date={String(marketOrder.created_at)}
-                    link={textWithDots(marketOrder.seller_id, 6)}
+                    link={marketOrder.seller_id}
                     image={marketOrder.land_data?.image}
                     alt={marketOrder.land_data?.type}
                   />

@@ -223,15 +223,26 @@ export default function CardBuyItemMobile({
     switch (gameObject.game_mode) {
       case "story-mode":
         return (
-          <ButtonLink
-            icon={<></>}
-            text="Play"
-            size="large"
-            color="error"
-            variant="contained"
-            className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
-            href={getGameStoryModeURL(gameObject)}
-          />
+          <Box
+            component="div"
+            sx={{
+              width: "100%",
+              "a": {
+                width: "100%",
+                display: "block"
+              }
+            }}
+          >
+            <ButtonLink
+              icon={<></>}
+              text="Play"
+              size="large"
+              color="error"
+              variant="contained"
+              className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
+              href={getGameStoryModeURL(gameObject)}
+            />
+          </Box>
         )
       case "free-to-play":
       case "free-to-earn":

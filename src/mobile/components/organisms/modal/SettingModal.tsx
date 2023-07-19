@@ -101,7 +101,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           avatar={
             <div className="head-profile__info--avatar">
               <ImageCustom
-                src={profile?.avatar || "/images/avatar.png"}
+                src={profile?.avatar || "/images/common/no_login_avatar.png"}
                 alt="avatar"
                 width={55}
                 height={55}
@@ -201,7 +201,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           <>
             <TelegramWidget
               dataOnAuth={handleSyncTelegramId}
-              botName="NakaGameMBot"
+              botName="NakaGameBot"
             />
             <Divider className="my-6 !block border-b border-[#35383F]" />
           </>

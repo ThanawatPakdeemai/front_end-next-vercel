@@ -1,12 +1,13 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from "react"
 import SettingIcon from "@components/icons/SettingIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import TableIcon from "@components/icons/TableIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { Box, Divider, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import { IPlayerInfoResponse } from "@src/types/profile"
 import { RandomReveal } from "react-random-reveal"
@@ -26,19 +27,17 @@ import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByE
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
-// import { useWeb3Provider } from "@providers/index"
-// import Script from "next/script"
-// import { useLinkToTelegram } from "@feature/profile/containers/hook/useSyncProfileQuery"
+import CONFIGS from "@configs/index"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 import FacebookLogin from "react-facebook-login"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import CONFIGS from "@configs/index"
-import EditProfileModal from "./EditProfileModal"
-import SliderBadges from "./SliderBadges"
-import SideSocialShare from "../SideSocialShare"
+import CrumbCustom from "@components/atoms/CrumbCustom"
 import TotalCardContent from "./TotalCardContent"
+import SideSocialShare from "../SideSocialShare"
+import SliderBadges from "./SliderBadges"
+import EditProfileModal from "./EditProfileModal"
 
 const ProfileContent = () => {
   const { profile: pro } = useProfileStore()
@@ -56,6 +55,8 @@ const ProfileContent = () => {
   const { errorToast } = useToast()
   const { player_id } = router.query
   const { t } = useTranslation()
+  const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
+  const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
 
   const {
     getProfileInfo: profileDataFromQuery,
@@ -72,9 +73,6 @@ const ProfileContent = () => {
   })
 
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
-  // const { mutateLinkToTelegram } = useLinkToTelegram()
-  const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
-  const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
 
   useEffect(() => {
     if (isError) {
@@ -154,30 +152,6 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  // const jsClickButton = async () => {
-  //   const telegramParams: any = await localStorage.getItem("telegram-params")
-  //   const telegramParse: any = JSON.parse(telegramParams)
-  //   if (telegramParse) {
-  //     const telegramId = String(telegramParse.id)
-  //     if (telegramId) {
-  //       mutateLinkToTelegram({
-  //         player_id: idPlayer,
-  //         telegram_id: Number(telegramId)
-  //       })
-  //       localStorage.removeItem("telegram-params")
-  //     }
-  //   }
-  // }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
-      const list: any = document.querySelector("#login-telegram")
-      list.append(gandalf)
-    }, 5000)
-    return () => clearTimeout(timer)
-  }, [])
-
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
   }
@@ -194,58 +168,6 @@ const ProfileContent = () => {
 
   return profileFetched && getProfileInfo && !isFetching ? (
     <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
-      {/* <div className="w-[90%]"> */}
-      {/* <button
-        onClick={jsClickButton}
-        className="hidden"
-        id="button-click"
-      >
-        Click
-      </button>
-      <div
-        id="login-telegram"
-        className="hidden pb-[20px]"
-      >
-        <Script
-          async
-          src="https://telegram.org/js/telegram-widget.js?22"
-          data-telegram-login="NakaGameBot"
-          data-size="large"
-          data-onauth="onTelegramAuth(user)"
-          data-request-access="write"
-          strategy="lazyOnload"
-        />
-        <Script id="show-banner">
-          {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); document.getElementById("button-click").click();} 
-              `}
-        </Script>
-      </div> */}
-
-      {/* ====== */}
-      {isShowSyncTelegram() && (
-        <>
-          <TelegramWidget
-            dataOnAuth={handleSyncTelegramId}
-            botName="NakaGameMBot"
-          />
-          <Divider className="my-6 !block border-b border-[#35383F]" />
-        </>
-      )}
-      {isShowSyncFacebook() && (
-        <>
-          <FacebookLogin
-            appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={handleSyncFacebookId}
-            cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            icon={<FacebookColorIcon />}
-            textButton="Sync with Facebook"
-          />
-          <Divider className="my-6 !block border-b border-[#35383F]" />
-        </>
-      )}
-      {/* ====== */}
       <SideSocialShare hidden="hidden lg:block" />
       <div className="relative">
         <Box
@@ -307,13 +229,23 @@ const ProfileContent = () => {
               </div>
             </div>
 
-            <Image
-              src={Helper.convertAvatar(getProfileInfo.data.avatar)}
-              width={150}
-              height={150}
-              alt="profile-avatar"
-              className="absolute !h-full rounded-3xl"
-            />
+            {getProfileInfo.data && getProfileInfo.data.avatar ? (
+              <Image
+                src={Helper.convertAvatar(getProfileInfo.data.avatar)}
+                width={150}
+                height={150}
+                alt="profile-avatar"
+                className="absolute !h-full rounded-3xl object-cover object-center"
+              />
+            ) : (
+              <Image
+                src="/images/common/no_login_avatar.png"
+                width={150}
+                height={150}
+                alt="profile-avatar"
+                className="absolute !h-full rounded-3xl object-cover object-center"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -381,6 +313,34 @@ const ProfileContent = () => {
             </>
           )}
         </div>
+      </div>
+      <div className="mt-8 flex flex-col gap-4">
+        {(isShowSyncTelegram() || isShowSyncTelegram()) && (
+          <div className="flex">
+            <CrumbCustom
+              text="Sync account to complete your profile"
+              className="mr-4 w-auto cursor-default border border-solid border-neutral-700 p-[20px] text-neutral-400"
+            />
+          </div>
+        )}
+        {/* Sync Button */}
+        {isShowSyncTelegram() && (
+          <TelegramWidget
+            dataOnAuth={handleSyncTelegramId}
+            botName="NakaGameBot"
+          />
+        )}
+        {isShowSyncFacebook() && (
+          <FacebookLogin
+            appId={`${CONFIGS.FACEBOOK_APP_ID}`}
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={handleSyncFacebookId}
+            cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
+            icon={<FacebookColorIcon />}
+            textButton="Sync with Facebook"
+          />
+        )}
       </div>
       <SliderBadges _playerId={profileFetched.id} />
       <GameStatOverview

@@ -53,8 +53,7 @@ import {
   BuildingIcon,
   MaterialIcon,
   NakapunkIcon,
-  ArcadeGameIcon,
-  ReefIcon
+  ArcadeGameIcon
 } from "@components/icons/MenunIcon/MarketIcon"
 
 // TODO: Open after launch V2
@@ -626,12 +625,12 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
         name: "NAKA Punks",
         link: "/marketplace/naka-punk",
         icon: NakapunkIcon
-      },
-      {
-        name: "Avatar Reef",
-        link: "/marketplace/avatar-reef",
-        icon: ReefIcon
       }
+      // {
+      //   name: "Avatar Reef",
+      //   link: "/marketplace/avatar-reef",
+      //   icon: ReefIcon
+      // }
     ]
   },
   {
@@ -752,8 +751,8 @@ export const MENU_MARKETPLACE_FILTERBOX: IMenuFilter[] = [
       { name: "Building", href: "/marketplace/inventory/building" },
       { name: "Material", href: "/marketplace/inventory/material" },
       { name: "NAKA Punks", href: "/marketplace/inventory/naka-punk" },
-      { name: "Arcade Game", href: "/marketplace/inventory/arcade-game" },
-      { name: "Avatar Reef", href: "/marketplace/inventory/avatar-reef" }
+      { name: "Arcade Game", href: "/marketplace/inventory/arcade-game" }
+      // { name: "Avatar Reef", href: "/marketplace/inventory/avatar-reef" }
     ]
   },
   {
@@ -761,8 +760,8 @@ export const MENU_MARKETPLACE_FILTERBOX: IMenuFilter[] = [
     child: [
       { name: "Land", href: "/marketplace/land" },
       { name: "Buildings", href: "/marketplace/building" },
-      { name: "NAKA Punks", href: "/marketplace/naka-punk" },
-      { name: "Avatar Reef", href: "/marketplace/avatar-reef" }
+      { name: "NAKA Punks", href: "/marketplace/naka-punk" }
+      // { name: "Avatar Reef", href: "/marketplace/avatar-reef" }
     ]
   }
 ]
@@ -847,11 +846,11 @@ export const INVENTORY_DROPDOWN = [
   {
     label: "Arcade Game",
     href: "/marketplace/inventory/arcade-game"
-  },
-  {
-    label: "Avatar Reef",
-    href: "/marketplace/inventory/avatar-reef"
   }
+  // {
+  //   label: "Avatar Reef",
+  //   href: "/marketplace/inventory/avatar-reef"
+  // }
 ]
 
 export const INVENTORY_DROPDOWN_FORSALE = [

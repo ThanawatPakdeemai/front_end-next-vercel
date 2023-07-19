@@ -15,9 +15,10 @@ import useProfileStore from "@stores/profileStore"
 import { motion } from "framer-motion"
 import React, { memo } from "react"
 import { useTranslation } from "react-i18next"
-import { useToast } from "@feature/toast/containers"
-import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import Link from "next/link"
+import useRedeem from "@feature/marketplace/hooks/useRedeem"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
+import useLoadingStore from "@stores/loading"
 
 interface ICharacterCoupon {
   couponLength: number
@@ -26,9 +27,14 @@ interface ICharacterCoupon {
 
 interface IProp {
   onRedeem?: (_coupon: string) => void
+  type: TNFTType
+  token?: string
+  evmAddress?: string
 }
 
-const RedemptionCode = ({ onRedeem }: IProp) => {
+const RedemptionCode = ({ type, token, evmAddress }: IProp) => {
+  const { setOpen, setClose } = useLoadingStore()
+  const { onSubmitRedeemByType } = useRedeem()
   const [expanded, setExpanded] = React.useState<string | false>("")
   const [coupon, setCoupon] = React.useState<string>("")
   const [characterCoupon, setCharacterCoupon] =
@@ -37,8 +43,6 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
       disableCoupon: true
     })
   const { profile } = useProfileStore()
-  const { getRedeemCode } = useGetCoupon()
-  const { errorToast, successToast } = useToast()
 
   const { t } = useTranslation()
 
@@ -63,23 +67,24 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
   }
 
   const handleClick = async () => {
-    if (onRedeem) {
-      await onRedeem(coupon)
-    } else if (coupon && !onRedeem) {
-      await getRedeemCode(coupon)
-        .then((res) => {
-          successToast(res.message)
-        })
-        .catch((error) => {
-          errorToast(error.message)
-        })
-    }
-
+    // if (onRedeem) {
+    //   await onRedeem(coupon)
+    // }
+    setOpen()
+    if (profile.data)
+      onSubmitRedeemByType({
+        type,
+        code: coupon,
+        playerId: profile.data.id,
+        token,
+        addrs: evmAddress
+      })
     setCoupon("")
     setCharacterCoupon({
       couponLength: 0,
       disableCoupon: true
     })
+    setClose()
   }
 
   return (
@@ -137,9 +142,7 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
             }}
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
-              if (e.target.value.length <= 6) {
-                isCharactersCoupon(e.target.value)
-              }
+              isCharactersCoupon(e.target.value)
             }}
             id="redeem-field"
             placeholder="e.g. naka12345"

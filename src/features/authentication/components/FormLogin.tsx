@@ -12,6 +12,7 @@ import {
   Grid,
   Alert
 } from "@mui/material"
+import { signIn } from "next-auth/react"
 import LoginIcon from "@mui/icons-material/Login"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import LockOpenIcon from "@mui/icons-material/LockOpen"
@@ -20,35 +21,24 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { useForm } from "react-hook-form"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
 import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
-import FacebookLogin from "react-facebook-login"
 import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
-import CONFIGS from "@configs/index"
+import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
+import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
 
 const FormLogin = () => {
-  const {
-    facebookLogin,
-    googleLogin,
-    twitterLogin,
-    metaMarkLogin,
-    isLoading,
-    onSubmitLogin
-  } = useFormLoginController()
+  const { metaMarkLogin, isLoading, onSubmitLogin } = useFormLoginController()
 
   const { t } = useTranslation()
 
-  const {
-    getClickLoginFacebook: toggleFacebookLogin,
-    setClickLoginFacebook: setToggleFacebookLogin
-  } = useLoginTypeStore()
+  const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const handleShowPassword = () => setShowPassword(!showPassword)
@@ -71,6 +61,11 @@ const FormLogin = () => {
       _password: ""
     }
   })
+
+  const handleLogin = async (_typeLogin: string) => {
+    await setLoginTypes(_typeLogin)
+    await signIn(_typeLogin)
+  }
 
   return (
     <>
@@ -238,25 +233,9 @@ const FormLogin = () => {
               stiffness: 400,
               damping: 4
             }}
-            onClick={() => setToggleFacebookLogin(true)}
-            icon={
-              toggleFacebookLogin ? (
-                <FacebookLogin
-                  appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  callback={facebookLogin}
-                  cssClass="button-facebook-login"
-                  textButton="Login with Facebook"
-                  icon={<FacebookIcon />}
-                />
-              ) : (
-                <FacebookIcon />
-              )
-            }
-            className={`flex h-[40px] w-[75px] justify-center rounded-lg border border-neutral-700 bg-neutral-800 ${
-              toggleFacebookLogin ? "items-end" : "items-center"
-            }`}
+            onClick={() => handleLogin("facebook")}
+            icon={<FacebookIcon />}
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
           <ButtonIcon
             whileHover="hover"
@@ -265,7 +244,7 @@ const FormLogin = () => {
               stiffness: 400,
               damping: 4
             }}
-            onClick={twitterLogin}
+            onClick={() => handleLogin("twitter")}
             icon={<TwitterIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
@@ -276,8 +255,19 @@ const FormLogin = () => {
               stiffness: 400,
               damping: 4
             }}
-            onClick={googleLogin}
+            onClick={() => handleLogin("google")}
             icon={<GoogleIcon />}
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+          />
+          <ButtonIcon
+            whileHover="hover"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 4
+            }}
+            onClick={() => handleLogin("discord")}
+            icon={<DiscordIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
           {!isMobile && (

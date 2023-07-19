@@ -24,7 +24,7 @@ const Home = () => {
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
   )
   // eslint-disable-next-line no-console
-  console.log("test-NEXTAUTH_SECRET", process.env.NEXTAUTH_SECRET)
+  console.log("test-NEXTAUTH_SECRET", process.env.NEXT_PUBLIC_NEXTAUTH_SECRET)
 
   const renderContent = () => {
     if (isMobile) {

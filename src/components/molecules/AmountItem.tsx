@@ -28,6 +28,8 @@ const AmountItem = ({
 }: IProps) => {
   const [amount, setAmount] = useState<string>(min.toString())
   const AmountAsNumber = Number(amount)
+  const { formatNumber } = Helper
+
   const onIncreaseAmount = useCallback(() => {
     const _value: number = Number(amount) + 1
     if (_value >= max) setAmount(max.toString())

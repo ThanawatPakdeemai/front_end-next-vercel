@@ -34,7 +34,7 @@ export const authOptions: any = {
       return Promise.resolve(session.session)
     }
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   session: {
     strategy: "jwt"
   }

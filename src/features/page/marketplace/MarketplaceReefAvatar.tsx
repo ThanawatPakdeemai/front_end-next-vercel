@@ -35,7 +35,6 @@ const MarketplaceReefAvatar = () => {
   const {
     priceAvatarReef,
     redeemAvatarReefData,
-    mutateRedeemAvatarReef,
     purchAvatarReefData,
     mutatePurchaseAvatarReef
   } = useMutateAvatarReef()
@@ -46,24 +45,6 @@ const MarketplaceReefAvatar = () => {
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
   const { marketAmount } = useMarketplaceProvider()
   const count = marketAmount || 1
-
-  const handleRedeem = (_coupon: string) => {
-    if (evm) {
-      setOpen()
-      mutateRedeemAvatarReef({ _evmAddrs: evm, _code: _coupon })
-        .then((_) => {
-          successToast("redeem success")
-        })
-        .catch((_) => {
-          errorToast("redeem fail")
-        })
-        .finally(() => {
-          setTimeout(() => setClose(), 1000)
-        })
-    } else {
-      errorToast("EVM Address is required!")
-    }
-  }
 
   const handleMintNFTAvatar = async () => {
     if (evm && priceNP > 0) {
@@ -332,7 +313,10 @@ const MarketplaceReefAvatar = () => {
               )}
             </div>
           </RightDetailsMarketplace>
-          <RedemptionCode onRedeem={handleRedeem} />
+          <RedemptionCode
+            type="nft_avatar"
+            evmAddress={evm}
+          />
         </div>
       </div>
     </>

@@ -1,7 +1,5 @@
 import LogoIcon from "@components/icons/LogoIcon"
-import NumpadIcon from "@components/icons/NumpadIcon"
 import PinnedMapIcon from "@components/icons/PinnedMapIcon"
-import CountItem from "@components/molecules/CountItem"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
 import Helper from "@utils/helper"
@@ -10,6 +8,7 @@ import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import AmountItem from "@components/molecules/AmountItem"
 import FormattedInputs from "./CurrencyTextField"
 
 interface IProp {
@@ -54,37 +53,17 @@ const TextfieldDetailContent = ({
     if (setInvPrice) setInvPrice(_value)
   }
 
-  const onDecreaseAmount = () => {
-    if (count)
-      if (setInvAmount) {
-        if (invAmount && invAmount <= count.min) setInvAmount(count.min)
-        else setInvAmount((prev: number) => prev - 1)
-      } else if (setMarketAmount) {
-        if (marketAmount && marketAmount <= count.min)
-          setMarketAmount(count.min)
-        else setMarketAmount((prev: number) => prev - 1)
-      }
-  }
-
-  const onIncreaseAmount = () => {
-    if (count) {
-      if (setInvAmount) {
-        if (invAmount && invAmount >= count.max) setInvAmount(count.max)
-        else setInvAmount((prev: number) => prev + 1)
-      } else if (setMarketAmount) {
-        if (marketAmount && marketAmount >= count.max)
-          setMarketAmount(count.max)
-        else setMarketAmount((prev: number) => prev + 1)
-      }
-    }
-  }
-
   const _count = useMemo(() => {
     if (setInvAmount) return invAmount
     if (setMarketAmount) return marketAmount
-    0
+    return 0
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invAmount, marketAmount])
+
+  const onCountChange = (_value: number) => {
+    if (setInvAmount) return setInvAmount(_value)
+    if (setMarketAmount) return setMarketAmount(_value)
+  }
 
   useEffect(() => {
     let load = false
@@ -118,7 +97,7 @@ const TextfieldDetailContent = ({
       }`}
       data-testid={type}
     >
-      {count &&
+      {/* {count &&
       type !== "nft_land" &&
       type !== "nft_building" &&
       type !== "nft_game" ? (
@@ -131,6 +110,18 @@ const TextfieldDetailContent = ({
           _item={_count}
           _minusItem={onDecreaseAmount}
           _addItem={onIncreaseAmount}
+        />
+      ) : null} */}
+      {count &&
+      type !== "nft_land" &&
+      type !== "nft_building" &&
+      type !== "nft_game" ? (
+        <AmountItem
+          setValue={onCountChange}
+          helperText={count.helperText}
+          label={count.label}
+          min={count.min}
+          max={count.max}
         />
       ) : null}
       {position ? (

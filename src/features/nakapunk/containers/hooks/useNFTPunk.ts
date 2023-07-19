@@ -97,7 +97,6 @@ const useNFTPunk = () => {
 
   const onTransferPunk = async (
     _fromAddress: string | undefined,
-
     _toAddress: string,
     _nftToken: string,
     _tokenId: string

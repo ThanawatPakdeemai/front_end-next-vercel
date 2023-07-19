@@ -15,11 +15,10 @@ import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
 import useNFTBuilding from "@feature/building/containers/hooks/useNFTBuilding"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcGame"
-import NumpadIcon from "@components/icons/NumpadIcon"
-import CountItem from "@components/molecules/CountItem"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import Helper from "@utils/helper"
 import { addressPattern } from "@constants/regex"
+import AmountItem from "@components/molecules/AmountItem"
 
 interface IProp {
   _tokenId: string
@@ -41,7 +40,8 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
     }
     return _min
   }, [_nftToken, _maxAmount])
-  const MAX_AMOUNT: number = _maxAmount || 1
+  const [maxAmount, setMaxAmount] = React.useState<number>(_maxAmount || 1)
+  const [clearAmount, setClearAmount] = React.useState<boolean>(false)
   const [transAmount, setTransAmount] = React.useState<number>(MIN_AMOUNT)
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
@@ -53,39 +53,29 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
   const { onTransferMaterial } = useInventoryProvider()
   const { convertNFTTypeToTType } = Helper
 
-  const onDecreaseAmount = () => {
-    if (transAmount && transAmount <= MIN_AMOUNT) {
-      setTransAmount(MIN_AMOUNT)
-    } else {
-      setTransAmount((prev: number) => prev - 1)
-    }
-  }
-
-  const onIncreaseAmount = () => {
-    if (transAmount && transAmount >= MAX_AMOUNT) {
-      setTransAmount(MAX_AMOUNT)
-    } else {
-      setTransAmount((prev: number) => prev + 1)
-    }
-  }
-
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false)
     }
 
   const handleOnTransfer = useCallback(async () => {
+    let _status: boolean = false
     if (marketType && profile) {
       switch (marketType) {
         case "nft_material":
           if (onTransferMaterial)
-            await onTransferMaterial(address, _nftToken, transAmount)
+            _status = await onTransferMaterial(address, _nftToken, transAmount)
           break
         case "nft_land":
-          await onTransferLand(profile?.address, address, _nftToken, _tokenId)
+          _status = await onTransferLand(
+            profile?.address,
+            address,
+            _nftToken,
+            _tokenId
+          )
           break
         case "nft_building":
-          await onTransferBuilding(
+          _status = await onTransferBuilding(
             profile?.address,
             address,
             _nftToken,
@@ -93,7 +83,7 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
           )
           break
         case "nft_game":
-          await onTransferArcGame(
+          _status = await onTransferArcGame(
             profile?.address,
             address,
             _nftToken,
@@ -101,15 +91,21 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
           )
           break
         case "nft_naka_punk":
-          await onTransferPunk(
+          _status = await onTransferPunk(
             profile?.address,
             address,
             _nftToken,
             _tokenId
-          ).catch(() => {})
+          )
           break
         default:
           break
+      }
+      if (_status) {
+        setAddress("")
+        setMaxAmount(maxAmount - transAmount)
+        setClearAmount((prev: boolean) => !prev)
+        setTransAmount(0)
       }
       if (marketType !== "nft_material")
         setTimeout(
@@ -200,18 +196,27 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
                 paddingLeft: 1
               }
             }}
+            autoComplete="off"
           />
           {marketType === "game_item" || marketType === "nft_material" ? (
-            <CountItem
-              endIcon={<NumpadIcon />}
-              helperText={`Total Amount: ${MAX_AMOUNT}`}
+            // <CountItem
+            //   endIcon={<NumpadIcon />}
+            //   helperText={`Total Amount: ${MAX_AMOUNT}`}
+            //   label="transfer amount"
+            //   min={MIN_AMOUNT}
+            //   max={MAX_AMOUNT}
+            //   count={transAmount}
+            //   setItemCount={setTransAmount}
+            //   _minusItem={onDecreaseAmount}
+            //   _addItem={onIncreaseAmount}
+            // />
+            <AmountItem
+              setValue={setTransAmount}
+              helperText={`Total Amount: ${maxAmount}`}
               label="transfer amount"
-              min={MIN_AMOUNT}
-              max={MAX_AMOUNT}
-              count={transAmount}
-              setItemCount={setTransAmount}
-              _minusItem={onDecreaseAmount}
-              _addItem={onIncreaseAmount}
+              min={maxAmount > MIN_AMOUNT ? MIN_AMOUNT : 0}
+              max={maxAmount}
+              resetValue={clearAmount}
             />
           ) : null}
           <Button

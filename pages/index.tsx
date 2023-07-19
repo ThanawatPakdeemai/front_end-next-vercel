@@ -14,6 +14,20 @@ const HomeMobile = dynamic(() => import("@mobile/features/pages/HomeMobile"), {
 })
 
 const Home = () => {
+  // eslint-disable-next-line no-console
+  console.log("test-env", process.env.NEXT_PUBLIC_MODE_TEST)
+  // eslint-disable-next-line no-console
+  console.log("test-GOOGLE_CLIENT_ID", process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID)
+  // eslint-disable-next-line no-console
+  console.log(
+    "test-GOOGLE_CLIENT_SECRET",
+    process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+  )
+  // eslint-disable-next-line no-console
+  console.log("test-NEXTAUTH_SECRET", process.env.NEXT_PUBLIC_NEXTAUTH_SECRET)
+  // eslint-disable-next-line no-console
+  console.log("test-NEXTAUTH_URL", process.env.NEXT_PUBLIC_NEXTAUTH_URL)
+
   const renderContent = () => {
     if (isMobile) {
       return <HomeMobile />

@@ -53,6 +53,10 @@ const MyApp = (props) => {
       {/* <MetaDataTag /> */}
       <Head>
         <title>{metaData.meta_title}</title>
+        <meta
+          name="google-site-verification"
+          content="UsRiJhdMChniXZXa-OHistDhd4o8QZ0MunjBsx09yoQ"
+        />
       </Head>
       <Loading />
 

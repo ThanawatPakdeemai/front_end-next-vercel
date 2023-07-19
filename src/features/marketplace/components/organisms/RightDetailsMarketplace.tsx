@@ -244,7 +244,12 @@ const RightDetailsMarketplace = ({
         </div>
         <main className="h-auto w-full px-4">{children}</main>
       </div>
-      {redemption && checkRedreemMobile && <RedemptionCode />}
+      {redemption && checkRedreemMobile && (
+        <RedemptionCode
+          type={type}
+          token={id ? (id as string) : undefined}
+        />
+      )}
       <div className="flex flex-row items-center" />
     </div>
   )

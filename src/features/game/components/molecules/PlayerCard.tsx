@@ -6,6 +6,7 @@ import useGameStore from "@stores/game"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import { memo } from "react"
 import { useTranslation } from "react-i18next"
+import useGlobal from "@hooks/useGlobal"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
@@ -19,6 +20,7 @@ const PlayerCard = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
   const { t } = useTranslation()
+  const { getAvatarURL } = useGlobal()
 
   const checkText = (item: IItemPlyer) => {
     if (gameData?.game_type === "multiplayer") {
@@ -93,11 +95,7 @@ const PlayerCard = ({ players }: IProps) => {
                       ? "border-purple-primary border-pink-rainbow m-auto"
                       : "border-error-main border-lemon-rainbow"
                   }
-                  src={
-                    item.avatar.split("/")[0] === "assets"
-                      ? `/${item.avatar}`
-                      : item.avatar
-                  }
+                  src={getAvatarURL(item)}
                   imageBadge={
                     item.rank ? `/images/gamePage/rank/${item.rank}.svg` : ""
                   }
@@ -107,6 +105,7 @@ const PlayerCard = ({ players }: IProps) => {
                   }}
                   badgeColor={colorsBadge(item)}
                 />
+
                 <Box
                   component="div"
                   className="m-auto w-[92px] py-3"

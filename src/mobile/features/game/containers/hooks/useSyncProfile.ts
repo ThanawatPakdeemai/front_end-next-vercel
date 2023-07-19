@@ -84,7 +84,7 @@ const useSyncProfile = () => {
     (response: any) => {
       if (!profile) return
       if (profile && profile.discord_id) {
-        errorToast(MESSAGES.sync_discord_already)
+        errorToast(MESSAGES.sync_discord_error)
         return
       }
 
@@ -102,10 +102,33 @@ const useSyncProfile = () => {
     [errorToast, mutateLinkToDiscord, onSetProfileData, profile, successToast]
   )
 
+  // const handleSyncGoogle = useCallback(
+  //   (response: any) => {
+  //     if (!profile) return
+  //     if (profile && profile.google_id) {
+  //       errorToast(MESSAGES.sync_google_error)
+  //       return
+  //     }
+
+  //     mutateLinkToDiscord({
+  //       player_id: profile.id,
+  //       discord_id: response.userID
+  //     }).then((res) => {
+  //       if (res.google_id) {
+  //         successToast(MESSAGES.sync_google_success)
+  //         // Update profile to store
+  //         onSetProfileData(res)
+  //       }
+  //     })
+  //   },
+  //   [errorToast, mutateLinkToDiscord, onSetProfileData, profile, successToast]
+  // )
+
   return {
     handleSyncFacebookId,
     handleSyncTelegramId,
     handleSyncDiscord
+    // handleSyncGoogle
   }
 }
 

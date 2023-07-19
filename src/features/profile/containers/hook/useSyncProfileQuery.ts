@@ -1,6 +1,7 @@
 import {
   linkToDiscord,
   linkToFacebook,
+  // linkToGoogle,
   linkToTelegram
 } from "@feature/profile/containers/services/profile.service"
 import { useMutation } from "@tanstack/react-query"
@@ -62,3 +63,23 @@ export const useLinkToDiscord = () => {
     mutateLinkToDiscord
   }
 }
+
+// export const useLinkToGoogle = () => {
+//   const {
+//     data: dataLinkToGoogle,
+//     error: errorLinkToGoogle,
+//     isLoading: isLoadingLinkToGoogle,
+//     isError: isErrorLinkToGoogle,
+//     mutateAsync: mutateLinkToGoogle
+//   } = useMutation(linkToGoogle, {
+//     mutationKey: ["linkToGoogle"]
+//   })
+
+//   return {
+//     dataLinkToGoogle,
+//     errorLinkToGoogle,
+//     isLoadingLinkToGoogle,
+//     isErrorLinkToGoogle,
+//     mutateLinkToGoogle
+//   }
+// }

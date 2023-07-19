@@ -236,7 +236,7 @@ const FormLogin = () => {
             onClick={() => handleLogin("facebook")}
             icon={<FacebookIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          /> */}
+          />
           <ButtonIcon
             whileHover="hover"
             transition={{

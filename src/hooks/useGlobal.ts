@@ -7,7 +7,8 @@ import {
   IPayloadGameFilter,
   IGame,
   IGetType,
-  TGameType
+  TGameType,
+  IGameCurrentPlayer
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
@@ -458,6 +459,19 @@ const useGlobal = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile])
 
+  /**
+   * @description Get avatar url
+   */
+  const getAvatarURL = useCallback((_avatar?: IGameCurrentPlayer) => {
+    if (!_avatar) return "/images/home/logoNakaMaster.svg"
+    if (!_avatar.avatar) return "/images/home/logoNakaMaster.svg"
+    if (_avatar.avatar.split("/")[0] === "assets") {
+      return `/${_avatar.avatar}`
+    }
+    return _avatar.avatar
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return {
     onHandleClick,
     onClickLink,
@@ -492,7 +506,8 @@ const useGlobal = (
     goldProfile,
     goldProfileComma,
     handleClickScroll,
-    getURLWithEmailToken
+    getURLWithEmailToken,
+    getAvatarURL
   }
 }
 

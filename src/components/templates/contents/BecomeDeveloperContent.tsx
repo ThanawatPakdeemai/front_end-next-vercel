@@ -1,12 +1,12 @@
+import React from "react"
 import { ImageCustom } from "@components/atoms/image/Image"
 import Jumbotron from "@components/molecules/Jumbotron"
-import { IImageProps } from "@constants/images"
+import { IImageProps, IMAGES } from "@constants/images"
 import { Box, SxProps, Theme } from "@mui/material"
-import React from "react"
 
 interface IBecomeDeveloperContentProps {
   id: string
-  image?: IImageProps
+  image?: string
   sxCustomStyled?: SxProps<Theme>
   className?: string
   children?: React.ReactNode
@@ -19,7 +19,7 @@ const BecomeDeveloperContent = ({
   image,
   children = (
     <Jumbotron
-      textTitle="NAKAMOTO.GAMES"
+      detail="NAKAMOTO.GAMES"
       textTitleSub="FOR GAME DEVELOPERS_"
       text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
       textButton="Subscribe Now"
@@ -42,10 +42,10 @@ const BecomeDeveloperContent = ({
       {image && (
         <div className="become-developer__image max-w-[50%] flex-1">
           <ImageCustom
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
+            src={image}
+            alt={IMAGES.becomeDeveloperSection1.alt}
+            width={IMAGES.becomeDeveloperSection1.width}
+            height={IMAGES.becomeDeveloperSection1.height}
           />
         </div>
       )}

@@ -22,9 +22,11 @@ const ChipStyles = {
   marginBottom: "1.5rem"
 }
 
-const BecomeDeveloperPage = () => {
+function BecomeDeveloperPage() {
   const { becomeDeveloperData } = useBecomeDeveloper()
   const [sectionIntro, setSectionIntro] = useState<IWebBecomeDevData>()
+  const [sectionExistingNFT, setSectionExistingNFT] =
+    useState<IWebBecomeDevData>()
   const [sectionFeature, setSectionFeature] = useState<IWebBecomeDevData>()
 
   // eslint-disable-next-line no-console
@@ -35,6 +37,13 @@ const BecomeDeveloperPage = () => {
       (_elm) => _elm.section_name === "Intro"
     )
     setSectionIntro(filterIntro)
+  }
+
+  const filterBecomeDevExistingNFT = () => {
+    const filterExistingNFT = becomeDeveloperData?.find(
+      (_elm) => _elm.section_name === "existingNFTs"
+    )
+    setSectionExistingNFT(filterExistingNFT)
   }
 
   const filterBecomeDevFeature = () => {
@@ -73,6 +82,7 @@ const BecomeDeveloperPage = () => {
     if (becomeDeveloperData && becomeDeveloperData.length > 0 && load) {
       ;(async () => {
         await filterBecomeDevIntro()
+        await filterBecomeDevExistingNFT()
         await filterBecomeDevFeature()
       })()
     }
@@ -86,7 +96,7 @@ const BecomeDeveloperPage = () => {
   // eslint-disable-next-line no-console
   console.log("test-VIDEOS", VIDEOS)
   // eslint-disable-next-line no-console
-  console.log("test-filter", sectionIntro)
+  console.log("test-sectionExistingNFT", sectionExistingNFT)
 
   return (
     <main>
@@ -99,8 +109,7 @@ const BecomeDeveloperPage = () => {
         >
           <div className="flex items-center justify-between">
             <Jumbotron
-              textTitle={sectionIntro.list[0].title}
-              textTitleSub={sectionIntro.list[0].sub_title}
+              detail={sectionIntro.detail}
               className="w-[620px]"
               textButton="Subscribe Now"
             />
@@ -108,32 +117,33 @@ const BecomeDeveloperPage = () => {
           </div>
         </HeroSection>
       )}
-
-      <BecomeDeveloperContent
-        id="become-developer--section-1"
-        image={IMAGES.becomeDeveloperSection1}
-      >
-        <div className="inner-content">
-          <Chip
-            variant="filled"
-            color="success"
-            label="ONE-CLICK SOLUTION"
-            size="small"
-            sx={ChipStyles}
-          />
-          <Jumbotron
-            textTitle={`Import your <br> existing `}
-            textTitleSub="NFTs."
-            text="Display your in-game NFTs in the Nakamoto.Games storefront. Get gamers watching your in-game assets 🎮"
-            className="w-[620px]"
-          />
-          <CardPlatformItems
-            className="max-w-[560px]"
-            items={PLATFORM_LIST}
-          />
-        </div>
-      </BecomeDeveloperContent>
-      <BecomeDeveloperContent
+      {sectionExistingNFT && (
+        <BecomeDeveloperContent
+          id="become-developer--section-1"
+          image={sectionExistingNFT.image_url}
+        >
+          <div className="inner-content">
+            <Chip
+              variant="filled"
+              color="success"
+              label="ONE-CLICK SOLUTION"
+              size="small"
+              sx={ChipStyles}
+            />
+            <Jumbotron
+              detail={sectionExistingNFT.detail}
+              textTitleSub="NFTs."
+              text="Display your in-game NFTs in the Nakamoto.Games storefront. Get gamers watching your in-game assets 🎮"
+              className="w-[620px]"
+            />
+            <CardPlatformItems
+              className="max-w-[560px]"
+              items={PLATFORM_LIST}
+            />
+          </div>
+        </BecomeDeveloperContent>
+      )}
+      {/* <BecomeDeveloperContent
         id="become-developer--section-2"
         className="my-20 min-h-[640px]"
         sxCustomStyled={{
@@ -158,18 +168,17 @@ const BecomeDeveloperPage = () => {
             sx={ChipStyles}
           />
           <Jumbotron
-            textTitle="Features"
+            detail="Features"
             text={
               sectionFeature?.detail ||
               "We provide everything a Web3 game needs to maximize distribution."
             }
             className="mb-8"
           />
-          {/* FEATURES_DEVELOPER */}
           <CardFeaturedDeveloperItems items={sectionFeature?.list} />
         </div>
-      </BecomeDeveloperContent>
-      <FullWidthContent>
+      </BecomeDeveloperContent> */}
+      {/* <FullWidthContent>
         <BecomeDeveloperContent
           id="become-developer--section-1"
           image={IMAGES.becomeDeveloperSection2}
@@ -187,7 +196,7 @@ const BecomeDeveloperPage = () => {
         >
           <div className="inner-content ml-10">
             <Jumbotron
-              textTitle="READY TO TRY <br> NAKAMOTO.GAMES?"
+              detail="READY TO TRY <br> NAKAMOTO.GAMES?"
               textTitleSub="FOR GAME DEVELOPERS_"
               text="Submit your game for assessment and be up and running in a matter of days."
               className="w-[576px] text-center"
@@ -207,8 +216,8 @@ const BecomeDeveloperPage = () => {
             />
           </div>
         </BecomeDeveloperContent>
-      </FullWidthContent>
-      <BecomeDeveloperContent
+      </FullWidthContent> */}
+      {/* <BecomeDeveloperContent
         id="become-developer--section-3"
         className="flex min-h-[720px] items-center justify-center"
       >
@@ -222,7 +231,7 @@ const BecomeDeveloperPage = () => {
               sx={ChipStyles}
             />
             <Jumbotron
-              textTitle="Helping <span>web3</span> games grow."
+              detail="Helping <span>web3</span> games grow."
               text="We provide everything a Web3 game needs to maximize distribution."
               className="mb-8"
               sxCustomStyled={{
@@ -239,8 +248,8 @@ const BecomeDeveloperPage = () => {
             />
           </div>
         </div>
-      </BecomeDeveloperContent>
-      <HeroSection
+      </BecomeDeveloperContent> */}
+      {/* <HeroSection
         hasVideo
         src={VIDEOS.gameDeveloperVideo.src}
         poster={VIDEOS.gameDeveloperVideo.poster}
@@ -264,7 +273,7 @@ const BecomeDeveloperPage = () => {
       >
         <div className="relative z-[2] flex items-center justify-center text-center">
           <Jumbotron
-            textTitle="WANT TO READ MORE?"
+            detail="WANT TO READ MORE?"
             textTitleSub="FOR GAME DEVELOPERS_"
             text="We love sharing stories about our development progress, mechanics, updates and much more!"
             className="w-[620px]"
@@ -278,7 +287,7 @@ const BecomeDeveloperPage = () => {
             }}
           />
         </div>
-      </HeroSection>
+      </HeroSection> */}
     </main>
   )
 }

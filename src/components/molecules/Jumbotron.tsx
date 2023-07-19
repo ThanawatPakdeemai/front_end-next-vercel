@@ -6,9 +6,9 @@ import EastRoundedIcon from "@mui/icons-material/EastRounded"
 export interface IJumbotronProps {
   sxCustomStyled?: SxProps<Theme>
   className?: string
-  textTitle?: string
-  textTitleSub?: string
+  detail?: string
   text?: string
+  textTitleSub?: string
   textButton?: string
   iconButton?: React.ReactNode
   onClickButton?: () => void
@@ -34,8 +34,8 @@ export interface IJumbotronProps {
 const Jumbotron = ({
   sxCustomStyled = {},
   className,
-  textTitle = "Hello, world!",
-  text = "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.",
+  detail = `<p><span class="ql-font-neueMachinaBold ql-size-46px" style="color: rgb(247, 251, 250);">NAKAMOTO.GAMES</span><span class="ql-font-neueMachinaBold ql-size-46px" style="color: rgb(160, 237, 97);">FOR GAME DEVELOPERS_</span></p><p><span class="ql-size-16px">We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡</span></p><p><br></p>`,
+  textTitleSub = "",
   textButton = "",
   colorButton = "success",
   variantButton = "contained",
@@ -43,7 +43,6 @@ const Jumbotron = ({
   size = "large",
   onClickButton,
   hrefButton,
-  textTitleSub,
   textTitleDarkVariant = "success"
 }: IJumbotronProps) => {
   /**
@@ -95,16 +94,16 @@ const Jumbotron = ({
         <Typography
           variant="h1"
           dangerouslySetInnerHTML={{
-            __html: `${textTitle}`
+            __html: `${detail}`
           }}
         />
       </div>
-      <Typography
+      {/* <Typography
         className="jumbotron-text mb-8 mt-4"
         dangerouslySetInnerHTML={{
           __html: `${textTitleSub}`
         }}
-      />
+      /> */}
       {textButton && (
         <div className="jumbotron-button">
           <ButtonLink

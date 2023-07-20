@@ -1,9 +1,9 @@
 import PlayersAmount from "@components/atoms/PlayersAmount"
-import TimerLobby from "@components/atoms/timer/TimerLobby"
 import PlayersIcon from "@components/icons/PlayersIcon"
 import StopwatchIcon from "@components/icons/StopwatchIcon"
 import { Typography } from "@mui/material"
 import React, { ReactNode } from "react"
+import Counter from "@components/atoms/timer/Counter"
 import fullConfig from "../../../../tailwindResolver"
 
 interface IProp {
@@ -24,7 +24,6 @@ interface IProp {
   onClick?: () => void
   classNameText?: string
   showClock?: ReactNode
-  showTotalHours?: boolean
 }
 
 /**
@@ -48,8 +47,7 @@ const RoomListBox = ({
   unlimited,
   onClick,
   classNameText,
-  showClock = true,
-  showTotalHours
+  showClock = true
 }: IProp) => {
   const { theme } = fullConfig
 
@@ -64,12 +62,10 @@ const RoomListBox = ({
       {showClock || <StopwatchIcon stroke={initTheme} />}
 
       {timer && !unlimited ? (
-        <TimerLobby
-          endTime={timer.time}
+        <Counter
           initTheme={initTheme}
-          onExpire={timer.onExpire}
           classNameText={classNameText}
-          showTotalHours={showTotalHours}
+          targetDate={timer.time}
         />
       ) : (
         <Typography

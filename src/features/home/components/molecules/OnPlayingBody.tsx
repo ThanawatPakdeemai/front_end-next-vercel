@@ -61,14 +61,15 @@ const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => {
         <span className="text-xs uppercase text-neutral-500">
           {gameItem.game_name}
         </span>
-        {!gameItem?.game_free_play && (
+        {/* This code not working because in API don't have item_name */}
+        {/* {!gameItem?.game_free_play && gameItem.item_list[0].item_name && (
           <Chip
             variant="outlined"
             color="primary"
             size="small"
-            label={t(gameItem.item_list[0].item_name)}
+            label={gameItem.item_list[0].item_name}
           />
-        )}
+        )} */}
       </div>
     </div>
   )

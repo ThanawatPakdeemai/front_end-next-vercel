@@ -81,8 +81,6 @@ const FormRegister = () => {
   const { t } = useTranslation()
 
   const handleRegister = async (_typeRegister: string) => {
-    // eslint-disable-next-line no-console
-    console.log("test-register", _typeRegister)
     await setRegisterTypes(_typeRegister)
     await signIn(_typeRegister)
   }

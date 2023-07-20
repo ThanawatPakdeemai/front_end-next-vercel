@@ -1,4 +1,4 @@
-import { Box, Chip } from "@mui/material"
+import { Box } from "@mui/material"
 import React, { memo } from "react"
 import { Image } from "@components/atoms/image/index"
 import { GAME_MOCKUP_CARD } from "@constants/images"
@@ -6,7 +6,6 @@ import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import Link from "next/link"
 import { v4 as uuid } from "uuid"
 import SkeletonRoombarItem from "@components/atoms/skeleton/SkeletonRoombarItem"
-import { useTranslation } from "react-i18next"
 import OnPlayingRoomCardItem from "./OnPlayingRoomCardItem"
 
 interface IOnPlayingBodyProps {
@@ -14,7 +13,6 @@ interface IOnPlayingBodyProps {
 }
 
 const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => {
-  const { t } = useTranslation()
   return (
     <div className="on-playing-body__wrapper w-full md:mx-2 md:max-w-[359px] lg:max-w-[320px]   xl:max-w-[434px]">
       <Box

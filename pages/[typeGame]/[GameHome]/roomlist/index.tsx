@@ -89,6 +89,33 @@ export default function GameRoomList() {
   const { refetchItemSelected } = useBuyGameItemController()
 
   /**
+   * @description Refetch Item Selected when click link from Discord
+   */
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      refetchItemSelected()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, refetchItemSelected])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) onSetGameData(gameData)
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData])
+
+  /**
    * @description Render Form Buy Item
    */
   const renderFormBuyItem = () => {
@@ -111,33 +138,6 @@ export default function GameRoomList() {
         null
     }
   }
-
-  /**
-   * @description Refetch Item Selected when click link from Discord
-   */
-  useEffect(() => {
-    let load = false
-    if (!load) {
-      refetchItemSelected()
-    }
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (gameData) onSetGameData(gameData)
-    }
-
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData])
 
   const renderContentDesktop = () =>
     gameData ? (

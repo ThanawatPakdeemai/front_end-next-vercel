@@ -65,7 +65,7 @@ const BlogCard = ({
           </motion.div>
         </div>
 
-        <Typography className="mt-4 line-clamp-2 min-h-[40px] text-default uppercase text-neutral-400">
+        <Typography className="mt-4 min-h-[40px] text-default uppercase text-neutral-400 line-clamp-2">
           {title}
         </Typography>
       </Link>

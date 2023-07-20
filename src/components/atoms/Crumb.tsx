@@ -15,7 +15,7 @@ const Crumb = ({ title, href, last = false }: IProp) => {
         sx={{
           lineHeight: "25px"
         }}
-        className="line-clamp-1 max-w-sm cursor-pointer rounded bg-error-main px-[10px] text-xs font-bold text-error-contrastText"
+        className="max-w-sm cursor-pointer rounded bg-error-main px-[10px] text-xs font-bold text-error-contrastText line-clamp-1"
       >
         {title.split(/[_-]/).join(" ")}
       </Typography>

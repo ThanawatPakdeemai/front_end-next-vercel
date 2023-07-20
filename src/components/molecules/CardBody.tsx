@@ -15,7 +15,7 @@ const CardBody = ({ title, description }: ICardBodySlide) => (
       {title}
     </Typography>
     <Typography
-      className="line-clamp-4 text-sm text-black-default"
+      className="text-sm text-black-default line-clamp-4"
       variant="body1"
       dangerouslySetInnerHTML={{
         __html: description

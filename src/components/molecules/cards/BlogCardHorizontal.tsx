@@ -25,10 +25,10 @@ const BlogCardHorizontal = ({
     }`}
   >
     <div className="card--blog__horizontal-content max-w-[300px] flex-1">
-      <Typography className="mb-0 line-clamp-2 h-[40px] font-neue-machina-semi text-default uppercase text-neutral-400">
+      <Typography className="mb-0 h-[40px] font-neue-machina-semi text-default uppercase text-neutral-400 line-clamp-2">
         {title}
       </Typography>
-      <Typography className="my-[8px] line-clamp-1 text-sm text-neutral-500">
+      <Typography className="my-[8px] text-sm text-neutral-500 line-clamp-1">
         {description}
       </Typography>
       <div className="flex items-center gap-2">

@@ -85,7 +85,7 @@ const FormBuyItem = () => {
                 <p className={`${titleText} text-white-default`}>
                   {t("descriptions")}
                 </p>
-                <div className="line-clamp-3 overflow-hidden text-black-default">
+                <div className="overflow-hidden text-black-default line-clamp-3">
                   {game.item[0].detail}
                 </div>
               </div>

@@ -96,7 +96,7 @@ const ReviewCard = ({
             </div>
             <div className="h-auto w-full">
               <Typography
-                className="mb-0 text-sm text-neutral-500 line-clamp-1"
+                className="mb-0 line-clamp-1 text-sm text-neutral-500"
                 variant="body1"
                 dangerouslySetInnerHTML={{
                   __html: reviewText || "-"

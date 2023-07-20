@@ -14,13 +14,13 @@ const CardFeaturedDeveloperItem = ({ ...props }: IFeatureProps) => (
       />
     </div>
     <div className="card-featured-developer__content border-[1px] border-neutral-700 p-5">
-      <div className="card-featured-developer__content__subtitle mb-2 uppercase text-green-lemon line-clamp-1">
+      <div className="card-featured-developer__content__subtitle mb-2 line-clamp-1 uppercase text-green-lemon">
         {props.subtitle}
       </div>
-      <h3 className="card-featured-developer__content__title mb-2 text-[22px] uppercase text-neutral-300 line-clamp-1">
+      <h3 className="card-featured-developer__content__title mb-2 line-clamp-1 text-[22px] uppercase text-neutral-300">
         {props.title}
       </h3>
-      <p className="card-featured-developer__content__description text-neutral-500 line-clamp-5">
+      <p className="card-featured-developer__content__description line-clamp-5 text-neutral-500">
         {props.description}
       </p>
     </div>

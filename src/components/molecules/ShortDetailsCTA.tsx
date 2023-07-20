@@ -29,7 +29,7 @@ const ShortDetailsCTA = ({
         <div className="flex  items-center">
           {startIcon && (startIcon as React.ReactElement)}
           <Typography
-            className="mb-0 text-white-primary line-clamp-2 md:line-clamp-1"
+            className="mb-0 line-clamp-2 text-white-primary md:line-clamp-1"
             variant="body1"
             dangerouslySetInnerHTML={{
               __html: description

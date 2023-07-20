@@ -20,7 +20,7 @@ const PeriodLabel = ({ days, className, type }: IPeriodLabel) => {
       {(days && days !== -1) || days === undefined ? (
         <>
           {days !== undefined && (
-            <p className="text-neutral-30 mb-4 overflow-hidden text-sm line-clamp-1">
+            <p className="text-neutral-30 mb-4 line-clamp-1 overflow-hidden text-sm">
               {days} {t("days")}
             </p>
           )}

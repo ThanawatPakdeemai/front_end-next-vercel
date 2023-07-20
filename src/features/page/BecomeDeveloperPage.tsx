@@ -138,7 +138,7 @@ function BecomeDeveloperPage() {
             />
             <CardPlatformItems
               className="max-w-[560px]"
-              items={PLATFORM_LIST}
+              items={sectionExistingNFT.list}
             />
           </div>
         </BecomeDeveloperContent>

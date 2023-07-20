@@ -16,8 +16,6 @@ interface IProp {
   register: any
 }
 
-//Pretier Fixes
-
 export const StyledFormLabel = {
   "&.MuiFormLabel-root, &.MuiTypography-root": {
     color: "#70727B",

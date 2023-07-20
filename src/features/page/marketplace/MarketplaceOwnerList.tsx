@@ -45,16 +45,6 @@ const MarketplaceOwnerList = () => {
           const splitText = text.split(/\s(?=\d)/)
           const firstSpan = splitText[0]
 
-          // console.log("firstSpan", firstSpan)
-          // console.log(
-          //   "img",
-          //   firstSpan === "Bullet",
-          //   inventoryItemList.find(
-          //     (e) => e.name.includes("Bullet") && e.img
-          //   ) as any
-          //   // as IGameItemData
-          // )
-
           return (
             <CardItemMarketPlace
               key={uuidv4()}

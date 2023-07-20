@@ -50,6 +50,7 @@ export interface IProfile extends IProfileMain {
   telegram_id?: string
   facebook_id?: string
   discord_id?: string
+  google_id?: string
 }
 
 export interface IProfileSubmit {

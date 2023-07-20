@@ -10,22 +10,6 @@ const useGameGlobal = () => {
   const [gameData, setGameData] = useState<IGame>(data as IGame)
   const { id, GameHome } = router.query
 
-  // useMemo(() => {
-  //   let load = false
-  //   if (!load) {
-  //     if (!gameData && GameHome && GameHome !== "") {
-  //       getGameByPath(GameHome ? GameHome.toString() : "").then((_res) => {
-  //         setGameData(_res?.data?.[0])
-  //       })
-  //     }
-  //   }
-
-  //   return () => {
-  //     load = true
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
-
   // const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const itemSizeId = id as string
 

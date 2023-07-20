@@ -189,10 +189,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
                       }}
                       onOutRoom={outRoom}
                     />
-                    <SeatPlayersSingle
-                      players={playersMap}
-                      room_id={_roomId}
-                    />
+                    <SeatPlayersSingle players={playersMap} />
                   </>
                 ) : (
                   <>

@@ -13,9 +13,6 @@ const useRegisterTypeStore = create<IRegisterTypesStore>()(
       (set) => ({
         getClickRegisterTypes: "",
         setClickRegisterTypes: (_types: string) => {
-          // eslint-disable-next-line no-console
-          console.log("test-setRegister", _types)
-
           set(
             () => ({ getClickRegisterTypes: _types }),
             false,

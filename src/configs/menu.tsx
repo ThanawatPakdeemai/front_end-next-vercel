@@ -349,7 +349,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
     id: "inventory",
     label: "Inventory",
     icon: <InventoryIcon />,
-    href: `${CONFIGS.BASE_URL.MARKETPLACE}/en/inventory/land`,
+    href: `${CONFIGS.BASE_URL.MARKETPLACE}/inventory/land`,
     external: true,
     hasToken: true
   },

@@ -143,7 +143,7 @@ function BecomeDeveloperPage() {
           </div>
         </BecomeDeveloperContent>
       )}
-      {/* <BecomeDeveloperContent
+      <BecomeDeveloperContent
         id="become-developer--section-2"
         className="my-20 min-h-[640px]"
         sxCustomStyled={{
@@ -177,7 +177,7 @@ function BecomeDeveloperPage() {
           />
           <CardFeaturedDeveloperItems items={sectionFeature?.list} />
         </div>
-      </BecomeDeveloperContent> */}
+      </BecomeDeveloperContent>
       {/* <FullWidthContent>
         <BecomeDeveloperContent
           id="become-developer--section-1"

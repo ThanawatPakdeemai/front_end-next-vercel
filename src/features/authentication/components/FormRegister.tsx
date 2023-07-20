@@ -32,6 +32,7 @@ import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import useRegisterTypeStore from "@stores/registerTypes"
+import CONFIGS from "@configs/index"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -80,8 +81,6 @@ const FormRegister = () => {
   const { t } = useTranslation()
 
   const handleRegister = async (_typeRegister: string) => {
-    // eslint-disable-next-line no-console
-    console.log("test-register", _typeRegister)
     await setRegisterTypes(_typeRegister)
     await signIn(_typeRegister)
   }
@@ -574,29 +573,33 @@ const FormRegister = () => {
               justifyContent="center"
             >
               <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
-                <ButtonIcon
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  onClick={() => handleRegister("twitter")}
-                  icon={<TwitterIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                />
-                <ButtonIcon
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  // onClick={() => googleRegister(watch("referralId"))}
-                  onClick={() => handleRegister("google")}
-                  icon={<GoogleIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                />
+                {CONFIGS.MODE === "production" ? undefined : (
+                  <>
+                    <ButtonIcon
+                      whileHover="hover"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 4
+                      }}
+                      onClick={() => handleRegister("twitter")}
+                      icon={<TwitterIcon />}
+                      className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                    />
+                    <ButtonIcon
+                      whileHover="hover"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 4
+                      }}
+                      // onClick={() => googleRegister(watch("referralId"))}
+                      onClick={() => handleRegister("google")}
+                      icon={<GoogleIcon />}
+                      className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                    />
+                  </>
+                )}
                 {isMobile && (
                   <div className="absolute pt-14">
                     <Typography className="text-sm uppercase text-neutral-700">

@@ -18,8 +18,6 @@ const useRoomSingle = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   const router = useRouter()
-  // const { id, GameHome } = router.query
-  // const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const { data, itemSelected } = useGameStore()
 
   // const itemSizeId = id as string
@@ -37,19 +35,6 @@ const useRoomSingle = () => {
     useGetAllGameRoomsById({
       _gameId: !profile && gameData ? gameData._id : ""
     })
-
-  // useEffect(() => {
-  //   let load = false
-
-  //   if (!load) {
-  //     if (gameData) onSetGameData(gameData)
-  //   }
-
-  //   return () => {
-  //     load = true
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gameData])
 
   const intoRoomGame = (
     data_player_me: IGameCurrentPlayer,

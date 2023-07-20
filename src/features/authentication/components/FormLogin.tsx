@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { memo, useState } from "react"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -28,6 +29,7 @@ import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
+import CONFIGS from "@configs/index"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
@@ -226,50 +228,54 @@ const FormLogin = () => {
         container
       >
         <div className="flex w-full flex-row flex-wrap justify-between gap-2">
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            onClick={() => handleLogin("facebook")}
-            icon={<FacebookIcon />}
-            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          />
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            onClick={() => handleLogin("twitter")}
-            icon={<TwitterIcon />}
-            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          />
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            onClick={() => handleLogin("google")}
-            icon={<GoogleIcon />}
-            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          />
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            onClick={() => handleLogin("discord")}
-            icon={<DiscordIcon />}
-            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          />
+          {CONFIGS.MODE === "production" ? undefined : (
+            <>
+              <ButtonIcon
+                whileHover="hover"
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 4
+                }}
+                onClick={() => handleLogin("facebook")}
+                icon={<FacebookIcon />}
+                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              />
+              <ButtonIcon
+                whileHover="hover"
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 4
+                }}
+                onClick={() => handleLogin("twitter")}
+                icon={<TwitterIcon />}
+                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              />
+              <ButtonIcon
+                whileHover="hover"
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 4
+                }}
+                onClick={() => handleLogin("google")}
+                icon={<GoogleIcon />}
+                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              />
+              <ButtonIcon
+                whileHover="hover"
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 4
+                }}
+                onClick={() => handleLogin("discord")}
+                icon={<DiscordIcon />}
+                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              />
+            </>
+          )}
           {!isMobile && (
             <ButtonIcon
               whileHover="hover"

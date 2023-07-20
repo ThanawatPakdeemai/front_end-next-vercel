@@ -211,20 +211,32 @@ const useBuyGameItemController = () => {
   }
 
   const refetchItemSelected = useCallback(() => {
-    refetch().then((_item: any) => {
-      const _value = itemSizeId ? (itemSizeId as string) : watch("item_id")
-      if (_item) {
-        const item = _item?.data?.find((ele) => ele.id === _value)
-
-        if (item) {
-          onSetGameItemSelectd(item)
-          handleClose()
-        }
-        refetchBalanceofItem()
+    const _value = itemSizeId ? (itemSizeId as string) : watch("item_id")
+    if (gameItemList) {
+      const item = gameItemList?.find((ele) => ele.id === _value)
+      if (item) {
+        onSetGameItemSelectd(item)
+        handleClose()
       }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSetGameItemSelectd, refetch, watch, itemSizeId, router])
+    } else if (data) {
+      const itemFromGameData = data?.item.find((ele) => ele._id === _value)
+      if (itemFromGameData) {
+        onSetGameItemSelectd({
+          ...itemFromGameData,
+          qty: 0
+        } as IGameItemListData)
+      }
+    }
+    refetchBalanceofItem()
+    handleClose()
+  }, [
+    gameItemList,
+    itemSizeId,
+    onSetGameItemSelectd,
+    refetchBalanceofItem,
+    watch,
+    data
+  ])
 
   /**
    * Get code from local storage
@@ -408,7 +420,8 @@ const useBuyGameItemController = () => {
       gameItemList?.sort((a, b) => a.price - b.price)
       return gameItemList[0]
     }
-  }, [gameItemList, profile])
+    refetchItemSelected()
+  }, [gameItemList, profile, refetchItemSelected])
 
   const itemSelect = useMemo(() => {
     if (itemSelected) {

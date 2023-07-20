@@ -4,6 +4,8 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import MinusIcon from "@components/icons/CountIcon/MinusIcon"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import { iconmotion } from "@components/organisms/Footer"
+import Helper from "@utils/helper"
+import { commonPattern } from "@constants/regex"
 
 const regexNumber = /^[0-9]*$/
 
@@ -25,18 +27,8 @@ const AmountItem = ({
   resetValue
 }: IProps) => {
   const [amount, setAmount] = useState<string>(min.toString())
-
-  const onAmountChanged = useCallback(
-    (_value: string) => {
-      if (regexNumber.test(_value)) {
-        const amountAsNumber = Number(_value)
-        if (amountAsNumber >= max) setAmount(max.toString())
-        else if (amountAsNumber <= min) setAmount(min.toString())
-        else setAmount(_value)
-      }
-    },
-    [max, min]
-  )
+  const AmountAsNumber = Number(amount)
+  const { formatNumber } = Helper
 
   const onIncreaseAmount = useCallback(() => {
     const _value: number = Number(amount) + 1
@@ -61,6 +53,22 @@ const AmountItem = ({
       load = true
     }
   }, [amountUpdate])
+
+  const onAmountChanged = useCallback(
+    (_value: string) => {
+      if (_value.length > 3) _value = _value.replace(commonPattern, "")
+      if (regexNumber.test(_value) && _value !== "") {
+        if (_value.length >= 2 && _value.charAt(0) === "0")
+          _value = _value.slice(1)
+        if (Number(_value) >= max) setAmount(max.toString())
+        else if (Number(_value) <= min) setAmount(min.toString())
+        else setAmount(_value)
+      } else if (_value === "") {
+        setAmount(min.toString())
+      }
+    },
+    [max, min]
+  )
 
   useEffect(() => {
     let load = false
@@ -88,9 +96,14 @@ const AmountItem = ({
         />
         <TextField
           type="text"
-          value={amount}
+          value={formatNumber(AmountAsNumber)}
           onChange={(e) => onAmountChanged(e.target.value)}
           autoComplete="off"
+          inputProps={{
+            style: {
+              paddingLeft: 4
+            }
+          }}
         />
         <ButtonIcon
           onClick={onIncreaseAmount}

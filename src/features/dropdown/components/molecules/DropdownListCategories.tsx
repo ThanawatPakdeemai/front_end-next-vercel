@@ -35,8 +35,7 @@ const DropdownListCategories = ({
   className,
   onChangeSelect,
   register
-}: // defaultValue
-IProp) => {
+}: IProp) => {
   const [defaultItem, setDefaultItem] = useState<IGameCategory>(list[0])
 
   const onChangeItem = (_item: IGameCategory) => {
@@ -61,12 +60,6 @@ IProp) => {
   return (
     <div className="MuiFormControl-root">
       {label && (
-        // <FormLabel
-        //   sx={StyledFormLabel}
-        //   id={`${label}-label`}
-        // >
-        //   {label}
-        // </FormLabel>
         <Typography
           component="label"
           id={`${label}-label`}
@@ -85,14 +78,14 @@ IProp) => {
               <>
                 <div
                   {...bindTrigger(popupState)}
-                  className={` ${className}`} // m-auto block
+                  className={` ${className}`}
+                  style={{ width: "200px" }}
                 >
                   <ButtonDropdown
-                    className={`${className} uppercase`}
+                    className={`${className} w-full uppercase `}
                     isOpen={popupState.isOpen}
                     leftContent={
                       <div className="flex items-center">
-                        {/* <img src={defaultItem.image_list} /> */}
                         <p className="px-2 text-white-default">
                           {defaultItem.name}
                         </p>
@@ -114,19 +107,36 @@ IProp) => {
                   sx={{
                     "& .MuiPaper-root": {
                       background: "#010101",
-                      borderRadius: "15px "
+                      borderRadius: "15px",
+                      minWidth: "300px",
+                      minHeight: "200px",
+                      overflow: "hidden"
+                    },
+                    "& .MuiPopover-paper": {
+                      scrollbarWidth: "none",
+                      "-ms-overflow-style": "none",
+                      "&::-webkit-scrollbar": {
+                        display: "none"
+                      }
                     }
                   }}
                 >
-                  <SelectDropdownCategories
-                    className={className}
-                    register={register}
-                    details={list && list.map((ele: IGameCategory) => ele)}
-                    onChange={(_item) => {
-                      popupState.close()
-                      onChangeItem(_item as IGameCategory)
+                  <div
+                    style={{
+                      maxHeight: "200px",
+                      overflowY: "auto"
                     }}
-                  />
+                  >
+                    <SelectDropdownCategories
+                      className={className}
+                      register={register}
+                      details={list && list.map((ele: IGameCategory) => ele)}
+                      onChange={(_item) => {
+                        popupState.close()
+                        onChangeItem(_item as IGameCategory)
+                      }}
+                    />
+                  </div>
                 </Popover>
               </>
             )}
@@ -136,4 +146,5 @@ IProp) => {
     </div>
   )
 }
+
 export default DropdownListCategories

@@ -1,6 +1,7 @@
 import { TelegramUser } from "@components/atoms/button/TelegramWidget"
 import { MESSAGES } from "@constants/messages"
 import {
+  useLinkToDiscord,
   useLinkToFacebook,
   useLinkToTelegram
 } from "@feature/profile/containers/hook/useSyncProfileQuery"
@@ -15,6 +16,7 @@ const useSyncProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateLinkToTelegram } = useLinkToTelegram()
   const { mutateLinkToFacebook } = useLinkToFacebook()
+  const { mutateLinkToDiscord } = useLinkToDiscord()
   const { errorToast, successToast } = useToast()
   const { onSetProfileData } = useProfileStore()
 
@@ -78,9 +80,55 @@ const useSyncProfile = () => {
     [profile, errorToast, mutateLinkToTelegram, successToast, onSetProfileData]
   )
 
+  const handleSyncDiscord = useCallback(
+    (response: any) => {
+      if (!profile) return
+      if (profile && profile.discord_id) {
+        errorToast(MESSAGES.sync_discord_error)
+        return
+      }
+
+      mutateLinkToDiscord({
+        player_id: profile.id,
+        discord_id: response.userID
+      }).then((res) => {
+        if (res.discord_id) {
+          successToast(MESSAGES.sync_discord_success)
+          // Update profile to store
+          onSetProfileData(res)
+        }
+      })
+    },
+    [errorToast, mutateLinkToDiscord, onSetProfileData, profile, successToast]
+  )
+
+  // const handleSyncGoogle = useCallback(
+  //   (response: any) => {
+  //     if (!profile) return
+  //     if (profile && profile.google_id) {
+  //       errorToast(MESSAGES.sync_google_error)
+  //       return
+  //     }
+
+  //     mutateLinkToDiscord({
+  //       player_id: profile.id,
+  //       discord_id: response.userID
+  //     }).then((res) => {
+  //       if (res.google_id) {
+  //         successToast(MESSAGES.sync_google_success)
+  //         // Update profile to store
+  //         onSetProfileData(res)
+  //       }
+  //     })
+  //   },
+  //   [errorToast, mutateLinkToDiscord, onSetProfileData, profile, successToast]
+  // )
+
   return {
     handleSyncFacebookId,
-    handleSyncTelegramId
+    handleSyncTelegramId,
+    handleSyncDiscord
+    // handleSyncGoogle
   }
 }
 

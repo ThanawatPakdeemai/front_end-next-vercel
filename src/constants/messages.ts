@@ -82,5 +82,11 @@ export const MESSAGES = {
   "sync_telegram_already": "Sync telegram already",
   "sync_facebook_success": "Sync Facebook success",
   "sync_facebook_error": "Sync Facebook error",
-  "sync_facebook_already": "Sync Facebook already"
+  "sync_facebook_already": "Sync Facebook already",
+  "sync_discord_success": "Sync Discord success",
+  "sync_discord_error": "Sync Discord error",
+  "sync_discord_already": "Sync Discord already",
+  "sync_google_success": "Sync Google success",
+  "sync_google_error": "Sync Google error",
+  "sync_google_already": "Sync Google already"
 }

@@ -428,6 +428,9 @@ const FormJoinus = () => {
                 />
               }
             />
+            <FormLabel sx={StyledFormLabel}>
+              {`Please enter some link that about video games like video trailers `}
+            </FormLabel>
           </Grid>
         </Grid>
 

@@ -6,6 +6,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
 
+const withPWA = require("next-pwa")({
+  dest: "public"
+})
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 // const withTM = require("next-transpile-modules")(["three"])
 
@@ -66,4 +70,4 @@ module.exports = {
   }
 }
 
-module.exports = withBundleAnalyzer({ ...nextConfig })
+module.exports = withBundleAnalyzer(withPWA({ ...nextConfig }))

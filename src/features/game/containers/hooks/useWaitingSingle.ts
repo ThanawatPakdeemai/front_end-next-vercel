@@ -62,19 +62,6 @@ const useWaitingSingle = () => {
     }
   }, [data])
 
-  // const item_id = useMemo(() => {
-  //   if (data) {
-  //     if (data.play_to_earn || data.tournament) {
-  //       return data?.item[0]._id
-  //     }
-  //     if (itemSelected) {
-  //       return itemSelected._id
-  //     }
-  //     return undefined
-  //   }
-  //   return undefined
-  // }, [data, itemSelected])
-
   const {
     isLoading: loadingPlayer,
     playerGameSingle,

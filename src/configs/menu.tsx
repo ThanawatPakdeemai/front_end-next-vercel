@@ -212,8 +212,8 @@ export const MENU = [
       },
       // TODO: Open after launch V2
       {
-        name: "Become Developer",
-        link: "/become-developer",
+        name: "Game Developer",
+        link: "/game-developer",
         icon: DesktopIcon
       }
     ]
@@ -505,10 +505,10 @@ export const MENU_BLOG: IMenu[] = [
     external: false
   },
   {
-    id: "become-developer",
-    label: "Become Developer",
+    id: "game-developer",
+    label: "Game Developer",
     icon: <DesktopIcon className="stroke-neutral-300" />,
-    href: "/become-developer",
+    href: "/game-developer",
     external: false
   }
 ]

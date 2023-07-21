@@ -23,10 +23,10 @@ const GameDeveloperFooter = () => {
               isMobile && `justify-items-center`
             }`}
           >
-            <Link href="/become-developer">
+            <Link href="/game-developer">
               <ButtonToggleIcon
                 startIcon={<DesktopIcon />}
-                text="Become a NAKA Dev"
+                text="Game a NAKA Dev"
                 className={`z-[2] ${
                   isMobile ? `mb-2 h-[45px] !w-[300px]` : `h-[50px] !w-[220px]`
                 } border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default`}
@@ -52,7 +52,7 @@ const GameDeveloperFooter = () => {
                 //   openInNewTab("https://main.nakamoto.games/")
                 // }
                 startIcon={<DollarPaperIcon />}
-                text="Become a Partner"
+                text="Game a Partner"
                 className={`z-[2] ${
                   isMobile ? `mb-2 h-[45px] !w-[300px]` : `h-[50px] !w-[220px]`
                 } border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default`}

@@ -16,9 +16,5 @@ export const DROPDOWN_GAMETYPE: IDropdownGameType[] = [
   {
     title: "multiplayer",
     icon: <GroupAddOutlinedIcon />
-  },
-  {
-    title: "storymode",
-    icon: <GroupAddOutlinedIcon />
   }
 ]

@@ -1,8 +1,9 @@
-import React, { useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import { Image } from "@components/atoms/image"
 import Link from "next/link"
 import { isMobile } from "@hooks/useGlobal"
 import { useRouter } from "next/router"
+import useGameStore from "@stores/game"
 
 interface IGameItemSingleCardProp {
   itemId: string
@@ -23,12 +24,40 @@ const GameItemSingleCard = ({
   showLink
 }: IGameItemSingleCardProp) => {
   const router = useRouter()
-  const { GameHome, typeGame } = router.query
+  const { GameHome, typeGame, slug } = router.query
+  const game = useGameStore((state) => state.data)
+
+  const isCheckLink = useCallback(() => {
+    if (!showLink) return false
+    if (GameHome && typeGame) {
+      return true
+    }
+    if (router.asPath) {
+      return true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, GameHome, typeGame])
+
+  const isGameNFT = useCallback(() => {
+    if (
+      game &&
+      game.is_NFT &&
+      typeGame === undefined &&
+      GameHome === undefined &&
+      slug
+    ) {
+      return true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [game, typeGame, GameHome, slug])
 
   const _pathname = useMemo(
-    () => `/${typeGame}/${GameHome}/roomlist?id=${itemId}`,
+    () =>
+      isGameNFT()
+        ? `/arcade-emporium/${slug}/roomlist?id=${itemId}`
+        : `/${typeGame}/${GameHome}/roomlist?id=${itemId}`,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [router.query]
+    [router, game]
   )
 
   const renderContent = () => (
@@ -50,7 +79,7 @@ const GameItemSingleCard = ({
       )}
     </div>
   )
-  return showLink ? (
+  return isCheckLink() ? (
     <Link href={_pathname}>{renderContent()}</Link>
   ) : (
     renderContent()

@@ -31,7 +31,8 @@ const GameItemSingleCard = ({
     if (!showLink) return false
     if (GameHome && typeGame) {
       return true
-    } else if (router.asPath) {
+    }
+    if (router.asPath) {
       return true
     }
   }, [])

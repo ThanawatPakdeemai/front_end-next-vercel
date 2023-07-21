@@ -107,15 +107,15 @@ const SelectNaka = ({
                               router.push(option.link)
                             }
                           }}
-                          sx={
-                            option.value === "Game Developer"
-                              ? {
-                                  "&.MuiMenuItem-root": {
-                                    display: "none"
-                                  }
-                                }
-                              : {}
-                          }
+                          // sx={
+                          //   option.value === "Game Developer"
+                          //     ? {
+                          //         "&.MuiMenuItem-root": {
+                          //           display: "none"
+                          //         }
+                          //       }
+                          //     : {}
+                          // }
                         >
                           <Link
                             href={option.link ?? ""}

@@ -13,7 +13,7 @@ const useSubmitGenaralReview = () => {
     retry: false,
     onSuccess(res) {
       if (res) {
-        // router.push("/become-developer")
+        // router.push("/game-developer")
         const mode = `${process.env.NEXT_PUBLIC_GAME_DEVELOPER}`
         window.location.href = mode
       }

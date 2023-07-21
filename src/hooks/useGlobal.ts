@@ -84,7 +84,7 @@ const useGlobal = (
    * @description check if url is in marketplace
    */
   const isDeveloperPage =
-    router.asPath.includes("become-developer") ||
+    router.asPath.includes("game-developer") ||
     router.asPath.includes("developer")
 
   /**

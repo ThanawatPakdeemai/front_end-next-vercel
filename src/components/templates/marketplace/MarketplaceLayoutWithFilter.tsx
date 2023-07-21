@@ -22,7 +22,7 @@ const MarketplaceLayoutWithFilter = ({
       icon={<ShineIcon />}
       bgColor="bg-neutral-800"
       textColor="text-neutral-500 font-bold"
-      text="Join the NFT revolution and become a part of the future of ownership. "
+      text="Join the NFT revolution and game a part of the future of ownership. "
       className="hidden sm:block"
       show
     />

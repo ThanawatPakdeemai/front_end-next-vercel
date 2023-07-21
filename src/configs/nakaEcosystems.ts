@@ -36,8 +36,8 @@ export const NAKA_ECOSYSTEMSS = [
   // }
   // TODO: Open after launch V2
   // {
-  //   label: "Become A Developer",
-  //   path: "/become-developer",
+  //   label: "Game A Developer",
+  //   path: "/game-developer",
   //   icon: true
   // }
 ]

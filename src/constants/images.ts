@@ -345,18 +345,18 @@ export const IMAGES: {
     height: 200,
     alt: "featureImgSecure"
   },
-  becomeDeveloperSection1: {
-    src: "/images/becomeDeveloper/become_developer_01.png",
-    srcWebp: "/images/becomeDeveloper/become_developer_01.webp",
-    blurDataURL: "/images/becomeDeveloper/become_developer_01.webp",
+  gameDeveloperSection1: {
+    src: "/images/gameDeveloper/game_developer_01.png",
+    srcWebp: "/images/gameDeveloper/game_developer_01.webp",
+    blurDataURL: "/images/gameDeveloper/game_developer_01.webp",
     width: 1000,
     height: 1000,
     alt: "Import your existing NFTs."
   },
-  becomeDeveloperSection2: {
-    src: "/images/becomeDeveloper/become_developer_02.png",
-    srcWebp: "/images/becomeDeveloper/become_developer_02.webp",
-    blurDataURL: "/images/becomeDeveloper/become_developer_02.webp",
+  gameDeveloperSection2: {
+    src: "/images/gameDeveloper/game_developer_02.png",
+    srcWebp: "/images/gameDeveloper/game_developer_02.webp",
+    blurDataURL: "/images/gameDeveloper/game_developer_02.webp",
     width: 1000,
     height: 1000,
     alt: "READY TO TRY NAKAMOTO.GAMES?"

@@ -1,17 +1,18 @@
-import Jumbotron from "@components/molecules/Jumbotron"
+/* eslint-disable max-len */
 import React from "react"
-import CardPlatformItems from "@components/organisms/CardPlatformItems"
+import Jumbotron from "@components/molecules/Jumbotron"
+// import CardPlatformItems from "@components/organisms/CardPlatformItems"
 import CardFeaturedDeveloperItems from "@components/organisms/CardFeaturedDeveloperItems"
 import { FEATURES_DEVELOPER } from "@constants/features"
-import { PLATFORM_LIST } from "@configs/platform"
-import CardTestimonialItems from "@components/organisms/CardTestimonialItems"
-import TESTIMONAILS from "@constants/testimonial"
-import BecomeDeveloperContent from "@components/templates/contents/BecomeDeveloperContent"
+// import { PLATFORM_LIST } from "@configs/platform"
+// import CardTestimonialItems from "@components/organisms/CardTestimonialItems"
+// import TESTIMONAILS from "@constants/testimonial"
+import GameDeveloperContent from "@components/templates/contents/GameDeveloperContent"
 import { Chip } from "@mui/material"
-import { IMAGES } from "@constants/images"
+// import { IMAGES } from "@constants/images"
 import HeroSection from "@components/templates/contents/HeroSection"
 import { VIDEOS } from "@constants/video"
-import FullWidthContent from "@components/templates/contents/FullWidthContent"
+// import FullWidthContent from "@components/templates/contents/FullWidthContent"
 import ButtonScroll from "@components/atoms/button/ButtonScroll"
 
 const ChipStyles = {
@@ -19,28 +20,34 @@ const ChipStyles = {
   marginBottom: "1.5rem"
 }
 
-const BecomeDeveloperPage = () => (
+const GameDeveloperPage = () => (
   <main>
     <HeroSection
       hasVideo
-      src={VIDEOS.becomeDeveloperVideo.src}
-      poster={VIDEOS.becomeDeveloperVideo.poster}
+      src={VIDEOS.gameDeveloperVideoMain.src}
+      poster={VIDEOS.gameDeveloperVideoMain.poster}
       className="!items-end !justify-start pb-12"
     >
       <div className="flex items-center justify-between">
         <Jumbotron
-          textTitle="nakamoto.games"
-          textTitleDark="FOR GAME DEVELOPERS_"
-          text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
+          hrefButton="/joinus"
+          // textTitle="nakamoto.games"
+          // textTitleDark="FOR GAME DEVELOPERS_"
+          textTitle=""
+          textTitleGreen="Unlock Your Game's Potential with"
+          textTitleLight="NAKAMOTO.GAMES!"
+          text="We handle infrastructure and distribution, allowing you to concentrate on what you love - creating games. 
+Take the leap and publish your game with us today!"
+          // text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
           className="w-[620px]"
-          textButton="Subscribe Now"
+          textButton="Submit Game"
         />
-        <ButtonScroll anchorLink="become-developer--section-1" />
+        <ButtonScroll anchorLink="game-developer--section-1" />
       </div>
     </HeroSection>
-    <BecomeDeveloperContent
-      id="become-developer--section-1"
-      image={IMAGES.becomeDeveloperSection1}
+    {/* <GameDeveloperContent
+      id="game-developer--section-1"
+      image={IMAGES.gameDeveloperSection1}
     >
       <div className="inner-content">
         <Chip
@@ -51,6 +58,7 @@ const BecomeDeveloperPage = () => (
           sx={ChipStyles}
         />
         <Jumbotron
+          hrefButton="/joinus"
           textTitle={`Import your <br> existing `}
           textTitleDark="NFTs."
           text="Display your in-game NFTs in the Nakamoto.Games storefront. Get gamers watching your in-game assets 🎮"
@@ -61,9 +69,9 @@ const BecomeDeveloperPage = () => (
           items={PLATFORM_LIST}
         />
       </div>
-    </BecomeDeveloperContent>
-    <BecomeDeveloperContent
-      id="become-developer--section-2"
+    </GameDeveloperContent> */}
+    <GameDeveloperContent
+      id="game-developer--section-2"
       className="my-20 min-h-[640px]"
       sxCustomStyled={{
         ".jumbotron": {
@@ -87,25 +95,26 @@ const BecomeDeveloperPage = () => (
           sx={ChipStyles}
         />
         <Jumbotron
+          hrefButton="/joinus"
           textTitle="Features"
           text="We provide everything a Web3 game needs to maximize distribution."
           className="mb-8"
         />
         <CardFeaturedDeveloperItems items={FEATURES_DEVELOPER} />
       </div>
-    </BecomeDeveloperContent>
-    <FullWidthContent>
-      <BecomeDeveloperContent
-        id="become-developer--section-1"
-        image={IMAGES.becomeDeveloperSection2}
+    </GameDeveloperContent>
+    {/* <FullWidthContent>
+      <GameDeveloperContent
+        id="game-developer--section-1"
+        image={IMAGES.gameDeveloperSection2}
         sxCustomStyled={{
-          ".become-developer__content": {
+          ".game-developer__content": {
             order: 1
           },
-          ".become-developer__image": {
+          ".game-developer__image": {
             order: 2
           },
-          ".become-developer__wrapper": {
+          ".game-developer__wrapper": {
             minHeight: "0px"
           }
         }}
@@ -127,14 +136,14 @@ const BecomeDeveloperPage = () => (
                 justifyContent: "center"
               }
             }}
-            textButton="Subscribe Now"
+            textButton="Submit Game"
             hrefButton="/joinus"
           />
         </div>
-      </BecomeDeveloperContent>
-    </FullWidthContent>
-    <BecomeDeveloperContent
-      id="become-developer--section-3"
+      </GameDeveloperContent>
+    </FullWidthContent> */}
+    {/* <GameDeveloperContent
+      id="game-developer--section-3"
       className="flex min-h-[720px] items-center justify-center"
     >
       <div className="container mx-auto overflow-hidden">
@@ -147,6 +156,7 @@ const BecomeDeveloperPage = () => (
             sx={ChipStyles}
           />
           <Jumbotron
+            hrefButton="/joinus"
             textTitle="Helping <span>web3</span> games grow."
             text="We provide everything a Web3 game needs to maximize distribution."
             className="mb-8"
@@ -164,7 +174,7 @@ const BecomeDeveloperPage = () => (
           />
         </div>
       </div>
-    </BecomeDeveloperContent>
+    </GameDeveloperContent> */}
     <HeroSection
       hasVideo
       src={VIDEOS.gameDeveloperVideo.src}
@@ -189,11 +199,15 @@ const BecomeDeveloperPage = () => (
     >
       <div className="relative z-[2] flex items-center justify-center text-center">
         <Jumbotron
-          textTitle="WANT TO READ MORE?"
-          textTitleDark="FOR GAME DEVELOPERS_"
-          text="We love sharing stories about our development progress, mechanics, updates and much more!"
+          hrefButton="/joinus"
+          // textTitle="WANT TO READ MORE?"
+          // textTitleDark="FOR GAME DEVELOPERS_"
+          textTitle="Embrace the Future of Gaming"
+          textTitleDark="with NAKAMOTO.GAMES!"
+          // text="We love sharing stories about our development progress, mechanics, updates and much more!"
+          text="Submit your game for evaluation and get ready to launch in just a few days. Begin your Web3 gaming adventure now!"
           className="w-[620px]"
-          textButton="Subscribe Now"
+          textButton="Submit Game"
           sxCustomStyled={{
             ".jumbotron-button": {
               display: "flex",
@@ -207,4 +221,4 @@ const BecomeDeveloperPage = () => (
   </main>
 )
 
-export default BecomeDeveloperPage
+export default GameDeveloperPage

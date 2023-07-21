@@ -108,7 +108,7 @@ const SelectNaka = ({
                             }
                           }}
                           sx={
-                            option.value === "Become Developer"
+                            option.value === "Game Developer"
                               ? {
                                   "&.MuiMenuItem-root": {
                                     display: "none"

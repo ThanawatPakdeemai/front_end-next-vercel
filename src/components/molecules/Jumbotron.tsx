@@ -8,6 +8,8 @@ export interface IJumbotronProps {
   className?: string
   textTitle?: string
   textTitleDark?: string
+  textTitleGreen?: string
+  textTitleLight?: string
   text?: string
   textButton?: string
   iconButton?: React.ReactNode
@@ -44,7 +46,9 @@ const Jumbotron = ({
   onClickButton,
   hrefButton,
   textTitleDark,
-  textTitleDarkVariant = "success"
+  textTitleDarkVariant = "success",
+  textTitleGreen,
+  textTitleLight
 }: IJumbotronProps) => {
   /**
    * @description Get class text title dark variant
@@ -101,6 +105,14 @@ const Jumbotron = ({
             }}
           />
         )}
+        {textTitleGreen && (
+          <Typography
+            variant="h1"
+            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-green-lemon"
+          >
+            <p className="jumbotron-title--text">{textTitleGreen}</p>
+          </Typography>
+        )}
         {textTitleDark && (
           <Typography
             variant="h1"
@@ -111,6 +123,14 @@ const Jumbotron = ({
             >
               {textTitleDark}
             </span>
+          </Typography>
+        )}
+        {textTitleLight && (
+          <Typography
+            variant="h1"
+            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
+          >
+            <span className="jumbotron-title--text">{textTitleLight}</span>
           </Typography>
         )}
       </div>

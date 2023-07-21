@@ -14,6 +14,8 @@ import { useCallback } from "react"
 // import { IProfileFaceBook } from "@feature/profile/interfaces/IProfileService"
 // import { useLinkToFacebook } from "@feature/profile/containers/hook/useSyncProfileQuery"
 // import useProfileController from "@feature/profile/containers/hook/useProfileController"
+import { useLinkToDiscord } from "@feature/profile/containers/hook/useSyncProfileQuery"
+import useProfileStore from "@stores/profileStore"
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 
@@ -39,6 +41,8 @@ const useFormLoginController = () => {
   // const { fetchProfile } = useProfileController()
 
   const { data: session }: any = useSession()
+  const { mutateLinkToDiscord } = useLinkToDiscord()
+  const profile = useProfileStore((state) => state.profile.data)
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -184,7 +188,7 @@ const useFormLoginController = () => {
     if (session && session?.user?.email && session?.user?.id) {
       mutateLoginProvider({
         _email: session.user.email,
-        _provider: "google",
+        _provider: "twitter",
         _prevPath: "/",
         _providerUUID: session.user.id,
         _referral: ""
@@ -220,6 +224,18 @@ const useFormLoginController = () => {
       })
         .then((_res) => {
           if (_res) {
+            mutateLinkToDiscord({
+              player_id: profile?.id as string,
+              discord_id: session?.user.id
+            }).then((res) => {
+              if (res.discord_id) {
+                // successToast(MESSAGES.sync_discord_success)
+                // // Update profile to store
+                // onSetProfileData(res)
+                // console.log("discord_id", res.discord_id)
+                successToast(MESSAGES.logged_in_successfully)
+              }
+            })
             successToast(MESSAGES.logged_in_successfully)
           }
         })

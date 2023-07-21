@@ -35,7 +35,8 @@ const GameItemSingleCard = ({
     if (router.asPath) {
       return true
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, GameHome, typeGame])
 
   const isGameNFT = useCallback(() => {
     if (

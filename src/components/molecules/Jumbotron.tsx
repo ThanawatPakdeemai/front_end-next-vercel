@@ -42,8 +42,7 @@ const Jumbotron = ({
   iconButton = <EastRoundedIcon />,
   size = "large",
   onClickButton,
-  hrefButton,
-  textTitleDarkVariant = "success"
+  hrefButton
 }: IJumbotronProps) => {
   /**
    * @description Get class text title dark variant

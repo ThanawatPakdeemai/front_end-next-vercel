@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { IImageProps, IMAGES } from "./images"
 
 export interface IFeatureProps {

@@ -8,7 +8,7 @@ export interface IJumbotronProps {
   className?: string
   detail?: string
   text?: string
-  textTitleSub?: string
+  sectionName?: string
   textButton?: string
   iconButton?: React.ReactNode
   onClickButton?: () => void
@@ -34,8 +34,8 @@ export interface IJumbotronProps {
 const Jumbotron = ({
   sxCustomStyled = {},
   className,
-  detail = `<p><span class="ql-font-neueMachinaBold ql-size-46px" style="color: rgb(247, 251, 250);">NAKAMOTO.GAMES</span><span class="ql-font-neueMachinaBold ql-size-46px" style="color: rgb(160, 237, 97);">FOR GAME DEVELOPERS_</span></p><p><span class="ql-size-16px">We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡</span></p><p><br></p>`,
-  textTitleSub = "",
+  detail = "",
+  sectionName = "",
   textButton = "",
   colorButton = "success",
   variantButton = "contained",
@@ -90,20 +90,33 @@ const Jumbotron = ({
       sx={sxCustomStyled}
       className={`jumbotron ${className}`}
     >
-      <div className="jumbotron-title">
+      {sectionName === "features" ? (
+        <div className="jumbotron-title">
+          <Typography
+            variant="h1"
+            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
+          >
+            FEATURES
+          </Typography>
+        </div>
+      ) : (
+        <div className="jumbotron-title">
+          <Typography
+            variant="h1"
+            dangerouslySetInnerHTML={{
+              __html: `${detail}`
+            }}
+          />
+        </div>
+      )}
+      {sectionName === "features" && (
         <Typography
-          variant="h1"
+          className="jumbotron-text mb-8 mt-4"
           dangerouslySetInnerHTML={{
             __html: `${detail}`
           }}
         />
-      </div>
-      {/* <Typography
-        className="jumbotron-text mb-8 mt-4"
-        dangerouslySetInnerHTML={{
-          __html: `${textTitleSub}`
-        }}
-      /> */}
+      )}
       {textButton && (
         <div className="jumbotron-button">
           <ButtonLink

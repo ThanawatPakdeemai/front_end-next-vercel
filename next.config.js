@@ -52,6 +52,16 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "nakamoto-prod-s3.s3.eu-central-1.amazonaws.com",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.pic.in.th",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
         hostname: "ipfs.io",
         pathname: "/**"
       }

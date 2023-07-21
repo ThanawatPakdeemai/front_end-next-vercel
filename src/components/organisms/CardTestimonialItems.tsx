@@ -1,13 +1,13 @@
 import React, { useRef } from "react"
 import CardTestimonialItem from "@components/molecules/CardTestimonialItem"
-import { ITestimonialProps } from "@constants/testimonial"
 import { Box, SxProps, Theme } from "@mui/material"
 import { v4 as uuidv4 } from "uuid"
 import Slider, { Settings } from "react-slick"
 import GameCarouselHeader from "@components/molecules/gameSlide/GameCarouselHeader"
+import { IList } from "@feature/become-developer/interfaces/IWebBecome"
 
 interface ICardTestimonialItemsProps {
-  items: ITestimonialProps[]
+  items: IList[]
   sxCustomStyled?: SxProps<Theme>
   isSlider?: boolean
 }
@@ -47,10 +47,10 @@ const CardTestimonialItems = ({
   const renderContent = items.map((item) => (
     <CardTestimonialItem
       key={uuidv4()}
-      image={item.image}
-      text={item.text}
-      name={item.name}
-      position={item.position}
+      image={item.image_url}
+      text={item.detail}
+      name={item.title}
+      position={item.sub_title}
     />
   ))
 

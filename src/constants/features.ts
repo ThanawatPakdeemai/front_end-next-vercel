@@ -1,5 +1,5 @@
 import { IWebBecomeDevData } from "@feature/become-developer/interfaces/IWebBecome"
-import { IImageProps, IMAGES } from "./images"
+import { IMAGES } from "./images"
 
 export interface IFeatureProps {
   key: string

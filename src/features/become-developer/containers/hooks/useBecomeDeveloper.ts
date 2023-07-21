@@ -1,4 +1,3 @@
-import { IPayloadGameFilter } from "@feature/game/interfaces/IGameService"
 import { IInfo } from "@interfaces/IHelper"
 import { useQuery } from "@tanstack/react-query"
 import { getWebBecomeDeveloper } from "../services/becomeDeveloper.service"

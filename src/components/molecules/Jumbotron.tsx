@@ -49,24 +49,6 @@ const Jumbotron = ({
    * @description Get class text title dark variant
    * @returns {string}
    */
-  const classTextTitleDarkVariant = (): string => {
-    switch (textTitleDarkVariant) {
-      case "error":
-        return "text-error-main"
-
-      case "info":
-        return "text-info-main"
-
-      case "primary":
-        return "text-primary-main"
-
-      case "secondary":
-        return "text-secondary-main"
-
-      default:
-        return "text-green-lemon"
-    }
-  }
 
   const classNameButtonLink = (): string => {
     switch (colorButton) {

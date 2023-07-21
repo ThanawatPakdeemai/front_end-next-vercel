@@ -1,7 +1,7 @@
 import React from "react"
 import { ImageCustom } from "@components/atoms/image/Image"
 import Jumbotron from "@components/molecules/Jumbotron"
-import { IImageProps, IMAGES } from "@constants/images"
+import { IMAGES } from "@constants/images"
 import { Box, SxProps, Theme } from "@mui/material"
 
 interface IBecomeDeveloperContentProps {

@@ -1,7 +1,5 @@
 import React from "react"
 import { ImageCustom } from "@components/atoms/image/Image"
-import { IList } from "@feature/become-developer/interfaces/IWebBecome"
-import { IMAGES } from "@constants/images"
 import { IFeatureProps } from "@constants/features"
 
 const CardFeaturedDeveloperItem = ({

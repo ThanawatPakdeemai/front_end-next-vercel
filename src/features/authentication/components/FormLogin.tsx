@@ -67,7 +67,7 @@ const FormLogin = () => {
   const handleLogin = async (_typeLogin: string) => {
     await setLoginTypes(_typeLogin)
     // await signIn(_typeLogin)
-    await signIn("google", {
+    await signIn(_typeLogin, {
       callbackUrl: "https://frontend-v2.naka.im/api/auth/callback/google"
     })
   }

@@ -230,55 +230,55 @@ const FormLogin = () => {
         container
       >
         <div className="flex w-full flex-row flex-wrap justify-between gap-2">
-          {CONFIGS.MODE === "production" ? undefined : (
-            <>
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("facebook")}
-                // onClick={() => signOut()}
-                icon={<FacebookIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("twitter")}
-                icon={<TwitterIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("google")}
-                icon={<GoogleIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("discord")}
-                icon={<DiscordIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-            </>
-          )}
+          {/* {CONFIGS.MODE === "production" ? undefined : ( */}
+          <>
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={() => handleLogin("facebook")}
+              // onClick={() => signOut()}
+              icon={<FacebookIcon />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={() => handleLogin("twitter")}
+              icon={<TwitterIcon />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={() => handleLogin("google")}
+              icon={<GoogleIcon />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={() => handleLogin("discord")}
+              icon={<DiscordIcon />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+          </>
+          {/* )} */}
           {!isMobile && (
             <ButtonIcon
               whileHover="hover"

@@ -218,8 +218,8 @@ const useBuyGameItemController = () => {
         onSetGameItemSelectd(item)
         handleClose()
       }
-    } else if (data) {
-      const itemFromGameData = data?.item.find((ele) => ele._id === _value)
+    } else if (data && data.item) {
+      const itemFromGameData = data.item.find((ele) => ele._id === _value)
       if (itemFromGameData) {
         onSetGameItemSelectd({
           ...itemFromGameData,

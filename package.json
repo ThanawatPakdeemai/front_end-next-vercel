@@ -13,7 +13,7 @@
     "start": "next start -p 40004",
     "uat": "next start -p 4008",
     "start:dev": "next start -p 4004",
-    "build:dev": "env-cmd -f ./.env.development yarn build",
+    "build:dev": "yarn build",
     "build:uat": "env-cmd -f ./.env.uat yarn build",
     "lint": "next lint --dir src",
     "format:eslint": "eslint --fix --ignore-path .eslintignore \"./**/*.{js,jsx,ts,tsx}\" && yarn format:prettier-tsx",

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { motion } from "framer-motion"
@@ -13,7 +13,7 @@ import {
   Grid,
   Alert
 } from "@mui/material"
-import { signIn, useSession, signOut } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import LoginIcon from "@mui/icons-material/Login"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import LockOpenIcon from "@mui/icons-material/LockOpen"
@@ -31,8 +31,6 @@ import { isMobile } from "@hooks/useGlobal"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import CONFIGS from "@configs/index"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
-import { useLinkToDiscord } from "@feature/profile/containers/hook/useSyncProfileQuery"
-import useProfileStore from "@stores/profileStore"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"

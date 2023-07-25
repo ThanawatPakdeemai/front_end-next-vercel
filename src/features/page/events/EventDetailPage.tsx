@@ -136,7 +136,7 @@ const EventDetailPage = () => {
               </div>
               {/* Display when event is not end */}
               {/* {currentEventData.status !== "end" } */}
-              {renderPlayerContent()}
+              {currentEventData.is_show_leaderboard && renderPlayerContent()}
             </Box>
           }
         />

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Box, Button, Divider, Typography } from "@mui/material"
-import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
+import CardNoReward from "@feature/game/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"

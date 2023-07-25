@@ -99,7 +99,7 @@ const useBuyGameItemController = () => {
   }
 
   const { balanceofItem, refetch: refetchBalanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
+    _address: profile?.address ?? null,
     _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
@@ -227,16 +227,10 @@ const useBuyGameItemController = () => {
         } as IGameItemListData)
       }
     }
-    refetchBalanceofItem()
+    if (refetchBalanceofItem) refetchBalanceofItem()
     handleClose()
-  }, [
-    gameItemList,
-    itemSizeId,
-    onSetGameItemSelectd,
-    refetchBalanceofItem,
-    watch,
-    data
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameItemList, itemSizeId, onSetGameItemSelectd, watch])
 
   /**
    * Get code from local storage

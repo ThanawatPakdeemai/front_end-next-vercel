@@ -116,6 +116,9 @@ export const SlickDefaultThumbnail: SxProps = {
     ".verticalSmallThumb-slide__item": {
       margin: "0 4px"
     },
+    "&.slick-cloned": {
+      display: "none"
+    },
     "&.slick-current.slick-active": {
       opacity: 1,
       ".MuiCardMedia-root": {

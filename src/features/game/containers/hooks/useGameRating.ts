@@ -49,9 +49,6 @@ const useGameRating = (_gameId: string | undefined) => {
 
   const { mutateAsync: checkRatingGame } = useMutation(getCheckUserRatingGame, {
     mutationKey: ["getCheckUserRatingGame"],
-    onSuccess: () => {
-      successToast("get check rating success")
-    },
     onError: (_response) => {
       errorToast(
         (_response as IMessage)?.message ??

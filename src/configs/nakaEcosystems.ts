@@ -15,29 +15,8 @@ export const NAKA_ECOSYSTEMSS = [
     icon: true
   },
   {
-    label: "Legacy Version",
-    path: "https://legacy.nakamoto.games",
+    label: "Game Developer",
+    path: "/game-developer",
     icon: true
   }
-  // {
-  //   label: "Marketplace",
-  //   path: `${CONFIGS.BASE_URL.MARKETPLACE}`,
-  //   icon: true
-  // },
-  // {
-  //   label: "Nakaverse",
-  //   path: `${CONFIGS.BASE_URL.NAKAVERSE}`,
-  //   icon: true
-  // },
-  // {
-  //   label: "Nakapunks",
-  //   path: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
-  //   icon: true
-  // }
-  // TODO: Open after launch V2
-  // {
-  //   label: "Game A Developer",
-  //   path: "/game-developer",
-  //   icon: true
-  // }
 ]

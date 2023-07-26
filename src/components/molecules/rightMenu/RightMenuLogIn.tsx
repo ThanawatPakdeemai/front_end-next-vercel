@@ -145,58 +145,60 @@ const RightMenuLogIn = () => {
                     </Typography>
                   )}
                 </div>
-                <Link href={`/profile/${profile?.id}`}>
-                  {profile && profile.avatar ? (
-                    <Image
-                      src={profile.avatar}
-                      alt="avatar"
-                      width={40}
-                      height={40}
-                      className="mr-[5px] rounded-lg"
-                    />
-                  ) : (
-                    <Image
-                      src="/images/common/no_login_avatar.png"
-                      alt="avatar"
-                      width={40}
-                      height={40}
-                      className="mr-[5px] rounded-lg"
-                    />
-                  )}
-                </Link>
-                {/* expand button */}
-                <IconButtonCustom
-                  expand={expanded.toString()}
-                  onClick={handleOnExpandClick}
-                  aria-expanded={Boolean(expanded)}
-                  aria-label="expanded-menu-profile"
-                  className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-100 ease-bounce ${
-                    !expanded
-                      ? `bg-${themeColor().toString()} hover:scale-[85%]`
-                      : "bg-error-main"
-                  }
+                <div className="flex">
+                  <Link href={`/profile/${profile?.id}`}>
+                    {profile && profile.avatar ? (
+                      <Image
+                        src={profile.avatar}
+                        alt="avatar"
+                        width={40}
+                        height={40}
+                        className="mr-[5px] rounded-lg"
+                      />
+                    ) : (
+                      <Image
+                        src="/images/common/no_login_avatar.png"
+                        alt="avatar"
+                        width={40}
+                        height={40}
+                        className="mr-[5px] rounded-lg"
+                      />
+                    )}
+                  </Link>
+                  {/* expand button */}
+                  <IconButtonCustom
+                    expand={expanded.toString()}
+                    onClick={handleOnExpandClick}
+                    aria-expanded={Boolean(expanded)}
+                    aria-label="expanded-menu-profile"
+                    className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-100 ease-bounce ${
+                      !expanded
+                        ? `bg-${themeColor().toString()} hover:scale-[85%]`
+                        : "bg-error-main"
+                    }
                   ${!expanded ? "rotate-0" : "rotate-180"} ${
-                    expanded && !hoverExpand
-                      ? "rotate-[-45deg] scale-[75%]"
-                      : "scale-1 rotate-0"
-                  }
+                      expanded && !hoverExpand
+                        ? "rotate-[-45deg] scale-[75%]"
+                        : "scale-1 rotate-0"
+                    }
                   ${
                     !expanded
                       ? `hover:bg-${themeColor().toString()}`
                       : `hover:bg-error-main`
                   }`}
-                  onMouseOver={() => {
-                    setHoverExpand(true)
-                  }}
-                  onMouseOut={() => {
-                    setHoverExpand(false)
-                  }}
-                >
-                  <StateIcon
-                    expanded={expanded}
-                    hover={hoverExpand}
-                  />
-                </IconButtonCustom>
+                    onMouseOver={() => {
+                      setHoverExpand(true)
+                    }}
+                    onMouseOut={() => {
+                      setHoverExpand(false)
+                    }}
+                  >
+                    <StateIcon
+                      expanded={expanded}
+                      hover={hoverExpand}
+                    />
+                  </IconButtonCustom>
+                </div>
               </CardActions>
             </Card>
           </TooltipsCustom>

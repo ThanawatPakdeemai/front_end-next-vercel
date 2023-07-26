@@ -20,17 +20,19 @@ import useSupportedChain from "@hooks/useSupportedChain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
 import { useRouter } from "next/router"
-import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+// import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { ELocalKey } from "@interfaces/ILocal"
 import { MESSAGES } from "@constants/messages"
 import useGlobal from "@hooks/useGlobal"
 import useShareToEarnTracking from "@feature/game/containers/hooks/useShareToEarnTracking"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateShareToEarnTracking } = useShareToEarnTracking()
-  const { stateProfile } = useGlobal()
+  const { stateProfile, isFreeToPlayGame } = useGlobal()
   const { mutateBuyItems, mutateBuyItemsBSC, isLoading } = useBuyGameItems()
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
@@ -97,11 +99,15 @@ const useBuyGameItemController = () => {
     errorToast("Please fill in the required fields")
     setClose()
   }
+  // const { balanceofItem, refetch: refetchBalanceofItem } = useGetBalanceOf({
+  //   _address: profile?.address ?? "",
+  //   _item_id: isFreeToPlayGame(data as IGame)
+  //     ? 0
+  //     : itemSelected?.item_id_smartcontract ?? 0
+  // })
 
-  const { balanceofItem, refetch: refetchBalanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
-  })
+  const { refetchBalanceofItem, balanceofItem } = useBalanceOfProvider()
+  // const balanceofItem = { data: 1, status: true }
 
   const updatePricePerItem = useCallback(async () => {
     Helper.calculateItemPerPrice(
@@ -209,34 +215,31 @@ const useBuyGameItemController = () => {
     setOpenForm(true)
     // resetForm()
   }
-
+  // useCallback
   const refetchItemSelected = useCallback(() => {
-    const _value = itemSizeId ? (itemSizeId as string) : watch("item_id")
-    if (gameItemList) {
-      const item = gameItemList?.find((ele) => ele.id === _value)
-      if (item) {
-        onSetGameItemSelectd(item)
-        handleClose()
+    if (!isFreeToPlayGame(data as IGame)) {
+      const _value = itemSizeId ? (itemSizeId as string) : watch("item_id")
+      if (gameItemList) {
+        const item = gameItemList?.find((ele) => ele.id === _value)
+        if (item) {
+          onSetGameItemSelectd(item)
+          handleClose()
+        }
+      } else if (data && data.item) {
+        const itemFromGameData = data.item.find((ele) => ele._id === _value)
+        if (itemFromGameData) {
+          onSetGameItemSelectd({
+            ...itemFromGameData,
+            qty: 0
+          } as IGameItemListData)
+        }
       }
-    } else if (data && data.item) {
-      const itemFromGameData = data.item.find((ele) => ele._id === _value)
-      if (itemFromGameData) {
-        onSetGameItemSelectd({
-          ...itemFromGameData,
-          qty: 0
-        } as IGameItemListData)
-      }
+      if (refetchBalanceofItem) refetchBalanceofItem()
+      handleClose()
     }
-    refetchBalanceofItem()
-    handleClose()
-  }, [
-    gameItemList,
-    itemSizeId,
-    onSetGameItemSelectd,
-    refetchBalanceofItem,
-    watch,
-    data
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  // , [itemSizeId, watch, gameItemList, data])
 
   /**
    * Get code from local storage

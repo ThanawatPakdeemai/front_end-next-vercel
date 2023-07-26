@@ -1,7 +1,6 @@
 import React, { memo } from "react"
 import { Box, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
-import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import { useTranslation } from "react-i18next"
 import PlayerCard from "../molecules/PlayerCard"
@@ -9,10 +8,10 @@ import ButtonGame from "../atoms/ButtonPlayer"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
+  onPlayGame: () => void
 }
 
-const SeatPlayers = ({ players }: IProps) => {
-  const { onPlayGame } = useWaitingSingle()
+const SeatPlayers = ({ players, onPlayGame }: IProps) => {
   const { t } = useTranslation()
 
   return (

@@ -43,7 +43,7 @@ const useGetReward = ({ _poolId, _gameId, _type }: IUseGetReward) => {
     keepPreviousData: true,
     staleTime: Infinity,
     retry: false,
-    enabled: !!_poolId && _type === "REWARD_WEEKLY"
+    enabled: !!_poolId && _type !== "REWARD_WEEKLY"
   })
 
   const {

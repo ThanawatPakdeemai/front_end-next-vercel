@@ -29,7 +29,7 @@ import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
-import CONFIGS from "@configs/index"
+// import CONFIGS from "@configs/index"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
@@ -67,9 +67,7 @@ const FormLogin = () => {
   const handleLogin = async (_typeLogin: string) => {
     await setLoginTypes(_typeLogin)
     // await signIn(_typeLogin)
-    await signIn(_typeLogin, {
-      callbackUrl: "https://frontend-v2.naka.im/api/auth/callback/google"
-    })
+    await signIn(_typeLogin)
   }
   return (
     <>

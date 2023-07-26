@@ -4,25 +4,24 @@ import CardNoReward from "@feature/game/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
-import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import { signIn } from "next-auth/react"
 import useLoginTypeStore from "@stores/loginTypes"
+import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import LoginModal from "../organisms/modal/LoginModal"
 import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
-  const { twitterLogin } = useFormLoginController()
   const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
     useState<boolean>(false)
 
-  const handleLogin = (_typeLogin: string) => {
-    setLoginTypes(_typeLogin)
-    signIn(_typeLogin)
+  const handleLogin = async (_typeLogin: string) => {
+    await setLoginTypes(_typeLogin)
+    await signIn(_typeLogin)
   }
 
   return (
@@ -71,8 +70,8 @@ const SignInLayout = () => {
         <Box component="div">
           <Button
             variant="contained"
-            className="h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={twitterLogin}
+            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
+            onClick={() => handleLogin("twitter")}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
@@ -83,6 +82,24 @@ const SignInLayout = () => {
                 />
               </span>
               <span>Sign in with Twitter</span>
+            </div>
+          </Button>
+        </Box>
+        <Box component="div">
+          <Button
+            variant="contained"
+            className="h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
+            onClick={() => handleLogin("discord")}
+          >
+            <div className="flex items-center font-urbanist text-base font-medium">
+              <span className="pr-2">
+                <DiscordIcon
+                  fill="#5765f1"
+                  width={30}
+                  height={30}
+                />
+              </span>
+              <span>Sign in with Discord</span>
             </div>
           </Button>
         </Box>

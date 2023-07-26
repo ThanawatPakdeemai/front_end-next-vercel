@@ -3,14 +3,14 @@ import React from "react"
 import dayjs from "dayjs"
 import _ from "lodash"
 import { isMobile } from "@hooks/useGlobal"
+import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
 import SummaryItemUsed, {
   ISummaryItemUsedProps
-} from "../molecules/SummaryItemUsed"
-import CardSummaryMain from "../molecules/CardSummaryMain"
-import GameSummaryRewardFooter from "../templates/GameSummaryRewardFooter"
-import SummaryGameData from "../molecules/SummaryGameData"
-import CardSummaryReward from "../molecules/CardSummaryReward"
-import CardNoReward from "../atoms/CardNoReward"
+} from "@feature/game/components/molecules/SummaryItemUsed"
+import GameSummaryRewardFooter from "@feature/game/components/templates/GameSummaryRewardFooter"
+import SummaryGameData from "@feature/game/components/molecules/SummaryGameData"
+import CardSummaryReward from "@feature/game/components/molecules/CardSummaryReward"
+import CardNoReward from "@feature/game/components/atoms/CardNoReward"
 
 interface IProp extends ISummaryItemUsedProps {
   date: string | Date

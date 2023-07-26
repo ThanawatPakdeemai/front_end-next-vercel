@@ -1,11 +1,11 @@
 import React from "react"
-import GameSummaryBody from "@feature/game/containers/components/organisms/GameSummaryBody"
+import GameSummaryBody from "@feature/game/components/organisms/GameSummaryBody"
 import SkeletonSummaryRaward from "@components/atoms/skeleton/SkeletonSummaryRaward"
 import GameSummaryContent from "@components/templates/contents/GameSummaryContent"
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
 import useGlobal from "@hooks/useGlobal"
-import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
+import GameSummaryBodyReturnItem from "@feature/game/components/organisms/GameSummaryBodyReturnItem"
 import { useRouter } from "next/router"
 
 const GameSummaryRewardPage = () => {

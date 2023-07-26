@@ -35,7 +35,7 @@ const RightSidebarContentEffect = ({
         {content}
       </div>
 
-      <div className="right-sidebar-content__sidebar h-full w-full flex-auto rounded-md md:w-2/6 md:max-w-[562px]">
+      <div className="right-sidebar-content__sidebar h-full w-full max-w-[333px] flex-auto rounded-md md:w-2/6">
         {aside}
       </div>
     </div>

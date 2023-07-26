@@ -126,13 +126,15 @@ const LikeNoLobby = ({
       </div>
       {!hideImage && (
         <div className="like-no_image flex h-[218px] w-full justify-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4 md:w-[218px] md:justify-start">
-          <Image
-            src={imgSrc || "/images/gameDetails/nakamoto-wars.webp"}
-            alt={imgAlt || "nakamoto-wars"}
-            width={186}
-            height={186}
-            className="object-contain"
-          />
+          <div className="overflow-hidden rounded-xl">
+            <Image
+              src={imgSrc || "/images/gameDetails/nakamoto-wars.webp"}
+              alt={imgAlt || "nakamoto-wars"}
+              width={186}
+              height={186}
+              className="object-contain"
+            />
+          </div>
         </div>
       )}
     </div>

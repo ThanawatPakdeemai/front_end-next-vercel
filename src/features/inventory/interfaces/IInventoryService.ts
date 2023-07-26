@@ -39,6 +39,6 @@ export interface IBurnItemResponse {
 }
 
 export interface IGetBalanceOf {
-  _address: string
+  _address: string | null
   _item_id: number
 }

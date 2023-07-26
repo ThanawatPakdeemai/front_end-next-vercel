@@ -12,8 +12,10 @@ import {
   IGameRatingData,
   IGameRatingServ
 } from "@feature/game/interfaces/IGameRating"
+import useProfileStore from "@stores/profileStore"
 
 const useGameRating = (_gameId: string | undefined) => {
+  const profile = useProfileStore((state) => state.profile.data)
   const { successToast, errorToast } = useToast()
   const [ratingGame, setRatingGame] = useState<IGameRatingServ | null>(null)
   const [ownerRating, setOwnerRating] = useState<IGameRatingData | null>(null)
@@ -73,11 +75,11 @@ const useGameRating = (_gameId: string | undefined) => {
   }
 
   const { isLoading: gameRatingLoading } = useQuery({
-    queryKey: ["getGameRating"],
+    queryKey: ["getGameRating", profile?.id, _gameId],
     queryFn: () => handleGetRatingGame(true),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: !!_gameId
+    enabled: !!_gameId && !!profile?.id
   })
 
   const onSubmitSendRating = async (_value: boolean) => {

@@ -192,6 +192,16 @@ const GameCard = ({
     }
   }
 
+  const getAlt = () => {
+    if (partnerdata) {
+      return partnerdata.name
+    }
+    if (data) {
+      return (data as IGame).name
+    }
+    return ""
+  }
+
   const renderCardContent = () => (
     <motion.div
       className="slick-card-container flex flex-col justify-center blur-none"
@@ -231,7 +241,7 @@ const GameCard = ({
         >
           <Image
             src={imageSrc}
-            alt="home-slide"
+            alt={getAlt()}
             width={218}
             height={218}
             className={`aspect-[3/2] rounded-3xl object-cover ${

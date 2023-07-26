@@ -182,7 +182,7 @@ const HorizontalThumbSlide = ({
     focusOnSelect: true,
     dots: false,
     centerPadding: sliderType === "avatar" ? "0px" : "10px",
-    centerMode: false,
+    centerMode: true,
     rows: 1,
     variableWidth: true,
     ...settingThumbnail
@@ -214,13 +214,13 @@ const HorizontalThumbSlide = ({
       <Box
         component="div"
         sx={getStyleMultipleSlide()}
-        className="slick-thumbnail__wrapper relative mt-4 flex justify-center"
+        className="slick-thumbnail__wrapper relative mt-4 flex w-full justify-center"
       >
         <Slider
           asNavFor={nav1 as Slider}
           ref={sliderRef1}
           {...settingSlideThumbnail}
-          className="h-[84px] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 p-1"
+          className="h-[84px] w-full"
         >
           {items &&
             items.map((item) => (

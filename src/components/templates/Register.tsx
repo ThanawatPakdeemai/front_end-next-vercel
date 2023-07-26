@@ -68,7 +68,8 @@ const RegisterLayout = () => {
   const router = useRouter()
   const { referral } = router.query
   const { data: session, status } = useSession()
-  const { googleRegister, twitterRegister } = useFormRegisterController()
+  const { googleRegister, twitterRegister, discordRegister } =
+    useFormRegisterController()
 
   // eslint-disable-next-line no-unused-vars
   const { formState } = useForm<TFormData>({
@@ -90,7 +91,7 @@ const RegisterLayout = () => {
           googleRegister(referral as string)
           break
         case "discord":
-          // discordLogin()
+          discordRegister(referral as string)
           break
         case "twitter":
           twitterRegister(referral as string)

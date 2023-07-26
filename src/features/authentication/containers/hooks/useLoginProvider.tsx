@@ -24,7 +24,7 @@ const useLoginProvider = () => {
       onSetProfileData(res)
       onSetProfileAddress("")
       onSetProfileJWT(res.jwtToken)
-      !_.isEmpty(res) && setClose()
+      setClose()
     },
     onError() {
       setClose()

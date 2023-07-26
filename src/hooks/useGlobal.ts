@@ -239,7 +239,11 @@ const useGlobal = (
    * @description Check if game is free to play
    */
   const isFreeToPlayGame = (_gameData: IGame): boolean => {
-    if (_gameData.game_mode === "free-to-play" && !_gameData.is_NFT) {
+    if (
+      _gameData &&
+      _gameData?.game_mode === "free-to-play" &&
+      !_gameData?.is_NFT
+    ) {
       return true
     }
     return false

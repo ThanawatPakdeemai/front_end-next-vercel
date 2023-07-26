@@ -21,7 +21,6 @@ const GameRoomList = () => {
   const { getGameMode } = useGlobal()
   const { getRoomStatus } = useRoomSingle()
   const profile = useProfileStore((state) => state.profile.data)
-
   const { item, itemSizeId, itemSelected, gameData: data } = useGameGlobal()
   const gameData = data
 
@@ -67,7 +66,11 @@ const GameRoomList = () => {
                       onExpire: () => null
                     }}
                     player={{
-                      currentPlayer: _data.amount_current_player,
+                      currentPlayer:
+                        // _data.amount_current_player,
+                        _data.amount_current_player <= _data.max_players
+                          ? _data.amount_current_player
+                          : _data.max_players,
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}

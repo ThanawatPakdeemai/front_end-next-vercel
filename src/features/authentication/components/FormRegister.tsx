@@ -33,6 +33,7 @@ import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import useRegisterTypeStore from "@stores/registerTypes"
 import CONFIGS from "@configs/index"
+import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -593,9 +594,19 @@ const FormRegister = () => {
                         stiffness: 400,
                         damping: 4
                       }}
-                      // onClick={() => googleRegister(watch("referralId"))}
                       onClick={() => handleRegister("google")}
                       icon={<GoogleIcon />}
+                      className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                    />
+                    <ButtonIcon
+                      whileHover="hover"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 4
+                      }}
+                      onClick={() => handleRegister("discord")}
+                      icon={<DiscordIcon />}
                       className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                     />
                   </>

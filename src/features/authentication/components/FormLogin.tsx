@@ -66,7 +66,6 @@ const FormLogin = () => {
 
   const handleLogin = async (_typeLogin: string) => {
     await setLoginTypes(_typeLogin)
-    // await signIn(_typeLogin)
     await signIn(_typeLogin)
   }
   return (
@@ -238,7 +237,6 @@ const FormLogin = () => {
                   damping: 4
                 }}
                 onClick={() => handleLogin("facebook")}
-                // onClick={() => signOut()}
                 icon={<FacebookIcon />}
                 className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
               />

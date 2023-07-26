@@ -25,7 +25,7 @@ const PanelContent = ({
     <div className="custom-scroll h-[90%] !overflow-y-scroll pr-4">
       {children}
     </div>
-    <div className="absolute bottom-0 left-0 h-20 w-full bg-gradient-to-b from-neutral-780/0 to-neutral-780" />
+    <div className="overlay absolute bottom-0 left-0 h-20 w-full bg-gradient-to-b from-neutral-780/0 to-neutral-780" />
   </Box>
 )
 

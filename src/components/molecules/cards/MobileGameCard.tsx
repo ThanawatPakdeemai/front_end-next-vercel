@@ -33,7 +33,7 @@ const MobileGameCard = ({
         >
           <Image
             src={img}
-            alt="home-slide"
+            alt={text}
             width={264}
             height={324}
             className="mb-[10px] h-[83px] rounded-[8px] object-cover group-hover:h-[250px]"

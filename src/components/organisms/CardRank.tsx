@@ -9,6 +9,7 @@ import NoDataIcon from "@components/icons/NoDataIcon"
 import NoData from "@components/molecules/NoData"
 import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { Box } from "@mui/material"
+import { v4 as uuid } from "uuid"
 
 interface IProp {
   topPlayerGameId: IPlayerRanking[] | IWeeklyPoolByGameIdDataRecord[]
@@ -78,7 +79,7 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
           whileHover="hover"
           animate="rest"
           className="card-ranking__wrapper grid grid-cols-[35px_165px_1fr_1fr] items-center gap-5 border-b-[1px] border-neutral-800 py-3"
-          key={data.id}
+          key={uuid()}
         >
           <NumberRank
             className="font card-ranking__number m-0 h-[35px] w-[35px] px-[16px] font-neue-machina-semi text-[14px]"

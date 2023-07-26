@@ -1,9 +1,9 @@
 import React from "react"
 import _ from "lodash"
-import { ISummaryItemUsedProps } from "@feature/game/containers/components/molecules/SummaryItemUsed"
-import CardSummaryMain from "@feature/game/containers/components/molecules/CardSummaryMain"
-import GameSummaryRewardFooter from "@feature/game/containers/components/templates/GameSummaryRewardFooter"
-import SummaryGameData from "@feature/game/containers/components/molecules/SummaryGameData"
+import { ISummaryItemUsedProps } from "@feature/game/components/molecules/SummaryItemUsed"
+import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
+import GameSummaryRewardFooter from "@feature/game/components/templates/GameSummaryRewardFooter"
+import SummaryGameData from "@feature/game/components/molecules/SummaryGameData"
 
 interface IGameSummaryBodyReturnItemMobile extends ISummaryItemUsedProps {
   date: string | Date

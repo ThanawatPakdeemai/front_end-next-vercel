@@ -1,7 +1,7 @@
 import OverviewIcon from "@components/icons/OverviewIcon"
 import TagMultiple from "@components/molecules/TagMultiple"
 import TagSingular from "@components/molecules/TagSingular"
-import { Divider } from "@mui/material"
+import { Box, Divider } from "@mui/material"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import Link from "next/link"
@@ -9,10 +9,8 @@ import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import PanelContent from "@components/molecules/PanelContent"
 import AsideLayout from "@components/templates/contents/AsideLayout"
 import useGameStore from "@stores/game"
-// import AboutGame from "./AboutGame"
 
 interface IOverviewGameProps {
   gameId: string
@@ -45,37 +43,39 @@ const OverviewContent = ({
   const { data } = useGameStore()
 
   return (
-    <div className="relative flex w-full flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 lg:min-w-[333px]">
+    <Box
+      component="div"
+      className="relative flex w-full flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 lg:min-w-[333px]"
+    >
       {hydrated && (
         <AsideLayout
           icon={<OverviewIcon />}
           title={title || t("game_overview")}
         >
-          <PanelContent height="h-[500px]">
-            <div className="text-start text-sm text-neutral-500 lg:pl-4 lg:pr-3 lg:pt-3">
-              <TagMultiple
-                title={`${t("genre")}`}
-                tags={gameTags}
-              />
-              <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-              <TagSingular
-                title={t("developer")}
-                label={gameDeveloper}
-                link={`/publishers/${gameDeveloper.toLocaleLowerCase()}`}
-              />
+          <div className="text-start text-sm text-neutral-500 lg:pl-4 lg:pr-3 lg:pt-3">
+            <TagMultiple
+              title={`${t("genre")}`}
+              tags={gameTags}
+            />
+            <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            <TagSingular
+              title={t("developer")}
+              label={gameDeveloper}
+              link={`/publishers/${gameDeveloper.toLocaleLowerCase()}`}
+            />
 
-              {gamePublisher !== "-" && (
-                <>
-                  <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                  <TagSingular
-                    title={t("publisher")}
-                    label={gamePublisher}
-                    link={`/publishers/${gamePublisher.toLocaleLowerCase()}`}
-                  />
-                </>
-              )}
+            {gamePublisher !== "-" && (
+              <>
+                <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                <TagSingular
+                  title={t("publisher")}
+                  label={gamePublisher}
+                  link={`/publishers/${gamePublisher.toLocaleLowerCase()}`}
+                />
+              </>
+            )}
 
-              {/* <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            {/* <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
               <div className="overview-row grid gap-2 lg:grid-cols-2">
                 <div
                   id="overview-release-date"
@@ -102,23 +102,43 @@ const OverviewContent = ({
                   </div>
                 )}
               </div> */}
-              {gameTypeCode !== "-" && (
-                <>
-                  <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                  <div className="overview-row grid grid-cols-2">
-                    <div
-                      id="overview-game-type"
-                      className="overview-col"
-                    >
-                      <TagSingular
-                        title={t("game_type")}
-                        label={gameTypeCode}
-                      />
-                    </div>
+            {gameTypeCode !== "-" && (
+              <>
+                <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                <div className="overview-row grid grid-cols-2">
+                  <div
+                    id="overview-game-type"
+                    className="overview-col"
+                  >
+                    <TagSingular
+                      title={t("game_type")}
+                      label={gameTypeCode}
+                    />
                   </div>
-                </>
-              )}
-              {gameOwner && gameOwner !== "-" && (
+                </div>
+              </>
+            )}
+            {gameOwner && gameOwner !== "-" && (
+              <>
+                <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                <div className="overview-row grid gap-2 lg:grid-cols-2">
+                  <div
+                    id="overview-game-owner"
+                    className="overview-col whitespace-nowrap"
+                  >
+                    <TagSingular
+                      title={t("game_owner")}
+                      label={gameOwner}
+                      idNFT={gameIdNFT}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            {gameOwnerCommission !== undefined &&
+              stateProfile &&
+              data &&
+              stateProfile.id === data.NFT_info?.owner_id?._id.toString() && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                   <div className="overview-row grid gap-2 lg:grid-cols-2">
@@ -127,46 +147,26 @@ const OverviewContent = ({
                       className="overview-col whitespace-nowrap"
                     >
                       <TagSingular
-                        title={t("game_owner")}
-                        label={gameOwner}
-                        idNFT={gameIdNFT}
+                        title={t("earn_amount")}
+                        label={gameOwnerCommission.total_amount_commission.toString()}
+                      />
+                    </div>
+                  </div>
+                  <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                  <div className="overview-row grid gap-2 lg:grid-cols-2">
+                    <div
+                      id="overview-game-owner"
+                      className="overview-col whitespace-nowrap"
+                    >
+                      <TagSingular
+                        title={t("play_count")}
+                        label={gameOwnerCommission.total_transaction.toString()}
                       />
                     </div>
                   </div>
                 </>
               )}
-              {gameOwnerCommission !== undefined &&
-                stateProfile &&
-                data &&
-                stateProfile.id === data.NFT_info?.owner_id?._id.toString() && (
-                  <>
-                    <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                    <div className="overview-row grid gap-2 lg:grid-cols-2">
-                      <div
-                        id="overview-game-owner"
-                        className="overview-col whitespace-nowrap"
-                      >
-                        <TagSingular
-                          title={t("earn_amount")}
-                          label={gameOwnerCommission.total_amount_commission.toString()}
-                        />
-                      </div>
-                    </div>
-                    <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                    <div className="overview-row grid gap-2 lg:grid-cols-2">
-                      <div
-                        id="overview-game-owner"
-                        className="overview-col whitespace-nowrap"
-                      >
-                        <TagSingular
-                          title={t("play_count")}
-                          label={gameOwnerCommission.total_transaction.toString()}
-                        />
-                      </div>
-                    </div>
-                  </>
-                )}
-              {/* {singleVersion !== "-" && (
+            {/* {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                   <div className="overview-row grid gap-2 lg:grid-cols-2">
@@ -182,42 +182,41 @@ const OverviewContent = ({
                   </div>
                 </>
               )} */}
-              {gamePartnerSocial && gamePartnerSocial.length > 0 && (
-                <>
-                  <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                  <div className="flex flex-wrap">
-                    {gamePartnerSocial.map(
-                      (item, index) =>
-                        item.href && (
-                          <Link
-                            key={Number(index)}
-                            href={item.href}
-                            target="_blank"
-                          >
-                            <ButtonIcon
-                              variants={iconmotion}
-                              whileHover="hover"
-                              transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 4
-                              }}
-                              icon={item.icon}
-                              className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                            />
-                          </Link>
-                        )
-                    )}
-                  </div>
-                </>
-              )}
-              <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-              {/* {gameDescription && <AboutGame text={gameDescription} />} */}
-            </div>
-          </PanelContent>
+            {gamePartnerSocial && gamePartnerSocial.length > 0 && (
+              <>
+                <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                <div className="flex flex-wrap">
+                  {gamePartnerSocial.map(
+                    (item, index) =>
+                      item.href && (
+                        <Link
+                          key={Number(index)}
+                          href={item.href}
+                          target="_blank"
+                        >
+                          <ButtonIcon
+                            variants={iconmotion}
+                            whileHover="hover"
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 4
+                            }}
+                            icon={item.icon}
+                            className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                          />
+                        </Link>
+                      )
+                  )}
+                </div>
+              </>
+            )}
+            <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            {/* {gameDescription && <AboutGame text={gameDescription} />} */}
+          </div>
         </AsideLayout>
       )}
-    </div>
+    </Box>
   )
 }
 

@@ -142,9 +142,6 @@ const useFormLoginController = () => {
         })
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-          if (_error.response.status === 404) {
-            signOut({ redirect: false })
-          }
         })
     } else {
       errorToast(MESSAGES.logged_in_unsuccessfully)
@@ -171,9 +168,6 @@ const useFormLoginController = () => {
         })
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-          if (_error.response.status === 404) {
-            signOut({ redirect: false })
-          }
         })
     } else {
       errorToast(MESSAGES.logged_in_unsuccessfully)
@@ -200,9 +194,6 @@ const useFormLoginController = () => {
         })
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-          if (_error.response.status === 404) {
-            signOut({ redirect: false })
-          }
         })
     } else {
       errorToast(MESSAGES.logged_in_unsuccessfully)
@@ -229,10 +220,6 @@ const useFormLoginController = () => {
               discord_id: session?.user.id
             }).then((res) => {
               if (res.discord_id) {
-                // successToast(MESSAGES.sync_discord_success)
-                // // Update profile to store
-                // onSetProfileData(res)
-                // console.log("discord_id", res.discord_id)
                 successToast(MESSAGES.logged_in_successfully)
               }
             })

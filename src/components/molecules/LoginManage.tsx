@@ -3,7 +3,7 @@ import useLoginTypeStore from "@stores/loginTypes"
 import { useSession } from "next-auth/react"
 import React, { useEffect } from "react"
 
-const LoninManage = () => {
+const LoginManage = () => {
   const { getClickLoginTypes: loginTypes } = useLoginTypeStore()
   const { data: session, status } = useSession()
   const { googleLogin, discordLogin, twitterLogin, facebookLogin } =
@@ -44,4 +44,4 @@ const LoninManage = () => {
   return <></>
 }
 
-export default LoninManage
+export default LoginManage

@@ -26,7 +26,7 @@ const Loading = dynamic(() => import("@components/molecules/Loading"), {
   ssr: false
 })
 
-const LoninManage = dynamic(() => import("@components/molecules/LoninManage"), {
+const LoginManage = dynamic(() => import("@components/molecules/LoginManage"), {
   suspense: true,
   ssr: false
 })
@@ -69,7 +69,7 @@ const MyApp = (props) => {
         <Web3Provider>
           <CacheProvider value={emotionCache}>
             <SessionProvider session={session}>
-              <LoninManage />
+              <LoginManage />
               <ThemeProvider theme={customTheme}>
                 <ProviderApp>
                   <BaseProvider>

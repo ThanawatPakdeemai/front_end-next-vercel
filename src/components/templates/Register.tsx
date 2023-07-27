@@ -68,7 +68,8 @@ const RegisterLayout = () => {
   const router = useRouter()
   const { referral } = router.query
   const { data: session, status } = useSession()
-  const { googleRegister, twitterRegister } = useFormRegisterController()
+  const { googleRegister, twitterRegister, discordRegister } =
+    useFormRegisterController()
 
   // eslint-disable-next-line no-unused-vars
   const { formState } = useForm<TFormData>({
@@ -83,14 +84,14 @@ const RegisterLayout = () => {
   const { getSubmitClickRegister: submitRegisterForm } =
     useRegisterAvatarStore()
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     if (session && status === "authenticated" && registerTypes !== "") {
       switch (registerTypes) {
         case "google":
           googleRegister(referral as string)
           break
         case "discord":
-          // discordLogin()
+          discordRegister(referral as string)
           break
         case "twitter":
           twitterRegister(referral as string)
@@ -105,7 +106,7 @@ const RegisterLayout = () => {
   useEffect(() => {
     let load = false
     if (!load) {
-      handleLogin()
+      handleRegister()
     }
     return () => {
       load = true

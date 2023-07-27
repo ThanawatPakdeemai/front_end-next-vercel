@@ -256,6 +256,32 @@ const useFormRegisterController = () => {
     [errorToast, mutateLoginProvider, successToast, session]
   )
 
+  const discordRegister = useCallback(
+    async (referralId?: string) => {
+      if (session && session?.user?.email && session?.user?.id) {
+        mutateLoginProvider({
+          _email: session.user.email,
+          _provider: "discord",
+          _prevPath: "/",
+          _providerUUID: session.user.id,
+          _referral: referralId || ""
+        })
+          .then((_res) => {
+            if (_res) {
+              successToast(MESSAGES.create_successful_user)
+            }
+          })
+          .catch((_error: IError) => {
+            errorToast(MESSAGES.create_not_successful_user || _error.message)
+          })
+      } else {
+        errorToast(MESSAGES.create_not_successful_user)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [errorToast, mutateLoginProvider, successToast, session]
+  )
+
   const metaMarkLogin = async () => {
     errorToast("This feature is unavailable.")
   }
@@ -314,6 +340,7 @@ const useFormRegisterController = () => {
     facebookRegister,
     twitterRegister,
     googleRegister,
+    discordRegister,
     metaMarkLogin,
     passwordCorrect,
     errors,

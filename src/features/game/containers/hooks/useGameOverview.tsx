@@ -294,47 +294,27 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         }
         break
       case "arcade-emporium":
-        if (gameData) {
+        if (
+          gameData &&
+          gameData.image_nft_arcade_game &&
+          gameData.animation_nft_arcade_game &&
+          gameData.image_background
+        ) {
           gameDataMedia.push(
             {
               id: uuid(),
-              type: "image",
-              src: gameData ? gameData.image_banner : GAME_MOCKUP_CARD[0].src
-            },
-            {
-              id: uuid(),
               type: "video",
-              src: gameData
-                ? gameData.animation_nft_arcade_game
-                : GAME_MOCKUP_CARD[1].src
+              src: gameData.animation_nft_arcade_game
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData
-                ? gameData.image_nft_arcade_game
-                : GAME_MOCKUP_CARD[2].src
+              src: gameData.image_nft_arcade_game
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData
-                ? gameData.image_background
-                : GAME_MOCKUP_CARD[3].src
-            },
-            {
-              id: uuid(),
-              type: "image",
-              src: gameData
-                ? gameData.image_category_list
-                : GAME_MOCKUP_CARD[4].src
-            },
-            {
-              id: uuid(),
-              type: "image",
-              src: gameData
-                ? gameData.image_background
-                : GAME_MOCKUP_CARD[5].src
+              src: gameData.image_background
             }
           )
         }

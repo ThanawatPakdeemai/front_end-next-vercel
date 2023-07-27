@@ -39,22 +39,15 @@ import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { useTranslation } from "react-i18next"
 import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
-import { useSession } from "next-auth/react"
-import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
-import useLoginTypeStore from "@stores/loginTypes"
 
 const Home = () => {
-  const { googleLogin, discordLogin, twitterLogin, facebookLogin } =
-    useFormLoginController()
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
     useGlobal()
-  const { getClickLoginTypes: loginTypes } = useLoginTypeStore()
 
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
-  const { data: session, status } = useSession()
 
   /**
    * @description: Spark fire effect
@@ -126,39 +119,6 @@ const Home = () => {
     loadingDataF2pGames,
     loadingDataP2eGame
   ])
-
-  const handleLogin = () => {
-    if (session && status === "authenticated" && loginTypes !== "") {
-      switch (loginTypes) {
-        case "google":
-          googleLogin()
-          break
-        case "discord":
-          discordLogin()
-          break
-        case "twitter":
-          twitterLogin()
-          break
-        case "facebook":
-          facebookLogin()
-          break
-        default:
-          // Handle unknown login type
-          break
-      }
-    }
-  }
-
-  useEffect(() => {
-    let load = false
-    if (!load) {
-      handleLogin()
-    }
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, status, loginTypes])
 
   return hydrated ? (
     <>

@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from "react"
 import dayjs from "dayjs"
-import { ISummaryItemUsedProps } from "@feature/game/containers/components/molecules/SummaryItemUsed"
-import CardSummaryMain from "@feature/game/containers/components/molecules/CardSummaryMain"
+import { ISummaryItemUsedProps } from "@feature/game/components/molecules/SummaryItemUsed"
+import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
 import { Box } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { IGame } from "@feature/game/interfaces/IGameService"

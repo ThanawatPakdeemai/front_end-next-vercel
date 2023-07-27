@@ -1,9 +1,9 @@
-import Jumbotron from "@components/molecules/Jumbotron"
 import React, { useEffect, useState } from "react"
+import Jumbotron from "@components/molecules/Jumbotron"
 import CardPlatformItems from "@components/organisms/CardPlatformItems"
 import CardFeaturedDeveloperItems from "@components/organisms/CardFeaturedDeveloperItems"
 import CardTestimonialItems from "@components/organisms/CardTestimonialItems"
-import BecomeDeveloperContent from "@components/templates/contents/BecomeDeveloperContent"
+import GameDeveloperContent from "@components/templates/contents/GameDeveloperContent"
 import { Chip } from "@mui/material"
 import HeroSection from "@components/templates/contents/HeroSection"
 import FullWidthContent from "@components/templates/contents/FullWidthContent"
@@ -16,7 +16,7 @@ const ChipStyles = {
   marginBottom: "1.5rem"
 }
 
-function BecomeDeveloperPage() {
+function GameDeveloperPage() {
   const { becomeDeveloperData } = useBecomeDeveloper()
   const [sectionIntro, setSectionIntro] = useState<IWebBecomeDevData>()
   const [sectionExistingNFT, setSectionExistingNFT] =
@@ -83,9 +83,6 @@ function BecomeDeveloperPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [becomeDeveloperData])
 
-  // eslint-disable-next-line no-console
-  console.log("test-sectionSubscribe", sectionSubscribe)
-
   return (
     <main>
       {sectionIntro && (
@@ -106,7 +103,7 @@ function BecomeDeveloperPage() {
         </HeroSection>
       )}
       {sectionExistingNFT && (
-        <BecomeDeveloperContent
+        <GameDeveloperContent
           id="become-developer--section-1"
           image={sectionExistingNFT.image_url}
         >
@@ -128,10 +125,10 @@ function BecomeDeveloperPage() {
               items={sectionExistingNFT.list}
             />
           </div>
-        </BecomeDeveloperContent>
+        </GameDeveloperContent>
       )}
       {sectionFeature && (
-        <BecomeDeveloperContent
+        <GameDeveloperContent
           id="become-developer--section-2"
           className="my-20 min-h-[640px]"
           sxCustomStyled={{
@@ -166,11 +163,11 @@ function BecomeDeveloperPage() {
             />
             <CardFeaturedDeveloperItems items={sectionFeature?.list} />
           </div>
-        </BecomeDeveloperContent>
+        </GameDeveloperContent>
       )}
       {sectionSubscribe && (
         <FullWidthContent>
-          <BecomeDeveloperContent
+          <GameDeveloperContent
             id="become-developer--section-1"
             image={sectionSubscribe.image_url}
             sxCustomStyled={{
@@ -204,11 +201,11 @@ function BecomeDeveloperPage() {
                 hrefButton="/joinus"
               />
             </div>
-          </BecomeDeveloperContent>
+          </GameDeveloperContent>
         </FullWidthContent>
       )}
       {sectionHelping && (
-        <BecomeDeveloperContent
+        <GameDeveloperContent
           id="become-developer--section-3"
           className="flex min-h-[720px] items-center justify-center"
         >
@@ -239,7 +236,7 @@ function BecomeDeveloperPage() {
               />
             </div>
           </div>
-        </BecomeDeveloperContent>
+        </GameDeveloperContent>
       )}
       {sectionFooter && (
         <HeroSection
@@ -284,4 +281,4 @@ function BecomeDeveloperPage() {
   )
 }
 
-export default BecomeDeveloperPage
+export default GameDeveloperPage

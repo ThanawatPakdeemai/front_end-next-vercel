@@ -84,7 +84,7 @@ const useGlobal = (
    * @description check if url is in marketplace
    */
   const isDeveloperPage =
-    router.asPath.includes("become-developer") ||
+    router.asPath.includes("game-developer") ||
     router.asPath.includes("developer")
 
   /**
@@ -239,7 +239,11 @@ const useGlobal = (
    * @description Check if game is free to play
    */
   const isFreeToPlayGame = (_gameData: IGame): boolean => {
-    if (_gameData.game_mode === "free-to-play" && !_gameData.is_NFT) {
+    if (
+      _gameData &&
+      _gameData?.game_mode === "free-to-play" &&
+      !_gameData?.is_NFT
+    ) {
       return true
     }
     return false

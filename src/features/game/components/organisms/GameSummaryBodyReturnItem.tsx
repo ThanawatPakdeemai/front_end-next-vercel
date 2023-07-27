@@ -1,11 +1,11 @@
 import React from "react"
 import _ from "lodash"
 import Tagline from "@components/molecules/tagline/Tagline"
-import GameSummaryRewardFooter from "../templates/GameSummaryRewardFooter"
-import SummaryGameAsset from "../molecules/SummaryGameData"
-import { ISummaryItemUsedProps } from "../molecules/SummaryItemUsed"
-import CardSummaryMain from "../molecules/CardSummaryMain"
-import CardNoReward from "../atoms/CardNoReward"
+import GameSummaryRewardFooter from "@feature/game/components/templates/GameSummaryRewardFooter"
+import SummaryGameAsset from "@feature/game/components/molecules/SummaryGameData"
+import { ISummaryItemUsedProps } from "@feature/game/components/molecules/SummaryItemUsed"
+import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
+import CardNoReward from "@feature/game/components/atoms/CardNoReward"
 
 interface IGameSummaryBodyReturnItem extends ISummaryItemUsedProps {
   date: string | Date

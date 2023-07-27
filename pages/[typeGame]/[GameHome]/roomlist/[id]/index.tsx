@@ -7,6 +7,7 @@ import useGameStore from "@stores/game"
 import CONFIGS from "@configs/index"
 import WaitingLayout from "@src/mobile/components/templates/WaitingLayout"
 import { isMobile } from "@hooks/useGlobal"
+import { BalanceOfProvider } from "@providers/BalanceOfProvider"
 
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
@@ -43,17 +44,21 @@ export default function GameRoomList() {
   }, [gameData])
 
   return (
-    <>
+    <BalanceOfProvider>
       <GameRoomWaitingPage _roomId={id as string} />
-    </>
+    </BalanceOfProvider>
   )
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
-    <WaitingLayout />
-  ) : (
-    <GameRoomLayout>{page}</GameRoomLayout>
+  return (
+    <>
+      {isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+        <WaitingLayout />
+      ) : (
+        <GameRoomLayout>{page}</GameRoomLayout>
+      )}
+    </>
   )
 }
 

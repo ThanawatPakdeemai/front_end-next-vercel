@@ -95,7 +95,7 @@ const TournamentProfile = () => (
     </div>
     <div className="how-to mb-8 p-4 text-neutral-500">
       <p>
-        Become a master archer! Apple Shooter is an exciting and challenging
+        Game a master archer! Apple Shooter is an exciting and challenging
         archery game that tests players` aiming and accuracy skills. In the
         game, players must use their mouse.
       </p>

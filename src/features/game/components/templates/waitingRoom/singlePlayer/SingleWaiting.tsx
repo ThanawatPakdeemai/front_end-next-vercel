@@ -2,140 +2,142 @@ import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import OverviewContent from "@components/organisms/OverviewContent"
 import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
-import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
+import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
 import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
-import useProfileStore from "@stores/profileStore"
-import { useRouter } from "next/router"
-import React, { useCallback, useEffect, useMemo } from "react"
-import { unstable_batchedUpdates } from "react-dom"
+import React from "react"
 
 export interface IPropWaitingSingle {
   _roomId: string
 }
 
 const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
-  const profile = useProfileStore((state) => state.profile.data)
   const { data } = useGameStore()
-  const router = useRouter()
-  const { isLoading, playerGameSingle, fetchPlayerGameSingle } =
-    useGetCurrentPlayerGameSingle()
+  // const { isLoading, playerGameSingle, fetchPlayerGameSingle } =
+  //   useGetCurrentPlayerGameSingle()
   const { getGameMode, isFreeToEarnGame } = useGlobal()
+  const {
+    onPlayGame,
+    playerGameSingle,
+    loadingPlayer: isLoading,
+    playersMap,
+    outRoom
+  } = useWaitingSingle()
 
-  const fetchPlayers = useCallback(
-    (_type: "in" | "out") => {
-      if (data && profile && _roomId && fetchPlayerGameSingle) {
-        unstable_batchedUpdates(() => {
-          fetchPlayerGameSingle({
-            _roomId,
-            _playerId: profile.id,
-            _type
-          })
-        })
-      }
-    },
-    [_roomId, fetchPlayerGameSingle, data, profile]
-  )
+  // const fetchPlayers = useCallback(
+  //   (_type: "in" | "out") => {
+  //     if (data && profile && _roomId && fetchPlayerGameSingle) {
+  //       unstable_batchedUpdates(() => {
+  //         fetchPlayerGameSingle({
+  //           _roomId,
+  //           _playerId: profile.id,
+  //           _type
+  //         })
+  //       })
+  //     }
+  //   },
+  //   [_roomId, fetchPlayerGameSingle, data, profile]
+  // )
 
-  useEffect(() => {
-    let load = false
+  // useEffect(() => {
+  //   let load = false
 
-    if (!load) fetchPlayers("in")
+  //   if (!load) fetchPlayers("in")
 
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  //   return () => {
+  //     load = true
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  useEffect(() => {
-    let load = false
+  // useEffect(() => {
+  //   let load = false
 
-    if (!load) {
-      router.beforePopState(({ as }) => {
-        if (as !== router.asPath) {
-          // Will run when leaving the current page; on back/forward actions
-          // out room this game
-          fetchPlayers("out")
-        }
-        return true
-      })
-    }
+  //   if (!load) {
+  //     router.beforePopState(({ as }) => {
+  //       if (as !== router.asPath) {
+  //         // Will run when leaving the current page; on back/forward actions
+  //         // out room this game
+  //         fetchPlayers("out")
+  //       }
+  //       return true
+  //     })
+  //   }
 
-    return () => {
-      load = true
-      router.beforePopState(() => true)
-    }
-  }, [fetchPlayers, router])
+  //   return () => {
+  //     load = true
+  //     router.beforePopState(() => true)
+  //   }
+  // }, [fetchPlayers, router])
+  // console.log(playerGameSingle)
 
-  const playersMap = useMemo(() => {
-    const player_in = playerGameSingle?.current_player ?? []
-    const uniquePlayerIn = player_in.filter(
-      (thing, index, self) =>
-        index === self.findIndex((t) => t.player_id === thing.player_id)
-    )
+  // const playersMap = useMemo(() => {
+  //   const player_in = playerGameSingle?.current_player ?? []
+  //   const uniquePlayerIn = player_in.filter(
+  //     (thing, index, self) =>
+  //       index === self.findIndex((t) => t.player_id === thing.player_id)
+  //   )
 
-    const playerMe = uniquePlayerIn.find((ele) => ele.player_id === profile?.id)
+  //   const playerMe = uniquePlayerIn.find((ele) => ele.player_id === profile?.id)
 
-    const playerMeIndex = uniquePlayerIn.findIndex(
-      (ele) => ele.player_id === profile?.id
-    )
-    if (playerMeIndex !== 0) {
-      uniquePlayerIn.splice(playerMeIndex, 1)
-      if (playerMe) uniquePlayerIn.splice(0, 0, playerMe)
-    }
+  //   const playerMeIndex = uniquePlayerIn.findIndex(
+  //     (ele) => ele.player_id === profile?.id
+  //   )
+  //   if (playerMeIndex !== 0) {
+  //     uniquePlayerIn.splice(playerMeIndex, 1)
+  //     if (playerMe) uniquePlayerIn.splice(0, 0, playerMe)
+  //   }
 
-    const player_blank = Array(
-      (playerGameSingle?.max_players ?? 8) - uniquePlayerIn.length
-    ).map((ele) => ele)
-    const itemPlayer = [...uniquePlayerIn, ...player_blank]
-    return itemPlayer
-  }, [
-    playerGameSingle?.current_player,
-    playerGameSingle?.max_players,
-    profile?.id
-  ])
+  //   const player_blank = Array(
+  //     (playerGameSingle?.max_players ?? 8) - uniquePlayerIn.length
+  //   ).map((ele) => ele)
+  //   const itemPlayer = [...uniquePlayerIn, ...player_blank]
+  //   return itemPlayer
+  // }, [
+  //   playerGameSingle?.current_player,
+  //   playerGameSingle?.max_players,
+  //   profile?.id
+  // ])
 
-  const playersMe = useMemo(() => {
-    if (playersMap)
-      return playersMap?.find((ele) => ele?.player_id === profile?.id)
-  }, [playersMap, profile?.id])
+  // const playersMe = useMemo(() => {
+  //   if (playersMap)
+  //     return playersMap?.find((ele) => ele?.player_id === profile?.id)
+  // }, [playersMap, profile?.id])
 
-  const outRoomLink = useCallback(async () => {
-    if (data)
-      await router.push(`/${router.query.typeGame}/${data.path}/roomlist`)
-  }, [data, router])
+  // const outRoomLink = useCallback(() => {
+  //   if (data) router.push(`/${router.query.typeGame}/${data.path}/roomlist`)
+  // }, [data, router])
 
-  const outRoom = async () => {
-    if (_roomId && profile) {
-      await fetchPlayerGameSingle({
-        _roomId,
-        _playerId: profile.id,
-        _type: "out"
-      })
-      await outRoomLink()
-    }
-  }
+  // const outRoom = async () => {
+  //   if (_roomId && profile) {
+  //     outRoomLink()
+  //     fetchPlayerGameSingle({
+  //       _roomId,
+  //       _playerId: profile.id,
+  //       _type: "out"
+  //     })
+  //   }
+  // }
 
-  useEffect(() => {
-    let load = false
+  // useEffect(() => {
+  //   let load = false
 
-    if (!load) {
-      if (playersMe) {
-        if (playersMe.status === "played") {
-          outRoomLink()
-        }
-      }
-    }
+  //   if (!load) {
+  //     if (playersMe) {
+  //       if (playersMe.status === "played") {
+  //         outRoomLink()
+  //       }
+  //     }
+  //   }
 
-    return () => {
-      load = true
-    }
-  }, [outRoomLink, playersMe])
+  //   return () => {
+  //     load = true
+  //   }
+  // }, [outRoomLink, playersMe])
 
   return (
     <>
@@ -189,7 +191,10 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
                       }}
                       onOutRoom={outRoom}
                     />
-                    <SeatPlayersSingle players={playersMap} />
+                    <SeatPlayersSingle
+                      players={playersMap}
+                      onPlayGame={onPlayGame}
+                    />
                   </>
                 ) : (
                   <>

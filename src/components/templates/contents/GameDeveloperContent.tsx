@@ -4,7 +4,7 @@ import Jumbotron from "@components/molecules/Jumbotron"
 import { IMAGES } from "@constants/images"
 import { Box, SxProps, Theme } from "@mui/material"
 
-interface IBecomeDeveloperContentProps {
+interface IGameDeveloperContentProps {
   id: string
   image?: string
   sxCustomStyled?: SxProps<Theme>
@@ -12,7 +12,7 @@ interface IBecomeDeveloperContentProps {
   children?: React.ReactNode
 }
 
-const BecomeDeveloperContent = ({
+const GameDeveloperContent = ({
   id,
   sxCustomStyled = {},
   className,
@@ -21,7 +21,7 @@ const BecomeDeveloperContent = ({
     <Jumbotron
       detail="NAKAMOTO.GAMES"
       text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
-      textButton="Subscribe Now"
+      textButton="Submit Game"
       className="w-[620px]"
       sxCustomStyled={{
         ".jumbotron-title--text": {
@@ -30,16 +30,16 @@ const BecomeDeveloperContent = ({
       }}
     />
   )
-}: IBecomeDeveloperContentProps) => (
+}: IGameDeveloperContentProps) => (
   <Box
     id={id}
     component="section"
     className={`container mx-auto ${className}`}
     sx={{ ...sxCustomStyled }}
   >
-    <div className="become-developer__wrapper flex min-h-[500px] items-center justify-between gap-20">
+    <div className="game-developer__wrapper flex min-h-[500px] items-center justify-between gap-20">
       {image && (
-        <div className="become-developer__image max-w-[50%] flex-1">
+        <div className="game-developer__image max-w-[50%] flex-1">
           <ImageCustom
             src={image}
             alt={IMAGES.becomeDeveloperSection1.alt}
@@ -48,9 +48,9 @@ const BecomeDeveloperContent = ({
           />
         </div>
       )}
-      <div className="become-developer__content flex-1">{children}</div>
+      <div className="game-developer__content flex-1">{children}</div>
     </div>
   </Box>
 )
 
-export default BecomeDeveloperContent
+export default GameDeveloperContent

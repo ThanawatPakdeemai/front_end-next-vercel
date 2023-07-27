@@ -26,6 +26,11 @@ const Loading = dynamic(() => import("@components/molecules/Loading"), {
   ssr: false
 })
 
+const LoginManage = dynamic(() => import("@components/molecules/LoginManage"), {
+  suspense: true,
+  ssr: false
+})
+
 dayjs.extend(rt)
 
 const clientSideEmotionCache = createEmotionCache()
@@ -64,6 +69,7 @@ const MyApp = (props) => {
         <Web3Provider>
           <CacheProvider value={emotionCache}>
             <SessionProvider session={session}>
+              <LoginManage />
               <ThemeProvider theme={customTheme}>
                 <ProviderApp>
                   <BaseProvider>

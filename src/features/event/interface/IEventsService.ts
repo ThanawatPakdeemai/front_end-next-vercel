@@ -55,6 +55,7 @@ export interface IGetEventResponseData {
   fixed_rewards: IFixedReward[]
   shot_detail: string
   user_limit: number
+  is_show_leaderboard: boolean
 }
 
 export interface IGetEventResponseInfo {

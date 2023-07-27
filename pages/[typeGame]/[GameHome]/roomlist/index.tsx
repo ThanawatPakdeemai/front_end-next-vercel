@@ -11,6 +11,7 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
 import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
+import { BalanceOfProvider } from "@providers/BalanceOfProvider"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -223,7 +224,7 @@ export default function GameRoomList() {
     return renderContentDesktop()
   }
 
-  return renderDefaultPage()
+  return <BalanceOfProvider>{renderDefaultPage()}</BalanceOfProvider>
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {

@@ -30,7 +30,7 @@ import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import CONFIGS from "@configs/index"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
+// import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
@@ -68,7 +68,6 @@ const FormLogin = () => {
     await setLoginTypes(_typeLogin)
     await signIn(_typeLogin)
   }
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitLogin)}>
@@ -230,7 +229,7 @@ const FormLogin = () => {
         <div className="flex w-full flex-row flex-wrap justify-between gap-2">
           {CONFIGS.MODE === "production" ? undefined : (
             <>
-              <ButtonIcon
+              {/* <ButtonIcon
                 whileHover="hover"
                 transition={{
                   type: "spring",
@@ -240,7 +239,7 @@ const FormLogin = () => {
                 onClick={() => handleLogin("facebook")}
                 icon={<FacebookIcon />}
                 className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
+              /> */}
               <ButtonIcon
                 whileHover="hover"
                 transition={{

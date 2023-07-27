@@ -139,10 +139,7 @@ export const getGeoInfo = () => {
   return Promise.resolve(promise)
 }
 
-export const linkToTelegram = (data: {
-  player_id: string
-  telegram_id: number
-}) =>
+export const linkToTelegram = (data: { email: string; telegram_id: number }) =>
   new Promise<any>((resolve, reject) => {
     services
       .put<any>(`${CONFIGS.BASE_URL.API}/profile/link-profile-telegram/`, {
@@ -156,13 +153,10 @@ export const linkToTelegram = (data: {
       })
   })
 
-export const linkToFacebook = (data: {
-  player_id: string
-  facebook_id: string
-}) =>
+export const linkToFacebook = (data: { email: string; facebook_id: string }) =>
   new Promise<IProfile>((resolve, reject) => {
     services
-      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-facebook-profile/`, {
+      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-profile-facebook/`, {
         ...data
       })
       .then((res) => {
@@ -173,13 +167,10 @@ export const linkToFacebook = (data: {
       })
   })
 
-export const linkToDiscord = (data: {
-  player_id: string
-  discord_id: string
-}) =>
+export const linkToDiscord = (data: { email: string; discord_id: string }) =>
   new Promise<IProfile>((resolve, reject) => {
     services
-      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-discord-profile/`, {
+      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-profile-discord/`, {
         ...data
       })
       .then((res) => {

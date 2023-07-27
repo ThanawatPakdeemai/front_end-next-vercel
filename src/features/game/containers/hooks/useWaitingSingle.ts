@@ -1,7 +1,6 @@
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
 import useGameStore from "@stores/game"
-import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useCallback, useMemo, useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import { unstable_batchedUpdates } from "react-dom"
@@ -14,6 +13,7 @@ import CONFIGS from "@configs/index"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGameGlobal from "@hooks/useGameGlobal"
 import useLoadingStore from "@stores/loading"
+import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 import useGetCurrentPlayerGameSingle from "./useGetCurrentPlayerGameSingle"
 import useGetGameRoomById from "./useGetGameRoomById"
 
@@ -28,7 +28,10 @@ const useWaitingSingle = () => {
   const { id: roomId, GameHome } = router.query
   const { gameRoomById } = useGetGameRoomById(roomId as string)
 
-  const { balanceofItem } = useBuyGameItemController()
+  // const { balanceofItem } = useBuyGameItemController()
+  const { balanceofItem } = useBalanceOfProvider()
+
+  // const balanceofItem = { data: 1 }
   const { errorToast } = useToast()
   const { address } = useWeb3Provider()
   const [gameUrl, setGameUrl] = useState<string>("")
@@ -374,6 +377,7 @@ const useWaitingSingle = () => {
     GameHome,
     getGameMode,
     loadingPlayer,
+    fetchPlayerGameSingle,
     gameUrl,
     onPlayGame,
     playersMap,

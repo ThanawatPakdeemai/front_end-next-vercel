@@ -63,7 +63,7 @@ const RightMenuDeveloper = () => {
       >
         <ButtonLink
           href="/joinus"
-          text="Submit"
+          text="Submit Game"
           icon={<></>}
           size="large"
           color="success"

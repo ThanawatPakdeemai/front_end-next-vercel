@@ -15,6 +15,7 @@ import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 import useLoadingStore from "@stores/loading"
 import GameReviews from "@feature/game/components/molecules/GameReviews"
 import CONFIGS from "@configs/index"
+import { BalanceOfProvider } from "@providers/BalanceOfProvider"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -318,10 +319,15 @@ function GameLobbyDesktop() {
 }
 
 export default function GameLobby() {
-  if (isMobile) {
-    return <GameLobbyMobile />
-  }
-  return GameLobbyDesktop()
+  // if (isMobile) {
+  //   return <GameLobbyMobile />
+  // }
+  // return GameLobbyDesktop()
+  return (
+    <BalanceOfProvider>
+      {isMobile ? <GameLobbyMobile /> : GameLobbyDesktop()}
+    </BalanceOfProvider>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => ({

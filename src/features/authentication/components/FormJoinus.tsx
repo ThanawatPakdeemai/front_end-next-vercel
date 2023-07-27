@@ -428,6 +428,9 @@ const FormJoinus = () => {
                 />
               }
             />
+            <FormLabel sx={StyledFormLabel}>
+              {`Please enter some link that about video games like video trailers `}
+            </FormLabel>
           </Grid>
         </Grid>
 
@@ -525,7 +528,7 @@ const FormJoinus = () => {
             <ButtonToggleIcon
               type="submit"
               startIcon={<IEdit />}
-              text="Regiter"
+              text="Register"
               className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
             />
           </Grid>

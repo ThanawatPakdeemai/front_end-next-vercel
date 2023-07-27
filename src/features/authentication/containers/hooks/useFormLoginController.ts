@@ -11,9 +11,7 @@ import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Web3 from "web3"
 import { useCallback } from "react"
-// import { IProfileFaceBook } from "@feature/profile/interfaces/IProfileService"
-// import { useLinkToFacebook } from "@feature/profile/containers/hook/useSyncProfileQuery"
-// import useProfileController from "@feature/profile/containers/hook/useProfileController"
+import { useLinkToDiscord } from "@feature/profile/containers/hook/useSyncProfileQuery"
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 
@@ -39,6 +37,7 @@ const useFormLoginController = () => {
   // const { fetchProfile } = useProfileController()
 
   const { data: session }: any = useSession()
+  const { mutateLinkToDiscord } = useLinkToDiscord()
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -138,9 +137,6 @@ const useFormLoginController = () => {
         })
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-          if (_error.response.status === 404) {
-            signOut({ redirect: false })
-          }
         })
     } else {
       errorToast(MESSAGES.logged_in_unsuccessfully)
@@ -167,9 +163,6 @@ const useFormLoginController = () => {
         })
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-          if (_error.response.status === 404) {
-            signOut({ redirect: false })
-          }
         })
     } else {
       errorToast(MESSAGES.logged_in_unsuccessfully)
@@ -184,7 +177,7 @@ const useFormLoginController = () => {
     if (session && session?.user?.email && session?.user?.id) {
       mutateLoginProvider({
         _email: session.user.email,
-        _provider: "google",
+        _provider: "twitter",
         _prevPath: "/",
         _providerUUID: session.user.id,
         _referral: ""
@@ -196,9 +189,6 @@ const useFormLoginController = () => {
         })
         .catch((_error) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-          if (_error.response.status === 404) {
-            signOut({ redirect: false })
-          }
         })
     } else {
       errorToast(MESSAGES.logged_in_unsuccessfully)
@@ -219,7 +209,15 @@ const useFormLoginController = () => {
         _referral: ""
       })
         .then((_res) => {
-          if (_res) {
+          if (_res && _res.email) {
+            mutateLinkToDiscord({
+              email: _res.email,
+              discord_id: session?.user.id
+            }).then((res) => {
+              if (res.discord_id) {
+                successToast(MESSAGES.logged_in_successfully)
+              }
+            })
             successToast(MESSAGES.logged_in_successfully)
           }
         })

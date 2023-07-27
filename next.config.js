@@ -64,6 +64,16 @@ const nextConfig = {
         protocol: "https",
         hostname: "ipfs.io",
         pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "nakamoto-prod-s3.s3.eu-central-1.amazonaws.com",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "ipfs.io",
+        pathname: "/**"
       }
     ]
     // domains: ["nakamoto-prod-new.s3.eu-central-1.amazonaws.com"]

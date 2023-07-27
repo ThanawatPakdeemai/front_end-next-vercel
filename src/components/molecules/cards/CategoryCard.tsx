@@ -83,7 +83,7 @@ const CategoryCard = ({
         >
           <Image
             src={img}
-            alt="home-slide"
+            alt={text}
             width={264}
             height={324}
             className="rounded-md object-cover group-hover:h-[250px]"

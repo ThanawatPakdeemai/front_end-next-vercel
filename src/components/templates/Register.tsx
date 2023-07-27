@@ -84,7 +84,7 @@ const RegisterLayout = () => {
   const { getSubmitClickRegister: submitRegisterForm } =
     useRegisterAvatarStore()
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     if (session && status === "authenticated" && registerTypes !== "") {
       switch (registerTypes) {
         case "google":
@@ -106,7 +106,7 @@ const RegisterLayout = () => {
   useEffect(() => {
     let load = false
     if (!load) {
-      handleLogin()
+      handleRegister()
     }
     return () => {
       load = true

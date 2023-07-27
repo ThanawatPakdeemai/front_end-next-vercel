@@ -171,7 +171,7 @@ const ProfileContent = () => {
       const telegramId = String(telegramParse.id)
       if (telegramId) {
         mutateLinkToTelegram({
-          player_id: idPlayer,
+          email: idPlayer,
           telegram_id: Number(telegramId)
         })
         localStorage.removeItem("telegram-params")

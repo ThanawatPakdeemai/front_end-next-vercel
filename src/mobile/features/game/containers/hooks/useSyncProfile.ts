@@ -32,7 +32,7 @@ const useSyncProfile = () => {
       }
       // If user not exist in website, then create new user in website
       mutateLinkToFacebook({
-        player_id: profile.id,
+        email: profile.email,
         facebook_id: response.userID
       }).then((res) => {
         if (res.facebook_id) {
@@ -63,7 +63,7 @@ const useSyncProfile = () => {
       if (profile && !profile.telegram_id) {
         // If user not exist in website, then create new user in website
         mutateLinkToTelegram({
-          player_id: profile.id,
+          email: profile.email,
           telegram_id: response.id
         }).then(async (res) => {
           if (res?.data?.telegram_id) {
@@ -89,7 +89,7 @@ const useSyncProfile = () => {
       }
 
       mutateLinkToDiscord({
-        player_id: profile.id,
+        email: profile.email,
         discord_id: response.userID
       }).then((res) => {
         if (res.discord_id) {

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from "react"
 import { Box, Button, Divider, Typography } from "@mui/material"
 import CardNoReward from "@feature/game/components/atoms/CardNoReward"
@@ -5,7 +6,7 @@ import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+// import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import { signIn } from "next-auth/react"
 import useLoginTypeStore from "@stores/loginTypes"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
@@ -39,11 +40,10 @@ const SignInLayout = () => {
         <Typography className="my-8 text-center font-urbanist text-3xl font-bold uppercase text-red-card">
           Welcome Back
         </Typography>
-        <Box component="div">
+        {/* <Box component="div">
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            // onClick={googleLogin}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
@@ -52,7 +52,7 @@ const SignInLayout = () => {
               <span>Sign in with Facebook</span>
             </div>
           </Button>
-        </Box>
+        </Box> */}
         <Box component="div">
           <Button
             variant="contained"

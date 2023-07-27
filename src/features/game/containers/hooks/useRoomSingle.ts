@@ -39,7 +39,8 @@ const useRoomSingle = () => {
 
   const { allGameRoomsById, isLoading: loadingAllroomById } =
     useGetAllGameRoomsById({
-      _gameId: !profile && gameData ? gameData._id : ""
+      _gameId: !profile && gameData ? gameData._id : "",
+      _itemId: (itemSizeId as string) || ((item as string) ?? "")
     })
 
   const intoRoomGame = useCallback(

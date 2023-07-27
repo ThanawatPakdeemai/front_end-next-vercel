@@ -2,7 +2,7 @@ import { IGameId } from "@feature/game/interfaces/IGameService"
 import { useQuery } from "@tanstack/react-query"
 import { getGameRoomWithoutEmail } from "../services/game.service"
 
-const useGetAllGameRoomsById = ({ _gameId }: IGameId) => {
+const useGetAllGameRoomsById = ({ _gameId, _itemId }: IGameId) => {
   const {
     data: allGameRoomsById,
     error,
@@ -11,7 +11,7 @@ const useGetAllGameRoomsById = ({ _gameId }: IGameId) => {
     refetch: refetchAllGameRooms
   } = useQuery({
     queryKey: ["getAllGameRooms", { _gameId }],
-    queryFn: () => getGameRoomWithoutEmail(_gameId),
+    queryFn: () => getGameRoomWithoutEmail(_gameId, _itemId),
     retry: false,
     enabled: !!_gameId,
     cacheTime: 0

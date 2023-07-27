@@ -174,7 +174,7 @@ export const getGameRoomWithoutEmail = (_gameId: string, _itemId: string) =>
   new Promise<IGameRoomDetailService>((resolve, reject) => {
     services
       .get<IGameRoomDetailService>(
-        `/gameroom/without-email/${_gameId}/${_itemId}`
+        `/gameroom/without-email/new/${_gameId}/${_itemId}`
       )
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))

@@ -33,7 +33,8 @@ const GameRoomList = () => {
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({
-    _gameId: !profile && data ? data._id : ""
+    _gameId: !profile && data ? data._id : "",
+    _itemId: (itemSizeId as string) || ((item as string) ?? "")
   })
 
   const renderRoomName = (): string => {

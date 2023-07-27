@@ -406,6 +406,7 @@ export interface IGameCategoryService extends IFormatService {
 
 export interface IGameId {
   _gameId: string
+  _itemId: string
 }
 export interface IGetAllGameRooms extends IGameId {
   _email: string

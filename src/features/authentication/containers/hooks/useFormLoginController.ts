@@ -209,7 +209,7 @@ const useFormLoginController = () => {
         _referral: ""
       })
         .then((_res) => {
-          if (_res && _res.id) {
+          if (_res && _res.email) {
             mutateLinkToDiscord({
               email: _res.email,
               discord_id: session?.user.id

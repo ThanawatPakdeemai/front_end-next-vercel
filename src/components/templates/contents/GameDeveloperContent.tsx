@@ -42,9 +42,9 @@ const GameDeveloperContent = ({
         <div className="game-developer__image max-w-[50%] flex-1">
           <ImageCustom
             src={image}
-            alt={IMAGES.becomeDeveloperSection1.alt}
-            width={IMAGES.becomeDeveloperSection1.width}
-            height={IMAGES.becomeDeveloperSection1.height}
+            alt={IMAGES.gameDeveloperSection1.alt}
+            width={IMAGES.gameDeveloperSection1.width}
+            height={IMAGES.gameDeveloperSection1.height}
           />
         </div>
       )}

@@ -261,54 +261,34 @@ function GameLobbyDesktop() {
           />
         }
         component2={
-          CONFIGS.MODE === "development" ? (
-            <RightSidebarContentEffect
-              className="mb-[64px]"
-              content={
-                <FullWidthContent
-                  sxCustomStyled={{
-                    "&.container": {
-                      maxWidth: "100%!important",
-                      "&.container-fullWidth": {
-                        padding: "49px"
-                      }
+          <RightSidebarContentEffect
+            className="mb-[64px]"
+            content={
+              <FullWidthContent
+                sxCustomStyled={{
+                  "&.container": {
+                    maxWidth: "100%!important",
+                    "&.container-fullWidth": {
+                      padding: "49px"
                     }
-                  }}
-                >
-                  <TabProvider>
-                    <GameTabsVertical
-                      gameId={gameData.id}
-                      gameType={getGameMode(gameData)}
-                    />
-                  </TabProvider>
-                </FullWidthContent>
-              }
-              aside={
-                <GameReviews
-                  gameType={getGameMode(gameData)}
-                  gameId={gameData.id}
-                />
-              }
-            />
-          ) : (
-            <FullWidthContent
-              sxCustomStyled={{
-                "&.container": {
-                  maxWidth: "100%!important",
-                  "&.container-fullWidth": {
-                    padding: "49px"
                   }
-                }
-              }}
-            >
-              <TabProvider>
-                <GameTabsVertical
-                  gameId={gameData.id}
-                  gameType={getGameMode(gameData)}
-                />
-              </TabProvider>
-            </FullWidthContent>
-          )
+                }}
+              >
+                <TabProvider>
+                  <GameTabsVertical
+                    gameId={gameData.id}
+                    gameType={getGameMode(gameData)}
+                  />
+                </TabProvider>
+              </FullWidthContent>
+            }
+            aside={
+              <GameReviews
+                gameType={getGameMode(gameData)}
+                gameId={gameData.id}
+              />
+            }
+          />
         }
       />
     ) : (

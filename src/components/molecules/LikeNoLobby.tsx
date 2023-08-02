@@ -9,6 +9,7 @@ import GaugeStats from "./GaugeStats"
 
 interface IProp {
   value: number
+  hadVote?: boolean | undefined
   maxValue?: number
   imgSrc?: string
   imgAlt?: string
@@ -23,6 +24,7 @@ interface IProp {
 
 const LikeNoLobby = ({
   value,
+  hadVote = undefined,
   maxValue,
   imgSrc,
   imgAlt,
@@ -50,34 +52,46 @@ const LikeNoLobby = ({
             <span className="w-[60%] rounded-[8px] border-[1px]  border-neutral-700 bg-black-100  text-[10px] text-neutral-300">
               {parseFloat(value.toString()).toFixed(2)} %
             </span>
-            <span className="w-full  text-white-default">
+            <span className="h-10 w-full text-white-default">
               Did you like this game ?
             </span>
             <div className="flex w-full flex-row justify-center gap-2">
               <button
                 type="button"
-                className="flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px]  border-neutral-700   bg-neutral-700 p-[6px] font-neue-machina  capitalize text-neutral-500"
+                className={`flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px] border-neutral-700 bg-neutral-700   p-[6px] font-neue-machina capitalize  text-neutral-500 hover:opacity-50  ${
+                  hadVote
+                    ? "border-varidian-default text-varidian-default"
+                    : "text-neutral-500"
+                }`}
                 onClick={() => onHandleClick(true)}
                 disabled={isLoading}
               >
                 <IconLiker.Like
                   width={12}
                   height={12}
-                  className="mr-2 fill-neutral-500"
+                  className={`mr-2 ${
+                    hadVote ? "fill-varidian-default" : "fill-neutral-500"
+                  }`}
                 />
                 <p>yes</p>
               </button>
 
               <button
                 type="button"
-                className="flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px]  border-neutral-700   bg-neutral-700 p-[6px] font-neue-machina  capitalize text-neutral-500"
+                className={`flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px] border-neutral-700 bg-neutral-700 hover:opacity-50 ${
+                  hadVote === false
+                    ? "border-error-main text-error-main"
+                    : "text-neutral-500"
+                } p-[6px] font-neue-machina  capitalize`}
                 onClick={() => onHandleClick(false)}
                 disabled={isLoading}
               >
                 <IconLiker.UnLike
                   width={12}
                   height={12}
-                  className="mr-2 fill-neutral-500"
+                  className={`mr-2 ${
+                    hadVote === false ? "fill-error-main" : "fill-neutral-500"
+                  }`}
                 />
                 <p>no</p>
               </button>
@@ -110,14 +124,14 @@ const LikeNoLobby = ({
         <div className="flex w-full flex-row justify-center gap-2">
           <ButtonLike
             type="like"
-            active={false}
+            active={!!hadVote}
             className="border-[1px] border-neutral-700 border-opacity-80 bg-neutral-700 p-4"
             onClick={() => onHandleClick(true)}
             disabled={isLoading}
           />
           <ButtonLike
             type="unlike"
-            active={false}
+            active={!!(hadVote === false)}
             className="border-[1px] border-neutral-700 border-opacity-60 bg-neutral-700 p-4"
             onClick={() => onHandleClick(false)}
             disabled={isLoading}

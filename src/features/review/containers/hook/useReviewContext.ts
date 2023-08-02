@@ -78,33 +78,33 @@ const useReviewContext = (_id: string) => {
     _action: "add" | "update" | "delete",
     _review: IReviewList
   ) => {
+    const _data = previewList.length <= limit ? previewList : reviewList
     let _dummy: Array<IReviewList> = []
     switch (_action) {
       case "add":
-        _dummy = [...reviewList, _review]
+        _dummy = [..._data, _review]
         break
       case "update": {
-        const _findOwnerReview = reviewList.findIndex(
-          (f) => f.id === _review.id
-        )
-        if (reviewList.length > 0 && _findOwnerReview >= 0) {
-          _dummy = reviewList.splice(_findOwnerReview, 1, _review) && reviewList
+        const _findOwnerReview = _data.findIndex((f) => f.id === _review.id)
+        if (_data.length > 0 && _findOwnerReview >= 0) {
+          _dummy = _data.splice(_findOwnerReview, 1, _review) && _data
         }
         break
       }
       case "delete": {
-        const _findOwnerReview = reviewList.findIndex(
-          (f) => f.id === _review.id
-        )
-        if (reviewList.length > 0 && _findOwnerReview >= 0) {
-          _dummy = reviewList.splice(_findOwnerReview, 1) && reviewList
+        const _findOwnerReview = _data.findIndex((f) => f.id === _review.id)
+        if (_data.length > 0 && _findOwnerReview >= 0) {
+          _dummy = _data.splice(_findOwnerReview, 1) && _data
         }
         break
       }
       default:
         break
     }
-    if (_dummy && _dummy !== reviewList) setReviewList(_dummy)
+    if (_dummy && _dummy !== _data) {
+      if (reviewList.length <= limit) setPreviewList(_dummy)
+      else setReviewList(_dummy)
+    }
     if (_action === "delete") {
       setOwnerReview(undefined)
       getReviewListById(false)

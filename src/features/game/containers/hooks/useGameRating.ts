@@ -114,6 +114,7 @@ const useGameRating = (_gameId: string | undefined) => {
   }
 
   return {
+    ownerRating,
     ratingGame,
     gameRatingLoading,
     mutateSendGameRating,

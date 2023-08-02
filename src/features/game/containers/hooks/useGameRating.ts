@@ -7,7 +7,7 @@ import {
   getGameRatingById,
   updateGameRating
 } from "@feature/game/containers/services/gameRating.service"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   IGameRatingData,
   IGameRatingServ
@@ -114,6 +114,7 @@ const useGameRating = (_gameId: string | undefined) => {
   }
 
   return {
+    ownerRating,
     ratingGame,
     gameRatingLoading,
     mutateSendGameRating,

@@ -27,7 +27,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
     page,
     setPage,
     ownerReview,
-    reviewOwnerStatus
+    reviewLoading
   } = useReviewProvider()
   const { profile } = useProfileStore()
   const [openAdd, setOpenAdd] = React.useState<boolean>(false)
@@ -99,6 +99,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
               className="!h-10 rounded-[20px] text-sm capitalize"
               onClick={onOpenAddModalChange}
               startIcon={<ChatBoxIcon />}
+              disabled={!!reviewLoading}
             >
               add review
             </Button>
@@ -132,7 +133,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
           )}
         </div>
 
-        {reviewOwnerStatus ? (
+        {!reviewLoading ? (
           <ModalAddReview
             gameId={gameId}
             method={ownerReview ? "edit" : "add"}

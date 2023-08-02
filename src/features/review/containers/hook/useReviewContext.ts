@@ -102,8 +102,10 @@ const useReviewContext = (_id: string) => {
         break
     }
     if (_dummy && _dummy !== _data) {
-      if (reviewList.length <= limit) setPreviewList(_dummy)
-      else setReviewList(_dummy)
+      if (reviewList.length <= limit) {
+        setPreviewList(_dummy)
+      }
+      setReviewList(_dummy)
     }
     if (_action === "delete") {
       setOwnerReview(undefined)

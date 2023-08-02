@@ -60,7 +60,7 @@ const LikeNoLobby = ({
                 type="button"
                 className={`flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px] border-neutral-700 bg-neutral-700   p-[6px] font-neue-machina capitalize  text-neutral-500 hover:opacity-50  ${
                   hadVote
-                    ? "border-varidian-default text-varidian-default"
+                    ? "!border-varidian-default text-varidian-default"
                     : "text-neutral-500"
                 }`}
                 onClick={() => onHandleClick(true)}
@@ -80,7 +80,7 @@ const LikeNoLobby = ({
                 type="button"
                 className={`flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px] border-neutral-700 bg-neutral-700 hover:opacity-50 ${
                   hadVote === false
-                    ? "border-error-main text-error-main"
+                    ? "!border-error-main text-error-main"
                     : "text-neutral-500"
                 } p-[6px] font-neue-machina  capitalize`}
                 onClick={() => onHandleClick(false)}

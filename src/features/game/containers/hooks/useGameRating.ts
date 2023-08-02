@@ -7,7 +7,7 @@ import {
   getGameRatingById,
   updateGameRating
 } from "@feature/game/containers/services/gameRating.service"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   IGameRatingData,
   IGameRatingServ

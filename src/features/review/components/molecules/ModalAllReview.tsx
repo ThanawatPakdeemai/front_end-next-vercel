@@ -47,7 +47,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
       open={openViewAll}
       onClose={onModalClose}
     >
-      <Stack className="gap-y-[22px] capitalize">
+      <Stack className="w-[320px] gap-y-[22px] capitalize sm:w-[366px]">
         <ModalHeader
           handleClose={onModalClose}
           title="all review"

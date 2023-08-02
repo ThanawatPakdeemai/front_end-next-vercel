@@ -25,7 +25,8 @@ interface IGameReviewProps {
 const GameReviewContent = ({ gameId }: { gameId: string }) => {
   const { t } = useTranslation()
   const { stateProfile, hydrated } = useGlobal()
-  const { previewList, reviewInfo, limit } = useReviewProvider()
+  const { previewList, reviewInfo, limit, ownerReview, reviewLoading } =
+    useReviewProvider()
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const { profile } = useProfileStore()
   const [openAdd, setOpenAdd] = useState<boolean>(false)
@@ -50,13 +51,13 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
             average={reviewInfo ? reviewInfo.avarage.toFixed(2) : "0"}
             gameId={gameId}
           >
-            <div className="flex h-full w-full flex-col gap-y-2">
+            <div className="relative flex h-full w-full flex-col gap-y-2 ">
               <div
                 className={`${
                   previewList && limit && previewList.length > limit / 2
                     ? "text-shadow-bottom"
                     : undefined
-                } flex h-fit max-h-[374px] w-full flex-col gap-y-2 overflow-y-auto pb-12`}
+                } flex h-fit max-h-[374px] w-full flex-col gap-y-2 overflow-y-auto overflow-x-hidden pb-16`}
               >
                 {previewList && previewList.length > 0 ? (
                   previewList.map((_item) => (
@@ -76,7 +77,7 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
                   <div className="text-center">{t("no_review")}</div>
                 )}
               </div>
-              <div className="absolute bottom-0 z-10 flex w-full flex-row items-center justify-center p-4">
+              <div className="absolute bottom-0 z-10 flex w-full flex-row items-center justify-center overflow-hidden p-4">
                 {stateProfile ? (
                   <div className="flex w-full flex-row items-center justify-center bg-transparent">
                     <Button
@@ -85,13 +86,15 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
                       color="secondary"
                       className="!h-10 rounded-[20px] text-sm capitalize"
                       onClick={onOpenAddModalChange}
+                      disabled={reviewLoading}
                       startIcon={<ChatBoxIcon />}
                     >
                       add review
                     </Button>
                     <ModalAddReview
                       gameId={gameId}
-                      method="add"
+                      reviewId={ownerReview?.id}
+                      method={ownerReview ? "edit" : "add"}
                       modalOpen={openAdd}
                       setModalOpen={setOpenAdd}
                     />

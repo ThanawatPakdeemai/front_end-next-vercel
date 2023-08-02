@@ -8,6 +8,8 @@ interface IProps {
   }>
 }
 
+const min_star = 0.5
+
 const ReviewTextArea = ({ onSubmit }: IProps) => {
   const [text, setText] = React.useState<string>("")
   const [star, setStar] = React.useState<number>(0)
@@ -26,6 +28,15 @@ const ReviewTextArea = ({ onSubmit }: IProps) => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [onSubmit, star, text]
+  )
+
+  const onStarChanged = React.useCallback(
+    (event: React.SyntheticEvent<Element, Event>, value: number | null) => {
+      let _value: number = Number(value)
+      if (_value <= min_star) _value = min_star
+      setStar(_value)
+    },
+    []
   )
 
   return (
@@ -51,9 +62,10 @@ const ReviewTextArea = ({ onSubmit }: IProps) => {
             size="small"
             name="read-only"
             value={star}
+            defaultValue={1}
             precision={0.5}
             onChange={(e, newValue) => {
-              setStar(Number(newValue))
+              onStarChanged(e, newValue)
             }}
           />
           <Chip
@@ -81,17 +93,19 @@ const ReviewTextArea = ({ onSubmit }: IProps) => {
         variant="contained"
         color="secondary"
         className="!h-10 rounded-[20px] text-sm capitalize"
-        disabled={loading}
+        disabled={loading || star <= 0}
       >
         {loading ? "sending..." : "submit review"}
       </Button>
       <div className="h-6 text-sm">
-        {star <= 0 ? (
-          <span className="flex h-full w-fit flex-row gap-x-1 normal-case text-error-main">
-            <StarIcon className="text-base text-green-lemon" />
-            <p>Review rate must be more than 0.</p>
-          </span>
-        ) : undefined}
+        <span
+          className={`flex h-full w-fit flex-row gap-x-1 normal-case ${
+            star < min_star ? " text-error-main" : "text-green-card"
+          }`}
+        >
+          <StarIcon className="text-base text-green-lemon" />
+          <p>Review rate must be more than {min_star} .</p>
+        </span>
       </div>
     </form>
   )

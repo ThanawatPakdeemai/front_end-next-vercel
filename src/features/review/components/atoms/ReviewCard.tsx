@@ -138,8 +138,9 @@ const ReviewCard = ({
           </div>
         ) : undefined}
       </div>
-      {playerId && playerId === reviewUserId ? (
-        <div className="relative flex w-6 flex-row items-center">
+
+      <div className="relative flex w-6 flex-row items-center">
+        {playerId && playerId === reviewUserId ? (
           <button
             type="button"
             className="h-6 w-6"
@@ -147,8 +148,8 @@ const ReviewCard = ({
           >
             <MoreVerticalIcon />
           </button>
-        </div>
-      ) : undefined}
+        ) : undefined}
+      </div>
     </div>
   )
 }

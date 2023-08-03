@@ -1,4 +1,5 @@
 import React from "react"
+import Image from "next/image"
 import Video from "@components/atoms/Video"
 import { IVideoProps } from "@constants/video"
 import { Box, SxProps, Theme } from "@mui/material"
@@ -47,15 +48,33 @@ const HeroSection = ({
       ...sxCustomStyled
     }}
   >
-    {hasVideo && (
-      <Video
+    {props.src.includes("data:image") ||
+    props.src.endsWith(".jpg") ||
+    props.src.endsWith(".jpeg") ||
+    props.src.endsWith(".gif") ||
+    props.src.endsWith(".webp") ||
+    props.src.endsWith(".ico") ||
+    props.src.endsWith(".svg") ||
+    props.src.endsWith(".png") ? (
+      <Image
         src={props.src}
-        poster={props.poster}
-        controls={false}
-        autoPlay
-        className="absolute top-0 h-full w-full object-cover"
+        alt="intro"
+        className="top-0 !h-full !w-full"
+        width={100}
+        height={100}
       />
+    ) : (
+      hasVideo && (
+        <Video
+          src={props.src}
+          poster={props.poster}
+          controls={false}
+          autoPlay
+          className="absolute top-0 h-full w-full object-cover"
+        />
+      )
     )}
+
     <div
       className={`absolute left-0 top-0 z-[2] flex h-full w-full items-center justify-center px-6 ${className}`}
     >

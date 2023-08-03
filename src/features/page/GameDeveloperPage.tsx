@@ -28,7 +28,7 @@ function GameDeveloperPage() {
 
   const filterBecomeDevIntro = () => {
     const filterIntro = becomeDeveloperData?.find(
-      (_elm) => _elm.section_name === "Intro"
+      (_elm) => _elm.section_name === "intro"
     )
     setSectionIntro(filterIntro)
   }
@@ -85,7 +85,7 @@ function GameDeveloperPage() {
 
   return (
     <main>
-      {sectionIntro && (
+      {sectionIntro && sectionIntro.button && (
         <HeroSection
           hasVideo
           src={sectionIntro.image_url}
@@ -96,13 +96,15 @@ function GameDeveloperPage() {
             <Jumbotron
               detail={sectionIntro.detail}
               className="w-[620px]"
-              textButton="Helping Now"
+              textButton={sectionIntro.button_data?.text}
+              hrefButton={sectionIntro.button_data?.link}
+              sectionName={sectionIntro.section_name}
             />
             <ButtonScroll anchorLink="become-developer--section-1" />
           </div>
         </HeroSection>
       )}
-      {sectionExistingNFT && (
+      {sectionExistingNFT && sectionExistingNFT.button && (
         <GameDeveloperContent
           id="become-developer--section-1"
           image={sectionExistingNFT.image_url}
@@ -118,7 +120,7 @@ function GameDeveloperPage() {
             <Jumbotron
               detail={sectionExistingNFT.detail}
               text="Display your in-game NFTs in the Nakamoto.Games storefront. Get gamers watching your in-game assets 🎮"
-              className="w-[620px]"
+              className="mb-4 w-[620px]"
             />
             <CardPlatformItems
               className="max-w-[560px]"
@@ -127,7 +129,7 @@ function GameDeveloperPage() {
           </div>
         </GameDeveloperContent>
       )}
-      {sectionFeature && (
+      {sectionFeature && sectionFeature.button && (
         <GameDeveloperContent
           id="become-developer--section-2"
           className="my-20 min-h-[640px]"
@@ -165,7 +167,7 @@ function GameDeveloperPage() {
           </div>
         </GameDeveloperContent>
       )}
-      {sectionSubscribe && (
+      {sectionSubscribe && sectionSubscribe.button && (
         <FullWidthContent>
           <GameDeveloperContent
             id="become-developer--section-1"
@@ -185,6 +187,7 @@ function GameDeveloperPage() {
             <div className="inner-content ml-10">
               <Jumbotron
                 detail={sectionSubscribe.detail}
+                sectionName={sectionSubscribe.section_name}
                 className="w-[576px] text-center"
                 sxCustomStyled={{
                   ".jumbotron-title--text": {
@@ -204,7 +207,7 @@ function GameDeveloperPage() {
           </GameDeveloperContent>
         </FullWidthContent>
       )}
-      {sectionHelping && (
+      {sectionHelping && sectionHelping.button && (
         <GameDeveloperContent
           id="become-developer--section-3"
           className="flex min-h-[720px] items-center justify-center"
@@ -222,6 +225,7 @@ function GameDeveloperPage() {
                 detail={sectionHelping.detail}
                 text="We provide everything a Web3 game needs to maximize distribution."
                 className="mb-8"
+                hrefButton="/joinus"
                 sxCustomStyled={{
                   ".jumbotron-title span": {
                     color: "#A0ED61"
@@ -233,12 +237,13 @@ function GameDeveloperPage() {
               <CardTestimonialItems
                 isSlider
                 items={sectionHelping.list}
+                buttonData={sectionHelping.button_data}
               />
             </div>
           </div>
         </GameDeveloperContent>
       )}
-      {sectionFooter && (
+      {sectionFooter && sectionFooter.button && (
         <HeroSection
           hasVideo
           src={sectionFooter.image_url}
@@ -265,7 +270,9 @@ function GameDeveloperPage() {
             <Jumbotron
               detail={sectionFooter.detail}
               className="w-[620px]"
-              textButton="Subscribe Now"
+              textButton={sectionFooter.button_data?.text}
+              hrefButton={sectionFooter.button_data?.link}
+              sectionName={sectionFooter.section_name}
               sxCustomStyled={{
                 ".jumbotron-button": {
                   display: "flex",

@@ -6,15 +6,22 @@ import Slider, { Settings } from "react-slick"
 import GameCarouselHeader from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IList } from "@feature/become-developer/interfaces/IWebBecome"
 
+interface IButtonData {
+  text: string
+  link: string
+}
+
 interface ICardTestimonialItemsProps {
   items: IList[]
   sxCustomStyled?: SxProps<Theme>
   isSlider?: boolean
+  buttonData?: IButtonData
 }
 const CardTestimonialItems = ({
   items,
   sxCustomStyled,
-  isSlider = false
+  isSlider = false,
+  buttonData
 }: ICardTestimonialItemsProps) => {
   /**
    * @description Slider ref
@@ -59,6 +66,7 @@ const CardTestimonialItems = ({
       <GameCarouselHeader
         onNext={onSlideNext}
         onPrev={onSlidePrev}
+        buttonData={buttonData}
       />
       <Slider
         ref={sliderRef}

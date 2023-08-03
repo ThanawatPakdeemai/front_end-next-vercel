@@ -81,7 +81,9 @@ const Jumbotron = ({
           </Typography>
         </div>
       ) : (
-        <div className="jumbotron-title">
+        <div
+          className={`jumbotron-title ${sectionName === "subscribe" && "mb-4"}`}
+        >
           <Typography
             variant="h1"
             dangerouslySetInnerHTML={{
@@ -99,7 +101,9 @@ const Jumbotron = ({
         />
       )}
       {textButton && (
-        <div className="jumbotron-button">
+        <div
+          className={`jumbotron-button ${sectionName === "intro" && "mt-8"} }`}
+        >
           <ButtonLink
             href={onClickButton ? undefined : hrefButton}
             text={textButton}

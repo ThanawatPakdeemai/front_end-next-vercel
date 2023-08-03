@@ -22,7 +22,7 @@ const ButtonLike = ({
       <button
         type="button"
         className={`${className} ${btnStyled} ${
-          active ? "border-error-main text-error-main" : "text-neutral-500"
+          active ? "!border-error-main text-error-main" : "text-neutral-500"
         }`}
         onClick={onClick}
         disabled={disabled}

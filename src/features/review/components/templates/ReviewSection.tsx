@@ -28,7 +28,7 @@ const ReviewSection = ({ children, average, gameId }: IReviewProps) => {
             icon={<AddIcon />}
             color="secondary"
             size="small"
-            className="button-global button-transparent"
+            className="button-global button-transparent w-32"
           />
         }
       >

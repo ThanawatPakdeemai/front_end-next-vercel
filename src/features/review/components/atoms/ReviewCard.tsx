@@ -6,6 +6,8 @@ import React from "react"
 import MoreVerticalIcon from "@components/icons/MoreVerticalIcon"
 import EditIcon from "@components/icons/EditIcon"
 import DeleteIcon from "@components/icons/DeleteIcon"
+import Helper from "@utils/helper"
+import TooltipsCustom from "@components/atoms/TooltipsCustom"
 
 interface IProps {
   reviewId: string
@@ -31,7 +33,7 @@ const ReviewCard = ({
   onDel
 }: IProps) => {
   const [isMore, setIsMore] = React.useState<boolean>(false)
-
+  const { shortenString } = Helper
   const handleEdit = React.useCallback(() => {
     if (onEdit) onEdit(true)
     setIsMore(false)
@@ -68,9 +70,16 @@ const ReviewCard = ({
           </div>
           <div className="flex h-full w-full flex-col gap-y-2">
             <div className="flex h-6 min-h-[24px] w-full flex-row justify-between">
-              <div className="flex h-full items-center font-neue-machina font-bold uppercase text-white-primary">
-                {reviewUsername}
-              </div>
+              <TooltipsCustom
+                className="truncate text-xs text-neutral-500 hover:text-clip"
+                placement="top"
+                title={reviewUsername}
+                color="primary"
+              >
+                <div className="flex h-full cursor-pointer items-center font-neue-machina font-bold uppercase text-white-primary">
+                  {shortenString(reviewUsername, 3)}
+                </div>
+              </TooltipsCustom>
               <div className="review--item__content-rating flex h-full items-center gap-2">
                 <Rating
                   sx={{
@@ -80,9 +89,10 @@ const ReviewCard = ({
                     }
                   }}
                   size="small"
-                  name="read-only"
+                  name="star-read-only"
                   value={parseFloat(reviewRate)}
                   readOnly
+                  max={5}
                   precision={0.5}
                 />
                 <Chip
@@ -128,8 +138,9 @@ const ReviewCard = ({
           </div>
         ) : undefined}
       </div>
-      {playerId && playerId === reviewUserId ? (
-        <div className="relative flex w-6 flex-row items-center">
+
+      <div className="relative flex w-6 flex-row items-center">
+        {playerId && playerId === reviewUserId ? (
           <button
             type="button"
             className="h-6 w-6"
@@ -137,8 +148,8 @@ const ReviewCard = ({
           >
             <MoreVerticalIcon />
           </button>
-        </div>
-      ) : undefined}
+        ) : undefined}
+      </div>
     </div>
   )
 }

@@ -35,6 +35,7 @@ const ReviewCardModal = ({
   const onDeleteReview = useCallback(async (_reviewId: string) => {
     setIsLoading(true)
     await onSubmitDeleteReview(_reviewId)
+    setOpenDel(false)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

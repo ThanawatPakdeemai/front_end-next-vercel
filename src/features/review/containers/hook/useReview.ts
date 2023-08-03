@@ -34,7 +34,8 @@ const useReview = () => {
       })
         .then((res) => {
           if (res) {
-            successToast(res.message)
+            // successToast(res.message)
+            successToast("Add Game Review Successful.")
             if (updateReviewList && res.data)
               updateReviewList("add", {
                 id: res.data.id,
@@ -80,7 +81,8 @@ const useReview = () => {
       })
         .then((res) => {
           if (res) {
-            successToast(res.message)
+            // successToast(res.message)
+            successToast("Add Game Review Successful.")
             if (updateReviewList && res.data)
               updateReviewList("update", {
                 id: res.data.id,
@@ -111,7 +113,8 @@ const useReview = () => {
     setOpen()
     await mutateDeleteReview(_id)
       .then((res) => {
-        successToast(res.message)
+        // successToast(res.message)
+        successToast("Delete Review Game Review Successful.")
         if (updateReviewList && res.data && res.status)
           updateReviewList("delete", {
             id: res.data.id,

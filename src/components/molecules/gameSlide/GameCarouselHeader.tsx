@@ -33,7 +33,10 @@ export interface IHeaderSlide {
     | undefined
   stickerRotate: number
 }
-
+interface IButtonData {
+  text: string
+  link: string
+}
 interface IProps {
   menu?: IHeaderSlide
   curType?: IGetType
@@ -44,6 +47,7 @@ interface IProps {
   hideNextPrev?: boolean
   hideViewAll?: boolean
   showTitle?: boolean
+  buttonData?: IButtonData
 }
 
 const GameCarouselHeader = ({
@@ -55,7 +59,8 @@ const GameCarouselHeader = ({
   onPlaying, // NOT SURE ABOUT THIS
   hideNextPrev,
   hideViewAll,
-  showTitle
+  showTitle,
+  buttonData
 }: IProps) => {
   const bgColor = `bg-${menu?.theme}-main`
   const bgColorHover = `hover:bg-${menu?.theme}-main`
@@ -200,12 +205,12 @@ const GameCarouselHeader = ({
           <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
             {!hideViewAll ? (
               <Link
-                href={`/${curType}`}
+                href={buttonData?.link || "/"}
                 className="h-full"
               >
                 <ButtonToggleIcon
                   startIcon={<AddIcon />}
-                  text={t("view_all")}
+                  text={t(`${buttonData?.text}`)}
                   className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
                   type="button"
                 />

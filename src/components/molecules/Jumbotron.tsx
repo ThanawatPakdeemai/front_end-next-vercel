@@ -6,11 +6,9 @@ import EastRoundedIcon from "@mui/icons-material/EastRounded"
 export interface IJumbotronProps {
   sxCustomStyled?: SxProps<Theme>
   className?: string
-  textTitle?: string
-  textTitleDark?: string
-  textTitleGreen?: string
-  textTitleLight?: string
+  detail?: string
   text?: string
+  sectionName?: string
   textButton?: string
   iconButton?: React.ReactNode
   onClickButton?: () => void
@@ -36,42 +34,20 @@ export interface IJumbotronProps {
 const Jumbotron = ({
   sxCustomStyled = {},
   className,
-  textTitle = "Hello, world!",
-  text = "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.",
+  detail = "",
+  sectionName = "",
   textButton = "",
   colorButton = "success",
   variantButton = "contained",
   iconButton = <EastRoundedIcon />,
   size = "large",
   onClickButton,
-  hrefButton,
-  textTitleDark,
-  textTitleDarkVariant = "success",
-  textTitleGreen,
-  textTitleLight
+  hrefButton
 }: IJumbotronProps) => {
   /**
    * @description Get class text title dark variant
    * @returns {string}
    */
-  const classTextTitleDarkVariant = (): string => {
-    switch (textTitleDarkVariant) {
-      case "error":
-        return "text-error-main"
-
-      case "info":
-        return "text-info-main"
-
-      case "primary":
-        return "text-primary-main"
-
-      case "secondary":
-        return "text-secondary-main"
-
-      default:
-        return "text-green-lemon"
-    }
-  }
 
   const classNameButtonLink = (): string => {
     switch (colorButton) {
@@ -95,50 +71,39 @@ const Jumbotron = ({
       sx={sxCustomStyled}
       className={`jumbotron ${className}`}
     >
-      <div className="jumbotron-title">
-        {textTitle && (
+      {sectionName === "features" ? (
+        <div className="jumbotron-title">
           <Typography
             variant="h1"
             className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
+          >
+            FEATURES
+          </Typography>
+        </div>
+      ) : (
+        <div
+          className={`jumbotron-title ${sectionName === "subscribe" && "mb-4"}`}
+        >
+          <Typography
+            variant="h1"
             dangerouslySetInnerHTML={{
-              __html: `${textTitle}`
+              __html: `${detail}`
             }}
           />
-        )}
-        {textTitleGreen && (
-          <Typography
-            variant="h1"
-            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-green-lemon"
-          >
-            <p className="jumbotron-title--text">{textTitleGreen}</p>
-          </Typography>
-        )}
-        {textTitleDark && (
-          <Typography
-            variant="h1"
-            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
-          >
-            <span
-              className={`jumbotron-title--text ${classTextTitleDarkVariant()}`}
-            >
-              {textTitleDark}
-            </span>
-          </Typography>
-        )}
-        {textTitleLight && (
-          <Typography
-            variant="h1"
-            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
-          >
-            <span className="jumbotron-title--text">{textTitleLight}</span>
-          </Typography>
-        )}
-      </div>
-      {text && (
-        <div className="jumbotron-text mb-8 mt-4 text-neutral-400">{text}</div>
+        </div>
+      )}
+      {sectionName === "features" && (
+        <Typography
+          className="jumbotron-text mb-8 mt-4"
+          dangerouslySetInnerHTML={{
+            __html: `${detail}`
+          }}
+        />
       )}
       {textButton && (
-        <div className="jumbotron-button">
+        <div
+          className={`jumbotron-button ${sectionName === "intro" && "mt-8"} }`}
+        >
           <ButtonLink
             href={onClickButton ? undefined : hrefButton}
             text={textButton}

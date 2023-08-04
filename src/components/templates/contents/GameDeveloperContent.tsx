@@ -1,12 +1,12 @@
 import React from "react"
 import { ImageCustom } from "@components/atoms/image/Image"
 import Jumbotron from "@components/molecules/Jumbotron"
-import { IImageProps } from "@constants/images"
+import { IMAGES } from "@constants/images"
 import { Box, SxProps, Theme } from "@mui/material"
 
 interface IGameDeveloperContentProps {
   id: string
-  image?: IImageProps
+  image?: string
   sxCustomStyled?: SxProps<Theme>
   className?: string
   children?: React.ReactNode
@@ -19,9 +19,7 @@ const GameDeveloperContent = ({
   image,
   children = (
     <Jumbotron
-      hrefButton="/joinus"
-      textTitle="NAKAMOTO.GAMES"
-      textTitleDark="FOR GAME DEVELOPERS_"
+      detail="NAKAMOTO.GAMES"
       text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
       textButton="Submit Game"
       className="w-[620px]"
@@ -43,10 +41,10 @@ const GameDeveloperContent = ({
       {image && (
         <div className="game-developer__image max-w-[50%] flex-1">
           <ImageCustom
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
+            src={image}
+            alt={IMAGES.gameDeveloperSection1.alt}
+            width={IMAGES.gameDeveloperSection1.width}
+            height={IMAGES.gameDeveloperSection1.height}
           />
         </div>
       )}

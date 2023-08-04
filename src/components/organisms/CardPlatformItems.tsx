@@ -1,13 +1,13 @@
 import React from "react"
-import { IPlatformList } from "@configs/platform"
 import { Box, SxProps, Theme } from "@mui/material"
 import CardPlatformItem from "@components/molecules/CardPlatformItem"
 import { v4 as uuidv4 } from "uuid"
+import { IList } from "@feature/become-developer/interfaces/IWebBecome"
 
 interface ICardPlatformItemsProps {
   className?: string
   sxCustomStyled?: SxProps<Theme>
-  items: IPlatformList[]
+  items: IList[]
 }
 
 const CardPlatformItems = ({
@@ -24,8 +24,8 @@ const CardPlatformItems = ({
       <CardPlatformItem
         key={uuidv4()}
         title={item.title}
-        icon={item.icon}
-        link={item.link}
+        icon={item.image_url}
+        link={item.detail}
       />
     ))}
   </Box>

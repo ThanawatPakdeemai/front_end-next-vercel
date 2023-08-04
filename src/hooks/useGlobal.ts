@@ -482,7 +482,7 @@ const useGlobal = (
    * @description When click play game story mode, count play game will be increase
    * @param gameData
    */
-  const handleClickPlayGameStoryMode = (gameData: IGame) => {
+  const handleClickPlayGameStoryMode = useCallback((gameData: IGame) => {
     mutateUpdateCountPlayGame(gameData.id)
       .then((res) => {
         if (res) {
@@ -494,7 +494,8 @@ const useGlobal = (
         // Redirect to game without save play to api
         router.push(`${getGameStoryModeURL(gameData)}`)
       })
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return {
     onHandleClick,

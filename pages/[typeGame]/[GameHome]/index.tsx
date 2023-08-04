@@ -14,8 +14,8 @@ import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 import useLoadingStore from "@stores/loading"
 import GameReviews from "@feature/game/components/molecules/GameReviews"
-import CONFIGS from "@configs/index"
 import { BalanceOfProvider } from "@providers/BalanceOfProvider"
+import useProfileStore from "@stores/profileStore"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -90,13 +90,14 @@ const GameLobbyMobile = dynamic(
 
 function GameLobbyDesktop() {
   const router = useRouter()
+  const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const {
     getGameMode,
     getColorChipByGameType,
-    getGameStoryModeURL,
+    handleClickPlayGameStoryMode,
     isRedirectRoomlist,
     isPokerGame
   } = useGlobal()
@@ -172,6 +173,7 @@ function GameLobbyDesktop() {
    */
   const renderFormBuyItem = () => {
     if (!gameData) return null
+    if (!profile) return null
     switch (getGameMode(gameData)) {
       case "story-mode":
         return (
@@ -194,7 +196,8 @@ function GameLobbyDesktop() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={getGameStoryModeURL(gameData)}
+                url=""
+                onClick={() => handleClickPlayGameStoryMode(gameData)}
               />
             </Box>
           </Box>
@@ -299,10 +302,6 @@ function GameLobbyDesktop() {
 }
 
 export default function GameLobby() {
-  // if (isMobile) {
-  //   return <GameLobbyMobile />
-  // }
-  // return GameLobbyDesktop()
   return (
     <BalanceOfProvider>
       {isMobile ? <GameLobbyMobile /> : GameLobbyDesktop()}

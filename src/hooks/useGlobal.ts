@@ -19,6 +19,7 @@ import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
 import { signOut } from "next-auth/react"
+import useCountPlayGame from "@feature/game/containers/hooks/useCountPlayGame"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
@@ -67,6 +68,7 @@ const useGlobal = (
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin, onReset } = useProfileStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
+  const { mutateUpdateCountPlayGame } = useCountPlayGame()
 
   const { conditionPlayToEarn } = useGameGlobal()
 
@@ -476,6 +478,24 @@ const useGlobal = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  /**
+   * @description When click play game story mode, count play game will be increase
+   * @param gameData
+   */
+  const handleClickPlayGameStoryMode = (gameData: IGame) => {
+    mutateUpdateCountPlayGame(gameData.id)
+      .then((res) => {
+        if (res) {
+          // Redirect to game with save play to api
+          router.push(`${getGameStoryModeURL(gameData)}`)
+        }
+      })
+      .catch(() => {
+        // Redirect to game without save play to api
+        router.push(`${getGameStoryModeURL(gameData)}`)
+      })
+  }
+
   return {
     onHandleClick,
     onClickLink,
@@ -511,7 +531,8 @@ const useGlobal = (
     goldProfileComma,
     handleClickScroll,
     getURLWithEmailToken,
-    getAvatarURL
+    getAvatarURL,
+    handleClickPlayGameStoryMode
   }
 }
 

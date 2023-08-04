@@ -81,7 +81,7 @@ export default function ArcadeEmporiumGameDetails() {
   const gamePath = slug ? slug.toString() : ""
   const { gameData } = useGetGameByPath(gamePath)
   const { onSetGameData } = useGameStore()
-  const { getGameStoryModeURL, isRedirectRoomlist } = useGlobal()
+  const { handleClickPlayGameStoryMode, isRedirectRoomlist } = useGlobal()
   const { t } = useTranslation()
 
   /**
@@ -115,7 +115,8 @@ export default function ArcadeEmporiumGameDetails() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={getGameStoryModeURL(gameData)}
+                url=""
+                onClick={() => handleClickPlayGameStoryMode(gameData)}
               />
             </Box>
           </Box>

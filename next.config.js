@@ -6,6 +6,11 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
 
+const path = require("path")
+const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin")
+
+const PUBLIC_PATH = "https://front-end-next-vercel.vercel.app/"
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 // const withTM = require("next-transpile-modules")(["three"])
 
@@ -83,7 +88,27 @@ const nextConfig = {
 module.exports = {
   experimental: {
     nextScriptWorkers: true
-  }
+  },
+  entry: {
+    main: path.resolve(__dirname, "src/index")
+  },
+
+  output: {
+    path: path.resolve(__dirname, "src/bundles/"),
+    filename: "sw.js",
+    publicPath: PUBLIC_PATH
+  },
+
+  plugins: [
+    new SWPrecacheWebpackPlugin({
+      cacheId: "my-project-name",
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: "service-worker.js",
+      minify: true,
+      navigateFallback: `${PUBLIC_PATH}index.html`,
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
+    })
+  ]
 }
 
 module.exports = withBundleAnalyzer({ ...nextConfig })

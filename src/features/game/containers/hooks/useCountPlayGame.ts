@@ -1,27 +1,24 @@
-import { useQuery } from "@tanstack/react-query"
-import { IResponseGameUpdatedPlaying } from "@src/types/games"
+import { useMutation } from "@tanstack/react-query"
 import { updatePlayCounting } from "../services/game.service"
 
-const useCountPlayGame = (_gameId: string) => {
+const useCountPlayGame = () => {
   const {
-    data: gameCountPlayGame,
-    error,
-    isLoading,
-    isError
-  } = useQuery({
-    queryKey: ["countPlayGame", { _gameId }],
-    queryFn: () => updatePlayCounting(_gameId),
-    retry: false,
-    keepPreviousData: true,
-    staleTime: Infinity,
-    enabled: !!_gameId
+    data: dataCountPlayGame,
+    error: errorCountPlayGame,
+    isLoading: isLoadingCountPlayGame,
+    isError: isErrorCountPlayGame,
+    mutateAsync: mutateUpdateCountPlayGame
+  } = useMutation(updatePlayCounting, {
+    mutationKey: ["updatePlayCounting"],
+    retry: false
   })
 
   return {
-    gameDataCount: gameCountPlayGame as IResponseGameUpdatedPlaying,
-    error,
-    isLoading,
-    isError
+    dataCountPlayGame,
+    errorCountPlayGame,
+    isLoadingCountPlayGame,
+    isErrorCountPlayGame,
+    mutateUpdateCountPlayGame
   }
 }
 

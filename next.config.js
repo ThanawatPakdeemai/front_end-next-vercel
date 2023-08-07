@@ -6,8 +6,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
 
-const path = require("path")
-const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin")
+// eslint-disable-next-line no-var
+var path = require("path")
+// eslint-disable-next-line no-var
+var SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin")
 
 const PUBLIC_PATH = "https://front-end-next-vercel.vercel.app/"
 

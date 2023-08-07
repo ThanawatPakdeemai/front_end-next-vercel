@@ -37,7 +37,8 @@ export const MESSAGES = {
   "withdraw_error": "Withdraw error",
   "claim_error": "Claim error",
   "create_successful_user": "Create a successful user",
-  "create_not_successful_user": "Create a not successful user",
+  "create_not_successful_user":
+    "Login Failed. Please check your email and password and try again.",
   "reset_password_success": "Reset password success",
   "room-timeout": "Room timeout",
   "error-something": "Error something went wrong",

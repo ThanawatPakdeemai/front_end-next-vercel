@@ -1,6 +1,8 @@
 import services from "@configs/axiosGlobalConfig"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IRoomAvaliableResponse } from "@feature/home/interfaces/IHomeService"
+import { ELocalCacheKey } from "@interfaces/ILocal"
+import Helper from "@utils/helper"
 
 const getHomeSlide = () =>
   new Promise<IGame[]>((resolve, reject) => {
@@ -9,8 +11,14 @@ const getHomeSlide = () =>
       .get(`/game/banner/all/new`)
       .then((res) => {
         resolve(res.data.data)
+        Helper.setLocalStorage({
+          key: ELocalCacheKey.bannerSlide,
+          value: JSON.stringify(res.data.data)
+        })
       })
       .catch((err) => {
+        const collection = Helper.getLocalStorage(ELocalCacheKey.bannerSlide)
+        resolve(JSON.parse(collection || "{}"))
         reject(err)
       })
   })

@@ -1,25 +1,43 @@
 {
   "short_name": "Nakamoto Games",
   "name": "Nakamoto Games",
+  "description": "...",
   "icons": [
     {
-      "src": "naka64x64.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/naka16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
     },
     {
-      "src": "naka192x192.png",
+      "src": "/naka32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/naka64x64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/naka192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "naka512x512.png",
+      "src": "/naka512x512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "/naka-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#18181C",
-  "background_color": "#18181C"
+  "start_url": "/",
+  "background_color": "#FFFFFF",
+  "display": "/",
+  "scope": "/",
+  "theme_color": "#000000"
 }

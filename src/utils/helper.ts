@@ -4,7 +4,12 @@ import CONFIGS from "@configs/index"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
-import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
+import {
+  ILocal,
+  TLocalKey,
+  ELocalKey,
+  TLocalCacheKey
+} from "@interfaces/ILocal"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { trickerPriceBNBExternal } from "@feature/buyItem/containers/services/currency.services"
@@ -28,7 +33,7 @@ const Helper = {
   setLocalStorage({ key, value }: ILocal) {
     localStorage.setItem(key, value || "")
   },
-  getLocalStorage(_key: TLocalKey) {
+  getLocalStorage(_key: TLocalKey | TLocalCacheKey) {
     return typeof window !== "undefined" ? localStorage.getItem(_key) : null
   },
   removeLocalStorage(_key: TLocalKey) {

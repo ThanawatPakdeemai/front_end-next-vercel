@@ -38,6 +38,9 @@ const BannerSlide = () => {
     dots: true
   }
 
+  // eslint-disable-next-line no-console
+  console.log("test-slideGames", slideGames)
+
   return (
     <section
       className={`relative w-full overflow-hidden ${!isMobile && "mb-10"}`}

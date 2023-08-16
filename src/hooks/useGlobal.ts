@@ -1,5 +1,4 @@
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -20,6 +19,7 @@ import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
 import { signOut } from "next-auth/react"
 import useCountPlayGame from "@feature/game/containers/hooks/useCountPlayGame"
+import useGameStore from "@stores/game"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 

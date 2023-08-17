@@ -1,7 +1,21 @@
 import React from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { Box, SxProps, Theme, Typography } from "@mui/material"
-import EastRoundedIcon from "@mui/icons-material/EastRounded"
+import dynamic from "next/dynamic"
+
+const EastRoundedIcon = dynamic(
+  () => import("@mui/icons-material/EastRounded"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IJumbotronProps {
   sxCustomStyled?: SxProps<Theme>

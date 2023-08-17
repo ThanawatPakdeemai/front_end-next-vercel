@@ -1,15 +1,35 @@
 import { useEffect, useRef } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
 import useGlobal from "@hooks/useGlobal"
 import useSelectStore from "@stores/selector"
 import useEventFilter from "@stores/event"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import EventsCard from "@feature/event/components/EventsCard"
 import useGetEventList from "@feature/event/containers/hooks/useGetEventList"
 import { getEventList } from "@feature/event/containers/services/events.service"
 import { IGetEventResponseData } from "@feature/event/interface/IEventsService"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const EventsCard = dynamic(
+  () => import("@feature/event/components/EventsCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const EventsListPage = () => {
   const { page, limit, setPage, totalCount, setTotalCount } = useGlobal()

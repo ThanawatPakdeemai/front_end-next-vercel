@@ -1,19 +1,41 @@
 import React from "react"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box, Grid } from "@mui/material"
-import useGlobal, { isMobile } from "@hooks/useGlobal"
 import Link from "next/link"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { MobileView } from "react-device-detect"
-import CardContentSlide from "../molecules/CardContentSlide"
-import CardNextSlide, { ICardNextSlide } from "../molecules/CardNextSlide"
+import { IMAGES } from "@constants/images"
+import { ICardNextSlide } from "../molecules/CardNextSlide"
+
+const CardContentSlide = dynamic(
+  () => import("../molecules/CardContentSlide"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const CardNextSlide = dynamic(() => import("../molecules/CardNextSlide"), {
+  suspense: true,
+  ssr: true
+})
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame
 }
 
 const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
-  const { getGameMode, onHandleSetGameStore, isRedirectRoomlist } = useGlobal()
+  const {
+    getGameMode,
+    onHandleSetGameStore,
+    isRedirectRoomlist,
+    isWrongFormatURL,
+    isOldPathURL
+  } = useGlobal()
 
   return (
     <>
@@ -44,7 +66,12 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
                       <ImageCustom
                         height={1080}
                         width={1920}
-                        src={slide.image_home_banner}
+                        src={
+                          isWrongFormatURL(slide.image_home_banner) ||
+                          isOldPathURL(slide.image_home_banner)
+                            ? IMAGES.no_image.srcWebp
+                            : slide.image_home_banner
+                        }
                         alt={slide.name}
                         className="h-full w-full object-cover"
                       />
@@ -83,7 +110,12 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
                     <ImageCustom
                       height={1080}
                       width={1920}
-                      src={slide.image_home_banner}
+                      src={
+                        isWrongFormatURL(slide.image_home_banner) ||
+                        isOldPathURL(slide.image_home_banner)
+                          ? IMAGES.no_image.srcWebp
+                          : slide.image_home_banner
+                      }
                       alt={slide.name}
                       className="h-full w-full object-cover"
                     />

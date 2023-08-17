@@ -1,11 +1,16 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import { Image } from "@components/atoms/image"
+import { useTranslation } from "next-i18next"
+import dynamic from "next/dynamic"
 import { IPropsPlayerMulti } from "@feature/game/components/organisms/SeatPlayersMulti"
 import { CurrentPlayer } from "@feature/game/interfaces/IGameService"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import useProfileStore from "@stores/profileStore"
-import { useTranslation } from "next-i18next"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 export const classesWrapper =
   "relative m-auto flex flex-row items-center justify-center overflow-hidden rounded-[8px] pt-[94%]"

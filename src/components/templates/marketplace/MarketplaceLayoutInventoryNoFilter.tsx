@@ -1,20 +1,55 @@
-import { Image } from "@components/atoms/image"
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
-import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
 import { Divider, MenuList, Typography } from "@mui/material"
-import useProfileStore from "@stores/profileStore"
-import useNotiStore from "@stores/notification"
-import Helper from "@utils/helper"
 import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
+import useProfileStore from "@stores/profileStore"
+import useNotiStore from "@stores/notification"
+import Helper from "@utils/helper"
 import { InventoryProvider } from "@providers/InventoryProvider"
-import HeaderMunuMobile from "@feature/page/marketplace/mobilescreen/HeaderMunuMobile"
-import Balance from "@components/molecules/balance/Balance"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const HeaderMunuMobile = dynamic(
+  () => import("@feature/page/marketplace/mobilescreen/HeaderMenuMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Balance = dynamic(() => import("@components/molecules/balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: true
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const MarketplaceLayoutInventory = ({
   children
@@ -97,13 +132,9 @@ const MarketplaceLayoutInventory = ({
               </MenuList>
             </div>
             <Balance widthBalance="w-[calc(100%-70px)]" />
-            {/* <AmountBalance
-            icon={chain === "polygon" ? <INaka /> : <IBusd />}
-            balance={balance || { digit: 0, text: "N/A" }}
-          /> */}
             {profile && (
               <ButtonToggleIcon
-                startIcon={<PlugIcon />}
+                startIcon={<Icomoon className="icon-Power" />}
                 text={t("logout")}
                 handleClick={async () => {
                   await onResetNotification()

@@ -1,8 +1,19 @@
-import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
-import NoData from "@components/molecules/NoData"
-import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
-import { Box } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+import { Box } from "@mui/material"
+import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
+
+const GameItemSingleCard = dynamic(
+  () => import("@components/atoms/GameItemSingleCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProps {
   gameItems: IGameItemList[] | string

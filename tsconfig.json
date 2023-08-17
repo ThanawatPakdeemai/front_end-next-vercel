@@ -40,7 +40,8 @@
     "**/*.ts",
     "**/*.tsx",
     "environment.d.ts",
-    "src/mobile/components/molecules/homePage/cardDetail"
+    "src/mobile/components/molecules/homePage/cardDetail",
+    "service-worker.js"
   ],
   "exclude": ["node_modules"]
 }

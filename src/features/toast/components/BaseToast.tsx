@@ -3,10 +3,25 @@ import React from "react"
 import { Alert, Box, Typography } from "@mui/material"
 import CheckIcon from "@mui/icons-material/Check"
 import WarningAmberIcon from "@mui/icons-material/WarningAmber"
-import { IMAGES } from "@constants/images"
-import { Image } from "@components/atoms/image"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
-import ButtonLink from "@components/atoms/button/ButtonLink"
+import dynamic from "next/dynamic"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: true
+})
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IToastProps {
   text: string
@@ -64,30 +79,8 @@ function BaseToastComponent({
       iconMapping={{
         success: <CheckIcon fontSize="inherit" />,
         warning: <WarningAmberIcon fontSize="inherit" />,
-        error: (
-          <Image
-            src={IMAGES.radiation.src}
-            width={IMAGES.radiation.width}
-            height={IMAGES.radiation.height}
-            alt={IMAGES.radiation.alt}
-          />
-        ),
-        info:
-          status === "inherit" ? (
-            <Image
-              src={IMAGES.nakaIconWhite.src}
-              width={IMAGES.nakaIconWhite.width}
-              height={IMAGES.nakaIconWhite.height}
-              alt={IMAGES.nakaIconWhite.alt}
-            />
-          ) : (
-            <Image
-              src={IMAGES.flagIcon.src}
-              width={IMAGES.flagIcon.width}
-              height={IMAGES.flagIcon.height}
-              alt={IMAGES.flagIcon.alt}
-            />
-          )
+        error: <Icomoon className="icon-Radiation text-error-main" />,
+        info: <Icomoon className="icon-Radiation text-info-main" />
       }}
     >
       <Typography

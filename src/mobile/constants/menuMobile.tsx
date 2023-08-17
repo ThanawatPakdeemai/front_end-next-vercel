@@ -1,12 +1,11 @@
 import React from "react"
+import dynamic from "next/dynamic"
 import { ISlideList } from "@components/molecules/gameSlide/GameCarouselHeader"
-import NakaIconMobile from "@mobile/components/atoms/icons/NakaIconMobile"
-import HeartIconMobile from "@mobile/components/atoms/icons/HeartIconMobile"
-import RewardIconMobile from "@mobile/components/atoms/icons/RewardIconMobile"
-import SettingIconMobile from "@mobile/components/atoms/icons/SettingIconMobile"
-import HeartFilledIconMobile from "@mobile/components/atoms/icons/HeartFilledIconMobile"
-import RewardFilledIconMobile from "@mobile/components/atoms/icons/RewardFilledIconMobile"
-import NakaIconFilledMobile from "@mobile/components/atoms/icons/NakaIconFilledMobile"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: true
+})
 
 export const GAME_MENU_MOBILE: ISlideList[] = [
   {
@@ -49,25 +48,25 @@ export const MAIN_MENU_MOBILE: {
     id: "home",
     name: "Home",
     link: "/",
-    icon: <NakaIconMobile />,
-    iconActive: <NakaIconFilledMobile />
+    icon: <Icomoon className="icon-Naka text-error-main" />,
+    iconActive: <Icomoon className="icon-Naka text-error-main" />
   },
   {
     id: "wishlist",
     name: "Wishlist",
-    icon: <HeartIconMobile />,
-    iconActive: <HeartFilledIconMobile />
+    icon: <Icomoon className="icon-Heart" />,
+    iconActive: <Icomoon className="icon-app-bold icon-Heart text-error-main" />
   },
   {
     id: "rewards",
     name: "Rewards",
-    icon: <RewardIconMobile />,
-    iconActive: <RewardFilledIconMobile />
+    icon: <Icomoon className="icon-app icon-Game" />,
+    iconActive: <Icomoon className="icon-app icon-Game text-error-main" />
   },
   {
     id: "settings",
     name: "Settings",
-    icon: <SettingIconMobile />,
-    iconActive: <SettingIconMobile />
+    icon: <Icomoon className="icon-app icon-Filter" />,
+    iconActive: <Icomoon className="icon-app icon-Filter text-error-main" />
   }
 ]

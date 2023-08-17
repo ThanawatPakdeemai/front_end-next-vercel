@@ -1,8 +1,19 @@
 import { Box } from "@mui/material"
 import React from "react"
-import ArrowDownRoundIcon from "@components/icons/ArrowDownRoundIcon"
+import dynamic from "next/dynamic"
 import { defaultCategory, useBaseProvider } from "@providers/BaseProvider"
-import ButtonOutlineTemplate from "../templates/ButtonOutlineTemplate"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonOutlineTemplate = dynamic(
+  () => import("../templates/ButtonOutlineTemplate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IGameFilterMobile {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -44,9 +55,7 @@ const GameFilterMobile = ({ setOpen }: IGameFilterMobile) => {
           }}
         >
           {selectedCategory.name}
-          <i>
-            <ArrowDownRoundIcon />
-          </i>
+          <Icomoon className="icon-app-bold icon-Arrow---Down-2" />
         </ButtonOutlineTemplate>
       </Box>
     </Box>

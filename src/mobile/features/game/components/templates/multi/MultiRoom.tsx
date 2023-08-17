@@ -1,9 +1,23 @@
-import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import { v4 as uuid } from "uuid"
-import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
 import { Box } from "@mui/material"
-import NoData from "@components/molecules/NoData"
-import ListJoinGame from "../../molecules/ListJoinGame"
+import dynamic from "next/dynamic"
+import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
+
+const SkeletonEarnRewardMobile = dynamic(
+  () => import("@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const ListJoinGame = dynamic(() => import("../../molecules/ListJoinGame"), {
+  suspense: true,
+  ssr: true
+})
 
 const MultiRoom = () => {
   const { dataRoom, data, handleJoinRoom, itemSelected, getRoomStatus } =

@@ -1,25 +1,54 @@
-import {
-  Button,
-  Collapse,
-  FormControl,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from "@mui/material"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import { Select, SelectChangeEvent } from "@mui/material"
 import {
   INVENTORY_DROPDOWN,
   INVENTORY_DROPDOWN_FORSALE,
   INVENTORY_DROPDOWN_PROCESS,
   INVENTORY_DROPDOWN_RENTAL
 } from "@configs/menu"
-import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
-import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
 import useMarketFilterStore from "@stores/marketFilter"
-import FilterSearchBox from "./FilterSearchBox"
-import SwipeableEdgeDrawer from "../organisms/DrawerMobileFilter"
+
+const Button = dynamic(() => import("@mui/material/Button"), {
+  suspense: true,
+  ssr: false
+})
+const Collapse = dynamic(() => import("@mui/material/Collapse"), {
+  suspense: true,
+  ssr: false
+})
+const FormControl = dynamic(() => import("@mui/material/FormControl"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItem = dynamic(() => import("@mui/material/MenuItem"), {
+  suspense: true,
+  ssr: false
+})
+const MenuButtonExpandMobile = dynamic(
+  () => import("@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FilterSearchBox = dynamic(() => import("./FilterSearchBox"), {
+  suspense: true,
+  ssr: false
+})
+const SwipeableEdgeDrawer = dynamic(
+  () => import("../organisms/DrawerMobileFilter"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const FilterDropdown = () => {
   const router = useRouter()
@@ -188,7 +217,7 @@ const FilterDropdown = () => {
             }}
             className="!h-[40px] !w-[40px] rounded-lg border border-neutral-700 bg-neutral-800 p-2"
           >
-            <SettingIconFilter />
+            <Icomoon className="icon-Filters-Horizontal text-white-default" />
           </Button>
         </div>
         <SwipeableEdgeDrawer

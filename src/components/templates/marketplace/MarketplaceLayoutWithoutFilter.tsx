@@ -1,9 +1,19 @@
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
-import MarketplaceLayoutMobile from "@feature/page/marketplace/mobilescreen/MarketplaceLayoutMobile"
-import { MarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useRouter } from "next/router"
 import React from "react"
+import dynamic from "next/dynamic"
+import { MarketplaceProvider } from "@providers/MarketplaceProvider"
+
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
+const MarketplaceLayoutMobile = dynamic(
+  () => import("@feature/page/marketplace/mobilescreen/MarketplaceLayoutMobile")
+)
 
 interface IProp {
   isNoFilter?: boolean

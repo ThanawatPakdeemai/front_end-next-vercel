@@ -8,7 +8,15 @@ import {
   useProgress,
   Preload
 } from "@react-three/drei"
-import { Image } from "@components/atoms/image/index"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(
+  () => import("@components/atoms/image/index").then((mod) => mod.Image),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 extend({ Image })
 

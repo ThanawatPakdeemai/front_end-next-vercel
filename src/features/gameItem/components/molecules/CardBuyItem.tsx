@@ -1,23 +1,66 @@
 import React, { useMemo } from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import { Box } from "@mui/material"
+import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
-import { useRouter } from "next/router"
 import { MESSAGES } from "@constants/messages"
-import { useTranslation } from "next-i18next"
-import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGlobal from "@hooks/useGlobal"
-import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
-import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
-import { ImageCustom } from "@components/atoms/image/Image"
-import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
-import DollarSolidIcon from "@components/icons/DollarSolidIcon"
-import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
+import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
+
+const RightMenuBuyItem = dynamic(
+  () => import("@feature/gameItem/components/molecules/RightMenuBuyItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightMenuNotLogIn = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuNotLogIn"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonGame = dynamic(
+  () => import("@feature/game/components/molecules/ButtonGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameItemSingleCard = dynamic(
+  () => import("@components/atoms/GameItemSingleCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const CardBuyItemHeader = dynamic(
+  () => import("@feature/gameItem/molecules/CardBuyItemHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -64,7 +107,7 @@ export default function CardBuyItem({
           <ButtonLink
             text={t("join-game")}
             href={`${router.asPath}/roomlist`}
-            icon={<ArrowJoinIcon />}
+            icon={<Icomoon className="icon-Arrow-in-Box-Right" />}
             size="medium"
             color="secondary"
             variant="contained"
@@ -76,7 +119,7 @@ export default function CardBuyItem({
     return (
       <ButtonLink
         text={t(MESSAGES["please_item"])}
-        icon={<ArrowJoinIcon />}
+        icon={<Icomoon className="icon-Arrow-in-Box-Right" />}
         href={`${router.asPath}`}
         size="medium"
         color="secondary"
@@ -98,7 +141,7 @@ export default function CardBuyItem({
             <ButtonLink
               text={t("please_login")}
               href=""
-              icon={<ArrowJoinIcon />}
+              icon={<Icomoon className="icon-Arrow-in-Box-Right" />}
               size="medium"
               color="secondary"
               className="h-[50px] w-full whitespace-nowrap bg-secondary-main"
@@ -138,14 +181,12 @@ export default function CardBuyItem({
               )}
               <div className="flex w-full flex-col gap-3 rounded-2xl border-[1px] border-neutral-700 bg-primary-main p-3">
                 {gameItemList && isHideOnWaitingRoom && (
-                  <>
-                    <DropdownListItem
-                      isCheck
-                      list={gameItemList?.sort((a, b) => a.price - b.price)}
-                      onChangeSelect={onChangeSelectItem}
-                      hideDropdownIcon
-                    />
-                  </>
+                  <DropdownListItem
+                    isCheck
+                    list={gameItemList?.sort((a, b) => a.price - b.price)}
+                    onChangeSelect={onChangeSelectItem}
+                    hideDropdownIcon
+                  />
                 )}
                 <div className="flex w-full flex-wrap gap-3">
                   {gameObject && (
@@ -181,7 +222,7 @@ export default function CardBuyItem({
                         <span>=</span>
                         <span className="total-price">{totalPrice}</span>
                       </p>
-                      <DollarSolidIcon />
+                      <Icomoon className="icon-Dollar" />
                     </div>
                     {isHideOnWaitingRoom && (
                       <div className="card-buy-item__buyButton w-full">

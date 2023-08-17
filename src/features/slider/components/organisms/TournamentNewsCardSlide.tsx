@@ -1,10 +1,20 @@
 import LanguageIcon from "@mui/icons-material/Language"
 import { Card, Typography } from "@mui/material"
 import React from "react"
-import CardTitle from "@components/organisms/CardTitle"
-import CardTournamentNewsSlide, {
-  INewsCardDetail
-} from "../molecules/CardTournamentNewsSlide"
+import dynamic from "next/dynamic"
+import { INewsCardDetail } from "../molecules/CardTournamentNewsSlide"
+
+const CardTitle = dynamic(() => import("@components/organisms/CardTitle"), {
+  suspense: true,
+  ssr: true
+})
+const CardTournamentNewsSlide = dynamic(
+  () => import("../molecules/CardTournamentNewsSlide"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface INewsCardSlide {
   slide: INewsCardDetail

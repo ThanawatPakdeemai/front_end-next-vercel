@@ -7,27 +7,44 @@ import {
   IconButton,
   SwipeableDrawer
 } from "@mui/material"
-import EditProfileIcon from "@components/icons/EditProfileIcon"
-import useProfileStore from "@stores/profileStore"
-import NavigateNextIcon from "@mui/icons-material/NavigateNext"
-import Support2Icon from "@components/icons/Support2Icon"
-import ClockIcon from "@components/icons/ClockIcon"
-import LogoutIcon from "@components/icons/LogoutIcon"
 import { useTranslation } from "react-i18next"
+import FacebookLogin from "react-facebook-login"
+import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
-import { ImageCustom } from "@components/atoms/image/Image"
-import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
+import CONFIGS from "@configs/index"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
-import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import FacebookLogin from "react-facebook-login"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import CONFIGS from "@configs/index"
-import ProfileSettingModal from "./ProfileSettingModal"
-import PlayedHistoryModal from "./PlayedHistoryModal"
-import LogoutModal from "./LogoutModal"
+import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const TelegramWidget = dynamic(
+  () => import("@components/atoms/button/TelegramWidget"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ProfileSettingModal = dynamic(() => import("./ProfileSettingModal"), {
+  suspense: true,
+  ssr: false
+})
+const PlayedHistoryModal = dynamic(() => import("./PlayedHistoryModal"), {
+  suspense: true,
+  ssr: false
+})
+const LogoutModal = dynamic(() => import("./LogoutModal"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ISettingModalProps {
   open: boolean
@@ -75,7 +92,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           onClick={() => setOpenSetting(false)}
           aria-hidden="true"
         >
-          <ArrowBackIcon />
+          <Icomoon className="icon-Full-Arrow-Left" />
           Settings
         </h2>
         <CardHeader
@@ -114,7 +131,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               aria-label="settings"
               onClick={() => setToggleProflie(!toggleProflie)}
             >
-              <EditProfileIcon />
+              <Icomoon className="icon-app-bold icon-Edit text-error-main" />
             </IconButton>
           }
           title={profile?.username}
@@ -122,7 +139,12 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
         />
         <Box
           component="div"
-          className="my-6 grid gap-6 border-b border-t border-[#35383F] py-6"
+          className="my-6 grid gap-6 border-b border-t border-[#35383F] py-6 text-white-default"
+          sx={{
+            ".icon-app": {
+              color: "#fff"
+            }
+          }}
         >
           <CardHeader
             onClick={() => setTogglePlayedHistory(!togglePlayedHistory)}
@@ -150,12 +172,12 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
                 sx={{ width: 56, height: 56 }}
                 aria-label="recipe"
               >
-                <ClockIcon />
+                <Icomoon className="icon-app icon-Time-Circle" />
               </Avatar>
             }
             action={
               <IconButton aria-label="All played games">
-                <NavigateNextIcon className="text-white-default" />
+                <Icomoon className="icon-app icon-Arrow---Right-2" />
               </IconButton>
             }
             title={t("History")}
@@ -186,12 +208,12 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
                 sx={{ width: 56, height: 56 }}
                 aria-label="recipe"
               >
-                <Support2Icon />
+                <Icomoon className="icon-app icon-headset" />
               </Avatar>
             }
             action={
               <IconButton aria-label="support">
-                <NavigateNextIcon className="text-white-default" />
+                <Icomoon className="icon-app icon-Arrow---Right-2" />
               </IconButton>
             }
             title={t("Support")}
@@ -214,7 +236,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               fields="name,email,picture"
               callback={handleSyncFacebookId}
               cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
-              icon={<FacebookColorIcon />}
+              icon={<Icomoon className="icon-Facebook" />}
               textButton="Sync with Facebook"
             />
             <Divider className="my-6 !block border-b border-[#35383F]" />
@@ -244,10 +266,16 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           avatar={
             <Avatar
               className="bg-neutral-800"
-              sx={{ width: 56, height: 56 }}
+              sx={{
+                width: 56,
+                height: 56,
+                ".icon-app": {
+                  color: "#fff"
+                }
+              }}
               aria-label="recipe"
             >
-              <LogoutIcon />
+              <Icomoon className="icon-app icon-Logout" />
             </Avatar>
           }
           title={t("logout")}

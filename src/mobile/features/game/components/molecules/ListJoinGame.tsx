@@ -1,11 +1,30 @@
 import { Box } from "@mui/material"
-import RoomListBox from "@components/molecules/roomList/RoomListBox"
-import StopwatchIcon from "@components/icons/StopwatchIcon"
-import { ImageCustom } from "@components/atoms/image/Image"
-import PlayersIcon from "@components/icons/PlayersIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { TRoomStatus } from "@components/molecules/roomList/RoomListBar"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { TGameRoomStatus } from "@feature/game/interfaces/IGameService"
+
+const RoomListBox = dynamic(
+  () => import("@components/molecules/roomList/RoomListBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   image: string
@@ -17,7 +36,7 @@ interface IProps {
   descChip2?: string
   time?: string
   text?: string
-  btnText: TRoomStatus
+  btnText: TGameRoomStatus
 }
 const ListJoinGame = ({
   image,
@@ -77,12 +96,7 @@ const ListJoinGame = ({
                 color="green"
                 shade="lemon"
                 showClock={
-                  <StopwatchIcon
-                    stroke="#F32429"
-                    className="mr-[-7px] w-[12px]"
-                    width={16}
-                    height={16}
-                  />
+                  <Icomoon className="icon-Stopwatch w-[12px mr-[-7px] text-[F32429]" />
                 }
               />
             ) : (
@@ -102,11 +116,7 @@ const ListJoinGame = ({
             }}
             className="flex items-center gap-2 text-[12px] text-[#F2C94C]"
           >
-            <PlayersIcon
-              width={20}
-              height={20}
-              stroke="#F2C94C"
-            />
+            <Icomoon className="icon-Users-Group text-[#F2C94C]" />
             {descChip2}
           </Box>
         </div>

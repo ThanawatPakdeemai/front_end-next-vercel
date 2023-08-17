@@ -1,37 +1,72 @@
 import React, { memo } from "react"
 import { Box, ButtonGroup, CircularProgress } from "@mui/material"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { Controller } from "react-hook-form"
-import DropdownListCurrency from "@feature/gameItem/atoms/DropdownListCurrency"
-import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
-import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
+import dynamic from "next/dynamic"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import Helper from "@utils/helper"
-import Balance from "@components/molecules/balance/Balance"
 import CONFIGS from "@configs/index"
-import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import { useWeb3Provider } from "@providers/Web3Provider"
-import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
-import { ImageCustom } from "@components/atoms/image/Image"
-import INaka from "@components/icons/Naka"
-import IShoppingCart from "@components/icons/ShoppingCart"
-import MinusIcon from "@components/icons/CountIcon/MinusIcon"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import { iconmotion } from "@styles/themes/partial/motion"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
-const iconmotion = {
-  hover: {
-    scale: 1.2,
-    rotate: 17,
-    ease: "easeIn",
-    transition: {
-      duration: 0.4,
-      stiffness: 500,
-      type: "spring"
-    }
+const DropdownListCurrency = dynamic(
+  () => import("@feature/gameItem/atoms/DropdownListCurrency"),
+  {
+    suspense: true,
+    ssr: false
   }
-}
+)
+const DropdownListItem = dynamic(
+  () => import("@feature/gameItem/atoms/DropdownListItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameItemSingleCard = dynamic(
+  () => import("@components/atoms/GameItemSingleCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(
+  () => import("@components/atoms/image/Image").then((mod) => mod.ImageCustom),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const PleaseCheckWallet = dynamic(
+  () => import("@components/atoms/PleaseCheckWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Balance = dynamic(() => import("@components/molecules/balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const FormBuyItem = () => {
   const { t } = useTranslation()
@@ -163,7 +198,9 @@ const FormBuyItem = () => {
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={<MinusIcon />}
+              icon={
+                <Icomoon className="icon-Minus relative top-[4px] text-white-primary" />
+              }
               className={buttonIncreaseDecrease.toString()}
             />
             <div className="form-buy-item__value flex h-10 flex-1 items-center justify-between rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-neutral-500">
@@ -199,7 +236,9 @@ const FormBuyItem = () => {
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={<PlusIcon />}
+              icon={
+                <Icomoon className="icon-Plus1 relative top-[4px] text-white-primary" />
+              }
               className={buttonIncreaseDecrease.toString()}
             />
           </div>
@@ -226,7 +265,7 @@ const FormBuyItem = () => {
                 })}
               </p>
               <div className="game-item-image flex h-9 w-6 items-center p-0">
-                <INaka color="#7B5BE6" />
+                <Icomoon className="icon-Naka text-[#7B5BE6]" />
               </div>
             </div>
           </div>
@@ -275,7 +314,7 @@ const FormBuyItem = () => {
                 text={t("view_in_marketplace")}
                 size="medium"
                 variant="contained"
-                icon={<IShoppingCart />}
+                icon={<Icomoon className="icon-Shopping-Cart-01" />}
               />
             </div>
           </ButtonGroup>

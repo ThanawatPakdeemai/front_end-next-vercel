@@ -1,3 +1,5 @@
+import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
+import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
 import CONFIGS from "@configs/index"
 import {
@@ -5,11 +7,19 @@ import {
   ISlideList
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
-import IconDollar from "@components/icons/dollarIcon"
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
-import ControllerIcon from "@components/icons/ControllerIcon"
-import { ImageCustom } from "@components/atoms/image/Image"
 import { IMAGES } from "./images"
+
+const ImageCustom = dynamic(
+  () => import("@components/atoms/image/Image").then((mod) => mod.ImageCustom),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -229,7 +239,7 @@ export const P2EHeaderMenu: IHeaderSlide = {
   menuList: p2eMenu,
   theme: "error",
   stickerRotate: 15,
-  icon: <IconDollar.Ori className="slick-header-error-icon" />
+  icon: <Icomoon className="icon-Dollar" />
 }
 
 export const StoryModeHeaderMenu: IHeaderSlide = {
@@ -245,7 +255,7 @@ export const StoryModeHeaderMenu: IHeaderSlide = {
   menuList: p2eMenu,
   theme: "success",
   stickerRotate: 15,
-  icon: <IconDollar.Ori className="slick-header-error-icon" />
+  icon: <Icomoon className="icon-Flag-01" />
 }
 
 export const NFTHeaderMenu: IHeaderSlide = {
@@ -261,7 +271,7 @@ export const NFTHeaderMenu: IHeaderSlide = {
   menuList: p2eMenu,
   theme: "info",
   stickerRotate: 15,
-  icon: <IconDollar.Ori className="slick-header-error-icon" />
+  icon: <Icomoon className="icon-Diamond" />
 }
 
 export const onPlayingHeaderMenu: IHeaderSlide = {
@@ -270,7 +280,7 @@ export const onPlayingHeaderMenu: IHeaderSlide = {
   menuList: onPlayingMenu,
   theme: "success",
   stickerRotate: 15,
-  icon: <ControllerIcon stroke="#3DCD95" /> // <IconDollar.Ori className="slick-header-error-icon" />
+  icon: <Icomoon className="icon-Joystick text-[#3DCD95]" />
 }
 
 const f2pMenu: ISlideList[] = [
@@ -307,7 +317,7 @@ export const F2PHeaderMenu: IHeaderSlide = {
       height={IMAGES.stickerFree.height}
     />
   ),
-  icon: <IconDollar.Not className="slick-header-secondary-icon" />,
+  icon: <Icomoon className="icon-Emoticon-Wink" />,
   title: "Free To Earn",
   menuList: f2pMenu,
   theme: "secondary",

@@ -1,11 +1,28 @@
 import React, { memo } from "react"
 import { Box } from "@mui/material"
 import { v4 as uuid } from "uuid"
-import SkeletonNotificationList from "@mobile/components/atoms/skeleton/SkeletonNotificationList"
-import NoData from "@components/molecules/NoData"
+import dynamic from "next/dynamic"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import NotificationCardMobile from "../molecules/NotificationCardMobile"
+
+const SkeletonNotificationList = dynamic(
+  () => import("@mobile/components/atoms/skeleton/SkeletonNotificationList"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const NotificationCardMobile = dynamic(
+  () => import("../molecules/NotificationCardMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface INotificationListMobile {
   loading: boolean

@@ -1,16 +1,21 @@
 import { Typography } from "@mui/material"
 import React from "react"
-
-import HrLine from "@components/icons/HrLine"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
-
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
-import Balance from "@components/molecules/balance/Balance"
-import { useTranslation } from "react-i18next"
-import Form from "../molecules/Form"
+
+const Form = dynamic(() => import("../molecules/Form"), {
+  suspense: true,
+  ssr: false
+})
+const Balance = dynamic(() => import("@components/molecules/balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   type?: string
@@ -104,7 +109,7 @@ const FormCreate = ({ type = "buy" }: IProp) => {
                 <Typography className="mr-3 whitespace-nowrap font-neue-machina text-sm uppercase text-neutral-500">
                   {t("your_wallet_balance")}
                 </Typography>
-                <HrLine className="" />
+                {/* <HrLine className="" /> */}
               </div>
               <Balance />
             </div>

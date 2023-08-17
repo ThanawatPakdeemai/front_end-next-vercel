@@ -1,8 +1,22 @@
 import React, { memo } from "react"
-import { Chip } from "@mui/material"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { useTranslation } from "next-i18next"
-import CheckMarkIcon from "@components/icons/CheckMarkIcon"
+import dynamic from "next/dynamic"
+
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   disabled: boolean
@@ -24,7 +38,7 @@ const Header = ({ unread, onHandleClick, disabled }: IProps) => {
           className="my-2 font-bold uppercase "
         />
         <ButtonToggleIcon
-          startIcon={<CheckMarkIcon />}
+          startIcon={<Icomoon className="icon-Check-in-a-Circle" />}
           text={t("mark_all_as_read")}
           handleClick={onHandleClick}
           className="border-sky-500 z-[2] rounded-full border border-solid text-[12px] capitalize md:w-[170px]"

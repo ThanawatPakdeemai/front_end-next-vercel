@@ -1,7 +1,7 @@
-import CopyTextIcon from "@components/icons/CopyTextIcon"
-import HrLine from "@components/icons/HrLine"
-import Balance from "@components/molecules/balance/Balance"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { ReactNode, useMemo } from "react"
+import { Trans, useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { chainIdConfig } from "@configs/sites"
 import { MESSAGES } from "@constants/messages"
 import {
@@ -11,11 +11,28 @@ import {
 import { useToast } from "@feature/toast/containers"
 
 // import useAllBalances from "@hooks/useAllBalances"
-import { Box, Typography } from "@mui/material"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
-import { ReactNode, useMemo } from "react"
-import { Trans, useTranslation } from "react-i18next"
+
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Balance = dynamic(() => import("@components/molecules/balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IPropContent {
   title: string | ReactNode
@@ -75,7 +92,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
                   successToast(MESSAGES.copy_text_success)
                 }}
               >
-                <CopyTextIcon />
+                <Icomoon className="icon-Copy" />
               </Box>
             </div>
           )}
@@ -99,7 +116,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
                   successToast(MESSAGES.copy_text_success)
                 }}
               >
-                <CopyTextIcon />
+                <Icomoon className="icon-Copy" />
               </Box>
             </div>
           )}
@@ -143,7 +160,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
               <Typography className="mr-3 whitespace-nowrap font-neue-machina text-sm uppercase text-neutral-500">
                 <Trans i18nKey="your_wallet_balance" />
               </Typography>
-              <HrLine className="" />
+              {/* <HrLine className="" /> */}
             </div>
             <Balance />
           </div>

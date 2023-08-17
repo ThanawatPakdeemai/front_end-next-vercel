@@ -20,13 +20,11 @@ import useSupportedChain from "@hooks/useSupportedChain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
 import { useRouter } from "next/router"
-// import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { ELocalKey } from "@interfaces/ILocal"
 import { MESSAGES } from "@constants/messages"
 import useGlobal from "@hooks/useGlobal"
 import useShareToEarnTracking from "@feature/game/containers/hooks/useShareToEarnTracking"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -37,7 +35,7 @@ const useBuyGameItemController = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId, accounts, signer, address } = useWeb3Provider()
+  const { chainId, signer, address } = useWeb3Provider()
   const { chainSupport } = useChainSupportStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
   const { price } = useNakaPriceProvider()
@@ -99,14 +97,9 @@ const useBuyGameItemController = () => {
     errorToast("Please fill in the required fields")
     setClose()
   }
-  // const { balanceofItem, refetch: refetchBalanceofItem } = useGetBalanceOf({
-  //   _address: profile?.address ?? "",
-  //   _item_id: isFreeToPlayGame(data as IGame)
-  //     ? 0
-  //     : itemSelected?.item_id_smartcontract ?? 0
-  // })
 
-  const { refetchBalanceofItem, balanceofItem } = useBalanceOfProvider()
+  // const { balanceofItem } = useBalanceOfProvider()
+  // const { refetchBalanceofItem, balanceofItem } = useBalanceOfProvider()
   // const balanceofItem = { data: 1, status: true }
 
   const updatePricePerItem = useCallback(async () => {
@@ -234,12 +227,12 @@ const useBuyGameItemController = () => {
           } as IGameItemListData)
         }
       }
-      if (refetchBalanceofItem) refetchBalanceofItem()
+      // if (refetchBalanceofItem) refetchBalanceofItem()
       handleClose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  // , [itemSizeId, watch, gameItemList, data])
+  }, [itemSizeId])
+  // , [, watch, gameItemList, data])
 
   /**
    * Get code from local storage
@@ -286,7 +279,7 @@ const useBuyGameItemController = () => {
             if (res && _data.currency.balanceVault.digit) {
               await refetch()
               await refetchItemSelected()
-              successToast("Buy Items Success")
+              successToast("Purchase confirmed")
               setClose()
               handleClose()
             }
@@ -311,7 +304,7 @@ const useBuyGameItemController = () => {
               await refetch()
               await refetchItemSelected()
               // setVaultBalance(Number(balanceVaultNaka.data))
-              successToast("Buy Items Success")
+              successToast("Purchase confirmed")
               setClose()
               handleClose()
             }
@@ -404,14 +397,14 @@ const useBuyGameItemController = () => {
       watch("qty") > 0 &&
       _totalPrice <= watch("currency")?.balanceVault?.digit &&
       _totalPrice > 0 &&
-      Object.keys((accounts as string[]) ?? [])?.length > 0 &&
+      address &&
       Object.keys((signer as JsonRpcSigner) ?? [])?.length > 0
     ) {
       return false
     }
     return true
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts, signer, watch, watch("currency"), watch("nakaPerItem")])
+  }, [address, signer, watch, watch("currency"), watch("nakaPerItem")])
 
   const isHideOnWaitingRoom =
     router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]"
@@ -571,10 +564,9 @@ const useBuyGameItemController = () => {
     chainSupport,
     isDisabled,
     chainId,
-    accounts,
     signer,
     refetchItemSelected,
-    balanceofItem,
+    // balanceofItem,
     handleTimeExpire,
     getCodeShareToEarn,
     qtyItemSelected,

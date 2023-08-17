@@ -1,14 +1,27 @@
 import React, { memo, useState } from "react"
 import { motion } from "framer-motion"
-import { IGameCategory } from "@feature/game/interfaces/IGameService"
-import { ImageCustom } from "@components/atoms/image/Image"
 import Link from "next/link"
+import dynamic from "next/dynamic"
+import { IGameCategory } from "@feature/game/interfaces/IGameService"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import useProfileStore from "@stores/profileStore"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import HeartSolidIcon from "../atoms/icons/HeartSolidIcon"
-import HeartFilledIcon from "../atoms/icons/HeartFilledIcon"
-import RemoveWishlistModal from "../organisms/modal/RemoveWishlistModal"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: true
+})
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const RemoveWishlistModal = dynamic(
+  () => import("../organisms/modal/RemoveWishlistModal"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IProps {
   gameId: string
@@ -53,9 +66,23 @@ const GameCardMobile = ({
           {profile && (
             <div className="game-favorite absolute right-3 top-3 z-[1]">
               {favourite ? (
-                <HeartFilledIcon onClick={() => setToggleRemove(true)} />
+                <button
+                  type="button"
+                  aria-label="Favourite"
+                  onClick={() => setToggleRemove(true)}
+                  className="text-error-main"
+                >
+                  <Icomoon className="icon-app-bold icon-Heart" />
+                </button>
               ) : (
-                <HeartSolidIcon onClick={() => onClickFavouriteButton()} />
+                <button
+                  type="button"
+                  aria-label="Favourite"
+                  onClick={() => onClickFavouriteButton()}
+                  className="text-white-primary"
+                >
+                  <Icomoon className="icon-Heart" />
+                </button>
               )}
             </div>
           )}

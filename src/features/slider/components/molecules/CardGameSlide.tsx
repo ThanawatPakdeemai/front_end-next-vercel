@@ -1,21 +1,14 @@
 import React from "react"
-import { Image } from "@components/atoms/image"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import { motion } from "framer-motion"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import { iconmotion } from "@styles/themes/partial/motion"
 
-export const iconmotion = {
-  hover: {
-    scale: 1.2,
-    rotate: 17,
-    ease: "easeIn",
-    transition: {
-      duration: 0.4,
-      stiffness: 500,
-      type: "spring"
-    }
-  }
-}
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+
 export interface ICardNextSlide {
   slideNext: IGame
   gotoNext?: () => void
@@ -30,7 +23,7 @@ export default function CardGameSlide({
   return (
     <div className=" rounded-3xl border-[1px] border-neutral-800 ">
       <div className="relative flex justify-between px-4">
-        <ImageCustom
+        <Image
           width={200}
           height={200}
           src="/images/gamePage/game1.png"

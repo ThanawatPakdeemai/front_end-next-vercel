@@ -101,6 +101,8 @@ declare interface Window {
   TWidgetLogin: {
     auth: () => void
   }
+  okxwallet: any
+  BinanceChain: any
 }
 
 // declare module "*.svg" {

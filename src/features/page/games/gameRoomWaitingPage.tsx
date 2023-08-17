@@ -1,13 +1,28 @@
-import PleaseLogin from "@components/atoms/PleaseLogin"
+import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
-import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
-import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
-import React, { useEffect, useState } from "react"
-import NoData from "@components/molecules/NoData"
+
+const PleaseLogin = dynamic(() => import("@components/atoms/PleaseLogin"))
+const MultiWaiting = dynamic(
+  () =>
+    import(
+      "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
+    )
+)
+const SingleWaiting = dynamic(
+  () =>
+    import(
+      "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
+    )
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   _roomId: string

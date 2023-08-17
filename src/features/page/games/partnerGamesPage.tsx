@@ -1,9 +1,8 @@
-import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { P2EHeaderMenu } from "@constants/gameSlide"
-import { useQueryClient } from "@tanstack/react-query"
 import React, { memo, useEffect, useState } from "react"
 import { v4 as uuid } from "uuid"
+import { useQueryClient } from "@tanstack/react-query"
+import dynamic from "next/dynamic"
+import { P2EHeaderMenu } from "@constants/gameSlide"
 import useGameStore from "@stores/game/index"
 import usePartnerGame from "@feature/game/containers/hooks/usePartnerGame"
 import useGlobal from "@hooks/useGlobal"
@@ -11,8 +10,32 @@ import { getAllPartnerGames } from "@feature/game/partnerGames/containers/servic
 import useFilterStore from "@stores/blogFilter"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useFilterGamePartnerList from "@feature/partner/containers/hooks/useFilterGamePartnerList"
-import GameCard from "@feature/game/components/molecules/GameCard"
-import NoData from "@components/molecules/NoData"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 const PartnerGames = () => {
   const search = ""

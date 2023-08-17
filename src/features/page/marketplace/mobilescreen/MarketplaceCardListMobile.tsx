@@ -3,10 +3,20 @@ import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import { PaginationNaka } from "@components/atoms/pagination"
 import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
-import NoData from "@components/molecules/NoData"
-import SkeletonItemMobile from "./SkeletonItemMobile"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonItemMobile = dynamic(() => import("./SkeletonItemMobile"))
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),

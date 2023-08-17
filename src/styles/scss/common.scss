@@ -254,14 +254,6 @@ body {
   }
 }
 
-.slick-slider-dot-right {
-  .slick-slider {
-    .slick-dots {
-      justify-content: flex-start;
-    }
-  }
-}
-
 .progress-bar-energy {
   background: rgb(35, 35, 41) !important;
   background: linear-gradient(
@@ -337,7 +329,7 @@ body {
   background: linear-gradient(#1c1c21, #18181b) padding-box,
     linear-gradient(to bottom, #252627, #18181b) border-box;
   border: 1px solid transparent;
-  animation: firCircle 3s ease-in-out infinite;
+  // animation: firCircle 3s ease-in-out infinite;
 }
 
 .btn-sticky-in {
@@ -348,7 +340,7 @@ body {
     linear-gradient(to bottom, #27282b, #1a1a1e) border-box;
   border: 1px solid transparent;
   position: absolute;
-  animation: secCircle 3s ease-in-out infinite;
+  // animation: secCircle 3s ease-in-out infinite;
 }
 .btn-sticky-dot {
   width: 8px;
@@ -358,7 +350,7 @@ body {
   position: absolute;
   right: 28%;
   top: 28%;
-  animation: dotCircle 3s ease-in-out infinite;
+  // animation: dotCircle 3s ease-in-out infinite;
 }
 
 .btn-sticky-icon {

@@ -1,25 +1,58 @@
-import WandIcon from "@components/icons/WandIcon"
-import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
-import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
+import { Chip, Typography, Button } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+import dynamic from "next/dynamic"
 import useGetPriceNakaPunk from "@feature/nakapunk/containers/hooks/useGetPriceNakapunk"
 import usePurchaseNakapunk from "@feature/nakapunk/containers/hooks/usePurchaseNakapunk"
 import { useToast } from "@feature/toast/containers"
-import { Chip, Typography, Button } from "@mui/material"
 // import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
-import React, { useEffect, useState } from "react"
 import { IPunkMetaData } from "@feature/nakapunk/interfaces/INakapunkService"
 import useProfileStore from "@stores/profileStore"
-import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
-import GotNaKAPunk from "@components/molecules/Inventory/GotNaKAPunk"
-import { v4 as uuidv4 } from "uuid"
 import CONFIGS from "@configs/index"
 import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
-import Breadcrumb from "@components/molecules/Breadcrumb"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import { MESSAGES } from "@constants/messages"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
+
+const Breadcrumb = dynamic(() => import("@components/molecules/Breadcrumb"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const CardContentDetails = dynamic(
+  () => import("@feature/marketplace/components/organisms/CardContentDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightDetailsMarketplace = dynamic(
+  () =>
+    import("@feature/marketplace/components/organisms/RightDetailsMarketplace"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightMenuNotLogIn = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuNotLogIn"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GotNaKAPunk = dynamic(
+  () => import("@components/molecules/Inventory/GotNaKAPunk"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
@@ -226,7 +259,7 @@ const MarketplaceNakaPunk = () => {
                 type="submit"
                 variant="contained"
                 className="h-10 w-full !bg-green-lemon capitalize !text-primary-main"
-                startIcon={<WandIcon />}
+                startIcon={<Icomoon className="icon-Magic-Stick" />}
                 sx={{
                   maxWidth: 232
                 }}

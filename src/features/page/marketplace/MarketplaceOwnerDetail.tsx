@@ -40,7 +40,8 @@ const MarketplaceOwnerDetail = () => {
             {profile.data &&
               profile.data.address &&
               invenItemData.wallet_address &&
-              profile.data.address === invenItemData.wallet_address &&
+              profile.data.address.toLowerCase() ===
+                invenItemData.wallet_address.toLowerCase() &&
               !invenItemData.marketplaces_data &&
               invenItemData.type !== "nft_avatar" && (
                 <div className="px-8">

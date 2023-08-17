@@ -1,25 +1,35 @@
 import React from "react"
 import { motion } from "framer-motion"
-import ILogoMaster from "@components/icons/LogoMaster"
 import { Chip, Typography } from "@mui/material"
 import ContentCopySharpIcon from "@mui/icons-material/ContentCopySharp"
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded"
-import Helper from "@utils/helper"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
-import { Image } from "@components/atoms/image"
-import Video from "@components/atoms/Video"
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt"
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied"
 import Link from "next/link"
+import copy from "copy-to-clipboard"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import { isMobile } from "@hooks/useGlobal"
 // eslint-disable-next-line import/no-extraneous-dependencies
-import copy from "copy-to-clipboard"
-import { useRouter } from "next/router"
-
 import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
+import { MESSAGES } from "@constants/messages"
+import { useToast } from "@feature/toast/containers"
+import Helper from "@utils/helper"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Video = dynamic(() => import("@components/atoms/Video"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 // motion
 const imgMotion = {
@@ -415,11 +425,7 @@ const CardItemMarketPlace = ({
             <div className="mx-2 flex-wrap items-center justify-between sm:flex">
               {price && (
                 <div className="flex items-center">
-                  <ILogoMaster
-                    width="24"
-                    height="11"
-                    color="#ffff"
-                  />
+                  <Icomoon className="icon-Naka text-white-primary" />
                   <Typography className="ml-[11px] text-sm uppercase text-white-default">
                     {formatNumber(price as number, {
                       maximumFractionDigits: 4

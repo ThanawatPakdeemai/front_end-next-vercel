@@ -14,28 +14,51 @@ import {
 } from "@mui/material"
 import { signIn } from "next-auth/react"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
-import ButtonClose from "@components/atoms/button/ButtonClose"
 import { motion } from "framer-motion"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
-import Beenhere from "@components/icons/Beenhere"
-import ILock from "@components/icons/Lock"
-import IEdit from "@components/icons/Edit"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
-import ICheckMark from "@components/icons/CheckMark"
-import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useRegisterAvatarStore from "@stores/registerAvater"
 import { isMobile } from "@hooks/useGlobal"
 import useRegisterTypeStore from "@stores/registerTypes"
 import CONFIGS from "@configs/index"
-import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const FormRegister = () => {
   const {
@@ -319,7 +342,7 @@ const FormRegister = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <ILock />
+                      <Icomoon className="icon-Lock" />
                     </InputAdornment>
                   ),
                   endAdornment: (
@@ -423,7 +446,7 @@ const FormRegister = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Beenhere />
+                      <Icomoon className="icon-Shield-with-Check-02" />
                     </InputAdornment>
                   ),
                   endAdornment: (
@@ -502,12 +525,7 @@ const FormRegister = () => {
                       />
                     }
                     checkedIcon={
-                      <ICheckMark
-                        className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
-                        style={{
-                          borderRadius: "8.5px"
-                        }}
-                      />
+                      <Icomoon className="icon-Checkmark border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary" />
                     }
                     {...register("subscription")}
                   />
@@ -548,13 +566,13 @@ const FormRegister = () => {
                 <ButtonToggleIcon
                   handleClick={checkSizeFormRegister}
                   type="submit"
-                  startIcon={<IEdit />}
+                  startIcon={<Icomoon className="icon-Ballpen" />}
                   text={t("register")}
                   className="btn-rainbow-theme h-[40px] w-full bg-secondary-main font-bold capitalize text-white-default md:!w-[209px] "
                 />
               </Grid>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               container
               justifyContent="space-between"
@@ -567,7 +585,7 @@ const FormRegister = () => {
               <Grid item>
                 <hr className="w-[208px] border border-solid border-neutral-800" />
               </Grid>
-            </Grid>
+            </Grid> */}
             <Grid
               item
               container
@@ -584,7 +602,7 @@ const FormRegister = () => {
                         damping: 4
                       }}
                       onClick={() => handleRegister("twitter")}
-                      icon={<TwitterIcon />}
+                      icon={<Icomoon className="icon-twitter" />}
                       className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                     />
                     <ButtonIcon
@@ -594,19 +612,9 @@ const FormRegister = () => {
                         stiffness: 400,
                         damping: 4
                       }}
+                      // onClick={() => googleRegister(watch("referralId"))}
                       onClick={() => handleRegister("google")}
-                      icon={<GoogleIcon />}
-                      className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                    />
-                    <ButtonIcon
-                      whileHover="hover"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 4
-                      }}
-                      onClick={() => handleRegister("discord")}
-                      icon={<DiscordIcon />}
+                      icon={<Icomoon className="icon-Google text-[110%]" />}
                       className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                     />
                   </>

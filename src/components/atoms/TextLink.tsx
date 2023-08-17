@@ -1,7 +1,12 @@
 import React, { ReactNode } from "react"
 import { motion, Variants } from "framer-motion"
 import Link from "next/link"
-import ArrowOutwardIcon from "@components/icons/ArrowOutwardIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface ITextLink {
   name?: string | null
@@ -96,7 +101,11 @@ const TextLink = ({
         className="opacity-1 icon-arrow__start absolute left-0 top-[2px] translate-y-[-30%] transition-all"
         variants={variantsArrow || arrowMotion}
       >
-        {arrow ? <ArrowOutwardIcon /> : <></>}
+        {arrow ? (
+          <Icomoon className="icon-Link-out text-[rgb(152, 160, 181)]" />
+        ) : (
+          <></>
+        )}
       </motion.div>
       <div className="text-link__text-wrapper flex max-w-[120px] text-center">
         <motion.div
@@ -109,7 +118,7 @@ const TextLink = ({
               variants={iconEnd}
               className="icon-arrow__end"
             >
-              {icon || <ArrowOutwardIcon />}
+              {icon || <Icomoon className="icon-Link-out" />}
             </motion.span>
           )}
         </motion.div>

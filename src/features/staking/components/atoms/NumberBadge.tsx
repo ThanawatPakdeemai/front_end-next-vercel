@@ -1,6 +1,11 @@
-import IconNakaGlitch from "@components/icons/NakaGlitchIcon"
 import { Skeleton } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface INumberBadge {
   title: string
@@ -32,9 +37,10 @@ const NumberBadge = ({
         <Skeleton className="h-[32px] w-full rounded-sm sm:h-[50px]" />
       )}
 
-      <IconNakaGlitch
-        className="ml-4"
-        stroke={color === "purple" ? "#7B5BE6" : "#F42728"}
+      <Icomoon
+        className={`icon-Naka ml-4 ${
+          color === "purple" ? "#7B5BE6" : "#F42728"
+        }`}
       />
     </div>
   </div>

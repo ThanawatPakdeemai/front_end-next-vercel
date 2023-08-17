@@ -1,9 +1,38 @@
-import OverviewIcon from "@components/icons/OverviewIcon"
-import PanelContent from "@components/molecules/PanelContent"
-import AsideLayout from "@components/templates/contents/AsideLayout"
-import useEventController from "@feature/event/containers/hooks/useEventController"
-import { Box, Chip, Divider, Typography } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import useEventController from "@feature/event/containers/hooks/useEventController"
+
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Divider = dynamic(() => import("@mui/material/Divider"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const PanelContent = dynamic(
+  () => import("@components/molecules/PanelContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const AsideLayout = dynamic(
+  () => import("@components/templates/contents/AsideLayout"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const EventRewardSidebar = () => {
   const { currentEventData, MOCKUP_REWARD } = useEventController()
@@ -24,7 +53,7 @@ const EventRewardSidebar = () => {
     >
       <div className="relative my-2 flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2 sm:m-0 md:min-w-[330px]">
         <AsideLayout
-          icon={<OverviewIcon />}
+          icon={<Icomoon className="icon-Radar-02" />}
           title="Reward details"
         >
           <PanelContent height="h-[500px]">

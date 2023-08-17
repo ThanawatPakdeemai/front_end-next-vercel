@@ -121,7 +121,7 @@ const SelectNaka = ({
                             href={option.link ?? ""}
                             className="flex w-full justify-between"
                           >
-                            <ListItemIcon className="!text-primary-contrastText ">
+                            <ListItemIcon className="text-[1.5rem] text-white-primary">
                               {option.icon}
                             </ListItemIcon>
                             <ListItemText className="w-50 flex items-center">

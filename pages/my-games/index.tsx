@@ -16,11 +16,9 @@ const MyGamesPage = dynamic(() => import("@feature/page/games/MyGamesPage"), {
 
 export default function MyGames() {
   return (
-    <>
-      <article className="h-full w-full">
-        <MyGamesPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <MyGamesPage />
+    </article>
   )
 }
 

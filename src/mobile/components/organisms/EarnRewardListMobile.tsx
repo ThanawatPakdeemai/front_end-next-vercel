@@ -1,10 +1,27 @@
 import React from "react"
 import { Box } from "@mui/material"
-import { IPlayToEarnRewardData } from "@src/types/games"
 import { v4 as uuid } from "uuid"
-import NoData from "@components/molecules/NoData"
-import SkeletonEarnRewardMobile from "../atoms/skeleton/SkeletonEarnRewardMobile"
-import EarnRewardCardMobile from "../molecules/EarnRewardCardMobile"
+import dynamic from "next/dynamic"
+import { IPlayToEarnRewardData } from "@src/types/games"
+
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonEarnRewardMobile = dynamic(
+  () => import("../atoms/skeleton/SkeletonEarnRewardMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const EarnRewardCardMobile = dynamic(
+  () => import("../molecules/EarnRewardCardMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IEarnRewardListMobile {
   earnReward: IPlayToEarnRewardData[] | []

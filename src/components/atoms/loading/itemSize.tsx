@@ -1,5 +1,10 @@
 import React, { memo } from "react"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   image_icon: string

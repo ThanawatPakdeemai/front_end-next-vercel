@@ -1,12 +1,23 @@
 import { Typography } from "@mui/material"
 import { v4 as uuid } from "uuid"
+import { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { F2PHeaderMenu } from "@constants/gameSlide"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
-import GameCard from "./GameCard"
+
+const GameCard = dynamic(() => import("./GameCard"), {
+  suspense: true,
+  ssr: false
+})
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   _gameMode: IGetType

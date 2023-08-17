@@ -1,9 +1,17 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { isMobile } from "@hooks/useGlobal"
 import { Typography } from "@mui/material"
-import Helper from "@utils/helper"
 import React from "react"
 import { MobileView } from "react-device-detect"
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+import { isMobile } from "@hooks/useGlobal"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IProp {
   icon: React.ReactNode

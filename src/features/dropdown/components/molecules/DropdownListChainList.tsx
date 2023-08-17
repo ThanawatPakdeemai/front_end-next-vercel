@@ -5,7 +5,15 @@ import { Popover, Typography } from "@mui/material"
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
 import { IChainList } from "@configs/chain"
-import SelectDropdownChainList from "@components/atoms/selectDropdown/SelectDropdownChainList"
+import dynamic from "next/dynamic"
+
+const SelectDropdownChainList = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdownChainList"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   list: IChainList[]

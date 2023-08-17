@@ -1,21 +1,19 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { memo } from "react"
-// import { ITournamentData } from "@src/types/tournament"
-// import { IProfile, INaxtround } from "@src/types/profile"
-// import { IGame } from "@src/types/games"
-// import { useRouter } from "next/router"
-// import { IResponseGameById } from "@src/types/response"
-// import { getGameById } from "@feature/game/containers/services/game.service"
-import { Image } from "@components/atoms/image/index"
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
-// import TournamentReward from "./TournamentReward"
+import dynamic from "next/dynamic"
 
-// interface IProp {
-//   tournament?: ITournamentData
-//   account?: string
-//   profile?: IProfile
-//   statusRegister?: boolean
-// }
+// Use dynamic import for the components
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const ArrowDownwardIcon = dynamic(
+  () => import("@mui/icons-material/ArrowDownward"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 const TournamentProfile = () => (
   // const round = tournament.round.find(

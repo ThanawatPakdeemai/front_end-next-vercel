@@ -20,26 +20,48 @@ import LockOpenIcon from "@mui/icons-material/LockOpen"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
 import { useForm } from "react-hook-form"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
-import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
-import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useLoginTypeStore from "@stores/loginTypes"
 import { isMobile } from "@hooks/useGlobal"
-import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
-import CONFIGS from "@configs/index"
-// import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
-import FromForgotPassword from "./FromForgotPassword"
+// import CONFIGS from "@configs/index"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
 
+const FromForgotPassword = dynamic(() => import("./FromForgotPassword"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonWallet = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
 const FormLogin = () => {
-  const { metaMarkLogin, isLoading, onSubmitLogin } = useFormLoginController()
-
+  const { metaMarkLogin, isLoading, onSubmitLogin, okxLogin } =
+    useFormLoginController()
   const { t } = useTranslation()
-
   const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -66,6 +88,7 @@ const FormLogin = () => {
 
   const handleLogin = async (_typeLogin: string) => {
     await setLoginTypes(_typeLogin)
+    // await signIn(_typeLogin)
     await signIn(_typeLogin)
   }
   return (
@@ -227,9 +250,9 @@ const FormLogin = () => {
         container
       >
         <div className="flex w-full flex-row flex-wrap justify-between gap-2">
-          {CONFIGS.MODE === "production" ? undefined : (
-            <>
-              {/* <ButtonIcon
+          {/* {CONFIGS.MODE === "production" ? undefined : ( */}
+          <>
+            {/* <ButtonIcon
                 whileHover="hover"
                 transition={{
                   type: "spring",
@@ -240,42 +263,6 @@ const FormLogin = () => {
                 icon={<FacebookIcon />}
                 className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
               /> */}
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("twitter")}
-                icon={<TwitterIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("google")}
-                icon={<GoogleIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-              <ButtonIcon
-                whileHover="hover"
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 4
-                }}
-                onClick={() => handleLogin("discord")}
-                icon={<DiscordIcon />}
-                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              />
-            </>
-          )}
-          {!isMobile && (
             <ButtonIcon
               whileHover="hover"
               transition={{
@@ -283,10 +270,59 @@ const FormLogin = () => {
                 stiffness: 400,
                 damping: 4
               }}
-              onClick={metaMarkLogin}
-              icon={<MetaMarkIcon />}
+              onClick={() => handleLogin("twitter")}
+              icon={<Icomoon className="icon-twitter" />}
               className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
             />
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={() => handleLogin("google")}
+              icon={<Icomoon className="icon-Google text-[110%]" />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={() => handleLogin("discord")}
+              icon={<Icomoon className="icon-Discord" />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+          </>
+          {/* )} */}
+          {!isMobile && (
+            <>
+              <ButtonIcon
+                whileHover="hover"
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 4
+                }}
+                onClick={metaMarkLogin}
+                icon={<IcomoonWallet className="icon-Metamask" />}
+                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              />
+              <ButtonIcon
+                whileHover="hover"
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 4
+                }}
+                onClick={okxLogin}
+                icon={<IcomoonWallet className="icon-okx" />}
+                className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              />
+            </>
           )}
         </div>
       </Grid>

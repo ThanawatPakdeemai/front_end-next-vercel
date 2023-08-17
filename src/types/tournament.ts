@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
-import { TGameType } from "@feature/game/interfaces/IGameService"
-import { IGame, IGameItem } from "./games"
+import { IGame, TGameType } from "@feature/game/interfaces/IGameService"
+import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
 
 type ITournamentType = "play_for_all" | "tree_match"
 

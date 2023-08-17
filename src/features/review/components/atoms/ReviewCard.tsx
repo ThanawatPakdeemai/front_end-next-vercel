@@ -1,13 +1,17 @@
 import Chip from "@mui/material/Chip"
 import Rating from "@mui/material/Rating"
 import Typography from "@mui/material/Typography"
-import { Image } from "@components/atoms/image/index"
 import React from "react"
-import MoreVerticalIcon from "@components/icons/MoreVerticalIcon"
-import EditIcon from "@components/icons/EditIcon"
-import DeleteIcon from "@components/icons/DeleteIcon"
-import Helper from "@utils/helper"
-import TooltipsCustom from "@components/atoms/TooltipsCustom"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   reviewId: string
@@ -33,7 +37,7 @@ const ReviewCard = ({
   onDel
 }: IProps) => {
   const [isMore, setIsMore] = React.useState<boolean>(false)
-  const { shortenString } = Helper
+
   const handleEdit = React.useCallback(() => {
     if (onEdit) onEdit(true)
     setIsMore(false)
@@ -70,29 +74,21 @@ const ReviewCard = ({
           </div>
           <div className="flex h-full w-full flex-col gap-y-2">
             <div className="flex h-6 min-h-[24px] w-full flex-row justify-between">
-              <TooltipsCustom
-                className="truncate text-xs text-neutral-500 hover:text-clip"
-                placement="top"
-                title={reviewUsername}
-                color="primary"
-              >
-                <div className="flex h-full cursor-pointer items-center font-neue-machina font-bold uppercase text-white-primary">
-                  {shortenString(reviewUsername, 3)}
-                </div>
-              </TooltipsCustom>
+              <div className="flex h-full items-center font-neue-machina font-bold uppercase text-white-primary">
+                {reviewUsername}
+              </div>
               <div className="review--item__content-rating flex h-full items-center gap-2">
                 <Rating
                   sx={{
                     "& .MuiSvgIcon-root": {
-                      color: "#70727B",
+                      color: "#A0ED61!important",
                       width: "20px"
                     }
                   }}
                   size="small"
-                  name="star-read-only"
+                  name="read-only"
                   value={parseFloat(reviewRate)}
                   readOnly
-                  max={5}
                   precision={0.5}
                 />
                 <Chip
@@ -106,7 +102,7 @@ const ReviewCard = ({
             </div>
             <div className="h-auto w-full">
               <Typography
-                className="mb-0 text-sm text-neutral-500 line-clamp-1"
+                className="mb-0 text-sm text-neutral-500"
                 variant="body1"
                 dangerouslySetInnerHTML={{
                   __html: reviewText || "-"
@@ -120,36 +116,38 @@ const ReviewCard = ({
             {onEdit ? (
               <button
                 type="button"
+                aria-label="Edit review"
                 className="flex h-10 w-10 flex-row items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-800 hover:opacity-80"
                 onClick={handleEdit}
               >
-                <EditIcon />
+                <Icomoon className="icon-Pen-02" />
               </button>
             ) : undefined}
             {onDel ? (
               <button
                 type="button"
+                aria-label="Delete review"
                 className="flex h-10 w-10 flex-row items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-800 hover:opacity-80"
                 onClick={handleDel}
               >
-                <DeleteIcon />
+                <Icomoon className="icon-Delete" />
               </button>
             ) : undefined}
           </div>
         ) : undefined}
       </div>
-
-      <div className="relative flex w-6 flex-row items-center">
-        {playerId && playerId === reviewUserId ? (
+      {playerId && playerId === reviewUserId ? (
+        <div className="relative flex w-6 flex-row items-center">
           <button
             type="button"
+            aria-label="More"
             className="h-6 w-6"
             onClick={() => setIsMore((prev: boolean) => !prev)}
           >
-            <MoreVerticalIcon />
+            <Icomoon className="icon-Verified" />
           </button>
-        ) : undefined}
-      </div>
+        </div>
+      ) : undefined}
     </div>
   )
 }

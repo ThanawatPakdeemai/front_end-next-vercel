@@ -1,12 +1,27 @@
-import SearchIcon from "@components/icons/SearchIcon"
-import { commonPattern } from "@constants/regex"
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography
-} from "@mui/material"
 import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import { commonPattern } from "@constants/regex"
+
+const IconButton = dynamic(() => import("@mui/material/IconButton"), {
+  suspense: true,
+  ssr: false
+})
+const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"), {
+  suspense: true,
+  ssr: false
+})
+const TextField = dynamic(() => import("@mui/material/TextField"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   title: string
@@ -61,7 +76,7 @@ const FilterSearchBox = ({
                   onClick(state)
                 }}
               >
-                <SearchIcon />
+                <Icomoon className="icon-Search" />
               </IconButton>
             </InputAdornment>
           )

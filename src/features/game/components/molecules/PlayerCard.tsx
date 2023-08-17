@@ -1,12 +1,24 @@
+import { memo } from "react"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
-import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
-import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
-import { memo } from "react"
-import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
+
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const AvatarProfile = dynamic(
+  () => import("@components/atoms/avatar/AvatarProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]

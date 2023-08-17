@@ -1,9 +1,20 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import PageHeader from "@feature/table/components/molecules/PageHeader"
 import React from "react"
 import { useRouter } from "next/router"
-import P2PDexCreateContent from "@feature/p2pDex/components/templates/P2PDexCreateContent"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import dynamic from "next/dynamic"
+
+const PageHeader = dynamic(
+  () => import("@feature/table/components/molecules/PageHeader")
+)
+const P2PDexCreateContent = dynamic(
+  () => import("@feature/p2pDex/components/templates/P2PDexCreateContent")
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon")
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: true
+})
 
 const P2PDexCreatePage = () => {
   const router = useRouter()
@@ -21,7 +32,7 @@ const P2PDexCreatePage = () => {
         button={
           <ButtonToggleIcon
             startIcon=""
-            endIcon={<ArrowBackIcon />}
+            endIcon={<Icomoon className="icon-Full-Arrow-Left" />}
             text="Back"
             handleClick={onClickButton}
             className="flex h-[40px] !w-[100px] items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"

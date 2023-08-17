@@ -1,0 +1,4266 @@
+@font-face {
+  font-family: "icomoon-flags";
+  src: url("/assets/fonts/icomoon-flags.eot?j5uok8");
+  src: url("/assets/fonts/icomoon-flags.eot?j5uok8#iefix")
+      format("embedded-opentype"),
+    url("/assets/fonts/icomoon-flags.ttf?j5uok8") format("truetype"),
+    url("/assets/fonts/icomoon-flags.woff?j5uok8") format("woff"),
+    url("/assets/fonts/icomoon-flags.svg?j5uok8#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.icon-flag {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon-flags" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-afghanistan .path1:before {
+  content: "\eda8";
+  color: rgb(249, 57, 57);
+}
+.icon-afghanistan .path2:before {
+  content: "\eda9";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-afghanistan .path3:before {
+  content: "\edaa";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-afghanistan .path4:before {
+  content: "\edab";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-albania .path1:before {
+  content: "\edac";
+  color: rgb(249, 57, 57);
+}
+.icon-albania .path2:before {
+  content: "\edad";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-albania .path3:before {
+  content: "\edae";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-algeria .path1:before {
+  content: "\edaf";
+  color: rgb(255, 255, 255);
+}
+.icon-algeria .path2:before {
+  content: "\edb0";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-algeria .path3:before {
+  content: "\edb1";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-algeria .path4:before {
+  content: "\edb2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-algeria .path5:before {
+  content: "\edb3";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-andorra .path1:before {
+  content: "\edb4";
+  color: rgb(255, 218, 44);
+}
+.icon-andorra .path2:before {
+  content: "\edb5";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-andorra .path3:before {
+  content: "\edb6";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-andorra .path4:before {
+  content: "\edb7";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-andorra .path5:before {
+  content: "\edb8";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-andorra .path6:before {
+  content: "\edb9";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-angola .path1:before {
+  content: "\edba";
+  color: rgb(249, 57, 57);
+}
+.icon-angola .path2:before {
+  content: "\edbb";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-angola .path3:before {
+  content: "\edbc";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-angola .path4:before {
+  content: "\edbd";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-antigua-and-barbuda .path1:before {
+  content: "\edbe";
+  color: rgb(21, 21, 21);
+}
+.icon-antigua-and-barbuda .path2:before {
+  content: "\edbf";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-antigua-and-barbuda .path3:before {
+  content: "\edc0";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-antigua-and-barbuda .path4:before {
+  content: "\edc1";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-antigua-and-barbuda .path5:before {
+  content: "\edc2";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-antigua-and-barbuda .path6:before {
+  content: "\edc3";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-antigua-and-barbuda .path7:before {
+  content: "\edc4";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-argentina .path1:before {
+  content: "\edc5";
+  color: rgb(255, 255, 255);
+}
+.icon-argentina .path2:before {
+  content: "\edc6";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-argentina .path3:before {
+  content: "\edc7";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-armenia .path1:before {
+  content: "\edc8";
+  color: rgb(26, 71, 184);
+}
+.icon-armenia .path2:before {
+  content: "\edc9";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-armenia .path3:before {
+  content: "\edca";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-aruba .path1:before {
+  content: "\edcb";
+  color: rgb(62, 203, 248);
+}
+.icon-aruba .path2:before {
+  content: "\edcc";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-aruba .path3:before {
+  content: "\edcd";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-aruba .path4:before {
+  content: "\edce";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-aruba .path5:before {
+  content: "\edcf";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-australia .path1:before {
+  content: "\edd0";
+  color: rgb(26, 71, 184);
+}
+.icon-australia .path2:before {
+  content: "\edd1";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-australia .path3:before {
+  content: "\edd2";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+  opacity: 0.5;
+}
+.icon-australia .path4:before {
+  content: "\edd3";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-australia .path5:before {
+  content: "\edd4";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-austria .path1:before {
+  content: "\edd5";
+  color: rgb(255, 255, 255);
+}
+.icon-austria .path2:before {
+  content: "\edd6";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-azerbaijan .path1:before {
+  content: "\edd7";
+  color: rgb(249, 57, 57);
+}
+.icon-azerbaijan .path2:before {
+  content: "\edd8";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-azerbaijan .path3:before {
+  content: "\edd9";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-azerbaijan .path4:before {
+  content: "\edda";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-azerbaijan .path5:before {
+  content: "\eddb";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-bahamas .path1:before {
+  content: "\eddc";
+  color: rgb(255, 218, 44);
+}
+.icon-bahamas .path2:before {
+  content: "\eddd";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-bahamas .path3:before {
+  content: "\edde";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-bahrain .path1:before {
+  content: "\eddf";
+  color: rgb(249, 57, 57);
+}
+.icon-bahrain .path2:before {
+  content: "\ede0";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-bangladesh .path1:before {
+  content: "\ede1";
+  color: rgb(36, 159, 88);
+}
+.icon-bangladesh .path2:before {
+  content: "\ede2";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-bangladesh .path3:before {
+  content: "\ede3";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-barbados .path1:before {
+  content: "\ede4";
+  color: rgb(255, 218, 44);
+}
+.icon-barbados .path2:before {
+  content: "\ede5";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-barbados .path3:before {
+  content: "\ede6";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-barbados .path4:before {
+  content: "\ede7";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-belarus .path1:before {
+  content: "\ede8";
+  color: rgb(249, 57, 57);
+}
+.icon-belarus .path2:before {
+  content: "\ede9";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-belarus .path3:before {
+  content: "\edea";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-belarus .path4:before {
+  content: "\edeb";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-belgium .path1:before {
+  content: "\edec";
+  color: rgb(255, 218, 44);
+}
+.icon-belgium .path2:before {
+  content: "\eded";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-belgium .path3:before {
+  content: "\edee";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-belize .path1:before {
+  content: "\edef";
+  color: rgb(26, 71, 184);
+}
+.icon-belize .path2:before {
+  content: "\edf0";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-belize .path3:before {
+  content: "\edf1";
+  margin-left: -1.375em;
+  color: rgb(203, 203, 203);
+}
+.icon-belize .path4:before {
+  content: "\edf2";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-belize .path5:before {
+  content: "\edf3";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-belize .path6:before {
+  content: "\edf4";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-belize .path7:before {
+  content: "\edf5";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-belize .path8:before {
+  content: "\edf6";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-belize .path9:before {
+  content: "\edf7";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-belize .path10:before {
+  content: "\edf8";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-benin .path1:before {
+  content: "\edf9";
+  color: rgb(255, 218, 44);
+}
+.icon-benin .path2:before {
+  content: "\edfa";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-benin .path3:before {
+  content: "\edfb";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-benin .path4:before {
+  content: "\edfc";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-bhutan .path1:before {
+  content: "\edfd";
+  color: rgb(255, 108, 45);
+}
+.icon-bhutan .path2:before {
+  content: "\edfe";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-bhutan .path3:before {
+  content: "\edff";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-bhutan .path4:before {
+  content: "\ee00";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-bolivia .path1:before {
+  content: "\ee01";
+  color: rgb(255, 218, 44);
+}
+.icon-bolivia .path2:before {
+  content: "\ee02";
+  margin-left: -1.375em;
+  color: rgb(3, 188, 219);
+}
+.icon-bolivia .path3:before {
+  content: "\ee03";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-bolivia .path4:before {
+  content: "\ee04";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-bolivia .path5:before {
+  content: "\ee05";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-bolivia .path6:before {
+  content: "\ee06";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-bolivia .path7:before {
+  content: "\ee07";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-bolivia .path8:before {
+  content: "\ee08";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-bolivia .path9:before {
+  content: "\ee09";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-bosnia-and-herzegovina .path1:before {
+  content: "\ee0a";
+  color: rgb(255, 218, 44);
+}
+.icon-bosnia-and-herzegovina .path2:before {
+  content: "\ee0b";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-bosnia-and-herzegovina .path3:before {
+  content: "\ee0c";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-bosnia-and-herzegovina .path4:before {
+  content: "\ee0d";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-botswana .path1:before {
+  content: "\ee0e";
+  color: rgb(62, 203, 248);
+}
+.icon-botswana .path2:before {
+  content: "\ee0f";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-botswana .path3:before {
+  content: "\ee10";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-botswana .path4:before {
+  content: "\ee11";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-bouvet-island .path1:before {
+  content: "\ee12";
+  color: rgb(249, 57, 57);
+}
+.icon-bouvet-island .path2:before {
+  content: "\ee13";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-bouvet-island .path3:before {
+  content: "\ee14";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-brazil .path1:before {
+  content: "\ee15";
+  color: rgb(36, 159, 88);
+}
+.icon-brazil .path2:before {
+  content: "\ee16";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-brazil .path3:before {
+  content: "\ee17";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-brazil .path4:before {
+  content: "\ee18";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-brazil .path5:before {
+  content: "\ee19";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-brazil .path6:before {
+  content: "\ee1a";
+  margin-left: -1.375em;
+  color: none;
+}
+.icon-brunei-darussalam .path1:before {
+  content: "\ee1b";
+  color: rgb(255, 218, 44);
+}
+.icon-brunei-darussalam .path2:before {
+  content: "\ee1c";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-brunei-darussalam .path3:before {
+  content: "\ee1d";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-brunei-darussalam .path4:before {
+  content: "\ee1e";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-brunei-darussalam .path5:before {
+  content: "\ee1f";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-bulgaria .path1:before {
+  content: "\ee20";
+  color: rgb(36, 159, 88);
+}
+.icon-bulgaria .path2:before {
+  content: "\ee21";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-bulgaria .path3:before {
+  content: "\ee22";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-burkina-faso .path1:before {
+  content: "\ee23";
+  color: rgb(249, 57, 57);
+}
+.icon-burkina-faso .path2:before {
+  content: "\ee24";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-burkina-faso .path3:before {
+  content: "\ee25";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-burkina-faso .path4:before {
+  content: "\ee26";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-burundi .path1:before {
+  content: "\ee27";
+  color: rgb(249, 57, 57);
+}
+.icon-burundi .path2:before {
+  content: "\ee28";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-burundi .path3:before {
+  content: "\ee29";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-burundi .path4:before {
+  content: "\ee2a";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-cambodia .path1:before {
+  content: "\ee2b";
+  color: rgb(249, 57, 57);
+}
+.icon-cambodia .path2:before {
+  content: "\ee2c";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-cambodia .path3:before {
+  content: "\ee2d";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+  opacity: 0.7;
+}
+.icon-cambodia .path4:before {
+  content: "\ee2e";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+  opacity: 0.7;
+}
+.icon-cambodia .path5:before {
+  content: "\ee2f";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-cameroon .path1:before {
+  content: "\ee30";
+  color: rgb(249, 57, 57);
+}
+.icon-cameroon .path2:before {
+  content: "\ee31";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-cameroon .path3:before {
+  content: "\ee32";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-cameroon .path4:before {
+  content: "\ee33";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-canada .path1:before {
+  content: "\ee34";
+  color: rgb(255, 255, 255);
+}
+.icon-canada .path2:before {
+  content: "\ee35";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-canada .path3:before {
+  content: "\ee36";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-canada .path4:before {
+  content: "\ee37";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-cape-verde .path1:before {
+  content: "\ee38";
+  color: rgb(26, 71, 184);
+}
+.icon-cape-verde .path2:before {
+  content: "\ee39";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-cape-verde .path3:before {
+  content: "\ee3a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-cape-verde .path4:before {
+  content: "\ee3b";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-cape-verde .path5:before {
+  content: "\ee3c";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-central-african-republic .path1:before {
+  content: "\ee3d";
+  color: rgb(255, 255, 255);
+}
+.icon-central-african-republic .path2:before {
+  content: "\ee3e";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-central-african-republic .path3:before {
+  content: "\ee3f";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-central-african-republic .path4:before {
+  content: "\ee40";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-central-african-republic .path5:before {
+  content: "\ee41";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-central-african-republic .path6:before {
+  content: "\ee42";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-central-african-republic .path7:before {
+  content: "\ee43";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-chad .path1:before {
+  content: "\ee44";
+  color: rgb(255, 218, 44);
+}
+.icon-chad .path2:before {
+  content: "\ee45";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-chad .path3:before {
+  content: "\ee46";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-chile .path1:before {
+  content: "\ee47";
+  color: rgb(255, 255, 255);
+}
+.icon-chile .path2:before {
+  content: "\ee48";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-chile .path3:before {
+  content: "\ee49";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-chile .path4:before {
+  content: "\ee4a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-chile .path5:before {
+  content: "\ee4b";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-china .path1:before {
+  content: "\ee4c";
+  color: rgb(249, 57, 57);
+}
+.icon-china .path2:before {
+  content: "\ee4d";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-china .path3:before {
+  content: "\ee4e";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-colombia .path1:before {
+  content: "\ee4f";
+  color: rgb(26, 71, 184);
+}
+.icon-colombia .path2:before {
+  content: "\ee50";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-colombia .path3:before {
+  content: "\ee51";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-comoros .path1:before {
+  content: "\ee52";
+  color: rgb(255, 255, 255);
+}
+.icon-comoros .path2:before {
+  content: "\ee53";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-comoros .path3:before {
+  content: "\ee54";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-comoros .path4:before {
+  content: "\ee55";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-comoros .path5:before {
+  content: "\ee56";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-comoros .path6:before {
+  content: "\ee57";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-congo .path1:before {
+  content: "\ee58";
+  color: rgb(36, 159, 88);
+}
+.icon-congo .path2:before {
+  content: "\ee59";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-congo .path3:before {
+  content: "\ee5a";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-costa-rica .path1:before {
+  content: "\ee5b";
+  color: rgb(26, 71, 184);
+}
+.icon-costa-rica .path2:before {
+  content: "\ee5c";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-costa-rica .path3:before {
+  content: "\ee5d";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-costa-rica .path4:before {
+  content: "\ee5e";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-croatia .path1:before {
+  content: "\ee5f";
+  color: rgb(255, 255, 255);
+}
+.icon-croatia .path2:before {
+  content: "\ee60";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-croatia .path3:before {
+  content: "\ee61";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-croatia .path4:before {
+  content: "\ee62";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-croatia .path5:before {
+  content: "\ee63";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-croatia .path6:before {
+  content: "\ee64";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-croatia .path7:before {
+  content: "\ee65";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-cuba .path1:before {
+  content: "\ee66";
+  color: rgb(255, 255, 255);
+}
+.icon-cuba .path2:before {
+  content: "\ee67";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-cuba .path3:before {
+  content: "\ee68";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-cuba .path4:before {
+  content: "\ee69";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-cuba .path5:before {
+  content: "\ee6a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-cura-ao .path1:before {
+  content: "\ee6b";
+  color: rgb(26, 71, 184);
+}
+.icon-cura-ao .path2:before {
+  content: "\ee6c";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-cura-ao .path3:before {
+  content: "\ee6d";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-cyprus .path1:before {
+  content: "\ee6e";
+  color: rgb(255, 255, 255);
+}
+.icon-cyprus .path2:before {
+  content: "\ee6f";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-cyprus .path3:before {
+  content: "\ee70";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-czech-republic .path1:before {
+  content: "\ee71";
+  color: rgb(249, 57, 57);
+}
+.icon-czech-republic .path2:before {
+  content: "\ee72";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-czech-republic .path3:before {
+  content: "\ee73";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-denmark .path1:before {
+  content: "\ee74";
+  color: rgb(249, 57, 57);
+}
+.icon-denmark .path2:before {
+  content: "\ee75";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-djibouti .path1:before {
+  content: "\ee76";
+  color: rgb(36, 159, 88);
+}
+.icon-djibouti .path2:before {
+  content: "\ee77";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-djibouti .path3:before {
+  content: "\ee78";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-djibouti .path4:before {
+  content: "\ee79";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-dominica .path1:before {
+  content: "\ee7a";
+  color: rgb(36, 159, 88);
+}
+.icon-dominica .path2:before {
+  content: "\ee7b";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-dominica .path3:before {
+  content: "\ee7c";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-dominica .path4:before {
+  content: "\ee7d";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-dominica .path5:before {
+  content: "\ee7e";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-dominica .path6:before {
+  content: "\ee7f";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-dominica .path7:before {
+  content: "\ee80";
+  margin-left: -1.375em;
+  color: rgb(149, 93, 204);
+}
+.icon-dominican-republic .path1:before {
+  content: "\ee81";
+  color: rgb(255, 255, 255);
+}
+.icon-dominican-republic .path2:before {
+  content: "\ee82";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-dominican-republic .path3:before {
+  content: "\ee83";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-dominican-republic .path4:before {
+  content: "\ee84";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-dominican-republic .path5:before {
+  content: "\ee85";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-dominican-republic .path6:before {
+  content: "\ee86";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-dominican-republic .path7:before {
+  content: "\ee87";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-dominican-republic .path8:before {
+  content: "\ee88";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-dominican-republic .path9:before {
+  content: "\ee89";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-dominican-republic .path10:before {
+  content: "\ee8a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-dominican-republic .path11:before {
+  content: "\ee8b";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-dr-congo .path1:before {
+  content: "\ee8c";
+  color: rgb(58, 153, 255);
+}
+.icon-dr-congo .path2:before {
+  content: "\ee8d";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-dr-congo .path3:before {
+  content: "\ee8e";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-dr-congo .path4:before {
+  content: "\ee8f";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-dr-congo .path5:before {
+  content: "\ee90";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ecuador .path1:before {
+  content: "\ee91";
+  color: rgb(26, 71, 184);
+}
+.icon-ecuador .path2:before {
+  content: "\ee92";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ecuador .path3:before {
+  content: "\ee93";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-ecuador .path4:before {
+  content: "\ee94";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-ecuador .path5:before {
+  content: "\ee95";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-ecuador .path6:before {
+  content: "\ee96";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-egypt .path1:before {
+  content: "\ee97";
+  color: rgb(255, 255, 255);
+}
+.icon-egypt .path2:before {
+  content: "\ee98";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-egypt .path3:before {
+  content: "\ee99";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-egypt .path4:before {
+  content: "\ee9a";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-el-salvador .path1:before {
+  content: "\ee9b";
+  color: rgb(255, 255, 255);
+}
+.icon-el-salvador .path2:before {
+  content: "\ee9c";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-el-salvador .path3:before {
+  content: "\ee9d";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-el-salvador .path4:before {
+  content: "\ee9e";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-el-salvador .path5:before {
+  content: "\ee9f";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-equatorial-guinea .path1:before {
+  content: "\eea0";
+  color: rgb(255, 255, 255);
+}
+.icon-equatorial-guinea .path2:before {
+  content: "\eea1";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-equatorial-guinea .path3:before {
+  content: "\eea2";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-equatorial-guinea .path4:before {
+  content: "\eea3";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-equatorial-guinea .path5:before {
+  content: "\eea4";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-equatorial-guinea .path6:before {
+  content: "\eea5";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-equatorial-guinea .path7:before {
+  content: "\eea6";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-eritrea .path1:before {
+  content: "\eea7";
+  color: rgb(58, 153, 255);
+}
+.icon-eritrea .path2:before {
+  content: "\eea8";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-eritrea .path3:before {
+  content: "\eea9";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-eritrea .path4:before {
+  content: "\eeaa";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-eritrea .path5:before {
+  content: "\eeab";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-estonia .path1:before {
+  content: "\eeac";
+  color: rgb(21, 21, 21);
+}
+.icon-estonia .path2:before {
+  content: "\eead";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-estonia .path3:before {
+  content: "\eeae";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-eswatini .path1:before {
+  content: "\eeaf";
+  color: rgb(255, 218, 44);
+}
+.icon-eswatini .path2:before {
+  content: "\eeb0";
+  margin-left: -1.375em;
+  color: rgb(71, 105, 193);
+}
+.icon-eswatini .path3:before {
+  content: "\eeb1";
+  margin-left: -1.375em;
+  color: rgb(188, 10, 51);
+}
+.icon-eswatini .path4:before {
+  content: "\eeb2";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-eswatini .path5:before {
+  content: "\eeb3";
+  margin-left: -1.375em;
+  color: rgb(203, 203, 203);
+}
+.icon-eswatini .path6:before {
+  content: "\eeb4";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-eswatini .path7:before {
+  content: "\eeb5";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-eswatini .path8:before {
+  content: "\eeb6";
+  margin-left: -1.375em;
+  color: rgb(203, 203, 203);
+}
+.icon-eswatini .path9:before {
+  content: "\eeb7";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-ethiopia .path1:before {
+  content: "\eeb8";
+  color: rgb(255, 218, 44);
+}
+.icon-ethiopia .path2:before {
+  content: "\eeb9";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ethiopia .path3:before {
+  content: "\eeba";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-ethiopia .path4:before {
+  content: "\eebb";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-ethiopia .path5:before {
+  content: "\eebc";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-fiji .path1:before {
+  content: "\eebd";
+  color: rgb(62, 203, 248);
+}
+.icon-fiji .path2:before {
+  content: "\eebe";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-fiji .path3:before {
+  content: "\eebf";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-fiji .path4:before {
+  content: "\eec0";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-fiji .path5:before {
+  content: "\eec1";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-fiji .path6:before {
+  content: "\eec2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-finland .path1:before {
+  content: "\eec3";
+  color: rgb(255, 255, 255);
+}
+.icon-finland .path2:before {
+  content: "\eec4";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-france .path1:before {
+  content: "\eec5";
+  color: rgb(255, 255, 255);
+}
+.icon-france .path2:before {
+  content: "\eec6";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-france .path3:before {
+  content: "\eec7";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-gabon .path1:before {
+  content: "\eec8";
+  color: rgb(255, 218, 44);
+}
+.icon-gabon .path2:before {
+  content: "\eec9";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-gabon .path3:before {
+  content: "\eeca";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-gambia .path1:before {
+  content: "\eecb";
+  color: rgb(255, 255, 255);
+}
+.icon-gambia .path2:before {
+  content: "\eecc";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-gambia .path3:before {
+  content: "\eecd";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-gambia .path4:before {
+  content: "\eece";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-georgia .path1:before {
+  content: "\eecf";
+  color: rgb(255, 255, 255);
+}
+.icon-georgia .path2:before {
+  content: "\eed0";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-georgia .path3:before {
+  content: "\eed1";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-germany .path1:before {
+  content: "\eed2";
+  color: rgb(249, 57, 57);
+}
+.icon-germany .path2:before {
+  content: "\eed3";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-germany .path3:before {
+  content: "\eed4";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-ghana .path1:before {
+  content: "\eed5";
+  color: rgb(255, 218, 44);
+}
+.icon-ghana .path2:before {
+  content: "\eed6";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-ghana .path3:before {
+  content: "\eed7";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ghana .path4:before {
+  content: "\eed8";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-greece .path1:before {
+  content: "\eed9";
+  color: rgb(255, 255, 255);
+}
+.icon-greece .path2:before {
+  content: "\eeda";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-greece .path3:before {
+  content: "\eedb";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-grenada .path1:before {
+  content: "\eedc";
+  color: rgb(249, 57, 57);
+}
+.icon-grenada .path2:before {
+  content: "\eedd";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-grenada .path3:before {
+  content: "\eede";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-grenada .path4:before {
+  content: "\eedf";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-grenada .path5:before {
+  content: "\eee0";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-grenada .path6:before {
+  content: "\eee1";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-grenada .path7:before {
+  content: "\eee2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-grenada .path8:before {
+  content: "\eee3";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-guatemala .path1:before {
+  content: "\eee4";
+  color: rgb(255, 255, 255);
+}
+.icon-guatemala .path2:before {
+  content: "\eee5";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-guatemala .path3:before {
+  content: "\eee6";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-guatemala .path4:before {
+  content: "\eee7";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-guatemala .path5:before {
+  content: "\eee8";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-guinea-bissau .path1:before {
+  content: "\eee9";
+  color: rgb(255, 218, 44);
+}
+.icon-guinea-bissau .path2:before {
+  content: "\eeea";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-guinea-bissau .path3:before {
+  content: "\eeeb";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-guinea-bissau .path4:before {
+  content: "\eeec";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-guinea-bissau .path5:before {
+  content: "\eeed";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-guinea .path1:before {
+  content: "\eeee";
+  color: rgb(255, 218, 44);
+}
+.icon-guinea .path2:before {
+  content: "\eeef";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-guinea .path3:before {
+  content: "\eef0";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-guyana .path1:before {
+  content: "\eef1";
+  color: rgb(36, 159, 88);
+}
+.icon-guyana .path2:before {
+  content: "\eef2";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-guyana .path3:before {
+  content: "\eef3";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-guyana .path4:before {
+  content: "\eef4";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-guyana .path5:before {
+  content: "\eef5";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-haiti .path1:before {
+  content: "\eef6";
+  color: rgb(249, 57, 57);
+}
+.icon-haiti .path2:before {
+  content: "\eef7";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-haiti .path3:before {
+  content: "\eef8";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-haiti .path4:before {
+  content: "\eef9";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-haiti .path5:before {
+  content: "\eefa";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-holy-see .path1:before {
+  content: "\eefb";
+  color: rgb(255, 218, 44);
+}
+.icon-holy-see .path2:before {
+  content: "\eefc";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-holy-see .path3:before {
+  content: "\eefd";
+  margin-left: -1.375em;
+  color: none;
+}
+.icon-holy-see .path4:before {
+  content: "\eefe";
+  margin-left: -1.375em;
+  color: none;
+  opacity: 0.6;
+}
+.icon-holy-see .path5:before {
+  content: "\eeff";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-holy-see .path6:before {
+  content: "\ef00";
+  margin-left: -1.375em;
+  color: none;
+}
+.icon-honduras .path1:before {
+  content: "\ef01";
+  color: rgb(255, 255, 255);
+}
+.icon-honduras .path2:before {
+  content: "\ef02";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-hong-kong .path1:before {
+  content: "\ef03";
+  color: rgb(249, 57, 57);
+}
+.icon-hong-kong .path2:before {
+  content: "\ef04";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-hungary .path1:before {
+  content: "\ef05";
+  color: rgb(255, 255, 255);
+}
+.icon-hungary .path2:before {
+  content: "\ef06";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-hungary .path3:before {
+  content: "\ef07";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-iceland .path1:before {
+  content: "\ef08";
+  color: rgb(26, 71, 184);
+}
+.icon-iceland .path2:before {
+  content: "\ef09";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-iceland .path3:before {
+  content: "\ef0a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-india .path1:before {
+  content: "\ef0b";
+  color: rgb(255, 255, 255);
+}
+.icon-india .path2:before {
+  content: "\ef0c";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-india .path3:before {
+  content: "\ef0d";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-india .path4:before {
+  content: "\ef0e";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-india .path5:before {
+  content: "\ef0f";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-indonesia .path1:before {
+  content: "\ef10";
+  color: rgb(255, 255, 255);
+}
+.icon-indonesia .path2:before {
+  content: "\ef11";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-iran .path1:before {
+  content: "\ef12";
+  color: rgb(255, 255, 255);
+}
+.icon-iran .path2:before {
+  content: "\ef13";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-iran .path3:before {
+  content: "\ef14";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-iran .path4:before {
+  content: "\ef15";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-iran .path5:before {
+  content: "\ef16";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-iraq .path1:before {
+  content: "\ef17";
+  color: rgb(255, 255, 255);
+}
+.icon-iraq .path2:before {
+  content: "\ef18";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-iraq .path3:before {
+  content: "\ef19";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-iraq .path4:before {
+  content: "\ef1a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ireland .path1:before {
+  content: "\ef1b";
+  color: rgb(255, 255, 255);
+}
+.icon-ireland .path2:before {
+  content: "\ef1c";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-ireland .path3:before {
+  content: "\ef1d";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-israel .path1:before {
+  content: "\ef1e";
+  color: rgb(255, 255, 255);
+}
+.icon-israel .path2:before {
+  content: "\ef1f";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-italy .path1:before {
+  content: "\ef20";
+  color: rgb(255, 255, 255);
+}
+.icon-italy .path2:before {
+  content: "\ef21";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-italy .path3:before {
+  content: "\ef22";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ivory-coast .path1:before {
+  content: "\ef23";
+  color: rgb(255, 255, 255);
+}
+.icon-ivory-coast .path2:before {
+  content: "\ef24";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-ivory-coast .path3:before {
+  content: "\ef25";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-jamaica .path1:before {
+  content: "\ef26";
+  color: rgb(36, 159, 88);
+}
+.icon-jamaica .path2:before {
+  content: "\ef27";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-jamaica .path3:before {
+  content: "\ef28";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-japan .path1:before {
+  content: "\ef29";
+  color: rgb(255, 255, 255);
+}
+.icon-japan .path2:before {
+  content: "\ef2a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-jordan .path1:before {
+  content: "\ef2b";
+  color: rgb(255, 255, 255);
+}
+.icon-jordan .path2:before {
+  content: "\ef2c";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-jordan .path3:before {
+  content: "\ef2d";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-jordan .path4:before {
+  content: "\ef2e";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-jordan .path5:before {
+  content: "\ef2f";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-kazakhstan .path1:before {
+  content: "\ef30";
+  color: rgb(3, 188, 219);
+}
+.icon-kazakhstan .path2:before {
+  content: "\ef31";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-kazakhstan .path3:before {
+  content: "\ef32";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-kazakhstan .path4:before {
+  content: "\ef33";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-kenya .path1:before {
+  content: "\ef34";
+  color: rgb(21, 21, 21);
+}
+.icon-kenya .path2:before {
+  content: "\ef35";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-kenya .path3:before {
+  content: "\ef36";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-kenya .path4:before {
+  content: "\ef37";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-kenya .path5:before {
+  content: "\ef38";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-kenya .path6:before {
+  content: "\ef39";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-kenya .path7:before {
+  content: "\ef3a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-kenya .path8:before {
+  content: "\ef3b";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-kenya .path9:before {
+  content: "\ef3c";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-kiribati .path1:before {
+  content: "\ef3d";
+  color: rgb(249, 57, 57);
+}
+.icon-kiribati .path2:before {
+  content: "\ef3e";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-kiribati .path3:before {
+  content: "\ef3f";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-kiribati .path4:before {
+  content: "\ef40";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-kiribati .path5:before {
+  content: "\ef41";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-kuwait .path1:before {
+  content: "\ef42";
+  color: rgb(255, 255, 255);
+}
+.icon-kuwait .path2:before {
+  content: "\ef43";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-kuwait .path3:before {
+  content: "\ef44";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-kuwait .path4:before {
+  content: "\ef45";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-kyrgyzstan .path1:before {
+  content: "\ef46";
+  color: rgb(249, 57, 57);
+}
+.icon-kyrgyzstan .path2:before {
+  content: "\ef47";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-kyrgyzstan .path3:before {
+  content: "\ef48";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-laos .path1:before {
+  content: "\ef49";
+  color: rgb(35, 44, 128);
+}
+.icon-laos .path2:before {
+  content: "\ef4a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-laos .path3:before {
+  content: "\ef4b";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-latvia .path1:before {
+  content: "\ef4c";
+  color: rgb(255, 255, 255);
+}
+.icon-latvia .path2:before {
+  content: "\ef4d";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-lebanon .path1:before {
+  content: "\ef4e";
+  color: rgb(255, 255, 255);
+}
+.icon-lebanon .path2:before {
+  content: "\ef4f";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-lebanon .path3:before {
+  content: "\ef50";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-lesotho .path1:before {
+  content: "\ef51";
+  color: rgb(255, 255, 255);
+}
+.icon-lesotho .path2:before {
+  content: "\ef52";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-lesotho .path3:before {
+  content: "\ef53";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-lesotho .path4:before {
+  content: "\ef54";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-liberia .path1:before {
+  content: "\ef55";
+  color: rgb(255, 255, 255);
+}
+.icon-liberia .path2:before {
+  content: "\ef56";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-liberia .path3:before {
+  content: "\ef57";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-liberia .path4:before {
+  content: "\ef58";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-liberia .path5:before {
+  content: "\ef59";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-libya .path1:before {
+  content: "\ef5a";
+  color: rgb(21, 21, 21);
+}
+.icon-libya .path2:before {
+  content: "\ef5b";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-libya .path3:before {
+  content: "\ef5c";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-libya .path4:before {
+  content: "\ef5d";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-libya .path5:before {
+  content: "\ef5e";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-liechtenstein .path1:before {
+  content: "\ef5f";
+  color: rgb(249, 57, 57);
+}
+.icon-liechtenstein .path2:before {
+  content: "\ef60";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-liechtenstein .path3:before {
+  content: "\ef61";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-liechtenstein .path4:before {
+  content: "\ef62";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-lithuania .path1:before {
+  content: "\ef63";
+  color: rgb(10, 106, 48);
+}
+.icon-lithuania .path2:before {
+  content: "\ef64";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-lithuania .path3:before {
+  content: "\ef65";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-luxembourg .path1:before {
+  content: "\ef66";
+  color: rgb(255, 255, 255);
+}
+.icon-luxembourg .path2:before {
+  content: "\ef67";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-luxembourg .path3:before {
+  content: "\ef68";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-madagascar .path1:before {
+  content: "\ef69";
+  color: rgb(249, 57, 57);
+}
+.icon-madagascar .path2:before {
+  content: "\ef6a";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-madagascar .path3:before {
+  content: "\ef6b";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-malawi .path1:before {
+  content: "\ef6c";
+  color: rgb(249, 57, 57);
+}
+.icon-malawi .path2:before {
+  content: "\ef6d";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-malawi .path3:before {
+  content: "\ef6e";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-malawi .path4:before {
+  content: "\ef6f";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-malaysia .path1:before {
+  content: "\ef70";
+  color: rgb(255, 255, 255);
+}
+.icon-malaysia .path2:before {
+  content: "\ef71";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path3:before {
+  content: "\ef72";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path4:before {
+  content: "\ef73";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path5:before {
+  content: "\ef74";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path6:before {
+  content: "\ef75";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path7:before {
+  content: "\ef76";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path8:before {
+  content: "\ef77";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-malaysia .path9:before {
+  content: "\ef78";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-malaysia .path10:before {
+  content: "\ef79";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-malaysia .path11:before {
+  content: "\ef7a";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-maldives .path1:before {
+  content: "\ef7b";
+  color: rgb(175, 1, 13);
+}
+.icon-maldives .path2:before {
+  content: "\ef7c";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-maldives .path3:before {
+  content: "\ef7d";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-mali .path1:before {
+  content: "\ef7e";
+  color: rgb(255, 218, 44);
+}
+.icon-mali .path2:before {
+  content: "\ef7f";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-mali .path3:before {
+  content: "\ef80";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-malta .path1:before {
+  content: "\ef81";
+  color: rgb(175, 1, 13);
+}
+.icon-malta .path2:before {
+  content: "\ef82";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-malta .path3:before {
+  content: "\ef83";
+  margin-left: -1.375em;
+  color: rgb(203, 203, 203);
+}
+.icon-marshall-islands .path1:before {
+  content: "\ef84";
+  color: rgb(26, 71, 184);
+}
+.icon-marshall-islands .path2:before {
+  content: "\ef85";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-marshall-islands .path3:before {
+  content: "\ef86";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-marshall-islands .path4:before {
+  content: "\ef87";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-mauritania .path1:before {
+  content: "\ef88";
+  color: rgb(36, 159, 88);
+}
+.icon-mauritania .path2:before {
+  content: "\ef89";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mauritania .path3:before {
+  content: "\ef8a";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mauritania .path4:before {
+  content: "\ef8b";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-mauritania .path5:before {
+  content: "\ef8c";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-mauritius .path1:before {
+  content: "\ef8d";
+  color: rgb(255, 218, 44);
+}
+.icon-mauritius .path2:before {
+  content: "\ef8e";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-mauritius .path3:before {
+  content: "\ef8f";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-mauritius .path4:before {
+  content: "\ef90";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-mexico .path1:before {
+  content: "\ef91";
+  color: rgb(255, 255, 255);
+}
+.icon-mexico .path2:before {
+  content: "\ef92";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-mexico .path3:before {
+  content: "\ef93";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-mexico .path4:before {
+  content: "\ef94";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-mexico .path5:before {
+  content: "\ef95";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-micronesia .path1:before {
+  content: "\ef96";
+  color: rgb(58, 153, 255);
+}
+.icon-micronesia .path2:before {
+  content: "\ef97";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-moldova .path1:before {
+  content: "\ef98";
+  color: rgb(255, 218, 44);
+}
+.icon-moldova .path2:before {
+  content: "\ef99";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-moldova .path3:before {
+  content: "\ef9a";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-moldova .path4:before {
+  content: "\ef9b";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-moldova .path5:before {
+  content: "\ef9c";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-moldova .path6:before {
+  content: "\ef9d";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-moldova .path7:before {
+  content: "\ef9e";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-monaco .path1:before {
+  content: "\ef9f";
+  color: rgb(175, 1, 13);
+}
+.icon-monaco .path2:before {
+  content: "\efa0";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-mongolia .path1:before {
+  content: "\efa1";
+  color: rgb(26, 71, 184);
+}
+.icon-mongolia .path2:before {
+  content: "\efa2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-mongolia .path3:before {
+  content: "\efa3";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mongolia .path4:before {
+  content: "\efa4";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mongolia .path5:before {
+  content: "\efa5";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mongolia .path6:before {
+  content: "\efa6";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mongolia .path7:before {
+  content: "\efa7";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-montenegro .path1:before {
+  content: "\efa8";
+  color: rgb(212, 175, 44);
+}
+.icon-montenegro .path2:before {
+  content: "\efa9";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-montenegro .path3:before {
+  content: "\efaa";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-montenegro .path4:before {
+  content: "\efab";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-montenegro .path5:before {
+  content: "\efac";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-morocco .path1:before {
+  content: "\efad";
+  color: rgb(175, 1, 13);
+}
+.icon-morocco .path2:before {
+  content: "\efae";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-mozambique .path1:before {
+  content: "\efaf";
+  color: rgb(21, 21, 21);
+}
+.icon-mozambique .path2:before {
+  content: "\efb0";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mozambique .path3:before {
+  content: "\efb1";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-mozambique .path4:before {
+  content: "\efb2";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+  opacity: 0.35;
+}
+.icon-mozambique .path5:before {
+  content: "\efb3";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-mozambique .path6:before {
+  content: "\efb4";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-mozambique .path7:before {
+  content: "\efb5";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-mozambique .path8:before {
+  content: "\efb6";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-mozambique .path9:before {
+  content: "\efb7";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-myanmar .path1:before {
+  content: "\efb8";
+  color: rgb(36, 159, 88);
+}
+.icon-myanmar .path2:before {
+  content: "\efb9";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-myanmar .path3:before {
+  content: "\efba";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-myanmar .path4:before {
+  content: "\efbb";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-namibia .path1:before {
+  content: "\efbc";
+  color: rgb(26, 71, 184);
+}
+.icon-namibia .path2:before {
+  content: "\efbd";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-namibia .path3:before {
+  content: "\efbe";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-namibia .path4:before {
+  content: "\efbf";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-namibia .path5:before {
+  content: "\efc0";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-namibia .path6:before {
+  content: "\efc1";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-nauru .path1:before {
+  content: "\efc2";
+  color: rgb(35, 44, 128);
+}
+.icon-nauru .path2:before {
+  content: "\efc3";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-nauru .path3:before {
+  content: "\efc4";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-nepal .path1:before {
+  content: "\efc5";
+  color: rgb(0, 52, 149);
+}
+.icon-nepal .path2:before {
+  content: "\efc6";
+  margin-left: -1.375em;
+  color: rgb(223, 10, 55);
+}
+.icon-nepal .path3:before {
+  content: "\efc7";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-nepal .path4:before {
+  content: "\efc8";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-netherlands .path1:before {
+  content: "\efc9";
+  color: rgb(255, 255, 255);
+}
+.icon-netherlands .path2:before {
+  content: "\efca";
+  margin-left: -1.375em;
+  color: rgb(30, 68, 141);
+}
+.icon-netherlands .path3:before {
+  content: "\efcb";
+  margin-left: -1.375em;
+  color: rgb(176, 25, 35);
+}
+.icon-new-zealand .path1:before {
+  content: "\efcc";
+  color: rgb(26, 71, 184);
+}
+.icon-new-zealand .path2:before {
+  content: "\efcd";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-new-zealand .path3:before {
+  content: "\efce";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-new-zealand .path4:before {
+  content: "\efcf";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-new-zealand .path5:before {
+  content: "\efd0";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-nicaragua .path1:before {
+  content: "\efd1";
+  color: rgb(255, 255, 255);
+}
+.icon-nicaragua .path2:before {
+  content: "\efd2";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-nicaragua .path3:before {
+  content: "\efd3";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+  opacity: 0.4;
+}
+.icon-nicaragua .path4:before {
+  content: "\efd4";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-nicaragua .path5:before {
+  content: "\efd5";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+  opacity: 0.4;
+}
+.icon-nicaragua .path6:before {
+  content: "\efd6";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-niger .path1:before {
+  content: "\efd7";
+  color: rgb(255, 255, 255);
+}
+.icon-niger .path2:before {
+  content: "\efd8";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-niger .path3:before {
+  content: "\efd9";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-niger .path4:before {
+  content: "\efda";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-nigeria .path1:before {
+  content: "\efdb";
+  color: rgb(255, 255, 255);
+}
+.icon-nigeria .path2:before {
+  content: "\efdc";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-north-korea .path1:before {
+  content: "\efdd";
+  color: rgb(26, 71, 184);
+}
+.icon-north-korea .path2:before {
+  content: "\efde";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-north-korea .path3:before {
+  content: "\efdf";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-north-korea .path4:before {
+  content: "\efe0";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-north-korea .path5:before {
+  content: "\efe1";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-north-korea .path6:before {
+  content: "\efe2";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-north-macedonia .path1:before {
+  content: "\efe3";
+  color: rgb(175, 1, 13);
+}
+.icon-north-macedonia .path2:before {
+  content: "\efe4";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-north-macedonia .path3:before {
+  content: "\efe5";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-north-macedonia .path4:before {
+  content: "\efe6";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-north-macedonia .path5:before {
+  content: "\efe7";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-norway .path1:before {
+  content: "\efe8";
+  color: rgb(175, 1, 13);
+}
+.icon-norway .path2:before {
+  content: "\efe9";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-norway .path3:before {
+  content: "\efea";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-oman .path1:before {
+  content: "\efeb";
+  color: rgb(249, 57, 57);
+}
+.icon-oman .path2:before {
+  content: "\efec";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-oman .path3:before {
+  content: "\efed";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-oman .path4:before {
+  content: "\efee";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-oman .path5:before {
+  content: "\efef";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-pakistan .path1:before {
+  content: "\eff0";
+  color: rgb(10, 106, 48);
+}
+.icon-pakistan .path2:before {
+  content: "\eff1";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-pakistan .path3:before {
+  content: "\eff2";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-palau .path1:before {
+  content: "\eff3";
+  color: rgb(58, 153, 255);
+}
+.icon-palau .path2:before {
+  content: "\eff4";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-palestine .path1:before {
+  content: "\eff5";
+  color: rgb(255, 255, 255);
+}
+.icon-palestine .path2:before {
+  content: "\eff6";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-palestine .path3:before {
+  content: "\eff7";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-palestine .path4:before {
+  content: "\eff8";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-panama .path1:before {
+  content: "\eff9";
+  color: rgb(255, 255, 255);
+}
+.icon-panama .path2:before {
+  content: "\effa";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-panama .path3:before {
+  content: "\effb";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-panama .path4:before {
+  content: "\effc";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-panama .path5:before {
+  content: "\effd";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-panama .path6:before {
+  content: "\effe";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-papua-new-guinea .path1:before {
+  content: "\efff";
+  color: rgb(175, 1, 13);
+}
+.icon-papua-new-guinea .path2:before {
+  content: "\f000";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-papua-new-guinea .path3:before {
+  content: "\f001";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-papua-new-guinea .path4:before {
+  content: "\f002";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-papua-new-guinea .path5:before {
+  content: "\f003";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-papua-new-guinea .path6:before {
+  content: "\f004";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-papua-new-guinea .path7:before {
+  content: "\f005";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-papua-new-guinea .path8:before {
+  content: "\f006";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-paraguay .path1:before {
+  content: "\f007";
+  color: rgb(255, 255, 255);
+}
+.icon-paraguay .path2:before {
+  content: "\f008";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-paraguay .path3:before {
+  content: "\f009";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-paraguay .path4:before {
+  content: "\f00a";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-paraguay .path5:before {
+  content: "\f00b";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-peru .path1:before {
+  content: "\f00c";
+  color: rgb(255, 255, 255);
+}
+.icon-peru .path2:before {
+  content: "\f00d";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-philippines .path1:before {
+  content: "\f00e";
+  color: rgb(249, 57, 57);
+}
+.icon-philippines .path2:before {
+  content: "\f00f";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-philippines .path3:before {
+  content: "\f010";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-philippines .path4:before {
+  content: "\f011";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-philippines .path5:before {
+  content: "\f012";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-philippines .path6:before {
+  content: "\f013";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-philippines .path7:before {
+  content: "\f014";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-poland .path1:before {
+  content: "\f015";
+  color: rgb(175, 1, 13);
+}
+.icon-poland .path2:before {
+  content: "\f016";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-portugal .path1:before {
+  content: "\f017";
+  color: rgb(249, 57, 57);
+}
+.icon-portugal .path2:before {
+  content: "\f018";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-portugal .path3:before {
+  content: "\f019";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-portugal .path4:before {
+  content: "\f01a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-portugal .path5:before {
+  content: "\f01b";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-portugal .path6:before {
+  content: "\f01c";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-qatar .path1:before {
+  content: "\f01d";
+  color: rgb(175, 1, 13);
+}
+.icon-qatar .path2:before {
+  content: "\f01e";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-romania .path1:before {
+  content: "\f01f";
+  color: rgb(255, 218, 44);
+}
+.icon-romania .path2:before {
+  content: "\f020";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-romania .path3:before {
+  content: "\f021";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-russia .path1:before {
+  content: "\f022";
+  color: rgb(26, 71, 184);
+}
+.icon-russia .path2:before {
+  content: "\f023";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-russia .path3:before {
+  content: "\f024";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-rwanda .path1:before {
+  content: "\f025";
+  color: rgb(255, 218, 44);
+}
+.icon-rwanda .path2:before {
+  content: "\f026";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-rwanda .path3:before {
+  content: "\f027";
+  margin-left: -1.375em;
+  color: rgb(3, 188, 219);
+}
+.icon-rwanda .path4:before {
+  content: "\f028";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-saint-lucia .path1:before {
+  content: "\f029";
+  color: rgb(62, 203, 248);
+}
+.icon-saint-lucia .path2:before {
+  content: "\f02a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-saint-lucia .path3:before {
+  content: "\f02b";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-saint-lucia .path4:before {
+  content: "\f02c";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-saint-vicent-and-the-grenadines .path1:before {
+  content: "\f02d";
+  color: rgb(255, 218, 44);
+}
+.icon-saint-vicent-and-the-grenadines .path2:before {
+  content: "\f02e";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-saint-vicent-and-the-grenadines .path3:before {
+  content: "\f02f";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-saint-vicent-and-the-grenadines .path4:before {
+  content: "\f030";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-saint-vicent-and-the-grenadines .path5:before {
+  content: "\f031";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-saint-vicent-and-the-grenadines .path6:before {
+  content: "\f032";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-samoa .path1:before {
+  content: "\f033";
+  color: rgb(249, 57, 57);
+}
+.icon-samoa .path2:before {
+  content: "\f034";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-samoa .path3:before {
+  content: "\f035";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-samoa .path4:before {
+  content: "\f036";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+  opacity: 0.5;
+}
+.icon-san-marino .path1:before {
+  content: "\f037";
+  color: rgb(255, 255, 255);
+}
+.icon-san-marino .path2:before {
+  content: "\f038";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-san-marino .path3:before {
+  content: "\f039";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-san-marino .path4:before {
+  content: "\f03a";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-san-marino .path5:before {
+  content: "\f03b";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-sao-tome-and-principe .path1:before {
+  content: "\f03c";
+  color: rgb(255, 218, 44);
+}
+.icon-sao-tome-and-principe .path2:before {
+  content: "\f03d";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-sao-tome-and-principe .path3:before {
+  content: "\f03e";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-sao-tome-and-principe .path4:before {
+  content: "\f03f";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-saudi-arabia .path1:before {
+  content: "\f040";
+  color: rgb(36, 159, 88);
+}
+.icon-saudi-arabia .path2:before {
+  content: "\f041";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-senegal .path1:before {
+  content: "\f042";
+  color: rgb(255, 218, 44);
+}
+.icon-senegal .path2:before {
+  content: "\f043";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-senegal .path3:before {
+  content: "\f044";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-senegal .path4:before {
+  content: "\f045";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-serbia .path1:before {
+  content: "\f046";
+  color: rgb(26, 71, 184);
+}
+.icon-serbia .path2:before {
+  content: "\f047";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-serbia .path3:before {
+  content: "\f048";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-serbia .path4:before {
+  content: "\f049";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-serbia .path5:before {
+  content: "\f04a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-serbia .path6:before {
+  content: "\f04b";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-serbia .path7:before {
+  content: "\f04c";
+  margin-left: -1.375em;
+  color: rgb(167, 88, 53);
+}
+.icon-serbia .path8:before {
+  content: "\f04d";
+  margin-left: -1.375em;
+  color: rgb(136, 96, 95);
+}
+.icon-seychelles .path1:before {
+  content: "\f04e";
+  color: rgb(255, 218, 44);
+}
+.icon-seychelles .path2:before {
+  content: "\f04f";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-seychelles .path3:before {
+  content: "\f050";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-seychelles .path4:before {
+  content: "\f051";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-seychelles .path5:before {
+  content: "\f052";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-sierra-leone .path1:before {
+  content: "\f053";
+  color: rgb(255, 255, 255);
+}
+.icon-sierra-leone .path2:before {
+  content: "\f054";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-sierra-leone .path3:before {
+  content: "\f055";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-singapore .path1:before {
+  content: "\f056";
+  color: rgb(255, 255, 255);
+}
+.icon-singapore .path2:before {
+  content: "\f057";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-singapore .path3:before {
+  content: "\f058";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-sint-maarten .path1:before {
+  content: "\f059";
+  color: rgb(26, 71, 184);
+}
+.icon-sint-maarten .path2:before {
+  content: "\f05a";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-sint-maarten .path3:before {
+  content: "\f05b";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-sint-maarten .path4:before {
+  content: "\f05c";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-sint-maarten .path5:before {
+  content: "\f05d";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-sint-maarten .path6:before {
+  content: "\f05e";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-slovakia .path1:before {
+  content: "\f05f";
+  color: rgb(26, 71, 184);
+}
+.icon-slovakia .path2:before {
+  content: "\f060";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-slovakia .path3:before {
+  content: "\f061";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-slovakia .path4:before {
+  content: "\f062";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-slovakia .path5:before {
+  content: "\f063";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-slovakia .path6:before {
+  content: "\f064";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-slovenia .path1:before {
+  content: "\f065";
+  color: rgb(26, 71, 184);
+}
+.icon-slovenia .path2:before {
+  content: "\f066";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-slovenia .path3:before {
+  content: "\f067";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-slovenia .path4:before {
+  content: "\f068";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-slovenia .path5:before {
+  content: "\f069";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-slovenia .path6:before {
+  content: "\f06a";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-slovenia .path7:before {
+  content: "\f06b";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-solomon-islands .path1:before {
+  content: "\f06c";
+  color: rgb(26, 71, 184);
+}
+.icon-solomon-islands .path2:before {
+  content: "\f06d";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-solomon-islands .path3:before {
+  content: "\f06e";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-solomon-islands .path4:before {
+  content: "\f06f";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-somalia .path1:before {
+  content: "\f070";
+  color: rgb(58, 153, 255);
+}
+.icon-somalia .path2:before {
+  content: "\f071";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-south-africa .path1:before {
+  content: "\f072";
+  color: rgb(255, 255, 255);
+}
+.icon-south-africa .path2:before {
+  content: "\f073";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-south-africa .path3:before {
+  content: "\f074";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-south-africa .path4:before {
+  content: "\f075";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-south-africa .path5:before {
+  content: "\f076";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-south-africa .path6:before {
+  content: "\f077";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-south-africa .path7:before {
+  content: "\f078";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-south-africa .path8:before {
+  content: "\f079";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-south-korea .path1:before {
+  content: "\f07a";
+  color: rgb(255, 255, 255);
+}
+.icon-south-korea .path2:before {
+  content: "\f07b";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-south-korea .path3:before {
+  content: "\f07c";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-south-korea .path4:before {
+  content: "\f07d";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-south-sudan .path1:before {
+  content: "\f07e";
+  color: rgb(255, 255, 255);
+}
+.icon-south-sudan .path2:before {
+  content: "\f07f";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-south-sudan .path3:before {
+  content: "\f080";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-south-sudan .path4:before {
+  content: "\f081";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-south-sudan .path5:before {
+  content: "\f082";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-south-sudan .path6:before {
+  content: "\f083";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-spain .path1:before {
+  content: "\f084";
+  color: rgb(249, 57, 57);
+}
+.icon-spain .path2:before {
+  content: "\f085";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-spain .path3:before {
+  content: "\f086";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-spain .path4:before {
+  content: "\f087";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-spain .path5:before {
+  content: "\f088";
+  margin-left: -1.375em;
+  color: rgb(203, 203, 203);
+}
+.icon-spain .path6:before {
+  content: "\f089";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-spain .path7:before {
+  content: "\f08a";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-spain .path8:before {
+  content: "\f08b";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-spain .path9:before {
+  content: "\f08c";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-spain .path10:before {
+  content: "\f08d";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-spain .path11:before {
+  content: "\f08e";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-spain .path12:before {
+  content: "\f08f";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-sri-lanka .path1:before {
+  content: "\f090";
+  color: rgb(255, 218, 44);
+}
+.icon-sri-lanka .path2:before {
+  content: "\f091";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-sri-lanka .path3:before {
+  content: "\f092";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+  opacity: 0.3;
+}
+.icon-sri-lanka .path4:before {
+  content: "\f093";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-sri-lanka .path5:before {
+  content: "\f094";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-sri-lanka .path6:before {
+  content: "\f095";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+  opacity: 0.2;
+}
+.icon-sri-lanka .path7:before {
+  content: "\f096";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-sudan .path1:before {
+  content: "\f097";
+  color: rgb(255, 255, 255);
+}
+.icon-sudan .path2:before {
+  content: "\f098";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-sudan .path3:before {
+  content: "\f099";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-sudan .path4:before {
+  content: "\f09a";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-suriname .path1:before {
+  content: "\f09b";
+  color: rgb(255, 255, 255);
+}
+.icon-suriname .path2:before {
+  content: "\f09c";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-suriname .path3:before {
+  content: "\f09d";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+  opacity: 0.2;
+}
+.icon-suriname .path4:before {
+  content: "\f09e";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-suriname .path5:before {
+  content: "\f09f";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-sweden .path1:before {
+  content: "\f0a0";
+  color: rgb(58, 153, 255);
+}
+.icon-sweden .path2:before {
+  content: "\f0a1";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-switzerland .path1:before {
+  content: "\f0a2";
+  color: rgb(249, 57, 57);
+}
+.icon-switzerland .path2:before {
+  content: "\f0a3";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-syrian-arab-republic .path1:before {
+  content: "\f0a4";
+  color: rgb(255, 255, 255);
+}
+.icon-syrian-arab-republic .path2:before {
+  content: "\f0a5";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-syrian-arab-republic .path3:before {
+  content: "\f0a6";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-syrian-arab-republic .path4:before {
+  content: "\f0a7";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-tajikistan .path1:before {
+  content: "\f0a8";
+  color: rgb(255, 255, 255);
+}
+.icon-tajikistan .path2:before {
+  content: "\f0a9";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-tajikistan .path3:before {
+  content: "\f0aa";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-tajikistan .path4:before {
+  content: "\f0ab";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-tanzania .path1:before {
+  content: "\f0ac";
+  color: rgb(36, 159, 88);
+}
+.icon-tanzania .path2:before {
+  content: "\f0ad";
+  margin-left: -1.375em;
+  color: rgb(62, 203, 248);
+}
+.icon-tanzania .path3:before {
+  content: "\f0ae";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-tanzania .path4:before {
+  content: "\f0af";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-tanzania .path5:before {
+  content: "\f0b0";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-thailand .path1:before {
+  content: "\f0b1";
+  color: rgb(255, 255, 255);
+}
+.icon-thailand .path2:before {
+  content: "\f0b2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-thailand .path3:before {
+  content: "\f0b3";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-timor-leste .path1:before {
+  content: "\f0b4";
+  color: rgb(249, 57, 57);
+}
+.icon-timor-leste .path2:before {
+  content: "\f0b5";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-timor-leste .path3:before {
+  content: "\f0b6";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-timor-leste .path4:before {
+  content: "\f0b7";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-togo .path1:before {
+  content: "\f0b8";
+  color: rgb(255, 218, 44);
+}
+.icon-togo .path2:before {
+  content: "\f0b9";
+  margin-left: -1.375em;
+  color: rgb(10, 106, 48);
+}
+.icon-togo .path3:before {
+  content: "\f0ba";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-togo .path4:before {
+  content: "\f0bb";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-tonga .path1:before {
+  content: "\f0bc";
+  color: rgb(175, 1, 13);
+}
+.icon-tonga .path2:before {
+  content: "\f0bd";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-tonga .path3:before {
+  content: "\f0be";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-tonga .path4:before {
+  content: "\f0bf";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-trinidad-and-tobago .path1:before {
+  content: "\f0c0";
+  color: rgb(175, 1, 13);
+}
+.icon-trinidad-and-tobago .path2:before {
+  content: "\f0c1";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-trinidad-and-tobago .path3:before {
+  content: "\f0c2";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-tunisia .path1:before {
+  content: "\f0c3";
+  color: rgb(249, 57, 57);
+}
+.icon-tunisia .path2:before {
+  content: "\f0c4";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-tunisia .path3:before {
+  content: "\f0c5";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-tunisia .path4:before {
+  content: "\f0c6";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-turkey .path1:before {
+  content: "\f0c7";
+  color: rgb(249, 57, 57);
+}
+.icon-turkey .path2:before {
+  content: "\f0c8";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-turkey .path3:before {
+  content: "\f0c9";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-turkmenistan .path1:before {
+  content: "\f0ca";
+  color: rgb(36, 159, 88);
+}
+.icon-turkmenistan .path2:before {
+  content: "\f0cb";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-turkmenistan .path3:before {
+  content: "\f0cc";
+  margin-left: -1.375em;
+  color: rgb(174, 106, 62);
+}
+.icon-turkmenistan .path4:before {
+  content: "\f0cd";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-turkmenistan .path5:before {
+  content: "\f0ce";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+  opacity: 0.5;
+}
+.icon-tuvalu .path1:before {
+  content: "\f0cf";
+  color: rgb(58, 153, 255);
+}
+.icon-tuvalu .path2:before {
+  content: "\f0d0";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-tuvalu .path3:before {
+  content: "\f0d1";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-tuvalu .path4:before {
+  content: "\f0d2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-uganda .path1:before {
+  content: "\f0d3";
+  color: rgb(255, 218, 44);
+}
+.icon-uganda .path2:before {
+  content: "\f0d4";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-uganda .path3:before {
+  content: "\f0d5";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-uganda .path4:before {
+  content: "\f0d6";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-uganda .path5:before {
+  content: "\f0d7";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-uganda .path6:before {
+  content: "\f0d8";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-uganda .path7:before {
+  content: "\f0d9";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-ukraine .path1:before {
+  content: "\f0da";
+  color: rgb(255, 218, 44);
+}
+.icon-ukraine .path2:before {
+  content: "\f0db";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-united-arab-emirates .path1:before {
+  content: "\f0dc";
+  color: rgb(255, 255, 255);
+}
+.icon-united-arab-emirates .path2:before {
+  content: "\f0dd";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-united-arab-emirates .path3:before {
+  content: "\f0de";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-united-arab-emirates .path4:before {
+  content: "\f0df";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-united-kingdom .path1:before {
+  content: "\f0e0";
+  color: rgb(26, 71, 184);
+}
+.icon-united-kingdom .path2:before {
+  content: "\f0e1";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-united-kingdom .path3:before {
+  content: "\f0e2";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-united-kingdom .path4:before {
+  content: "\f0e3";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-united-kingdom .path5:before {
+  content: "\f0e4";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-united-kingdom .path6:before {
+  content: "\f0e5";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-united-kingdom .path7:before {
+  content: "\f0e6";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-united-states-of-america .path1:before {
+  content: "\f0e7";
+  color: rgb(255, 255, 255);
+}
+.icon-united-states-of-america .path2:before {
+  content: "\f0e8";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+}
+.icon-united-states-of-america .path3:before {
+  content: "\f0e9";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-united-states-of-america .path4:before {
+  content: "\f0ea";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-uruguay .path1:before {
+  content: "\f0eb";
+  color: rgb(255, 255, 255);
+}
+.icon-uruguay .path2:before {
+  content: "\f0ec";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-uruguay .path3:before {
+  content: "\f0ed";
+  margin-left: -1.375em;
+  color: rgb(212, 175, 44);
+}
+.icon-uruguay .path4:before {
+  content: "\f0ee";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-uruguay .path5:before {
+  content: "\f0ef";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-uzbekistan .path1:before {
+  content: "\f0f0";
+  color: rgb(249, 57, 57);
+}
+.icon-uzbekistan .path2:before {
+  content: "\f0f1";
+  margin-left: -1.375em;
+  color: rgb(0, 183, 49);
+}
+.icon-uzbekistan .path3:before {
+  content: "\f0f2";
+  margin-left: -1.375em;
+  color: rgb(3, 188, 219);
+}
+.icon-uzbekistan .path4:before {
+  content: "\f0f3";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-uzbekistan .path5:before {
+  content: "\f0f4";
+  margin-left: -1.375em;
+  color: rgb(26, 71, 184);
+  opacity: 0.5;
+}
+.icon-vanuaty .path1:before {
+  content: "\f0f5";
+  color: rgb(255, 255, 255);
+}
+.icon-vanuaty .path2:before {
+  content: "\f0f6";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-vanuaty .path3:before {
+  content: "\f0f7";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-vanuaty .path4:before {
+  content: "\f0f8";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-vanuaty .path5:before {
+  content: "\f0f9";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-vanuaty .path6:before {
+  content: "\f0fa";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-vanuaty .path7:before {
+  content: "\f0fb";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-venezuela .path1:before {
+  content: "\f0fc";
+  color: rgb(26, 71, 184);
+}
+.icon-venezuela .path2:before {
+  content: "\f0fd";
+  margin-left: -1.375em;
+  color: rgb(188, 201, 240);
+}
+.icon-venezuela .path3:before {
+  content: "\f0fe";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-venezuela .path4:before {
+  content: "\f0ff";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-viet-nam .path1:before {
+  content: "\f100";
+  color: rgb(249, 57, 57);
+}
+.icon-viet-nam .path2:before {
+  content: "\f101";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-virgin-islands .path1:before {
+  content: "\f102";
+  color: rgb(255, 255, 255);
+}
+.icon-virgin-islands .path2:before {
+  content: "\f103";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-virgin-islands .path3:before {
+  content: "\f104";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-virgin-islands .path4:before {
+  content: "\f105";
+  margin-left: -1.375em;
+  color: rgb(36, 159, 88);
+}
+.icon-virgin-islands .path5:before {
+  content: "\f106";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-virgin-islands .path6:before {
+  content: "\f107";
+  margin-left: -1.375em;
+  color: rgb(58, 153, 255);
+}
+.icon-virgin-islands .path7:before {
+  content: "\f108";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-virgin-islands .path8:before {
+  content: "\f109";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-virgin-islands .path9:before {
+  content: "\f10a";
+  margin-left: -1.375em;
+  color: rgb(35, 44, 128);
+}
+.icon-virgin-islands .path10:before {
+  content: "\f10b";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-virgin-islands .path11:before {
+  content: "\f10c";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-yemen .path1:before {
+  content: "\f10d";
+  color: rgb(255, 255, 255);
+}
+.icon-yemen .path2:before {
+  content: "\f10e";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-yemen .path3:before {
+  content: "\f10f";
+  margin-left: -1.375em;
+  color: rgb(175, 1, 13);
+}
+.icon-zambia .path1:before {
+  content: "\f110";
+  color: rgb(36, 159, 88);
+}
+.icon-zambia .path2:before {
+  content: "\f111";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-zambia .path3:before {
+  content: "\f112";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-zambia .path4:before {
+  content: "\f113";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-zambia .path5:before {
+  content: "\f114";
+  margin-left: -1.375em;
+  color: rgb(255, 108, 45);
+}
+.icon-zimbabwe .path1:before {
+  content: "\f115";
+  color: rgb(36, 159, 88);
+}
+.icon-zimbabwe .path2:before {
+  content: "\f116";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}
+.icon-zimbabwe .path3:before {
+  content: "\f117";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-zimbabwe .path4:before {
+  content: "\f118";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-zimbabwe .path5:before {
+  content: "\f119";
+  margin-left: -1.375em;
+  color: rgb(21, 21, 21);
+}
+.icon-zimbabwe .path6:before {
+  content: "\f11a";
+  margin-left: -1.375em;
+  color: rgb(255, 255, 255);
+}
+.icon-zimbabwe .path7:before {
+  content: "\f11b";
+  margin-left: -1.375em;
+  color: rgb(249, 57, 57);
+}
+.icon-zimbabwe .path8:before {
+  content: "\f11c";
+  margin-left: -1.375em;
+  color: rgb(255, 218, 44);
+}

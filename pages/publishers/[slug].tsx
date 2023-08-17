@@ -8,9 +8,15 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import { publisherGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
-import { PaginationNaka } from "@components/atoms/pagination"
 import { useRouter } from "next/router"
 
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const GamePageLayout = dynamic(
   () => import("@components/templates/PartnerPageLayout"),
   {

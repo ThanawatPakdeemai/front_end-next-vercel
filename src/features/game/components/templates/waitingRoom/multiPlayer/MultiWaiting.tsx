@@ -1,18 +1,62 @@
-import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import React, { memo } from "react"
 import { useRouter } from "next/router"
 import { Box, Typography } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
-import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
-import Chat from "@feature/chat/components/organisms/Chat"
-import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { useTranslation } from "next-i18next"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
 import useWaitingRoomController from "@feature/game/containers/hooks/useWaitingRoomController"
+import dynamic from "next/dynamic"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
+
+const SeatPlayersMulti = dynamic(
+  () => import("@feature/game/components/organisms/SeatPlayersMulti"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardButItem = dynamic(
+  () => import("@feature/gameItem/components/molecules/CardBuyItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeaderWaitingRoom = dynamic(
+  () => import("@components/organisms/HeaderWaitingRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BuyItemBody = dynamic(
+  () => import("@components/templates/game/BuyItemBody"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chat = dynamic(() => import("@feature/chat/components/organisms/Chat"), {
+  suspense: true,
+  ssr: false
+})
+const ArrowBackIcon = dynamic(() => import("@mui/icons-material/ArrowBack"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonCardPlayers = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCardPlayers"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const {

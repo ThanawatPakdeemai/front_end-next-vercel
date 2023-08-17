@@ -1,10 +1,16 @@
 import { Typography } from "@mui/material"
 import React from "react"
-
+import dynamic from "next/dynamic"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { ImageCustom } from "@components/atoms/image/Image"
-import NextButtonSlide from "../atoms/NextButtonSlide"
-import ProgressBarSlide from "../atoms/ProgressBarSlide"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const NextButtonSlide = dynamic(() => import("../atoms/NextButtonSlide"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface ICardNextSlide {
   slideNext: IGame
@@ -16,6 +22,7 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
     <button
       onClick={gotoNext}
       type="button"
+      aria-label="gotoNext"
       className="slide-next relative flex w-full items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left"
     >
       <div className="slide-next--image w-1/3 overflow-hidden rounded-xl">
@@ -34,7 +41,7 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
         >
           {slideNext?.name}
         </Typography>
-        <ProgressBarSlide />
+        {/* <ProgressBarSlide /> */}
       </div>
     </button>
   )

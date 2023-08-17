@@ -1,6 +1,10 @@
 import React from "react"
-import CardFeaturedDeveloperItem from "@components/molecules/CardFeaturedDeveloperItem"
 import { IList } from "@feature/become-developer/interfaces/IWebBecome"
+import dynamic from "next/dynamic"
+
+const CardFeaturedDeveloperItem = dynamic(
+  () => import("@components/molecules/CardFeaturedDeveloperItem")
+)
 
 interface ICardFeaturedDeveloperItemsProps {
   items: IList[] | undefined

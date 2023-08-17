@@ -3,9 +3,16 @@ import { useState } from "react"
 import { Popover, Typography } from "@mui/material"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
-import SelectDropdownCategories from "@components/atoms/selectDropdown/SelectDropdownCategories"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
+import dynamic from "next/dynamic"
+import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
+
+const SelectDropdownCategories = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdownCategories")
+)
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/atoms/ButtonDropdown")
+)
 
 interface IProp {
   list: IGameCategory[]
@@ -14,19 +21,6 @@ interface IProp {
   className?: string
   onChangeSelect?: (_item: IGameCategory) => void
   register: any
-}
-
-export const StyledFormLabel = {
-  "&.MuiFormLabel-root, &.MuiTypography-root": {
-    color: "#70727B",
-    fontFamily: "neueMachina",
-    textTransform: "uppercase",
-    position: "relative",
-    display: "block",
-    fontSize: "12px",
-    marginTop: "5px",
-    fontWeight: "bold"
-  }
 }
 
 const DropdownListCategories = ({

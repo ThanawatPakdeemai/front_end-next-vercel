@@ -21,11 +21,11 @@ const useConnectMetamaskAction = () => {
       const _signature = await signer.signMessage(
         `NAKAMOTO Authentication: ${address}`
       )
-      return _signature
+      return { status: true, result: _signature, err: undefined }
     } catch (err) {
       return {
         status: false,
-        addressContract: address,
+        result: address,
         err
       }
     }

@@ -1,21 +1,45 @@
 import React, { useState } from "react"
-import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
 import { Box, Button, Stack } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import usetournament from "@feature/tournament/containers/hooks/usetournament"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import { iconmotion } from "@components/organisms/Footer"
 import { useRouter } from "next/router"
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
+import dynamic from "next/dynamic"
+import usetournament from "@feature/tournament/containers/hooks/usetournament"
 import { useToast } from "@feature/toast/containers"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useShareToEarn from "@feature/game/containers/hooks/useShareToEarn"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
 import { MESSAGES } from "@constants/messages"
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
-import LinkIcon from "@components/icons/LinkIcon"
-import ButtonIcon from "./button/ButtonIcon"
+import { iconmotion } from "@styles/themes/partial/motion"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   id: string
@@ -69,17 +93,21 @@ const ShareToEarn = (props: IProps) => {
   return (
     <>
       {isMobile ? (
-        <ShareIcon onClick={handleOpen} />
+        <button
+          type="button"
+          aria-label="Share to earn"
+          onClick={handleOpen}
+        >
+          <Icomoon className="icon-Share" />
+        </button>
       ) : (
         <div className="flex items-center justify-end ">
           <Button
+            aria-label="Share to earn"
             className="md flex !min-w-[6.25rem] flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
             onClick={() => handleOpen()}
           >
-            <ShareIcon
-              color="#FFFFFF"
-              className="mr-2"
-            />
+            <Icomoon className="icon-Share mr-2" />
             {t("share")}
           </Button>
         </div>
@@ -116,7 +144,7 @@ const ShareToEarn = (props: IProps) => {
                     stiffness: 400,
                     damping: 4
                   }}
-                  icon={<LinkIcon className="rotate-[140deg]" />}
+                  icon={<Icomoon className="icon-Link" />}
                   className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                   onClick={() =>
                     handleShareToEarnLink(stateProfile.id, props?.id, uniqueId)
@@ -175,7 +203,7 @@ const ShareToEarn = (props: IProps) => {
                     stiffness: 400,
                     damping: 4
                   }}
-                  icon={<LinkIcon className="rotate-[140deg]" />}
+                  icon={<Icomoon className="icon-Link" />}
                   className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                   onClick={() =>
                     handleShareToEarnLink(stateProfile.id, props?.id, uniqueId)

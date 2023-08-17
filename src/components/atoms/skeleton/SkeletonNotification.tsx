@@ -1,7 +1,12 @@
 import React, { memo } from "react"
 import { Skeleton } from "@mui/material"
+import dynamic from "next/dynamic"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
-import NoData from "@components/molecules/NoData"
+
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   isLoading: boolean

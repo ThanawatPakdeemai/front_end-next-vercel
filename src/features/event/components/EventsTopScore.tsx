@@ -1,22 +1,49 @@
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  TableRow,
-  TableCell,
-  TableHead
-} from "@mui/material"
+/* eslint-disable max-len */
+import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
 import {
   IFixedReward,
   IResponseSummaryData
 } from "@feature/event/interface/IEventsService"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import { v4 as uuid } from "uuid"
-import { Image } from "@components/atoms/image/index"
-import NoData from "@components/molecules/NoData"
 import { numberWithCommas } from "@src/helpers/addComma"
 import useEventController from "../containers/hooks/useEventController"
-import EventCardContent from "./EventCardContent"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const EventCardContent = dynamic(() => import("./EventCardContent"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableRow = dynamic(() => import("@mui/material/TableRow"), {
+  suspense: true,
+  ssr: false
+})
+const TableCell = dynamic(() => import("@mui/material/TableCell"), {
+  suspense: true,
+  ssr: false
+})
+const TableHead = dynamic(() => import("@mui/material/TableHead"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IEventTopScoreProps {
   users: IResponseSummaryData[]
@@ -83,7 +110,7 @@ const EventsTopScore = ({
   return (
     <EventCardContent
       title="Top score"
-      icon={<TwitterIcon />}
+      icon={<Icomoon className="icon-twitter" />}
       labels={{
         player_count: playerCount,
         transaction_count: transactionCount
@@ -121,18 +148,6 @@ const EventsTopScore = ({
                           {index + 1}
                         </div>
                       </div>
-                      {user.country && (
-                        <div className="mr-2 flex h-[50px] w-[50px] items-center rounded-[4px] border-[1px] border-neutral-800 bg-neutral-780 p-[4px_14px]">
-                          <Image
-                            src={`/assets/flags/4x3/${user.country.toLocaleLowerCase()}.svg`}
-                            alt={user.country}
-                            width={50}
-                            height={50}
-                            title={user.country && user.country.toUpperCase()}
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
                       <div>{user.username}</div>
                     </div>
                   </TableCell>

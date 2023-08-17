@@ -1,6 +1,4 @@
 import React, { memo, useState } from "react"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import {
   Box,
   CircularProgress,
@@ -10,15 +8,46 @@ import {
   Typography
 } from "@mui/material"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
-import { useToast } from "@feature/toast/containers"
 import { useForm } from "react-hook-form"
-import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
-import ButtonLink from "@components/atoms/button/ButtonLink"
+import dynamic from "next/dynamic"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 import { isMobile } from "@hooks/useGlobal"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
 import useResetPassword from "../containers/hooks/useResetPassword"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const FromForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -131,7 +160,9 @@ const FromForgotPassword = () => {
                     text="Back"
                     startIcon={null}
                     handleClick={handleClose}
-                    endIcon={<IconArrowRight stroke="#fff" />}
+                    endIcon={
+                      <Icomoon className="icon-Full-Arrow-Right text-[#fff]" />
+                    }
                     style={{ borderRadius: "24px 0px 0px 24px" }}
                   />
                   <ButtonLink

@@ -1,38 +1,35 @@
 import React, { useEffect, useRef, useState } from "react"
-import { iconmotion } from "@components/organisms/Footer"
-import useGetBlog from "@feature/blog/containers/hook/useGetBlog"
 import { v4 as uuid } from "uuid"
-import { PaginationNaka } from "@components/atoms/pagination"
-import BlogCard from "@components/molecules/cards/BlogCard"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { useQueryClient } from "@tanstack/react-query"
+import dynamic from "next/dynamic"
+import useGetBlog from "@feature/blog/containers/hook/useGetBlog"
 import { getBlogAll } from "@feature/blog/containers/services/blog.service"
 import useSearchStore from "@stores/blogFilter"
 import useSelectStore from "@stores/selector"
+import {
+  arrowMotion,
+  iconmotion,
+  imgMotion
+} from "@styles/themes/partial/motion"
 
-const arrowMotion = {
-  rest: {
-    opacity: 0,
-    duration: 0.2,
-    type: "spring"
-  },
-  hover: {
-    width: "full",
-    opacity: 1,
-    x: 3,
-    transition: {
-      duration: 0.4
-    }
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
   }
-}
-
-const imgMotion = {
-  hover: {
-    marginLeft: "10px",
-    marginRight: "10px",
-    marginBottom: "-10px"
+)
+const BlogCard = dynamic(() => import("@components/molecules/cards/BlogCard"), {
+  suspense: true,
+  ssr: false
+})
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
   }
-}
+)
 
 const BlogListPage = () => {
   const limitPage = 16

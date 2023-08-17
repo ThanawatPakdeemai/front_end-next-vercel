@@ -1,17 +1,55 @@
-import { Image } from "@components/atoms/image"
-import ShineIcon from "@components/icons/ShineIcon"
-import Tagline from "@components/molecules/tagline/Tagline"
 import { Button, Collapse } from "@mui/material"
 import React, { useState } from "react"
-import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
-import { MENU_MARKETPLACE } from "@configs/menu"
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { NextRouter, useRouter } from "next/router"
-import SwipeableEdgeDrawer from "@feature/marketplace/components/organisms/DrawerMobileFilter"
-import FilterSearchBox from "@feature/marketplace/components/molecules/FilterSearchBox"
+import dynamic from "next/dynamic"
+import { MENU_MARKETPLACE } from "@configs/menu"
 import useMarketFilterStore from "@stores/marketFilter"
-import HeaderMunuMobile from "./HeaderMunuMobile"
-import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
+
+const HeaderMenuMobile = dynamic(() => import("./HeaderMenuMobile"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SwipeableEdgeDrawer = dynamic(
+  () => import("@feature/marketplace/components/organisms/DrawerMobileFilter"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FilterSearchBox = dynamic(
+  () => import("@feature/marketplace/components/molecules/FilterSearchBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MenuButtonExpandMobile = dynamic(
+  () => import("./MenuButtonExpandMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   isNoFilter?: boolean
@@ -53,7 +91,7 @@ const MarketplaceLayoutMobile = ({
 
   return (
     <div className="main-container mx-auto pt-14">
-      <HeaderMunuMobile />
+      <HeaderMenuMobile />
       <Image
         src="/images/banner/bannerMarketplace.webp"
         alt="openFilter"
@@ -62,7 +100,7 @@ const MarketplaceLayoutMobile = ({
         className="rounded-3xl p-4"
       />
       <Tagline
-        icon={<ShineIcon />}
+        icon={<Icomoon className="icon-require" />}
         bgColor="bg-neutral-800"
         textColor="text-neutral-500 font-bold"
         text="Join the NFT revolution and game a part of the future of ownership. "
@@ -162,7 +200,7 @@ const MarketplaceLayoutMobile = ({
                 }}
                 className="!h-[40px] !w-[40px] rounded-lg border border-neutral-700 bg-neutral-800 p-2"
               >
-                <SettingIconFilter />
+                <Icomoon className="icon-Filters-Horizontal text-white-default" />
               </Button>
             </div>
             <SwipeableEdgeDrawer

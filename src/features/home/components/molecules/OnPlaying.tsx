@@ -1,5 +1,5 @@
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
+import { useMemo, useState } from "react"
+import dynamic from "next/dynamic"
 import { onPlayingHeaderMenu } from "@constants/gameSlide"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGetRoomAvailable from "@feature/home/containers/hook/useGetRoomAvailable"
@@ -7,7 +7,17 @@ import {
   IRoomAvaliableData,
   IRoomAvaliableDataChannel
 } from "@feature/home/interfaces/IHomeService"
-import { useMemo, useState } from "react"
+
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCarousel = dynamic(
+  () => import("@components/molecules/gameSlide/GameCarousel")
+)
 
 const OnPlaying = () => {
   const { gamesAvailble, isLoading } = useGetRoomAvailable()

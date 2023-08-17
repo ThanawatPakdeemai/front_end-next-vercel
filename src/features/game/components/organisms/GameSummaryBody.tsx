@@ -1,16 +1,53 @@
-import Tagline from "@components/molecules/tagline/Tagline"
 import React from "react"
 import dayjs from "dayjs"
 import _ from "lodash"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
-import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
-import SummaryItemUsed, {
-  ISummaryItemUsedProps
-} from "@feature/game/components/molecules/SummaryItemUsed"
-import GameSummaryRewardFooter from "@feature/game/components/templates/GameSummaryRewardFooter"
-import SummaryGameData from "@feature/game/components/molecules/SummaryGameData"
-import CardSummaryReward from "@feature/game/components/molecules/CardSummaryReward"
-import CardNoReward from "@feature/game/components/atoms/CardNoReward"
+import { ISummaryItemUsedProps } from "../molecules/SummaryItemUsed"
+
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const CardSummaryMain = dynamic(
+  () => import("@feature/game/components/molecules/CardSummaryMain"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameSummaryRewardFooter = dynamic(
+  () => import("@feature/game/components/templates/GameSummaryRewardFooter"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SummaryGameData = dynamic(
+  () => import("@feature/game/components/molecules/SummaryGameData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardSummaryReward = dynamic(
+  () => import("@feature/game/components/molecules/CardSummaryReward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardNoReward = dynamic(
+  () => import("@feature/game/components/atoms/CardNoReward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SummaryItemUsed = dynamic(() => import("../molecules/SummaryItemUsed"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp extends ISummaryItemUsedProps {
   date: string | Date

@@ -1,8 +1,15 @@
 /* eslint-disable react/destructuring-assignment */
 import React from "react"
-import { Image } from "@components/atoms/image/index"
-import DieplayerIcon from "@components/icons/Tournament/DieplayerIcon"
-import NakaIcon from "@components/icons/Tournament/NakaIcon"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const BoxPlayer = ({ data, index }: any) => (
   <div
@@ -25,13 +32,13 @@ const BoxPlayer = ({ data, index }: any) => (
       />
     ) : (
       <div className="mx-[20px] my-[25px]">
-        <NakaIcon />
+        <Icomoon className="icon-Naka text-error-main" />
       </div>
     )}
 
     {data.status === "lose" && (
       <div className="absolute z-40 m-[25px]">
-        <DieplayerIcon />
+        <Icomoon className="icon-User-Crossed" />
       </div>
     )}
     <div

@@ -1,10 +1,27 @@
-import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
 import { Box } from "@mui/material"
 import React, { useState } from "react"
 import { NextRouter, useRouter } from "next/router"
 import { motion } from "framer-motion"
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded"
-import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
+import dynamic from "next/dynamic"
+
+const HighlightOffRoundedIcon = dynamic(
+  () => import("@mui/icons-material/HighlightOffRounded"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const FilterBox = dynamic(
+  () => import("@feature/marketplace/components/molecules/FilterBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   className?: string
@@ -60,7 +77,7 @@ const InventoryPage = ({ className }: IProps) => {
           {open ? (
             <HighlightOffRoundedIcon sx={{ color: "#ffff" }} />
           ) : (
-            <SettingIconFilter />
+            <Icomoon className="icon-Filters-Horizontal text-white-default" />
           )}
         </Box>
       </div>

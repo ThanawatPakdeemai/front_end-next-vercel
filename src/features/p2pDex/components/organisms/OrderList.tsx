@@ -1,12 +1,8 @@
 import React, { useState } from "react"
-import { TableBody, Table, TableContainer, Box } from "@mui/material"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-
-import ButtonLink from "@components/atoms/button/ButtonLink"
+import { Trans } from "next-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import Helper from "@utils/helper"
-import CopyTextIcon from "@components/icons/CopyTextIcon"
-import VerifiedIcon from "@components/icons/VerifiedIcon"
 import {
   IMultiTrustOrder,
   IMultiOrderListServ
@@ -18,9 +14,52 @@ import { useToast } from "@feature/toast/containers"
 import useP2PDexCancel from "@feature/p2pDex/containers/hooks/useP2PDexCancel"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import useLoadingStore from "@stores/loading"
-import { Trans } from "next-i18next"
-import FormEdit from "./FormEdit"
-import FormEx from "./FormEx"
+
+const FormEdit = dynamic(() => import("./FormEdit"), {
+  suspense: true,
+  ssr: false
+})
+const FormEx = dynamic(() => import("./FormEx"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   data: IMultiOrderListServ | undefined
@@ -214,12 +253,12 @@ const OrderList = ({ ...props }: IProp) => {
                           Helper.copyClipboard(order.id)
                         }}
                       >
-                        <CopyTextIcon />
+                        <Icomoon className="icon-Copy" />
                       </Box>
                     </>,
                     <>
                       {order.trusted_order ? (
-                        <VerifiedIcon />
+                        <Icomoon className="icon-Verified" />
                       ) : (
                         <div className="mr-[23px]" />
                       )}
@@ -233,7 +272,7 @@ const OrderList = ({ ...props }: IProp) => {
                           Helper.copyClipboard(order.wallet_address)
                         }}
                       >
-                        <CopyTextIcon />
+                        <Icomoon className="icon-Copy" />
                       </Box>
                     </>,
                     <>

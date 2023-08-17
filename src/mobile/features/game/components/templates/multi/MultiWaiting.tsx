@@ -1,19 +1,61 @@
+import { useTranslation } from "next-i18next"
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
+import { Box, CircularProgress } from "@mui/material"
+import dynamic from "next/dynamic"
 import useWaitingMulti from "@feature/game/containers/hooks/useWaitingMulti"
 import { CurrentPlayer } from "@feature/game/interfaces/IGameService"
-import PlayerCardMobile from "@src/mobile/features/game/components/molecules/PlayerCardMobile"
-import ButtonGame from "@src/mobile/features/game/components/atoms/ButtonGame"
-import { useTranslation } from "next-i18next"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
-import { Box, CircularProgress } from "@mui/material"
-import TitleOutRoom from "@src/mobile/components/molecules/TitleOutRoom"
-import WaitingSkeleton from "@mobile/components/atoms/skelaton/WaitingSkeleton"
 import { StyleWaitingRoom } from "@mobile/styles/muiStyleMobile"
-import RoomListBox from "@components/molecules/roomList/RoomListBox"
-import ClockIcon2 from "@components/icons/ClockIcon2"
-import ChatMobile from "../../organisms/ChatMobile"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const PlayerCardMobile = dynamic(
+  () =>
+    import("@src/mobile/features/game/components/molecules/PlayerCardMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonGame = dynamic(
+  () => import("@src/mobile/features/game/components/atoms/ButtonGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TitleOutRoom = dynamic(
+  () => import("@src/mobile/components/molecules/TitleOutRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const WaitingSkeleton = dynamic(
+  () => import("@mobile/components/atoms/skelaton/WaitingSkeleton"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RoomListBox = dynamic(
+  () => import("@components/molecules/roomList/RoomListBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ChatMobile = dynamic(
+  () => import("@src/mobile/features/game/components/organisms/ChatMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const MultiWaiting = () => {
   const {
@@ -98,7 +140,7 @@ const MultiWaiting = () => {
               {/* Room Timer */}
               {dataPlayers && (
                 <div className="waiting-room__header--timer ml-2 flex items-center gap-2">
-                  <ClockIcon2 />
+                  <Icomoon className="icon-Clock" />
                   <RoomListBox
                     type="timer"
                     timer={{

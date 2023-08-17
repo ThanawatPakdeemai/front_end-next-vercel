@@ -1,0 +1,328 @@
+@font-face {
+  font-family: "icomoon-app-bold";
+  src: url("/assets/fonts/icomoon-app-bold.eot?uy2i95");
+  src: url("/assets/fonts/icomoon-app-bold.eot?uy2i95#iefix")
+      format("embedded-opentype"),
+    url("/assets/fonts/icomoon-app-bold.ttf?uy2i95") format("truetype"),
+    url("/assets/fonts/icomoon-app-bold.woff?uy2i95") format("woff"),
+    url("/assets/fonts/icomoon-app-bold.svg?uy2i95#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.icon-app-bold {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon-app-bold" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-app-bold.icon-Activity:before {
+  content: "\e900";
+}
+.icon-app-bold.icon-Add-User:before {
+  content: "\e901";
+}
+.icon-app-bold.icon-Arrow---Down:before {
+  content: "\e902";
+}
+.icon-app-bold.icon-Arrow---Down-2:before {
+  content: "\e903";
+}
+.icon-app-bold.icon-Arrow---Down-3:before {
+  content: "\e904";
+}
+.icon-app-bold.icon-Arrow---Down-Circle:before {
+  content: "\e905";
+}
+.icon-app-bold.icon-Arrow---Down-Square:before {
+  content: "\e906";
+}
+.icon-app-bold.icon-Arrow---Left:before {
+  content: "\e907";
+}
+.icon-app-bold.icon-Arrow---Left-2:before {
+  content: "\e908";
+}
+.icon-app-bold.icon-Arrow---Left-3:before {
+  content: "\e909";
+}
+.icon-app-bold.icon-Arrow---Left-Circle:before {
+  content: "\e90a";
+}
+.icon-app-bold.icon-Arrow---Left-Square:before {
+  content: "\e90b";
+}
+.icon-app-bold.icon-Arrow---Right:before {
+  content: "\e90c";
+}
+.icon-app-bold.icon-Arrow---Right-2:before {
+  content: "\e90d";
+}
+.icon-app-bold.icon-Arrow---Right-3:before {
+  content: "\e90e";
+}
+.icon-app-bold.icon-Arrow---Right-Circle:before {
+  content: "\e90f";
+}
+.icon-app-bold.icon-Arrow---Right-Square:before {
+  content: "\e910";
+}
+.icon-app-bold.icon-Arrow---Up:before {
+  content: "\e911";
+}
+.icon-app-bold.icon-Arrow---Up-2:before {
+  content: "\e912";
+}
+.icon-app-bold.icon-Arrow---Up-3:before {
+  content: "\e913";
+}
+.icon-app-bold.icon-Arrow---Up-Circle:before {
+  content: "\e914";
+}
+.icon-app-bold.icon-Arrow---Up-Square:before {
+  content: "\e915";
+}
+.icon-app-bold.icon-Bag:before {
+  content: "\e916";
+}
+.icon-app-bold.icon-Bag-2:before {
+  content: "\e917";
+}
+.icon-app-bold.icon-Bookmark:before {
+  content: "\e918";
+}
+.icon-app-bold.icon-Buy:before {
+  content: "\e919";
+}
+.icon-app-bold.icon-Calendar:before {
+  content: "\e91a";
+}
+.icon-app-bold.icon-Call:before {
+  content: "\e91b";
+}
+.icon-app-bold.icon-Call-Missed:before {
+  content: "\e91c";
+}
+.icon-app-bold.icon-Call-Silent:before {
+  content: "\e91d";
+}
+.icon-app-bold.icon-Calling:before {
+  content: "\e91e";
+}
+.icon-app-bold.icon-Camera:before {
+  content: "\e91f";
+}
+.icon-app-bold.icon-Category:before {
+  content: "\e920";
+}
+.icon-app-bold.icon-Chart:before {
+  content: "\e921";
+}
+.icon-app-bold.icon-Chat:before {
+  content: "\e922";
+}
+.icon-app-bold.icon-Close-Square:before {
+  content: "\e923";
+}
+.icon-app-bold.icon-Danger:before {
+  content: "\e924";
+}
+.icon-app-bold.icon-Delete:before {
+  content: "\e925";
+}
+.icon-app-bold.icon-Discount:before {
+  content: "\e926";
+}
+.icon-app-bold.icon-Discovery:before {
+  content: "\e927";
+}
+.icon-app-bold.icon-Document:before {
+  content: "\e928";
+}
+.icon-app-bold.icon-Download:before {
+  content: "\e929";
+}
+.icon-app-bold.icon-Edit:before {
+  content: "\e92a";
+}
+.icon-app-bold.icon-Edit-Square:before {
+  content: "\e92b";
+}
+.icon-app-bold.icon-Filter:before {
+  content: "\e92c";
+}
+.icon-app-bold.icon-Filter-2:before {
+  content: "\e92d";
+}
+.icon-app-bold.icon-Folder:before {
+  content: "\e92e";
+}
+.icon-app-bold.icon-Game:before {
+  content: "\e92f";
+}
+.icon-app-bold.icon-Graph:before {
+  content: "\e930";
+}
+.icon-app-bold.icon-Heart:before {
+  content: "\e931";
+}
+.icon-app-bold.icon-Hide:before {
+  content: "\e932";
+}
+.icon-app-bold.icon-Home:before {
+  content: "\e933";
+}
+.icon-app-bold.icon-Image:before {
+  content: "\e934";
+}
+.icon-app-bold.icon-Image-2:before {
+  content: "\e935";
+}
+.icon-app-bold.icon-Info-Circle:before {
+  content: "\e936";
+}
+.icon-app-bold.icon-Info-Square:before {
+  content: "\e937";
+}
+.icon-app-bold.icon-Location:before {
+  content: "\e938";
+}
+.icon-app-bold.icon-Lock:before {
+  content: "\e939";
+}
+.icon-app-bold.icon-Login:before {
+  content: "\e93a";
+}
+.icon-app-bold.icon-Logout:before {
+  content: "\e93b";
+}
+.icon-app-bold.icon-Message:before {
+  content: "\e93c";
+}
+.icon-app-bold.icon-More-Circle:before {
+  content: "\e93d";
+}
+.icon-app-bold.icon-More-Square:before {
+  content: "\e93e";
+}
+.icon-app-bold.icon-Notification:before {
+  content: "\e93f";
+}
+.icon-app-bold.icon-Paper:before {
+  content: "\e940";
+}
+.icon-app-bold.icon-Paper-Download:before {
+  content: "\e941";
+}
+.icon-app-bold.icon-Paper-Fail:before {
+  content: "\e942";
+}
+.icon-app-bold.icon-Paper-Negative:before {
+  content: "\e943";
+}
+.icon-app-bold.icon-Paper-Plus:before {
+  content: "\e944";
+}
+.icon-app-bold.icon-Paper-Upload:before {
+  content: "\e945";
+}
+.icon-app-bold.icon-Password:before {
+  content: "\e946";
+}
+.icon-app-bold.icon-Play:before {
+  content: "\e947";
+}
+.icon-app-bold.icon-Plus:before {
+  content: "\e948";
+}
+.icon-app-bold.icon-Profile:before {
+  content: "\e949";
+}
+.icon-app-bold.icon-Scan:before {
+  content: "\e94a";
+}
+.icon-app-bold.icon-Search:before {
+  content: "\e94b";
+}
+.icon-app-bold.icon-Send:before {
+  content: "\e94c";
+}
+.icon-app-bold.icon-Setting:before {
+  content: "\e94d";
+}
+.icon-app-bold.icon-Shield-Done:before {
+  content: "\e94e";
+}
+.icon-app-bold.icon-Shield-Fail:before {
+  content: "\e94f";
+}
+.icon-app-bold.icon-Show:before {
+  content: "\e950";
+}
+.icon-app-bold.icon-Star:before {
+  content: "\e951";
+}
+.icon-app-bold.icon-Swap:before {
+  content: "\e952";
+}
+.icon-app-bold.icon-Tick-Square:before {
+  content: "\e953";
+}
+.icon-app-bold.icon-Ticket:before {
+  content: "\e954";
+}
+.icon-app-bold.icon-Ticket-Star:before {
+  content: "\e955";
+}
+.icon-app-bold.icon-Time-Circle:before {
+  content: "\e956";
+}
+.icon-app-bold.icon-Time-Square:before {
+  content: "\e957";
+}
+.icon-app-bold.icon-Unlock:before {
+  content: "\e958";
+}
+.icon-app-bold.icon-Upload:before {
+  content: "\e959";
+}
+.icon-app-bold.icon-User:before {
+  content: "\e95a";
+}
+.icon-app-bold.icon-User1:before {
+  content: "\e95b";
+}
+.icon-app-bold.icon-Video:before {
+  content: "\e95c";
+}
+.icon-app-bold.icon-Voice:before {
+  content: "\e95d";
+}
+.icon-app-bold.icon-Voice-2:before {
+  content: "\e95e";
+}
+.icon-app-bold.icon-Volume-Down:before {
+  content: "\e95f";
+}
+.icon-app-bold.icon-Volume-Off:before {
+  content: "\e960";
+}
+.icon-app-bold.icon-Volume-Up:before {
+  content: "\e961";
+}
+.icon-app-bold.icon-Wallet:before {
+  content: "\e962";
+}
+.icon-app-bold.icon-Work:before {
+  content: "\e963";
+}

@@ -1,10 +1,27 @@
 import React from "react"
-import ViewIcon from "@components/icons/BlogIcon/ViewIcon"
-import ShareIcon from "@mui/icons-material/Share"
-import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded"
-import { Box } from "@mui/material"
-import SocialShare, { ISocialShareProps } from "./SocialShare"
-import ViewCount from "../molecoles/ViewCount"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import { ISocialShareProps } from "./SocialShare"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ThumbUpRoundedIcon = dynamic(
+  () => import("@mui/icons-material/ThumbUpRounded"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SocialShare = dynamic(() => import("./SocialShare"), {
+  suspense: true,
+  ssr: false
+})
+const ViewCount = dynamic(() => import("../molecoles/ViewCount"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IBlogFooterProps extends ISocialShareProps {
   view?: number
@@ -33,12 +50,12 @@ const BlogFooter = ({ view, shared, like, ...props }: IBlogFooterProps) => (
   >
     <div className="count-wrapper flex flex-1 gap-3">
       <ViewCount
-        icon={<ViewIcon />}
+        icon={<Icomoon className="icon-Eye-Open" />}
         count={view || 0}
       />
       {shared ? (
         <ViewCount
-          icon={<ShareIcon />}
+          icon={<Icomoon className="icon-Share" />}
           count={shared || 0}
         />
       ) : null}

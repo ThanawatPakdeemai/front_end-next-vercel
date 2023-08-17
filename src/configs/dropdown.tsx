@@ -1,73 +1,105 @@
 import * as React from "react"
+import dynamic from "next/dynamic"
 import { IDropdown } from "@interfaces/IMenu"
-import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
-import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
-import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
-import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
-import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
-import PlayHistoryIcon from "@components/icons/MenunIcon/PlayHistoryIcon"
-import EditProfileIcon from "@components/icons/MenunIcon/EditProfileIcon"
-import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
-import AllGamesIcon from "@components/icons/AllGamesIcon"
-import AllDevicesIcon from "@components/icons/AllDevicesIcon"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export const DROPDOWN: IDropdown[] = [
   {
     title: "All Categories",
-    icon: <AllCategoriesIcon />,
+    icon: <Icomoon className="icon-Grid-02" />,
     className: "w-[200px]",
     text: "string",
     details: [
       {
         label: "Edit Profile",
         href: "/",
-        icon: <EditProfileIcon />
+        icon: <Icomoon className="icon-User-Pass" />
       },
-      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> },
+      {
+        label: "Wishlist",
+        href: "/favourite-games",
+        icon: <Icomoon className="icon-Heart" />
+      },
       {
         label: "Play History",
         href: "/",
-        icon: <PlayHistoryIcon />
+        icon: <Icomoon className="icon-Clock" />
       },
-      { label: "Your Mission", href: "/", icon: <YourMissionIcon /> },
-      { label: "Inventory", href: "/", icon: <InventoryIcon /> },
-      { label: "Item Reward", href: "/", icon: <ItemRewardIcon /> },
-      { label: "Support", href: "/", icon: <SupportIcon /> }
+      {
+        label: "Your Mission",
+        href: "/",
+        icon: <Icomoon className="icon-Camp-Fire" />
+      },
+      {
+        label: "Inventory",
+        href: "/",
+        icon: <Icomoon className="icon-Box-Download" />
+      },
+      {
+        label: "Item Reward",
+        href: "/",
+        icon: <Icomoon className="icon-Diamond" />
+      },
+      {
+        label: "Support",
+        href: "/",
+        icon: <Icomoon className="icon-Headset" />
+      }
     ]
   },
   {
     title: "All Game Assets",
-    icon: <AllGamesIcon />,
+    icon: <Icomoon className="icon-Grid-02" />,
     className: "w-[200px]",
     text: "string",
     details: [
       {
         label: "Edit Profile",
         href: "/",
-        icon: <EditProfileIcon />
+        icon: <Icomoon className="icon-User-Pass" />
       },
-      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> }
+      {
+        label: "Wishlist",
+        href: "/favourite-games",
+        icon: <Icomoon className="icon-Heart" />
+      }
     ]
   },
   {
     title: "All Devices",
-    icon: <AllDevicesIcon />,
+    icon: <Icomoon className="icon-Laptop-and-Phone" />,
     className: "w-[200px]",
     text: "string",
     details: [
       {
         label: "Edit Profile",
         href: "/",
-        icon: <EditProfileIcon />
+        icon: <Icomoon className="icon-User-Pass" />
       },
-      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> },
+      {
+        label: "Wishlist",
+        href: "/favourite-games",
+        icon: <Icomoon className="icon-Heart" />
+      },
       {
         label: "Play History",
         href: "/",
-        icon: <PlayHistoryIcon />
+        icon: <Icomoon className="icon-Clock" />
       },
-      { label: "Your Mission", href: "/", icon: <YourMissionIcon /> },
-      { label: "Inventory", href: "/", icon: <InventoryIcon /> }
+      {
+        label: "Your Mission",
+        href: "/",
+        icon: <Icomoon className="icon-Camp-Fire" />
+      },
+      {
+        label: "Inventory",
+        href: "/",
+        icon: <Icomoon className="icon-Box-Download" />
+      }
     ]
   },
   {
@@ -79,9 +111,13 @@ export const DROPDOWN: IDropdown[] = [
       {
         label: "Edit Profile",
         href: "/",
-        icon: <EditProfileIcon />
+        icon: <Icomoon className="icon-User-Pass" />
       },
-      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> }
+      {
+        label: "Wishlist",
+        href: "/favourite-games",
+        icon: <Icomoon className="icon-Heart" />
+      }
     ]
   },
   {
@@ -93,9 +129,9 @@ export const DROPDOWN: IDropdown[] = [
       {
         label: "1 Item",
         href: "/",
-        icon: <EditProfileIcon />
+        icon: <Icomoon className="icon-User-Pass" />
       },
-      { label: "1 Item", href: "/", icon: <WishlistIcon /> }
+      { label: "1 Item", href: "/", icon: <Icomoon className="icon-Heart" /> }
     ]
   }
 ]

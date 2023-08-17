@@ -1,13 +1,30 @@
 import React from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import ButtonFavourite from "@components/atoms/button/ButtonFavourite"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
-import useGlobal from "@hooks/useGlobal"
-import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useGlobal from "@hooks/useGlobal"
+import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonFavourite = dynamic(
+  () => import("@components/atoms/button/ButtonFavourite"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -45,14 +62,11 @@ const CardFooterSlide = ({
       >
         <ButtonLink
           text={t(text)}
-          icon={<JoinStickIcon />}
+          icon={<Icomoon className="icon-Joystick text-[1.7rem]" />}
           size="large"
           color="secondary"
           variant="contained"
           className="w-full"
-          // href={`/${getGameMode(gameData)}/${
-          //   gameData.path
-          // }${isRedirectRoomlist(gameData).toString()}`}
           onClick={() => {
             onHandleSetGameStore(getGameMode(gameData), gameData)
             router.push(
@@ -66,7 +80,7 @@ const CardFooterSlide = ({
       <ButtonFavourite
         handleClick={onClickFavouriteButton}
         favouriteStatus={favouriteStatus}
-        className="absolute right-0 top-0"
+        className="absolute right-0 top-0 text-[22px]"
       />
     </footer>
   )

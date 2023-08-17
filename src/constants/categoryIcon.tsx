@@ -1,26 +1,10 @@
 import React from "react"
-import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
-import BoardGameIcon from "@components/icons/BoardGameIcon"
-import CardGameIcon from "@components/icons/CardGameIcon"
-import CasinoGameIcon from "@components/icons/CasinoGameIcon"
-import DiceIcon from "@components/icons/DiceIcon"
-import EducationalGameIcon from "@components/icons/EducationalGameIcon"
-import FamilyGameIcon from "@components/icons/FamilyGameIcon"
-import MusicGameIcon from "@components/icons/MusicGameIcon"
-import RacingGameIcon from "@components/icons/RacingGameIcon"
-import RolePlayingIcon from "@components/icons/RolePlayingIcon"
-import SimulativeGameIcon from "@components/icons/SimulativeGameIcon"
-import StrategyGameIcon from "@components/icons/StrategyGameIcon"
-import WordGameIcon from "@components/icons/WordGameIcon"
-import TraviaGameIcon from "@components/icons/TraviaGameIcon"
-import PuzzleGameIcon from "@components/icons/PuzzleGameIcon"
-import CasualGameIcon from "@components/icons/CasualGameIcon"
-import FightingGameIcon from "@components/icons/FightingGameIcon"
-import ShootingGameIcon from "@components/icons/ShootingGameIcon"
-import SportGameIcon from "@components/icons/SportGameIcon"
-import Diamond from "@components/icons/Diamond"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
+import dynamic from "next/dynamic"
 
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 export interface ICategoryIcon {
   id: string
   icon: string | React.ReactElement
@@ -32,94 +16,94 @@ export interface ICategoryIcon {
 export const CATEGORY_ICON: ICategoryIcon[] = [
   {
     id: "adventure",
-    icon: <YourMissionIcon />
+    icon: <Icomoon className="icon-Camp-Fire" />
   },
   {
     id: "action",
-    icon: <YourMissionIcon />
+    icon: <Icomoon className="icon-Camp-Fire" />
   },
   {
     id: "boardgames",
-    icon: <BoardGameIcon />
+    icon: <Icomoon className="icon-Chess" />
   },
   {
     id: "card",
-    icon: <CardGameIcon />
+    icon: <Icomoon className="icon-Heart-Tablet" />
   },
   {
     id: "casino",
-    icon: <CasinoGameIcon />
+    icon: <Icomoon className="icon-Poker-Chip" />
   },
   {
     id: "dice",
-    icon: <DiceIcon />
+    icon: <Icomoon className="icon-Cube-4" />
   },
   {
     id: "educational",
-    icon: <EducationalGameIcon />
+    icon: <Icomoon className="icon-School" />
   },
   {
     id: "family",
-    icon: <FamilyGameIcon />
+    icon: <Icomoon className="icon-Home" />
   },
   {
     id: "music",
-    icon: <MusicGameIcon />
+    icon: <Icomoon className="icon-Double-Note" />
   },
   {
     id: "racing",
-    icon: <RacingGameIcon />
+    icon: <Icomoon className="icon-Motorsports" />
   },
   {
     id: "role-playing",
-    icon: <RolePlayingIcon />
+    icon: <Icomoon className="icon-Film" />
   },
   {
     id: "simulation",
-    icon: <SimulativeGameIcon />
+    icon: <Icomoon className="icon-Plus-in-a-box" />
   },
   {
     id: "strategy",
-    icon: <StrategyGameIcon />
-  },
-  {
-    id: "strategy",
-    icon: <StrategyGameIcon />
+    icon: <Icomoon className="icon-Map" />
   },
   {
     id: "word",
-    icon: <WordGameIcon />
+    icon: <Icomoon className="icon-Letter-Check" />
   },
   {
     id: "trivia",
-    icon: <TraviaGameIcon />
+    icon: <Icomoon className="icon-Screen-Text" />
   },
   {
     id: "puzzle",
-    icon: <PuzzleGameIcon />
+    icon: <Icomoon className="icon-Ticket" />
   },
   {
     id: "casual",
-    icon: <CasualGameIcon />
+    icon: <Icomoon className="icon-Macro" />
   },
   {
     id: "fighting",
-    icon: <FightingGameIcon />
+    icon: <Icomoon className="icon-Axe" />
   },
   {
     id: "others",
-    icon: <JoinStickIcon />
+    icon: <Icomoon className="icon-Joystick" />
   },
   {
     id: "shooting",
-    icon: <ShootingGameIcon />
+    icon: <Icomoon className="icon-Expand-Rotated" />
   },
   {
     id: "sport",
-    icon: <SportGameIcon />
+    icon: <Icomoon className="icon-Basketball" />
   },
   {
     id: "nft",
-    icon: <Diamond stroke="#E1E2E2" />
+    icon: <Icomoon className="icon-Diamond" />
+  },
+  {
+    id: "others",
+    icon: <Icomoon className="icon-Joystick" />
   }
 ]

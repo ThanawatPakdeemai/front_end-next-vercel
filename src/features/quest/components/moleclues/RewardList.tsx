@@ -1,8 +1,13 @@
-import { ImageCustom } from "@components/atoms/image/Image"
-import { IQuestReward } from "@feature/quest/interfaces/IQuestService"
 import { Typography } from "@mui/material"
 import React from "react"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
+import { IQuestReward } from "@feature/quest/interfaces/IQuestService"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   reward: IQuestReward

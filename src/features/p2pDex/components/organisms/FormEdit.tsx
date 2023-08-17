@@ -2,22 +2,42 @@
 import React, { useEffect, useMemo } from "react"
 
 import { useForm } from "react-hook-form"
+import { Trans } from "next-i18next"
+import dynamic from "next/dynamic"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import {
   IMultiData,
   IMultiTrustOrder
 } from "@feature/multichain/interfaces/IMultichain"
 
 import { useToast } from "@feature/toast/containers"
-import { Trans } from "next-i18next"
 import useProfileStore from "@stores/profileStore"
-import Form from "../molecules/Form"
-import LeftContentForm from "../molecules/LeftContentForm"
+
+const Form = dynamic(() => import("../molecules/Form"), {
+  suspense: true,
+  ssr: false
+})
+const LeftContentForm = dynamic(() => import("../molecules/LeftContentForm"), {
+  suspense: true,
+  ssr: false
+})
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   type?: string

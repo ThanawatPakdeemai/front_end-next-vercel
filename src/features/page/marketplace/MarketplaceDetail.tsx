@@ -1,6 +1,3 @@
-import CardWriterDetails from "@components/molecules/Inventory/CardWriterDetails"
-import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
-import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import CONFIGS from "@configs/index"
 import React, { useMemo } from "react"
 import dynamic from "next/dynamic"
@@ -8,13 +5,44 @@ import {
   TNFTType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
-import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
 import { Typography } from "@mui/material"
-import Breadcrumb from "@components/molecules/Breadcrumb"
 import useMarketCategTypes from "@stores/marketCategTypes"
 
+const RightDetailsMarketplace = dynamic(
+  () =>
+    import("@feature/marketplace/components/organisms/RightDetailsMarketplace"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardContentDetails = dynamic(
+  () => import("@feature/marketplace/components/organisms/CardContentDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardWriterDetails = dynamic(
+  () => import("@components/molecules/Inventory/CardWriterDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardDetailSkeleton = dynamic(
+  () => import("@feature/marketplace/components/molecules/CardDetailSkeleton"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Breadcrumb = dynamic(() => import("@components/molecules/Breadcrumb"), {
+  suspense: true,
+  ssr: false
+})
 const MarketplaceButton = dynamic(
   () => import("@components/molecules/MarketplaceButton"),
   {

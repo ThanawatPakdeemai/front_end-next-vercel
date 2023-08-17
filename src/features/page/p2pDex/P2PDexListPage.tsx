@@ -1,11 +1,19 @@
 import AddIcon from "@mui/icons-material/Add"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import PageHeader from "@feature/table/components/molecules/PageHeader"
 import React from "react"
 import { useRouter } from "next/router"
-import P2PDexListContent from "@feature/p2pDex/components/templates/P2PDexListContent"
 import ReorderIcon from "@mui/icons-material/Reorder"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+
+const P2PDexListContent = dynamic(
+  () => import("@feature/p2pDex/components/templates/P2PDexListContent")
+)
+const PageHeader = dynamic(
+  () => import("@feature/table/components/molecules/PageHeader")
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon")
+)
 
 const P2PDexListPage = () => {
   const router = useRouter()

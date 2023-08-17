@@ -1,18 +1,25 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { Layout } from "@components/templates"
 import { useRouter } from "next/router"
-import BlogPageDetails from "@feature/page/blogs/BlogDetails"
+import dynamic from "next/dynamic"
+
+const BlogPageDetails = dynamic(
+  () => import("@feature/page/blogs/BlogDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Layout = dynamic(() => import("@components/templates/Layout"), {
+  suspense: true,
+  ssr: false
+})
 
 export default function BlogDetails() {
   const router = useRouter()
   const { id } = router.query
 
-  return (
-    <>
-      <BlogPageDetails _blogId={id as string} />
-    </>
-  )
+  return <BlogPageDetails _blogId={id as string} />
 }
 
 BlogDetails.getLayout = function getLayout(page: ReactElement) {

@@ -1,7 +1,11 @@
-import PanelHeader, {
-  IPanelHeaderProps
-} from "@components/molecules/PanelHeader"
 import React from "react"
+import dynamic from "next/dynamic"
+import { IPanelHeaderProps } from "@components/molecules/PanelHeader"
+
+const PanelHeader = dynamic(() => import("@components/molecules/PanelHeader"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IOverviewProps extends IPanelHeaderProps {
   children: React.ReactNode

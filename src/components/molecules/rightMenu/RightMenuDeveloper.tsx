@@ -1,15 +1,38 @@
 import React, { useEffect, useState } from "react"
+import jwt_decode from "jwt-decode"
+import { Box } from "@mui/material"
+import EastRoundedIcon from "@mui/icons-material/EastRounded"
+import dynamic from "next/dynamic"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
-import jwt_decode from "jwt-decode"
-import { Box } from "@mui/material"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import EastRoundedIcon from "@mui/icons-material/EastRounded"
-import RightMenuNotLogInTemplate from "@components/templates/contents/RightMenuNotLogInTemplate"
-import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
-import RightMenuLogIn from "./RightMenuLogIn"
+
+const RightMenuNotLogInTemplate = dynamic(
+  () => import("@components/templates/contents/RightMenuNotLogInTemplate"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const CreateProfile = dynamic(
+  () => import("@feature/profile/components/createProfile/CreateProfile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const RightMenuLogIn = dynamic(() => import("./RightMenuLogIn"), {
+  suspense: true,
+  ssr: true
+})
 
 const RightMenuDeveloper = () => {
   const { onReset, profile } = useProfileStore()

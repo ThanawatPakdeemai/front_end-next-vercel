@@ -43,7 +43,7 @@ const CarouselSlide = ({ slideGames, isLoading }: ICarouselSlideProps) => {
     )
   }
 
-  return (
+  return slideGames.length ? (
     <Slider {...settings}>
       {slideGames &&
         slideGames.slice(0, 5).map((item, index) => (
@@ -65,6 +65,8 @@ const CarouselSlide = ({ slideGames, isLoading }: ICarouselSlideProps) => {
           </Box>
         ))}
     </Slider>
+  ) : (
+    <></>
   )
 }
 

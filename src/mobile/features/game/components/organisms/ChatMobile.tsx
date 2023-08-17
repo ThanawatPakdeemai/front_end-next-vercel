@@ -1,13 +1,41 @@
-import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
 import { IconButton } from "@mui/material"
 import ChatIcon from "@mui/icons-material/Chat"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import MessageContent from "@feature/chat/components/molecules/MessageContent"
-import MessageFooter from "@feature/chat/components/molecules/MessageFooter"
-import MessageIcon from "@components/icons/MessageIcon"
 import { useTranslation } from "next-i18next"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import PanelHeader from "@feature/game/components/atoms/PanelHeader"
+import dynamic from "next/dynamic"
+import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PanelHeader = dynamic(
+  () => import("@feature/game/components/atoms/PanelHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MessageContent = dynamic(
+  () => import("@feature/chat/components/molecules/MessageContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MessageFooter = dynamic(
+  () => import("@feature/chat/components/molecules/MessageFooter"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   modalChat: boolean
@@ -34,9 +62,9 @@ const ChatMobile = ({ modalChat, setModalChat }: IProps) => {
               icon={
                 <>
                   <IconButton onClick={() => setModalChat(false)}>
-                    <ArrowBackIcon />
+                    <Icomoon className="icon-Full-Arrow-Left" />
                   </IconButton>
-                  <MessageIcon />
+                  <Icomoon className="icon-Two-Messages" />
                 </>
               }
             />

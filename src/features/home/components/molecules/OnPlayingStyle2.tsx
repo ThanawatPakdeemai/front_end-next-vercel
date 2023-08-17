@@ -1,17 +1,39 @@
-import React, { useRef } from "react"
-import useGetRoomAvailable from "@feature/home/containers/hook/useGetRoomAvailable"
-import SkeletonRoombarList from "@components/atoms/skeleton/SkeletonRoombarList"
-import { Box } from "@mui/material"
+import React, { useMemo, useRef } from "react"
 import { v4 as uuid } from "uuid"
-import GameCarouselHeader, {
+import Slider, { Settings } from "react-slick"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
+import {
   IHeaderSlide,
   ISlideList
 } from "@components/molecules/gameSlide/GameCarouselHeader"
-import ControllerIcon from "@components/icons/ControllerIcon"
-import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
-import Slider, { Settings } from "react-slick"
-import { useTranslation } from "react-i18next"
-import OnPlayingBody from "./OnPlayingBody"
+import useGetRoomAvailable from "@feature/home/containers/hook/useGetRoomAvailable"
+import { TGameType } from "@feature/game/interfaces/IGameService"
+
+const SkeletonRoombarList = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonRoombarList"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const OnPlayingBody = dynamic(() => import("./OnPlayingBody"), {
+  suspense: true,
+  ssr: false
+})
+const GameCarouselHeader = dynamic(
+  () => import("@components/molecules/gameSlide/GameCarouselHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IOnPlayingStyle2 {
   isSlider?: boolean
@@ -69,8 +91,11 @@ const OnPlayingStyle2 = ({
     ]
   }
 
-  const renderContent = (_game: IRoomAvaliableData[]) => {
-    if (isSlider) {
+  const renderContent = (
+    _game: IRoomAvaliableData[],
+    _chanelType: TGameType
+  ) => {
+    if (isSlider && _game.length) {
       return (
         <Slider
           ref={sliderRef}
@@ -80,6 +105,7 @@ const OnPlayingStyle2 = ({
             <OnPlayingBody
               key={uuid()}
               gameItem={itemRoom}
+              chanelType={_chanelType}
             />
           ))}
         </Slider>
@@ -91,16 +117,43 @@ const OnPlayingStyle2 = ({
           <OnPlayingBody
             key={uuid()}
             gameItem={itemRoom}
+            chanelType={_chanelType}
           />
         ))}
       </div>
     )
   }
 
+  const sort_item_count = (array) => {
+    array.sort((a, b) => b.item_list.length - a.item_list.length)
+    return array
+  }
+  // limit 12 sort item
+  const mapDataGamesAvailbleItem = useMemo(() => {
+    if (gamesAvailble) {
+      return gamesAvailble.filter((_game) => {
+        if (_game.data.length > 0) {
+          const _sort = sort_item_count(_game.data)
+          _sort.length = 12
+
+          return {
+            ..._game,
+            data: _sort
+          }
+        }
+        return null
+      })
+    }
+    return gamesAvailble
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gamesAvailble, isLoading])
+
   return (
     <div className="on-playing__content">
-      {gamesAvailble && gamesAvailble.length > 0 && !isLoading ? (
-        gamesAvailble.map((game) => (
+      {mapDataGamesAvailbleItem &&
+      mapDataGamesAvailbleItem.length > 0 &&
+      !isLoading ? (
+        mapDataGamesAvailbleItem.map((game) => (
           <Box
             key={uuid()}
             id={`game-${game.chanel_type}`}
@@ -155,7 +208,7 @@ const OnPlayingStyle2 = ({
                     ] as ISlideList[],
                     theme: "success",
                     stickerRotate: 15,
-                    icon: <ControllerIcon />
+                    icon: <Icomoon className="icon-Joystick" />
                   } as IHeaderSlide
                 }
                 onNext={onSlideNext}
@@ -163,13 +216,12 @@ const OnPlayingStyle2 = ({
                 hideNextPrev
                 hideViewAll
                 showTitle={showTitle}
-                // curType={getURL(game.chanel_type)}
-                // setCurType={setCurType}
-                // onPlaying={false}
               />
             )}
 
-            {game.data && game.data.length > 0 && renderContent(game.data)}
+            {game.data &&
+              game.data.length > 0 &&
+              renderContent(game.data, game.chanel_type)}
           </Box>
         ))
       ) : (

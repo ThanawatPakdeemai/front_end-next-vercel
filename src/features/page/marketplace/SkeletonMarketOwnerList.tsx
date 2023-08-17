@@ -1,10 +1,19 @@
-import NoData from "@components/molecules/NoData"
-import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
-import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
-import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
-import SkeletonItemMobile from "./mobilescreen/SkeletonItemMobile"
+import dynamic from "next/dynamic"
+import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
+
+const SkeletonItem = dynamic(
+  () => import("@feature/marketplace/components/molecules/SkeletonItem")
+)
+const SkeletonItemMobile = dynamic(
+  () => import("./mobilescreen/SkeletonItemMobile")
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProps {
   invenList: IInventoryItemList[]

@@ -1,10 +1,18 @@
-import Dropdown from "@components/atoms/DropdownCustom"
-import SearchIcon from "@components/icons/SearchIcon"
 import { Grid, TextField } from "@mui/material"
-import useFilterStore from "@stores/blogFilter"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useFilterStore from "@stores/blogFilter"
+
+const Dropdown = dynamic(() => import("@components/atoms/DropdownCustom"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const HeadPartnerGames = ({ children }: { children: React.ReactNode }) => {
   const { setSearch: setSearchBlog } = useFilterStore()
@@ -75,7 +83,7 @@ const HeadPartnerGames = ({ children }: { children: React.ReactNode }) => {
             }}
             placeholder={`${t("search_games")}...`}
             InputProps={{
-              startAdornment: <SearchIcon className="mr-4" />
+              startAdornment: <Icomoon className="icon-Search mr-4" />
             }}
             className="w-[300px] md:!w-[265px] lg:!w-[164px] xl:!w-[218px]"
           />

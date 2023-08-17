@@ -1,13 +1,9 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { iconmotion } from "@components/organisms/Footer"
-import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
-import { Box, SxProps } from "@mui/material"
+import { Box, SxProps, Theme } from "@mui/material"
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import Slider, { Settings } from "react-slick"
-import EastIcon from "@mui/icons-material/East"
-import WestIcon from "@mui/icons-material/West"
+import Slider, { CustomArrowProps, Settings } from "react-slick"
+import dynamic from "next/dynamic"
+import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import {
-  SlickArrowCSS,
   SlickAvatarThumbnail,
   SlickDefaultThumbnail,
   SlickMainSlideCSS,
@@ -15,8 +11,18 @@ import {
   StyleArrowAvatar,
   StyleArrowDefault
 } from "@feature/slider/constants/HorizontalThumbSlide"
-import VerticalThumbCardSlide from "../organisms/VerticalThumbCardSlide"
-import VerticalThumbSmallCardSlide from "../organisms/VerticalThumbSmallCardSlide"
+import { Icomoon } from "@components/atoms/icomoon"
+
+const VerticalThumbCardSlide = dynamic(
+  () =>
+    import("@src/features/slider/components/organisms/VerticalThumbCardSlide")
+)
+const VerticalThumbSmallCardSlide = dynamic(
+  () =>
+    import(
+      "src/features/slider/components/organisms/VerticalThumbSmallCardSlide"
+    )
+)
 
 export type SliderType = "avatar" | "default"
 
@@ -28,6 +34,34 @@ interface IHorizontalThumbSlideProps {
   currentSelected?: number
   slidesToScrollCustom?: number
 }
+
+const SlickArrowLeft = ({
+  sx,
+  ...props
+}: CustomArrowProps & { sx?: SxProps<Theme> }) => (
+  <Box
+    component="button"
+    sx={sx}
+    onClick={props.onClick}
+    className="absolute left-[-70px] top-[10px] h-[40px] w-[40px] rounded-[8px] border-[1px] border-[#232329] bg-[#18181C]"
+  >
+    <Icomoon className="icon-app icon-Arrow---Left" />
+  </Box>
+)
+
+const SlickArrowRight = ({
+  sx,
+  ...props
+}: CustomArrowProps & { sx?: SxProps<Theme> }) => (
+  <Box
+    component="button"
+    sx={sx}
+    onClick={props.onClick}
+    className="absolute right-[-70px] top-[10px] h-[40px] w-[40px] rounded-[8px] border-[1px] border-[#232329] bg-[#18181C]"
+  >
+    <Icomoon className="icon-app icon-Arrow---Right" />
+  </Box>
+)
 
 const HorizontalThumbSlide = ({
   items,
@@ -132,42 +166,16 @@ const HorizontalThumbSlide = ({
     dots: false,
     arrows: true,
     prevArrow: (
-      <Box
-        component="div"
+      <SlickArrowLeft
         sx={getStyleArrow()}
         onClick={() => onSlidePrev()}
-      >
-        <ButtonIcon
-          variants={iconmotion}
-          whileHover="hover"
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 4
-          }}
-          icon={<WestIcon />}
-          className={SlickArrowCSS.toString()}
-        />
-      </Box>
+      />
     ),
     nextArrow: (
-      <Box
-        component="div"
+      <SlickArrowRight
         sx={getStyleArrow()}
         onClick={() => onSlideNext()}
-      >
-        <ButtonIcon
-          variants={iconmotion}
-          whileHover="hover"
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 4
-          }}
-          icon={<EastIcon />}
-          className={SlickArrowCSS.toString()}
-        />
-      </Box>
+      />
     ),
     ...settingSingle
   }
@@ -176,7 +184,8 @@ const HorizontalThumbSlide = ({
     infinite: true,
     speed: 1000,
     slidesToShow: sliderType === "avatar" ? 4 : 8,
-    slidesToScroll: slidesToScrollCustom || 4,
+    slidesToScroll: sliderType === "avatar" ? 1 : slidesToScrollCustom || 4,
+    // slidesToScroll: 1,
     arrows: false,
     vertical: false,
     focusOnSelect: true,
@@ -195,41 +204,45 @@ const HorizontalThumbSlide = ({
         sx={getStyleSingleSlide()}
         className={getStyleSingleSlideClasses()}
       >
-        <Slider
-          asNavFor={nav2 as Slider}
-          ref={sliderRef}
-          {...settings}
-          className="banner"
-        >
-          {items &&
-            items.map((item, index) => (
-              <VerticalThumbCardSlide
-                item={item}
-                key={item.id}
-                index={index}
-              />
-            ))}
-        </Slider>
+        {items.length && (
+          <Slider
+            asNavFor={nav2 as Slider}
+            ref={sliderRef}
+            {...settings}
+            className="banner"
+          >
+            {items &&
+              items.map((item, index) => (
+                <VerticalThumbCardSlide
+                  item={item}
+                  key={item.id}
+                  index={index}
+                />
+              ))}
+          </Slider>
+        )}
       </Box>
       <Box
         component="div"
         sx={getStyleMultipleSlide()}
         className="slick-thumbnail__wrapper relative mt-4 flex w-full justify-center"
       >
-        <Slider
-          asNavFor={nav1 as Slider}
-          ref={sliderRef1}
-          {...settingSlideThumbnail}
-          className="h-[84px] w-full"
-        >
-          {items &&
-            items.map((item) => (
-              <VerticalThumbSmallCardSlide
-                key={item.id}
-                item={item}
-              />
-            ))}
-        </Slider>
+        {items.length && (
+          <Slider
+            asNavFor={nav1 as Slider}
+            ref={sliderRef1}
+            {...settingSlideThumbnail}
+            className="h-[84px] w-full"
+          >
+            {items &&
+              items.map((item) => (
+                <VerticalThumbSmallCardSlide
+                  key={item.id}
+                  item={item}
+                />
+              ))}
+          </Slider>
+        )}
       </Box>
     </div>
   )

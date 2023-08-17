@@ -1,15 +1,25 @@
-import LogoIcon from "@components/icons/LogoIcon"
-import PinnedMapIcon from "@components/icons/PinnedMapIcon"
-import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
-import Helper from "@utils/helper"
 import React, { useEffect, useMemo, useState } from "react"
+import dynamic from "next/dynamic"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
+import Helper from "@utils/helper"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
-import AmountItem from "@components/molecules/AmountItem"
-import FormattedInputs from "./CurrencyTextField"
+
+const AmountItem = dynamic(() => import("@components/molecules/AmountItem"), {
+  suspense: true,
+  ssr: false
+})
+const FormattedInputs = dynamic(() => import("./CurrencyTextField"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   type: TNFTType
@@ -144,7 +154,7 @@ const TextfieldDetailContent = ({
                 position="start"
                 className="ml-[15px]"
               >
-                <PinnedMapIcon />
+                <Icomoon className="icon-Pin" />
               </InputAdornment>
             )
           }}
@@ -170,7 +180,7 @@ const TextfieldDetailContent = ({
                 position="start"
                 className="ml-[15px] mr-3"
               >
-                <LogoIcon fill="#70727B" />
+                <Icomoon className="icon-Naka text-[#70727B]" />
               </InputAdornment>
             )
           }}

@@ -1,8 +1,16 @@
 import React from "react"
 import { Box, Stack } from "@mui/material"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FormLogin from "@feature/authentication/components/FormLogin"
+import dynamic from "next/dynamic"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom")
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader")
+)
+const FormLogin = dynamic(
+  () => import("@feature/authentication/components/FormLogin")
+)
 
 const RightMenuNotLogInTemplate = ({
   children,

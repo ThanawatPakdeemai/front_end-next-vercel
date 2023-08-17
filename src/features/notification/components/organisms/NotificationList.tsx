@@ -1,13 +1,33 @@
 import React, { memo } from "react"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
-import { PaginationNaka } from "@components/atoms/pagination"
-import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import useGlobal from "@hooks/useGlobal"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import NoData from "@components/molecules/NoData"
-import NotificationTable from "./NotificationTable"
-import Header from "../molecules/NotificationHeader"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const NotificationTable = dynamic(() => import("./NotificationTable"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("../molecules/NotificationHeader"), {
+  suspense: true,
+  ssr: false
+})
 
 const NotificationList = () => {
   const { hydrated } = useGlobal()

@@ -1,19 +1,50 @@
+import React, { useState } from "react"
 import { CardContent, SxProps, Theme } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import Metamask from "@components/atoms/metamask"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "react-i18next"
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useWeb3Provider } from "@providers/index"
 import useGlobal from "@hooks/useGlobal"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
-import INaka from "@components/icons/Naka"
-import IBusd from "@components/icons/Busd"
 import useChainSupportStore from "@stores/chainSupport"
-import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
-import TokenList from "../TokenList"
-import TokenListItem from "../TokenListItem"
+import dynamic from "next/dynamic"
+
+const AccountBalanceWalletIcon = dynamic(
+  () => import("@mui/icons-material/AccountBalanceWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalConnectWallet = dynamic(
+  () => import("@components/atoms/ModalConnectWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TokenList = dynamic(() => import("@components/molecules/TokenList"), {
+  suspense: true,
+  ssr: false
+})
+const TokenListItem = dynamic(
+  () => import("@components/molecules/TokenListItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   token?: string | undefined
@@ -31,13 +62,13 @@ const Balance = ({
   widthBalance = "w-[40px]"
 }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { address, hasMetamask, isConnected, disabledConnectButton } =
-    useWeb3Provider()
+  const { address, isConnected } = useWeb3Provider()
   const { t } = useTranslation()
   const { chainSupport, currentTokenSelected, currentChainSelected } =
     useChainSupportStore()
   const { hydrated } = useGlobal()
-  const { handleConnectWallet } = useWalletContoller()
+  // const { handleConnectWallet } = useWalletContoller()
+  const [open, setOpen] = useState<boolean>(false)
 
   // const handleClickConnectWallet = async () => {
   //   if (setDisabledConnectButton && handleConnectWithMetamask) {
@@ -62,9 +93,9 @@ const Balance = ({
           <TokenListItem
             icon={
               (selectedCoin as ITokenContract).symbol === "NAKA" ? (
-                <INaka />
+                <Icomoon className="icon-Naka text-error-main" />
               ) : (
-                <IBusd />
+                <Icomoon className="icon-busd" />
               )
             }
             text={(selectedCoin as ITokenContract).balanceVault.text}
@@ -95,7 +126,7 @@ const Balance = ({
 
   return hydrated ? (
     <div>
-      {isConnected && address && profile && currentChainSelected ? (
+      {isConnected && address && profile ? (
         <CardContent
           className={`!my-2 min-w-[200px] items-center justify-center !p-0 ${className}`}
         >
@@ -103,19 +134,23 @@ const Balance = ({
         </CardContent>
       ) : (
         <div className="my-4">
-          {profile && (
+          <>
             <ButtonLink
-              onClick={handleConnectWallet}
+              onClick={() => setOpen(true)}
+              href="/"
               text={t("Connect Wallet")}
               icon={<AccountBalanceWalletIcon />}
-              size="medium"
               color="secondary"
               variant="contained"
-              className="min-h-[57px] w-full"
-              disabled={disabledConnectButton}
+              // size="small"
+              size="medium"
+              className="m-auto h-[54px] rounded-xl"
             />
-          )}
-          {!hasMetamask && profile && <Metamask />}
+            <ModalConnectWallet
+              open={open}
+              setOpen={setOpen}
+            />
+          </>
         </div>
       )}
     </div>

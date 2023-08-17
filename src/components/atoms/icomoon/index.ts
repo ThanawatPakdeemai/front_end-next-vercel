@@ -1,0 +1,6 @@
+export { default as Icomoon } from "./Icomoon"
+export { default as IcomoonFlag } from "./IcomoonFlag"
+export { default as IcomoonChain } from "./IcomoonChain"
+export { default as IcomoonSticker } from "./IcomoonSticker"
+export { default as IcomoonExchain } from "./IcomoonExchain"
+export { default as IcomoonWallet } from "./IcomoonWallet"

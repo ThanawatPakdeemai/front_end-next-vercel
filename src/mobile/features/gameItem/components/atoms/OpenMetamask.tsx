@@ -1,7 +1,15 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import CONFIGS from "@configs/index"
 import { Box } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+import CONFIGS from "@configs/index"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IOpenMetamask {
   url: string

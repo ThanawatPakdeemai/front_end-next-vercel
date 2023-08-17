@@ -1,5 +1,10 @@
-import GaugeCustom from "@components/atoms/GaugeCustom"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const GaugeCustom = dynamic(() => import("@components/atoms/GaugeCustom"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   value: number

@@ -1,10 +1,17 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef } from "react"
-import CardTestimonialItem from "@components/molecules/CardTestimonialItem"
 import { Box, SxProps, Theme } from "@mui/material"
 import { v4 as uuidv4 } from "uuid"
 import Slider, { Settings } from "react-slick"
-import GameCarouselHeader from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IList } from "@feature/become-developer/interfaces/IWebBecome"
+import dynamic from "next/dynamic"
+
+const CardTestimonialItem = dynamic(
+  () => import("@components/molecules/CardTestimonialItem")
+)
+const GameCarouselHeader = dynamic(
+  () => import("@components/molecules/gameSlide/GameCarouselHeader")
+)
 
 interface IButtonData {
   text: string
@@ -66,7 +73,6 @@ const CardTestimonialItems = ({
       <GameCarouselHeader
         onNext={onSlideNext}
         onPrev={onSlidePrev}
-        buttonData={buttonData}
       />
       <Slider
         ref={sliderRef}

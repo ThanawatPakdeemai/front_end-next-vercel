@@ -1,7 +1,12 @@
 import styled from "@emotion/styled"
 import { TableCell, TableRow } from "@mui/material"
 import React, { memo } from "react"
-import NoData from "@components/molecules/NoData"
+import dynamic from "next/dynamic"
+
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProps {
   className?: string

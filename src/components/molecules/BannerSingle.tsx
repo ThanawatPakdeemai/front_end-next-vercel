@@ -1,6 +1,11 @@
 import React from "react"
-import { Image } from "@components/atoms/image"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   src: string

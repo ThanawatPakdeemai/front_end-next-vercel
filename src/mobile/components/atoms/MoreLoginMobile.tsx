@@ -1,9 +1,12 @@
 import React from "react"
 import { Box, Button } from "@mui/material"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
+import dynamic from "next/dynamic"
 import useFormRegisterController from "@feature/authentication/containers/hooks/useFormRegisterController"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const MoreLoginMobile = () => {
   const { googleRegister } = useFormRegisterController()
@@ -15,26 +18,25 @@ const MoreLoginMobile = () => {
     >
       <Button
         variant="outlined"
+        aria-label="Facebook"
         className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
       >
-        <FacebookColorIcon />
+        <Icomoon className="icon-Facebook" />
       </Button>
       <Button
         variant="outlined"
+        aria-label="Google"
         className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
         onClick={() => googleRegister("")}
       >
-        <GoogleColorIcon />
+        <Icomoon className="icon-Google" />
       </Button>
       <Button
         variant="outlined"
+        aria-label="Twitter"
         className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
       >
-        <TwitterIcon
-          fill="#1D9BF0"
-          width={32}
-          height={32}
-        />
+        <Icomoon className="icon-twitter text-[#1D9BF0]" />
       </Button>
     </Box>
   )

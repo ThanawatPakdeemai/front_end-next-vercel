@@ -1,7 +1,12 @@
-import { ImageCustom } from "@components/atoms/image/Image"
-import { ITestimonialProps } from "@constants/testimonial"
-import { Chip } from "@mui/material"
 import React from "react"
+import { Chip } from "@mui/material"
+import dynamic from "next/dynamic"
+import { ITestimonialProps } from "@constants/testimonial"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface ICardTestimonialItemProps extends ITestimonialProps {
   className?: string

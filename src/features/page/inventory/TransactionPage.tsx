@@ -1,13 +1,7 @@
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import { PaginationNaka } from "@components/atoms/pagination"
-import PageHeader from "@feature/table/components/molecules/PageHeader"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
-import useTransactionController from "@feature/transaction/containers/hooks/useTransactionController"
-import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
-import useGlobal from "@hooks/useGlobal"
+import { v4 as uuid } from "uuid"
+import dayjs from "dayjs"
+import React, { useEffect, useState } from "react"
+import Link from "next/link"
 import {
   Box,
   Chip,
@@ -16,16 +10,72 @@ import {
   TableBody,
   TableContainer
 } from "@mui/material"
-import { v4 as uuid } from "uuid"
-import dayjs from "dayjs"
-import React, { useEffect, useState } from "react"
-import DropdownEvent from "@feature/transaction/components/molecules/DropdownEvent"
+import dynamic from "next/dynamic"
+import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
+import useTransactionController from "@feature/transaction/containers/hooks/useTransactionController"
+import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
+import useGlobal from "@hooks/useGlobal"
 import CONFIGS from "@configs/index"
 import { IProfile } from "@src/types/profile"
 import { gameItemType, landType, nakaType } from "@constants/historyTransaction"
-import Link from "next/link"
-import TooltipsCustom from "@components/atoms/TooltipsCustom"
-import ReloadIcon from "../../../components/icons/ReloadIcon"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const TooltipsCustom = dynamic(
+  () => import("@components/atoms/TooltipsCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PageHeader = dynamic(
+  () => import("@feature/table/components/molecules/PageHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownEvent = dynamic(
+  () => import("@feature/transaction/components/molecules/DropdownEvent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   profile?: IProfile
@@ -170,7 +220,7 @@ const TransactionPage = ({ profile }: IProp) => {
               >
                 {isLoading && (
                   <div className="absolute z-[2] grid h-full w-full content-center justify-items-center bg-neutral-900 opacity-50">
-                    <ReloadIcon className="animate-spin" />
+                    <Icomoon className="icon-Refresh-01 animate-spin" />
                   </div>
                 )}
                 {txHistory && txHistory.length > 0 ? (

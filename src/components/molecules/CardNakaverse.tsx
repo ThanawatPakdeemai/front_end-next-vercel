@@ -1,11 +1,25 @@
 /* eslint-disable prettier/prettier */
 import React from "react"
-import { Image } from "@components/atoms/image"
-import { IMAGES } from "@constants/images"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import { Card, CardContent, styled } from "@mui/material"
-import IOpenNew from "@components/icons/OpenNew"
+import { Card, CardContent } from "@mui/material"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardNakaverse {
   title?: string
@@ -13,18 +27,18 @@ interface ICardNakaverse {
   href?: string
   btnText?: string
 }
-
-const KeyFramesRotate = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(359deg)"
-    },
-    to: {
-      transform: "rotate(0deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
-})
+// Remove this because CPU usage is too high
+// const KeyFramesRotate = styled("div")({
+//   "@keyframes rotation": {
+//     from: {
+//       transform: "rotate(359deg)"
+//     },
+//     to: {
+//       transform: "rotate(0deg)"
+//     }
+//   },
+//   animation: "rotation 10s infinite linear"
+// })
 
 const CardNakaverse = ({
   title = "NAKAVERSE",
@@ -58,7 +72,7 @@ const CardNakaverse = ({
             // eslint-disable-next-line no-return-assign
             onClick={() => (window.location.href = href)}
             text={`${t(btnText)}`}
-            icon={<IOpenNew />}
+            icon={<Icomoon className="icon-Send-to" />}
             size="medium"
             color="secondary"
             variant="contained"
@@ -77,15 +91,14 @@ const CardNakaverse = ({
             />
           </div>
           <div className="absolute right-[12%] top-[15%] w-[171px] max-[480px]:top-[20%] max-[480px]:w-[70%]">
-            <KeyFramesRotate>
-              <Image
-                src={IMAGES.worldNakaverse.src}
-                alt={IMAGES.worldNakaverse.alt}
-                width={IMAGES.worldNakaverse.width}
-                height={IMAGES.worldNakaverse.height}
-                className="relative h-full w-full"
-              />
-            </KeyFramesRotate>
+            <Image
+              src={IMAGES.worldNakaverse.src}
+              alt={IMAGES.worldNakaverse.alt}
+              width={IMAGES.worldNakaverse.width}
+              height={IMAGES.worldNakaverse.height}
+              className="relative h-full w-full"
+            />
+            {/* <KeyFramesRotate></KeyFramesRotate> */}
           </div>
           <div className="absolute right-[10%] top-[13%] w-[195px] max-[480px]:right-[6%] max-[480px]:top-[17%] max-[480px]:w-[80%]">
             <Image

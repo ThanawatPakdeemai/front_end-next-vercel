@@ -73,4 +73,3 @@ To run build using .env.production, run the following command
 ## Nakamoto Documentation
 
 📑 [More Details](https://r3ceseksb9.larksuite.com/docs/docus62P4yf74dgK8tH4l7FJsBg)
-# front_end-next-vercel

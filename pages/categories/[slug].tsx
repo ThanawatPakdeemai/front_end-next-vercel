@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic"
-import { PaginationNaka } from "@components/atoms/pagination"
 import { F2PHeaderMenu } from "@constants/gameSlide"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
@@ -7,9 +6,22 @@ import { v4 as uuid } from "uuid"
 import useGlobal from "@hooks/useGlobal"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { Box } from "@mui/material"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import NoData from "@components/molecules/NoData"
 
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
 const SkeletonCard = dynamic(
   () => import("@components/atoms/skeleton/SkeletonCard"),
   {
@@ -31,18 +43,6 @@ const GameCard = dynamic(
     ssr: false
   }
 )
-
-// const HeadGames = dynamic(() => import("@components/molecules/HeadGames"), {
-//   suspense: true,
-//   ssr: false
-// })
-// const GamePageLayout = dynamic(
-//   () => import("@components/templates/GamePageLayout"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
 
 export default function CatogoriesPageDetails() {
   const {

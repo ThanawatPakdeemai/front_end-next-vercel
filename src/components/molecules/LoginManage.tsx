@@ -1,7 +1,7 @@
+import React, { useEffect } from "react"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import useLoginTypeStore from "@stores/loginTypes"
 import { useSession } from "next-auth/react"
-import React, { useEffect } from "react"
 
 const LoginManage = () => {
   const { getClickLoginTypes: loginTypes } = useLoginTypeStore()

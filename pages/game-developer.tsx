@@ -1,10 +1,21 @@
 import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
-import GameDeveloperTemplate from "@components/templates/GameDeveloperTemplate"
 
 const GameDeveloperPage = dynamic(
-  () => import("@feature/page/GameDeveloperPage")
+  () => import("@feature/page/GameDeveloperPage"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const GameDeveloperTemplate = dynamic(
+  () => import("@components/templates/GameDeveloperTemplate"),
+  {
+    suspense: true,
+    ssr: true
+  }
 )
 
 const GameDeveloper = () => <GameDeveloperPage />

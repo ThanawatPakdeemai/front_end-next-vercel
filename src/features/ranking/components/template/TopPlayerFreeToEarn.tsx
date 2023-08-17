@@ -1,15 +1,31 @@
-import useTopPlayFreeToEarn from "@feature/ranking/containers/hook/useTopPlayFreeToEarn"
-import { IPlayerPlayToEarnRanking } from "@feature/ranking/interfaces/IRanking"
 import { Box } from "@mui/material"
 import React, { useEffect, useState } from "react"
-import CardTitle from "@components/organisms/CardTitle"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
-import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
 import { v4 as uuid } from "uuid"
-import NoData from "@components/molecules/NoData"
-import CardRankFreeToEarn from "@components/organisms/CardRankFreeToEarn"
+import dynamic from "next/dynamic"
+import useTopPlayFreeToEarn from "@feature/ranking/containers/hook/useTopPlayFreeToEarn"
+import { IPlayerPlayToEarnRanking } from "@feature/ranking/interfaces/IRanking"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPlayer, StyledTopPlayerContent } from "./TopPlayer"
+
+const CardTitle = dynamic(() => import("@components/organisms/CardTitle"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonTopPlayer = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonTopPlayer"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const CardRankFreeToEarn = dynamic(
+  () => import("@components/organisms/CardRankFreeToEarn")
+)
 
 interface ITopPlayerFreeToEarn extends IPlayer {
   gameId: string

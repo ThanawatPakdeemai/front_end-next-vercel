@@ -1,6 +1,14 @@
 import React from "react"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
+import dynamic from "next/dynamic"
+
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
 
 const GameDeveloperTemplate = ({
   children

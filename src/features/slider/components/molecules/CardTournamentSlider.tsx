@@ -1,6 +1,11 @@
 import React, { useRef } from "react"
-import { Image } from "@components/atoms/image/index"
 import Slider, { Settings } from "react-slick"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const CardTournamentSlider = () => {
   // const { slideGames, isLoading } = useGetGames()
@@ -49,23 +54,25 @@ const CardTournamentSlider = () => {
     <div className="h-full w-full">
       <div className="flex items-center justify-center">
         <div className="mt-5 w-full md:mt-0 xl:w-[908px]">
-          <Slider
-            ref={sliderRef}
-            {...settings}
-          >
-            {tournamentmock &&
-              tournamentmock.slice(0, 5).map((item) => (
-                <div key={item.id}>
-                  <Image
-                    className="h-[204px] w-[908px] rounded-[20px] object-cover"
-                    src={item.img}
-                    width={908}
-                    height={204}
-                    alt="alt"
-                  />
-                </div>
-              ))}
-          </Slider>
+          {tournamentmock.length && (
+            <Slider
+              ref={sliderRef}
+              {...settings}
+            >
+              {tournamentmock &&
+                tournamentmock.slice(0, 5).map((item) => (
+                  <div key={item.id}>
+                    <Image
+                      className="h-[204px] w-[908px] rounded-[20px] object-cover"
+                      src={item.img}
+                      width={908}
+                      height={204}
+                      alt="alt"
+                    />
+                  </div>
+                ))}
+            </Slider>
+          )}
         </div>
       </div>
     </div>

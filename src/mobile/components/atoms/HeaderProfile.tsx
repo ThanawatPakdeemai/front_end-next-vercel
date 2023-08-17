@@ -1,11 +1,18 @@
-import useProfileStore from "@stores/profileStore"
+import React from "react"
 import dayjs from "dayjs"
-import { Image } from "@components/atoms/image/index"
+import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   title: string
 }
+
 const HeaderProfile = ({ title }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const today = dayjs(new Date()).format("dddd DD MMMM YYYY")

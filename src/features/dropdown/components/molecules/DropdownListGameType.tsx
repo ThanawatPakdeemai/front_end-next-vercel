@@ -1,11 +1,30 @@
 import * as React from "react"
 import { useState } from "react"
-import { Popover, Typography } from "@mui/material"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
+import dynamic from "next/dynamic"
+import { Typography } from "@mui/material"
 import { IDropdownGameType } from "@configs/gameType"
-import SelectDropdownGameType from "@components/atoms/selectDropdown/SelectDropdownGameType"
+import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
+
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Popover = dynamic(() => import("@mui/material/Popover"), {
+  suspense: true,
+  ssr: false
+})
+const SelectDropdownGameType = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdownGameType"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   list: IDropdownGameType[]
@@ -13,19 +32,6 @@ interface IProp {
   icon?: React.ReactNode
   className?: string
   onChangeSelect?: (_item: IDropdownGameType) => void
-}
-
-export const StyledFormLabel = {
-  "&.MuiFormLabel-root, &.MuiTypography-root": {
-    color: "#70727B",
-    fontFamily: "neueMachina",
-    textTransform: "uppercase",
-    position: "relative",
-    display: "block",
-    fontSize: "12px",
-    marginTop: "5px",
-    fontWeight: "bold"
-  }
 }
 
 const DropdownListGameType = ({

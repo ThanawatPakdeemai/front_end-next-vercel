@@ -72,7 +72,7 @@ const FooterMobile = () => {
           <Box
             component="button"
             key={_menu.name}
-            className="flex flex-col items-center justify-center gap-1"
+            className="flex flex-col items-center justify-center gap-1 text-[#9E9E9E]"
             onClick={() => onHandleClick(_menu.id)}
           >
             <i className="flex items-center justify-center">
@@ -80,9 +80,7 @@ const FooterMobile = () => {
                 ? _menu.iconActive
                 : _menu.icon}
             </i>
-            <span className="font-urbanist text-[12px] text-[#9E9E9E]">
-              {_menu.name}
-            </span>
+            <span className="font-urbanist text-[12px]">{_menu.name}</span>
           </Box>
         ))}
       </div>

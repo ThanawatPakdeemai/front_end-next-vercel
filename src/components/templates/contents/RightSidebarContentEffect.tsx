@@ -27,11 +27,11 @@ const RightSidebarContentEffect = ({
     <div
       className={`relative w-full flex-row gap-3 overflow-hidden md:flex ${className?.toString()}`}
     >
-      <div
+      {/* <div
         id="spark-fire"
         className="absolute bottom-0 hidden lg:block"
-      />
-      <div className="right-sidebar-content__wrapper mb-2 min-h-[700px] w-full flex-auto rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-primary-main p-4 sm:mb-0 md:w-4/6">
+      /> */}
+      <div className="right-sidebar-content__wrapper mb-2 min-h-[700px] w-full flex-auto rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-primary-main p-4 sm:mb-0 md:w-4/6">
         {content}
       </div>
 

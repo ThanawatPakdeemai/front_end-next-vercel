@@ -1,8 +1,13 @@
-import React from "react"
-import Image from "next/image"
-import Video from "@components/atoms/Video"
-import { IVideoProps } from "@constants/video"
 import { Box, SxProps, Theme } from "@mui/material"
+import React from "react"
+import dynamic from "next/dynamic"
+import { IVideoProps } from "@constants/video"
+import Image from "next/image"
+
+const Video = dynamic(() => import("@components/atoms/Video"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IHeroSectionProps extends IVideoProps {
   hasVideo?: boolean

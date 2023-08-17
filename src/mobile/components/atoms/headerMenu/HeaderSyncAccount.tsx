@@ -10,6 +10,7 @@ const HeaderSyncAccount = ({ target }: IHeaderSyncAccountProps) => (
     <button
       className="font-bold"
       type="button"
+      aria-label="Settings"
     >
       Settings
     </button>{" "}

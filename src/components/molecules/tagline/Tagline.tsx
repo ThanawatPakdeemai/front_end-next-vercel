@@ -1,5 +1,10 @@
 import React from "react"
-import { InsideTagLine } from "@components/molecules/insideTagLine"
+import dynamic from "next/dynamic"
+
+// Use dynamic import for the component
+const InsideTagLine = dynamic(
+  () => import("@components/molecules/insideTagLine/InsideTagLine")
+)
 
 interface IProp {
   icon: React.ReactNode

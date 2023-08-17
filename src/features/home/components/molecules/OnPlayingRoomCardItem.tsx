@@ -7,8 +7,10 @@ import { useTranslation } from "react-i18next"
 interface IOnPlayingRoomCardItemProps {
   href: string
   itemSize: string
-  roomCount: number
+  roomCount?: number
+  roomNumber?: number
   className?: string
+  amountCurrentPlayer?: number
   sxCustomStyled?: SxProps<Theme>
   onClick?: () => void
 }
@@ -17,8 +19,10 @@ const OnPlayingRoomCardItem = ({
   href,
   itemSize,
   roomCount,
+  roomNumber,
   className = "",
-  sxCustomStyled
+  sxCustomStyled,
+  amountCurrentPlayer
 }: IOnPlayingRoomCardItemProps) => {
   const { t } = useTranslation()
   return (
@@ -37,8 +41,15 @@ const OnPlayingRoomCardItem = ({
           component="div"
           className="flex items-center text-neutral-500"
         >
-          <span>{`${t("room")} : `}</span>
-          <span className="ml-[8px] text-neutral-300">{roomCount}</span>
+          <span>{`${t("room")} ${roomNumber || ""} :`}</span>
+          {roomCount && (
+            <span className="ml-[8px] text-neutral-300">{roomCount}</span>
+          )}
+          {amountCurrentPlayer && (
+            <span className="ml-[8px] text-neutral-300">
+              {`${amountCurrentPlayer}/8`}
+            </span>
+          )}
         </Box>
         <Box
           component="i"

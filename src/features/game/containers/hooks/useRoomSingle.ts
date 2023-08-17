@@ -5,15 +5,13 @@ import { useRouter } from "next/dist/client/router"
 import useGameStore from "@stores/game"
 import {
   IGameCurrentPlayer,
-  IGameRoomDetail
+  IGameRoomDetail,
+  TGameRoomStatus
 } from "@feature/game/interfaces/IGameService"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
-// import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGameGlobal from "@hooks/useGameGlobal"
-import { TRoomStatus } from "@components/molecules/roomList/RoomListBar"
-// import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 
 const useRoomSingle = () => {
@@ -165,7 +163,7 @@ const useRoomSingle = () => {
   /**
    * @description Get room status
    */
-  const getRoomStatus = (_data: IGameRoomDetail): TRoomStatus => {
+  const getRoomStatus = (_data: IGameRoomDetail): TGameRoomStatus => {
     if (!profile) return "unavailable"
 
     const _played = _data.current_player.find(

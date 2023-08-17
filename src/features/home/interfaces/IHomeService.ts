@@ -67,7 +67,7 @@ export interface IRoomAvaliableData {
 }
 
 export interface IRoomAvaliableDataChannel {
-  chanel_type: string
+  chanel_type: TGameType
   data: IRoomAvaliableData[]
 }
 

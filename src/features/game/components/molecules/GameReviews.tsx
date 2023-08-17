@@ -1,22 +1,69 @@
-import useGlobal from "@hooks/useGlobal"
 import { Button, Stack } from "@mui/material"
 import React, { useState, useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { IGetType } from "@feature/game/interfaces/IGameService"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import dynamic from "next/dynamic"
+import { IGetType } from "@feature/game/interfaces/IGameService"
+import useProfileStore from "@stores/profileStore"
+import useGlobal from "@hooks/useGlobal"
 import {
   ReviewProvider,
   useReviewProvider
 } from "@feature/review/containers/providers/ReviewProvider"
-import ButtonLogin from "@components/molecules/rightMenu/ButtonLogin"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FormLogin from "@feature/authentication/components/FormLogin"
-import ReviewSection from "@feature/review/components/templates/ReviewSection"
-import ModalAddReview from "@feature/review/components/molecules/ModalAddReview"
-import useProfileStore from "@stores/profileStore"
-import ChatBoxIcon from "@components/icons/ChatBoxIcon"
-import ReviewCardModal from "@feature/review/components/organisms/ReviewCardModal"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLogin = dynamic(
+  () => import("@components/molecules/rightMenu/ButtonLogin"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FormLogin = dynamic(
+  () => import("@feature/authentication/components/FormLogin"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ReviewSection = dynamic(
+  () => import("@feature/review/components/templates/ReviewSection"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalAddReview = dynamic(
+  () => import("@feature/review/components/molecules/ModalAddReview"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ReviewCardModal = dynamic(
+  () => import("@feature/review/components/organisms/ReviewCardModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IGameReviewProps {
   gameType: IGetType
@@ -25,8 +72,7 @@ interface IGameReviewProps {
 const GameReviewContent = ({ gameId }: { gameId: string }) => {
   const { t } = useTranslation()
   const { stateProfile, hydrated } = useGlobal()
-  const { previewList, reviewInfo, limit, ownerReview, reviewLoading } =
-    useReviewProvider()
+  const { previewList, reviewInfo, limit } = useReviewProvider()
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const { profile } = useProfileStore()
   const [openAdd, setOpenAdd] = useState<boolean>(false)
@@ -51,13 +97,13 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
             average={reviewInfo ? reviewInfo.avarage.toFixed(2) : "0"}
             gameId={gameId}
           >
-            <div className="relative flex h-full w-full flex-col gap-y-2 ">
+            <div className="flex h-full w-full flex-col gap-y-2">
               <div
                 className={`${
                   previewList && limit && previewList.length > limit / 2
                     ? "text-shadow-bottom"
                     : undefined
-                } flex h-fit max-h-[374px] w-full flex-col gap-y-2 overflow-y-auto overflow-x-hidden pb-16`}
+                } flex h-fit max-h-[374px] w-full flex-col gap-y-2 overflow-y-auto pb-12`}
               >
                 {previewList && previewList.length > 0 ? (
                   previewList.map((_item) => (
@@ -77,7 +123,7 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
                   <div className="text-center">{t("no_review")}</div>
                 )}
               </div>
-              <div className="absolute bottom-0 z-10 flex w-full flex-row items-center justify-center overflow-hidden p-4">
+              <div className="absolute bottom-0 z-10 flex w-full flex-row items-center justify-center p-4">
                 {stateProfile ? (
                   <div className="flex w-full flex-row items-center justify-center bg-transparent">
                     <Button
@@ -86,15 +132,14 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
                       color="secondary"
                       className="!h-10 rounded-[20px] text-sm capitalize"
                       onClick={onOpenAddModalChange}
-                      disabled={reviewLoading}
-                      startIcon={<ChatBoxIcon />}
+                      startIcon={<Icomoon className="icon-Message-Text" />}
+                      aria-label="Add Review Icon"
                     >
                       add review
                     </Button>
                     <ModalAddReview
                       gameId={gameId}
-                      reviewId={ownerReview?.id}
-                      method={ownerReview ? "edit" : "add"}
+                      method="add"
                       modalOpen={openAdd}
                       setModalOpen={setOpenAdd}
                     />

@@ -1,7 +1,18 @@
 import React, { ReactElement, memo, useState } from "react"
 import { Box } from "@mui/material"
-import RightMenuNotLogInTemplate from "@components/templates/contents/RightMenuNotLogInTemplate"
-import ButtonLogin from "./ButtonLogin"
+import dynamic from "next/dynamic"
+
+const RightMenuNotLogInTemplate = dynamic(
+  () => import("@components/templates/contents/RightMenuNotLogInTemplate"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ButtonLogin = dynamic(() => import("./ButtonLogin"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProps {
   button?: ReactElement

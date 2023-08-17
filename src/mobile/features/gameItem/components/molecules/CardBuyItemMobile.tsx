@@ -1,21 +1,56 @@
 import React, { useCallback } from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import { useRouter } from "next/router"
 import { useTranslation } from "next-i18next"
-import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
+import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGlobal from "@hooks/useGlobal"
-import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
-import { ImageCustom } from "@components/atoms/image/Image"
-import DollarSolidIcon from "@components/icons/DollarSolidIcon"
-import { Box } from "@mui/material"
 import CONFIGS from "@configs/index"
 import { useCreateWeb3Provider } from "@hooks/useWeb3Provider"
-import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import useProfileStore from "@stores/profileStore"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import OpenMetamask from "../atoms/OpenMetamask"
+
+const DropdownListItem = dynamic(
+  () => import("@feature/gameItem/atoms/DropdownListItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const OpenMetamask = dynamic(() => import("../atoms/OpenMetamask"), {
+  suspense: true,
+  ssr: false
+})
+const RightMenuBuyItem = dynamic(
+  () => import("@feature/gameItem/components/molecules/RightMenuBuyItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameItemSingleCard = dynamic(
+  () => import("@components/atoms/GameItemSingleCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardBuyItemMobileProp {
   gameObject: IGame
@@ -154,7 +189,7 @@ export default function CardBuyItemMobile({
                 <span>=</span>
                 <span className="total-price">{totalPrice}</span>
               </p>
-              <DollarSolidIcon />
+              <Icomoon className="icon-Dollar" />
             </div>
           </div>
         </div>

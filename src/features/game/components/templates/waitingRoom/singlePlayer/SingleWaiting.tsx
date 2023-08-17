@@ -1,15 +1,29 @@
-import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
-import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
-import OverviewContent from "@components/organisms/OverviewContent"
-import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
-import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
-import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
-import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
-import useGlobal from "@hooks/useGlobal"
-import { Box } from "@mui/material"
-import useGameStore from "@stores/game"
 import React from "react"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
+import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
+import useGlobal from "@hooks/useGlobal"
+import useGameStore from "@stores/game"
+
+const TopPlayerFreeToEarn = dynamic(
+  () => import("@feature/ranking/components/template/TopPlayerFreeToEarn")
+)
+const CardBuyItem = dynamic(
+  () => import("@feature/gameItem/components/molecules/CardBuyItem")
+)
+const SkeletonCardPlayers = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCardPlayers")
+)
+const HeaderWaitingRoom = dynamic(
+  () => import("@components/organisms/HeaderWaitingRoom")
+)
+const OverviewContent = dynamic(
+  () => import("@components/organisms/OverviewContent")
+)
+const SeatPlayersSingle = dynamic(
+  () => import("@feature/game/components/organisms/SeatPlayerSingle")
+)
 
 export interface IPropWaitingSingle {
   _roomId: string

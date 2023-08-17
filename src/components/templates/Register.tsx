@@ -3,44 +3,42 @@ import _ from "lodash"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Image } from "@components/atoms/image/index"
-import { IMAGES } from "@constants/images"
-import { Box, Grid, styled } from "@mui/material"
-import HeadLogo from "@components/molecules/HeadLogo"
-import Tagline from "@components/molecules/tagline/Tagline"
-import VectorIcon from "@components/icons/VectorIcon"
+import { Box, Grid } from "@mui/material"
 import { useRouter } from "next/router"
-import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
-import useRegisterAvatarStore from "@stores/registerAvater"
-import FormRegister from "@feature/authentication/components/FormRegister"
 import { useTranslation } from "react-i18next"
-import { isMobile } from "@hooks/useGlobal"
 import { useSession } from "next-auth/react"
+import dynamic from "next/dynamic"
+import useRegisterAvatarStore from "@stores/registerAvater"
+import { isMobile } from "@hooks/useGlobal"
 import useRegisterTypeStore from "@stores/registerTypes"
-import useFormRegisterController from "../../features/authentication/containers/hooks/useFormRegisterController"
+import { IMAGES } from "@constants/images"
+import useFormRegisterController from "@feature/authentication/containers/hooks/useFormRegisterController"
 
-const KeyFramesClockwise = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(0deg)"
-    },
-    to: {
-      transform: "rotate(359deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const CreateProfile = dynamic(
+  () => import("@feature/profile/components/createProfile/CreateProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FormRegister = dynamic(
+  () => import("@feature/authentication/components/FormRegister"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeadLogo = dynamic(() => import("@components/molecules/HeadLogo"), {
+  suspense: true,
+  ssr: false
 })
-
-const KeyFramesAnticlockwise = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(0deg)"
-    },
-    to: {
-      transform: "rotate(359deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
 })
 
 interface TFormData {
@@ -68,8 +66,7 @@ const RegisterLayout = () => {
   const router = useRouter()
   const { referral } = router.query
   const { data: session, status } = useSession()
-  const { googleRegister, twitterRegister, discordRegister } =
-    useFormRegisterController()
+  const { googleRegister, twitterRegister } = useFormRegisterController()
 
   // eslint-disable-next-line no-unused-vars
   const { formState } = useForm<TFormData>({
@@ -84,14 +81,14 @@ const RegisterLayout = () => {
   const { getSubmitClickRegister: submitRegisterForm } =
     useRegisterAvatarStore()
 
-  const handleRegister = () => {
+  const handleLogin = () => {
     if (session && status === "authenticated" && registerTypes !== "") {
       switch (registerTypes) {
         case "google":
           googleRegister(referral as string)
           break
         case "discord":
-          discordRegister(referral as string)
+          // discordLogin()
           break
         case "twitter":
           twitterRegister(referral as string)
@@ -106,7 +103,7 @@ const RegisterLayout = () => {
   useEffect(() => {
     let load = false
     if (!load) {
-      handleRegister()
+      handleLogin()
     }
     return () => {
       load = true
@@ -186,7 +183,7 @@ const RegisterLayout = () => {
                   bgColor="bg-neutral-800"
                   textColor="text-neutral-500"
                   text={t("main_tagline")}
-                  icon={<VectorIcon />}
+                  icon={<Icomoon className="icon-require" />}
                   className="!my-[2.938rem]"
                   show={false}
                 />
@@ -202,29 +199,8 @@ const RegisterLayout = () => {
                 background: "#050505"
               }}
             >
-              <Box
-                component="div"
-                className="relative flex  h-[100px] justify-end lg:h-auto"
-              >
-                <div className="absolute">
-                  <KeyFramesClockwise>
-                    <Image
-                      src={IMAGES.ro.src}
-                      alt={IMAGES.ro.alt}
-                      className="h-full w-full"
-                    />
-                  </KeyFramesClockwise>
-                </div>
-                <div className="absolute">
-                  <KeyFramesAnticlockwise>
-                    <Image
-                      src={IMAGES.vectorWorld.src}
-                      alt={IMAGES.vectorWorld.alt}
-                      className="relative h-full w-full p-[5px]"
-                    />
-                  </KeyFramesAnticlockwise>
-                </div>
-              </Box>
+              {/* Remove this because CPU usage is too high */}
+              {/* <CircleSphereAnimation /> */}
               <Box
                 component="div"
                 sx={{

@@ -1,5 +1,10 @@
 import React from "react"
-import { Image } from "@components/atoms/image/index"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   type: string
@@ -7,37 +12,42 @@ interface IProp {
 }
 
 const DeviceSupport = ({ type, support }: IProp) => {
-  const phoneSupport = support
-    ? "/assets/icons/social_icon/phoneNotchSuccess.svg"
-    : "/assets/icons/social_icon/phoneNotch.svg"
-  const desktopSupport = support
-    ? "/assets/icons/social_icon/desktopSuccess.svg"
-    : "/assets/icons/social_icon/desktop.svg"
-  return !support ? (
-    <>
-      {type === "desktop" ? (
-        <Image
-          id="1"
-          key="1"
-          src={desktopSupport}
-          width={12}
-          height={20}
-          alt="desktop"
-        />
-      ) : (
-        <Image
-          id="2"
-          key="2"
-          src={phoneSupport}
-          width={12}
-          height={20}
-          alt="mobile"
-        />
-      )}
-    </>
-  ) : (
-    <></>
-  )
+  /**
+   * @description check device support
+   * @returns icon name
+   */
+  const checkDeviceSupport = (_type: string): string => {
+    if (_type === "mobile" && support) {
+      return "icon-Phone-Notch"
+    }
+    if (_type === "desktop" && support) {
+      return "icon-Screen"
+    }
+    if (_type === "safari" && support) {
+      return "icon-safari"
+    }
+    if (_type === "chrome" && support) {
+      return "icon-chrome"
+    }
+    if (_type === "firefox" && support) {
+      return "icon-firefox"
+    }
+    if (_type === "opera" && support) {
+      return "icon-opera"
+    }
+    if (_type === "edge" && support) {
+      return "icon-edge"
+    }
+    return ""
+  }
+
+  return support ? (
+    <Icomoon
+      className={`mt-[-5px] text-[150%] text-green-lemon ${checkDeviceSupport(
+        type
+      )}`}
+    />
+  ) : null
 }
 
 export default DeviceSupport

@@ -1,44 +1,112 @@
 /* eslint-disable no-nested-ternary */
 import React, { memo, useEffect, useState } from "react"
-import LogoIcon from "@components/icons/LogoIcon"
-import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
-import ShapeIcon from "@components/icons/ShapeIcon"
-import BodyCategories from "@components/molecules/BodyCategories"
-import ButtonSticky from "@components/molecules/ButtonSticky"
-import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
-import Tagline from "@components/molecules/tagline/Tagline"
+import { v4 as uuid } from "uuid"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import {
   F2PHeaderMenu,
   GAME_DOWNLOAD,
   P2EHeaderMenu
 } from "@constants/gameSlide"
-import BannerSlide from "@feature/slider/components/templates/BannerSlide"
-import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
-import CardMarketplace from "@components/molecules/CardMarketplace"
-import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box } from "@mui/material"
-import ICoupon from "@components/icons/Coupon"
-import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
-import CardLink from "@components/molecules/CardLink"
-import INakaSwap from "@components/icons/NakaSwap"
-import IStacking from "@components/icons/Stacking"
-import IReferrals from "@components/icons/Referrals"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { v4 as uuid } from "uuid"
-import useTweenEffect from "@hooks/useSpartFireEffect"
 import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import { MenuLists } from "@configs/social"
 import useGlobal from "@hooks/useGlobal"
-import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
-import OrionTrade from "@components/organisms/OrionTrade"
-import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
-import { useTranslation } from "react-i18next"
-import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
+
+const OnPlayingStyle2 = dynamic(
+  () => import("@feature/home/components/molecules/OnPlayingStyle2"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BodyCategories = dynamic(
+  () => import("@components/molecules/BodyCategories"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonSticky = dynamic(
+  () => import("@components/molecules/ButtonSticky"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCarousel = dynamic(
+  () => import("@components/molecules/gameSlide/GameCarousel"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BannerSlide = dynamic(
+  () => import("@feature/slider/components/templates/BannerSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CarouselSlide = dynamic(
+  () => import("@feature/slider/components/templates/CarouselSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardMarketplace = dynamic(
+  () => import("@components/molecules/CardMarketplace"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardNakaverse = dynamic(
+  () => import("@components/molecules/CardNakaverse"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const CardLink = dynamic(() => import("@components/molecules/CardLink"), {
+  suspense: true,
+  ssr: false
+})
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardLinkTemplate = dynamic(
+  () => import("@components/templates/contents/CardLinkTemplate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const OrionTrade = dynamic(() => import("@components/organisms/OrionTrade"), {
+  suspense: true,
+  ssr: false
+})
+const DeveloperPart = dynamic(
+  () => import("@feature/home/components/template/DeveloperPart"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const Home = () => {
   const { profile } = useProfileStore()
@@ -48,23 +116,6 @@ const Home = () => {
 
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
-
-  /**
-   * @description: Spark fire effect
-   */
-  const { createParticle } = useTweenEffect(600, 300, 50, -500)
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (hydrated) createParticle()
-    }
-
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated])
 
   const handleModalMission = () => {
     setOpen()
@@ -124,18 +175,11 @@ const Home = () => {
     <>
       <BannerSlide />
       <div className="relative">
-        <Tagline
-          bgColor="bg-secondary-main"
-          textColor="text-white-default"
-          text={t("main_tagline")}
-          icon={<LogoIcon />}
-          show={false}
-        />
         {/* notification */}
         {profile && profile.data && (
           <div className="fixed bottom-5 right-4 z-10 flex flex-col items-center justify-center">
             <ButtonSticky
-              icon={<SupportIcon />}
+              icon={<Icomoon className="icon-Headset" />}
               onClick={() => {
                 window.open(MenuLists[0].href, "_blank")
               }}
@@ -169,7 +213,7 @@ const Home = () => {
               <CardLink
                 classNameSecond="!bg-red-card"
                 imageClassNameSecond="scale-[1.35]"
-                iconBtn={<INakaSwap />}
+                iconBtn={<Icomoon className="icon-Swap-Calls-Arrows" />}
                 textBtn={`${t("naka_swap")}`}
                 onClick={() => setOpenSwap(true)}
                 srcMain={IMAGES.frontNakaSwap.src}
@@ -188,7 +232,7 @@ const Home = () => {
               <CardLink
                 classNameSecond="!bg-warning-dark"
                 imageClassNameSecond="scale-[1.35]"
-                iconBtn={<IStacking />}
+                iconBtn={<Icomoon className="icon-Safe" />}
                 textBtn={`${t("Staking")}`}
                 href="/staking"
                 srcMain={IMAGES.frontStaking.src}
@@ -203,7 +247,7 @@ const Home = () => {
               <CardLink
                 classNameSecond="bg-info-light"
                 imageClassNameSecond="scale-[1.35]"
-                iconBtn={<IReferrals />}
+                iconBtn={<Icomoon className="icon-User-ID" />}
                 textBtn={`${t("referral")}`}
                 href="/referral"
                 srcMain={IMAGES.frontReferrals.src}
@@ -217,10 +261,10 @@ const Home = () => {
           </Box>
         </Box>
         <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-1">
-          <div
+          {/* <div
             id="spark-fire"
             className="absolute left-0 top-0 hidden h-[calc(100%-100px)] w-full xl:block"
-          />
+          /> */}
           <CarouselSlide
             slideGames={GAME_DOWNLOAD}
             isLoading={false}
@@ -257,9 +301,9 @@ const Home = () => {
         {p2eGame && !loadingDataP2eGame ? (
           <GameCarousel
             menu={P2EHeaderMenu}
-            list={p2eGame.filter(
-              (_item) => _item.play_to_earn_status === "in_progress"
-            )}
+            list={p2eGame
+              .filter((_item) => _item.hot_game_status)
+              .sort((a, b) => Number(b.hot_game_no) - Number(a.hot_game_no))}
             curType={p2eCurType}
             setCurType={setP2ECurType}
             showNo
@@ -274,16 +318,7 @@ const Home = () => {
         )}
       </div>
 
-      <Tagline
-        bgColor="bg-green-lemon"
-        textColor="text-neutral-800 font-bold"
-        text={t("switch_to_godmode")}
-        icon={<ShapeIcon />}
-        show={false}
-      />
-
       <BodyCategories />
-      {/* <OnPlaying /> */}
       <OnPlayingStyle2 isSlider={false} />
       <DeveloperPart />
       <Box
@@ -311,7 +346,7 @@ const Home = () => {
           <CardLinkTemplate>
             <CardLink
               classNameSecond="bg-secondary-light"
-              iconBtn={<ICoupon />}
+              iconBtn={<Icomoon className="icon-Ticket-Star" />}
               textBtn={`${t("Coupons")}`}
               href="/coupon"
               srcMain={IMAGES.frontCouponBand.src}
@@ -326,7 +361,7 @@ const Home = () => {
           <CardLinkTemplate>
             <CardLink
               classNameSecond="bg-info-light"
-              iconBtn={<IDiamond />}
+              iconBtn={<Icomoon className="icon-Diamond" />}
               textBtn="NAKA NFT"
               href="/arcade-emporium"
               srcMain={IMAGES.homeNakaNFT.src}

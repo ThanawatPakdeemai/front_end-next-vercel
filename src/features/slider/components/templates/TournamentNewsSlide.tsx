@@ -38,14 +38,16 @@ const TournamentNewsSlide = () => {
 
   return (
     <section className="relative w-full overflow-hidden">
-      <Slider {...settings}>
-        {mockupNews &&
-          mockupNews.map((slide, index) => (
-            <div key={Number(index)}>
-              <TournamentNewsCardSlide slide={slide} />
-            </div>
-          ))}
-      </Slider>
+      {mockupNews.length && (
+        <Slider {...settings}>
+          {mockupNews &&
+            mockupNews.map((slide, index) => (
+              <div key={Number(index)}>
+                <TournamentNewsCardSlide slide={slide} />
+              </div>
+            ))}
+        </Slider>
+      )}
     </section>
   )
 }

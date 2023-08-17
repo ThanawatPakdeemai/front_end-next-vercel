@@ -1,7 +1,15 @@
 import { memo } from "react"
 import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
-import LogoNakaIcon from "@components/icons/LogoNakaIcon"
+import dynamic from "next/dynamic"
+
+const LogoNakaIcon = dynamic(
+  () => import("@components/atoms/svg/LogoNakaIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   showIconTM?: boolean

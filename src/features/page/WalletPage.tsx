@@ -1,34 +1,58 @@
-import Gas from "@components/molecules/Gas"
 import React, { useEffect } from "react"
-import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
-import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 import useGlobal from "@hooks/useGlobal"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import CONFIGS from "@configs/index"
-import { useRouter } from "next/router"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
-import WalletContent from "@feature/wallet/components/organisms/WalletContent"
-import ChainList from "@components/molecules/ChainList"
-import TokenList from "@components/molecules/TokenList"
 import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
 import useChainSupportStore from "@stores/chainSupport"
+
+const Gas = dynamic(() => import("@components/molecules/Gas"), {
+  suspense: true,
+  ssr: false
+})
+const MetamaskWallet = dynamic(
+  () => import("@components/molecules/balance/MetamaskWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TransactionTable = dynamic(
+  () => import("@feature/transaction/components/molecules/TransactionTable"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const WalletContent = dynamic(
+  () => import("@feature/wallet/components/organisms/WalletContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ChainList = dynamic(() => import("@components/molecules/ChainList"), {
+  suspense: true,
+  ssr: false
+})
+const TokenList = dynamic(() => import("@components/molecules/TokenList"), {
+  suspense: true,
+  ssr: false
+})
 
 export default function WalletPage() {
   const { hydrated } = useGlobal()
   const { value, setDisabled, handleConnectWallet, tabChainList } =
     useWalletContoller()
   const { handleSwitchNetwork, isWrongNetwork } = useSwitchNetwork()
-  const {
-    isConnected,
-    chainId,
-    handleDisconnectWallet,
-    handleConnectWithMetamask,
-    address
-  } = useWeb3Provider()
+  const { isConnected, chainId, handleDisconnectWallet, address } =
+    useWeb3Provider()
 
   const router = useRouter()
   const { token } = router.query
@@ -94,7 +118,6 @@ export default function WalletPage() {
         <div className="flex w-full flex-1 flex-wrap justify-center gap-4 lg:max-w-[570px] xl:w-full xl:justify-end">
           <div className="my-2 h-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:my-0 md:min-h-[360px] md:p-0 xl:w-[570px]">
             <WalletContent
-              handleConnectWithMetamask={handleConnectWithMetamask}
               isWrongNetwork={isWrongNetwork}
               type={(tabChainList as IChainList).link}
               handleSwitchNetwork={

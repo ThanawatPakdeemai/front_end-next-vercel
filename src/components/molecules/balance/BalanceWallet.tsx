@@ -1,5 +1,10 @@
 import React from "react"
-import LogoIcon from "@components/icons/LogoIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IBalanceWalletProps {
   balance: string
@@ -10,7 +15,7 @@ const BalanceWallet = ({ balance, tokenName }: IBalanceWalletProps) => (
   <div className="box-metamask-shadow m-[2px] min-h-[50px] rounded-[13px] bg-neutral-700 p-[5px]">
     <div className="flex h-full items-center rounded-lg bg-neutral-900 p-1">
       <div className="flex h-full items-center rounded bg-neutral-800 p-1">
-        <LogoIcon fill="#4E5057" />
+        <Icomoon className="icon-Naka text-[#4E5057]" />
       </div>
       <div className="ml-3 flex w-full flex-wrap items-center justify-between">
         <span className="whitespace-pre-wrap text-xs uppercase text-neutral-600">

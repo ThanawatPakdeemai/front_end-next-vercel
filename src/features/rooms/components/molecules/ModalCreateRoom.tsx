@@ -1,11 +1,3 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import SwitchCustom from "@components/atoms/SwitchCustom"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
-import PlayersIcon from "@components/icons/PlayersIcon"
-import CountItem from "@components/molecules/CountItem"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
 import { MapOutlined } from "@mui/icons-material"
 import { useTranslation } from "react-i18next"
 import {
@@ -16,7 +8,43 @@ import {
   Typography,
   CircularProgress
 } from "@mui/material"
+import dynamic from "next/dynamic"
+import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SwitchCustom = dynamic(() => import("@components/atoms/SwitchCustom"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const CountItem = dynamic(() => import("@components/molecules/CountItem"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   gameData: IGame
@@ -44,7 +72,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
     <>
       <ButtonToggleIcon
         handleClick={handleOpen}
-        startIcon={<PlusIcon />}
+        startIcon={<Icomoon className="icon-Plus1" />}
         text={t("create_room")}
         className="btn-rainbow-theme z-[2] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
         type="button"
@@ -67,34 +95,8 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             </div>
             <ButtonClose onClick={handleClose} />
           </Box>
-          {/* <TextField
-            label="Room Name"
-            placeholder="Room Name..."
-            size="medium"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FlagIcon />
-                </InputAdornment>
-              )
-            }}
-          /> */}
-          {/* <CountItem
-            _item={itemUse}
-            _addItem={() => setItemUse(itemUse > 9 ? 10 : itemUse + 1)}
-            _minusItem={() => setItemUse(itemUse < 2 ? 1 : itemUse - 1)}
-            endIcon={
-              <Image
-                src={gameItemList?.[0]?.image_icon ?? ""}
-                width={15}
-                height={15}
-                alt={gameItemList?.[0]?.item_size ?? ""}
-              />
-            }
-            label={t("number_of_items")}
-          /> */}
           <CountItem
-            endIcon={<PlayersIcon />}
+            endIcon={<Icomoon className="icon-Users-Group" />}
             label={t("number_of_players")}
           />
           {gameData && gameData.type_code === "multi_02" && (
@@ -131,6 +133,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             <button
               className="ml-2 mr-[10px]"
               type="button"
+              aria-label="public room"
               onClick={() => handleSetIsCurrent(true)}
             >
               <span className={isPublicRoom ? "!text-neutral-300" : ""}>
@@ -150,6 +153,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             <button
               className="ml-[10px] mr-2"
               type="button"
+              aria-label="private room"
               onClick={() => handleSetIsCurrent(false)}
             >
               <span className={!isPublicRoom ? "!text-neutral-300" : ""}>
@@ -157,17 +161,6 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               </span>
             </button>
           </div>
-          {/* <TextField
-            placeholder="Password..."
-            size="medium"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon stroke="#70727B" />
-                </InputAdornment>
-              )
-            }}
-          /> */}
           <ButtonToggleIcon
             className=" flex items-center bg-secondary-main text-white-default"
             startIcon={null}

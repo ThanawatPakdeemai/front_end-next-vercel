@@ -1,5 +1,13 @@
 import React from "react"
-import { Image } from "@components/atoms/image/index"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(
+  () => import("@components/atoms/image/index").then((mod) => mod.Image),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 export interface IBlogBodyProps {
   image?: string

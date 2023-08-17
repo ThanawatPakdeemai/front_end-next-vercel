@@ -1,12 +1,29 @@
 import React, { memo } from "react"
 import { Box } from "@mui/material"
 import { v4 as uuid } from "uuid"
-import SkeletonNotificationList from "@mobile/components/atoms/skeleton/SkeletonNotificationList"
+import dynamic from "next/dynamic"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-import NoData from "@components/molecules/NoData"
-import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 import useHistoryController from "@feature/history/containers/hook/useHistoryController"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+
+const SkeletonNotificationList = dynamic(
+  () => import("@mobile/components/atoms/skeleton/SkeletonNotificationList"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const GameInfoCard = dynamic(
+  () => import("@mobile/features/game/components/molecules/GameInfoCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IPlayedHistoryListMobile {
   loading: boolean

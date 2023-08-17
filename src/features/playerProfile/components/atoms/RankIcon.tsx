@@ -1,7 +1,15 @@
 import React, { useState } from "react"
-import { Image } from "@components/atoms/image/index"
-import BadgesPlacrhoder from "@components/icons/Banner/BadgesPlacrhoder"
 import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   width: number
@@ -22,7 +30,10 @@ const RankIcon = ({ icon, width, height }: IProp) => {
           onError={() => setImgError(false)}
         />
       ) : (
-        <BadgesPlacrhoder key={uuid()} />
+        <Icomoon
+          className="icon-naka"
+          key={uuid()}
+        />
       )}
     </div>
   )

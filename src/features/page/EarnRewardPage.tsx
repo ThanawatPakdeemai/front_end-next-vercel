@@ -1,13 +1,47 @@
 import React from "react"
-import CheckMarkIcon from "@components/icons/CheckMarkIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import ItemRewardDetails from "@feature/game/components/molecules/ItemRewardDetails"
-import SkeletonDetails from "@feature/game/components/molecules/SkeletonDetails"
-import { Chip, Typography, Box } from "@mui/material"
 import { Trans, useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
-import NoData from "@components/molecules/NoData"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import useEarnRewardController from "@feature/earnReward/containers/hooks/useEarnRewardController"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ItemRewardDetails = dynamic(
+  () => import("@feature/game/components/molecules/ItemRewardDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonDetails = dynamic(
+  () => import("@feature/game/components/molecules/SkeletonDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
 
 const EarnRewardPage = () => {
   const {
@@ -55,7 +89,7 @@ const EarnRewardPage = () => {
             <ButtonToggleIcon
               text={t("claim_all")}
               className="ml-4 h-[50px] !w-[135px] !rounded-[24px] border border-neutral-700 bg-primary-main font-bold capitalize text-white-primary md:ml-[30px]"
-              startIcon={<CheckMarkIcon />}
+              startIcon={<Icomoon className="icon-Check-in-a-Circle" />}
               handleClick={onClaimAll}
             />
           </>

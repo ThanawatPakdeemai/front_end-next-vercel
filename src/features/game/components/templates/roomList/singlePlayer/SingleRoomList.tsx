@@ -1,17 +1,40 @@
 /* eslint-disable no-nested-ternary */
 import { Box, Divider } from "@mui/material"
 import React from "react"
-import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 
-import ButtonSticky from "@components/molecules/ButtonSticky"
-import ReloadIcon from "@components/icons/ReloadIcon"
-import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useGlobal from "@hooks/useGlobal"
 import useGameGlobal from "@hooks/useGameGlobal"
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
+import dynamic from "next/dynamic"
+
+const RoomListBar = dynamic(
+  () => import("@components/molecules/roomList/RoomListBar"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeaderRoomList = dynamic(
+  () => import("@components/organisms/HeaderRoomList"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonSticky = dynamic(
+  () => import("@components/molecules/ButtonSticky"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 /**
  *
@@ -105,7 +128,7 @@ const GameRoomList = () => {
                 )
               })}
           <ButtonSticky
-            icon={<ReloadIcon />}
+            icon={<Icomoon className="icon-Refresh-01" />}
             className="mt-10"
             multi
           />

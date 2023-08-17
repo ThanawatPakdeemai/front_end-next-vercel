@@ -1,7 +1,19 @@
-import ButtonLink, { IButtonLink } from "@components/atoms/button/ButtonLink"
 import { memo } from "react"
-import AddIcon from "@mui/icons-material/Add"
 import { Trans } from "next-i18next"
+import dynamic from "next/dynamic"
+import { IButtonLink } from "@components/atoms/button/ButtonLink"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const AddIcon = dynamic(() => import("@mui/icons-material/Add"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IButtonBuyItemProps extends IButtonLink {
   handleButton?: () => void

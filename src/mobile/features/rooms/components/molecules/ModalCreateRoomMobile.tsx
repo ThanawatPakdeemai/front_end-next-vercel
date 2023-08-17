@@ -1,12 +1,4 @@
 import React from "react"
-import SwitchCustom from "@components/atoms/SwitchCustom"
-import PlayersIcon from "@components/icons/PlayersIcon"
-import CountItem from "@components/molecules/CountItem"
-import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
-import ModalWithHeaderTemplate from "@mobile/components/templates/ModalWithHeaderTemplate"
-import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
-import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import { StyleCreateRoom, StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import { MapOutlined } from "@mui/icons-material"
 import {
   Box,
@@ -18,6 +10,37 @@ import {
   CircularProgress
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { StyleCreateRoom, StyleDrawer } from "@mobile/styles/muiStyleMobile"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
+
+const ModalWithHeaderTemplate = dynamic(
+  () => import("@mobile/components/templates/ModalWithHeaderTemplate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameInfoCard = dynamic(
+  () => import("@mobile/features/game/components/molecules/GameInfoCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SwitchCustom = dynamic(() => import("@components/atoms/SwitchCustom"), {
+  suspense: true,
+  ssr: false
+})
+const CountItem = dynamic(() => import("@components/molecules/CountItem"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICreateRoomProps {
   map: number
@@ -74,7 +97,7 @@ const ModalCreateRoomMobile = ({
             title={gameData.name}
           />
           <CountItem
-            endIcon={<PlayersIcon />}
+            endIcon={<Icomoon className="icon-Users-Group" />}
             label={t("number_of_players")}
           />
           {gameData && gameData.type_code === "multi_02" && (
@@ -111,6 +134,7 @@ const ModalCreateRoomMobile = ({
             <button
               className="ml-2 mr-[10px]"
               type="button"
+              aria-label="public"
               onClick={() => props.handleSetIsCurrent(true)}
             >
               <span className={props.isPublicRoom ? "!text-neutral-300" : ""}>
@@ -130,6 +154,7 @@ const ModalCreateRoomMobile = ({
             <button
               className="ml-[10px] mr-2"
               type="button"
+              aria-label="private"
               onClick={() => props.handleSetIsCurrent(false)}
             >
               <span className={!props.isPublicRoom ? "!text-neutral-300" : ""}>

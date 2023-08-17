@@ -1,4 +1,3 @@
-import SlideAvatar from "@feature/avatar/components/molecules/SlideAvatar"
 import {
   Box,
   Button,
@@ -7,23 +6,46 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import useProfileStore from "@stores/profileStore"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
 import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
-import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
-import CameraIcon from "@components/icons/CameraIcon"
-import RepeatIcon from "@components/icons/RepeatIcon"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useLoadingStore from "@stores/loading"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { useTranslation } from "react-i18next"
 import { commonPattern } from "@constants/regex"
 import useUpdateProfile from "../containers/hook/getUpdateProfile"
 import { IGeoProfile } from "../interfaces/IProfileService"
 import { getGeoInfo } from "../containers/services/profile.service"
+
+const SlideAvatar = dynamic(
+  () => import("@feature/avatar/components/molecules/SlideAvatar"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const AvatarProfile = dynamic(
+  () => import("@components/atoms/avatar/AvatarProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   platinumCount: number
@@ -116,7 +138,9 @@ const FormEditProfile = ({
           <div className="flex h-[66px] items-center justify-center rounded-xl bg-neutral-700">
             <ButtonIcon
               onClick={onOpenImage}
-              icon={<CameraIcon />}
+              icon={
+                <Icomoon className="icon-Add-Camera flex h-[40px] w-[40px] items-center justify-center rounded-[6px] bg-[#18181C]" />
+              }
             />
           </div>
           <Typography
@@ -160,7 +184,7 @@ const FormEditProfile = ({
               ),
               endAdornment: (
                 <InputAdornment position="start">
-                  <RepeatIcon />
+                  <Icomoon className="icon-Refresh-Rectangular" />
                 </InputAdornment>
               )
             }}

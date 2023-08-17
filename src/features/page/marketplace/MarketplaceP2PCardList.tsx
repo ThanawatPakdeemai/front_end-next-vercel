@@ -1,16 +1,34 @@
 import React, { useCallback } from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
-import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
-import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 import { useRouter } from "next/router"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
+import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
-import SkeletonItemMobile from "@feature/page/marketplace/mobilescreen/SkeletonItemMobile"
-import NoData from "@components/molecules/NoData"
 import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
-import CardListContainer from "./CardListContainer"
 
+const SkeletonItem = dynamic(
+  () => import("@feature/marketplace/components/molecules/SkeletonItem"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const SkeletonItemMobile = dynamic(
+  () => import("@feature/page/marketplace/mobilescreen/SkeletonItemMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const CardListContainer = dynamic(() => import("./CardListContainer"), {
+  suspense: true,
+  ssr: true
+})
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
   {

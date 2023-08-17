@@ -1,9 +1,29 @@
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import React, { useCallback } from "react"
 import { Stack } from "@mui/material"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import dynamic from "next/dynamic"
 import useReview from "@feature/review/containers/hook/useReview"
-import ReviewTextArea from "@feature/review/components/atoms/ReviewTextArea"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ReviewTextArea = dynamic(
+  () => import("@feature/review/components/atoms/ReviewTextArea"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   gameId: string

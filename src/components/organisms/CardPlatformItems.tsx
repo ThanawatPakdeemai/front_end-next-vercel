@@ -1,8 +1,12 @@
 import React from "react"
 import { Box, SxProps, Theme } from "@mui/material"
-import CardPlatformItem from "@components/molecules/CardPlatformItem"
 import { v4 as uuidv4 } from "uuid"
 import { IList } from "@feature/become-developer/interfaces/IWebBecome"
+import dynamic from "next/dynamic"
+
+const CardPlatformItem = dynamic(
+  () => import("@components/molecules/CardPlatformItem")
+)
 
 interface ICardPlatformItemsProps {
   className?: string

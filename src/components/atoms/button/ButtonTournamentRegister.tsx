@@ -10,6 +10,7 @@ const ButtonTournamentRegister = ({ time, handleButton }: IProp) => (
   <button
     onClick={() => handleButton()}
     type="button"
+    aria-label="Register Button"
     className={`mb-4 flex w-full items-center
             justify-center rounded-full ${
               time

@@ -2,8 +2,13 @@
 
 import { Box, Checkbox, Typography } from "@mui/material"
 import React, { memo } from "react"
-import { Image } from "@components/atoms/image"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   value: boolean

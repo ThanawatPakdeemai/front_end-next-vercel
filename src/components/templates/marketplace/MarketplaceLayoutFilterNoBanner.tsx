@@ -1,8 +1,20 @@
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
-import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
-import MarketplaceLayoutMobile from "@feature/page/marketplace/mobilescreen/MarketplaceLayoutMobile"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
+const FilterBox = dynamic(
+  () => import("@feature/marketplace/components/molecules/FilterBox")
+)
+const MarketplaceLayoutMobile = dynamic(
+  () => import("@feature/page/marketplace/mobilescreen/MarketplaceLayoutMobile")
+)
 
 const MarketplaceLayoutFilterNoBanner = ({
   children

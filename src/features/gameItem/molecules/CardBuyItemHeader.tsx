@@ -1,7 +1,15 @@
-import { ImageCustom } from "@components/atoms/image/Image"
 import React from "react"
 import { useTranslation } from "react-i18next"
-import RefreshIcon from "@mui/icons-material/Refresh"
+import dynamic from "next/dynamic"
+
+const RefreshIcon = dynamic(() => import("@mui/icons-material/Refresh"), {
+  suspense: true,
+  ssr: false
+})
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface ICardBuyItemHeaderProps {
   image: string

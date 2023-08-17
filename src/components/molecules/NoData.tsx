@@ -1,8 +1,13 @@
-import { ImageCustom } from "@components/atoms/image/Image"
 import { IMAGES } from "@constants/images"
 import { Typography } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
 import { Trans } from "react-i18next"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface INoData {
   className?: string

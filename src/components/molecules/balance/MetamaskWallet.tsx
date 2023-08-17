@@ -1,19 +1,64 @@
 import React from "react"
 import CircleIcon from "@mui/icons-material/Circle"
-import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
-import TextLink from "@components/atoms/TextLink"
 import CloseIcon from "@mui/icons-material/Close"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import MetamaskLogo from "@components/icons/MetamaskLogo"
+import { Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import { IChainList } from "@configs/chain"
 import { useWeb3Provider } from "@providers/Web3Provider"
-import { Typography } from "@mui/material"
 import useChainSupportStore from "@stores/chainSupport"
-import WalletAddress from "@feature/wallet/components/atoms/WalletAddress"
-import { useTranslation } from "react-i18next"
-import BalanceWallet from "./BalanceWallet"
 
+const AccountBalanceWalletIcon = dynamic(
+  () => import("@mui/icons-material/AccountBalanceWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalConnectWallet = dynamic(
+  () => import("@components/atoms/ModalConnectWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BalanceWallet = dynamic(() => import("./BalanceWallet"), {
+  suspense: true,
+  ssr: false
+})
+const TextLink = dynamic(() => import("@components/atoms/TextLink"), {
+  suspense: true,
+  ssr: false
+})
+const WalletAddress = dynamic(
+  () => import("@feature/wallet/components/atoms/WalletAddress"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const IcomoonWallet = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const IcomoonChain = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonChain"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 interface IProp {
   address?: string
   handleConnectWallet?: () => void
@@ -26,13 +71,14 @@ interface IProp {
 
 const MetamaskWallet = ({
   address,
-  handleConnectWallet,
+  // handleConnectWallet,
   handleOnDisconnectWallet,
   blockExplorerUrls
 }: IProp) => {
-  const { onAddToken, isConnected, disabledConnectButton } = useWeb3Provider()
+  const { onAddToken, isConnected } = useWeb3Provider()
   const { currentChainSelected, currentTokenSelected } = useChainSupportStore()
   const { t } = useTranslation()
+  const [open, setOpen] = React.useState<boolean>(false)
   /**
    * @description Handle display balances from wallet
    */
@@ -53,14 +99,31 @@ const MetamaskWallet = ({
         }
       />
     ) : (
-      <ButtonToggleIcon
-        startIcon={null}
-        text={t("Connect Wallet")}
-        type="button"
-        className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
-        handleClick={handleConnectWallet}
-        disabled={disabledConnectButton}
-      />
+      // <ButtonToggleIcon
+      //   startIcon={null}
+      //   text={t("Connect Wallet")}
+      //   type="button"
+      //   className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
+      //   handleClick={handleConnectWallet}
+      //   disabled={disabledConnectButton}
+      // />
+      <>
+        <ButtonLink
+          onClick={() => setOpen(true)}
+          href="/"
+          text={t("Connect Wallet")}
+          icon={<AccountBalanceWalletIcon />}
+          color="secondary"
+          variant="contained"
+          // size="small"
+          size="medium"
+          className="m-auto h-[54px] rounded-xl"
+        />
+        <ModalConnectWallet
+          open={open}
+          setOpen={setOpen}
+        />
+      </>
     )
 
   return (
@@ -73,10 +136,10 @@ const MetamaskWallet = ({
               isConnected ? "text-green-lemon" : "text-error-main"
             }`}
           />
-          <ChainPolygonIcon />
+          <IcomoonChain className="icon-Polygon" />
         </div>
         <div className="rounded-full border border-neutral-800 bg-[#34343433] p-6">
-          <MetamaskLogo />
+          <IcomoonWallet className="icon-Metamask" />
         </div>
         {/* isConnected */}
         <div className="my-6 flex flex-col items-center gap-4">

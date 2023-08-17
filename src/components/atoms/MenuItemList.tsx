@@ -1,7 +1,12 @@
-import { IMenu } from "@interfaces/IMenu"
 import { MenuItem } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
-import { Image } from "@components/atoms/image"
+import { IMenu } from "@interfaces/IMenu"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface RootObject {
   _id: string

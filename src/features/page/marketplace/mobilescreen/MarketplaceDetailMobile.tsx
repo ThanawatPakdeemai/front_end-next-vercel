@@ -1,16 +1,26 @@
-import CardWriterDetails from "@components/molecules/Inventory/CardWriterDetails"
-import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
-import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
-import CONFIGS from "@configs/index"
 import React from "react"
 import dynamic from "next/dynamic"
+import CONFIGS from "@configs/index"
 import {
   TNFTType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
-import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
+
+const CardDetailSkeleton = dynamic(
+  () => import("@feature/marketplace/components/molecules/CardDetailSkeleton")
+)
+const CardWriterDetails = dynamic(
+  () => import("@components/molecules/Inventory/CardWriterDetails")
+)
+const CardContentDetails = dynamic(
+  () => import("@feature/marketplace/components/organisms/CardContentDetails")
+)
+const RightDetailsMarketplace = dynamic(
+  () =>
+    import("@feature/marketplace/components/organisms/RightDetailsMarketplace")
+)
 
 const MarketplaceButton = dynamic(
   () => import("@components/molecules/MarketplaceButton"),

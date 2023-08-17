@@ -1,11 +1,24 @@
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import { MENU_GUEST } from "@configs/menu"
-// import { PROFILE_MOCKUP } from "@constants/profileMockup"
 import { MenuList, SxProps, Theme } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
-import Balance from "./balance/Balance"
-import StatProfile from "./statProfile/StatProfile"
+import { MENU_GUEST } from "@configs/menu"
+
+const Balance = dynamic(() => import("./balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
+const StatProfile = dynamic(() => import("./statProfile/StatProfile"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export const StyledMenuItemCustom: SxProps<Theme> = {
   "&.MuiList-root": {

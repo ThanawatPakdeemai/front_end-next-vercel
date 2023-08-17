@@ -1,13 +1,32 @@
 import React, { useMemo } from "react"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import { IStakingAll } from "@src/types/staking"
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
-import SkeletonStake from "@components/atoms/skeleton/SkeletonStake"
-import { useTranslation } from "react-i18next"
-import PeriodLabel from "../molecules/PeriodLabel"
-import TotalStaked from "../molecules/TotalStaked"
-import StakingPeriod from "../molecules/StakingPeriod"
-import NumberBadge from "../atoms/NumberBadge"
-import ActionBar from "../molecules/ActionBar"
+
+const SkeletonStake = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonStake")
+)
+const PeriodLabel = dynamic(() => import("../molecules/PeriodLabel"), {
+  suspense: true,
+  ssr: true
+})
+const TotalStaked = dynamic(() => import("../molecules/TotalStaked"), {
+  suspense: true,
+  ssr: true
+})
+const StakingPeriod = dynamic(() => import("../molecules/StakingPeriod"), {
+  suspense: true,
+  ssr: true
+})
+const NumberBadge = dynamic(() => import("../atoms/NumberBadge"), {
+  suspense: true,
+  ssr: true
+})
+const ActionBar = dynamic(() => import("../molecules/ActionBar"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface IStakingDetails {
   dataStaking: IStakingAll

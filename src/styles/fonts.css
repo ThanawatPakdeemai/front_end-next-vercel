@@ -44,3 +44,12 @@
   font-family: "Digital";
   src: url("/assets/fonts/digital-7.ttf") format("TrueType");
 }
+
+@import url("./css/icomoon-base.css");
+@import url("./css/icomoon-chain.css");
+@import url("./css/icomoon-exchain.css");
+@import url("./css/icomoon-flags.css");
+@import url("./css/icomoon-sticker.css");
+@import url("./css/icomoon-wallet.css");
+@import url("./css/icomoon-app.css");
+@import url("./css/icomoon-app-bold.css");

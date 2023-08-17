@@ -1,8 +1,16 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded"
+import dynamic from "next/dynamic"
 import { MESSAGES } from "@constants/messages"
 import Helper from "@utils/helper"
-import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded"
 import { useToast } from "@feature/toast/containers"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IWalletAddressProps {
   contractAddress: string

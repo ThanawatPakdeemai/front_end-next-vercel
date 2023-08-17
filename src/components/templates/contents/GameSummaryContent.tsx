@@ -1,10 +1,13 @@
-import HeaderWaitingRoom, {
-  IHeaderWaitingRoomProp
-} from "@components/organisms/HeaderWaitingRoom"
-import { isMobile } from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import React from "react"
 import { MobileView } from "react-device-detect"
+import dynamic from "next/dynamic"
+import { isMobile } from "@hooks/useGlobal"
+import { IHeaderWaitingRoomProp } from "@components/organisms/HeaderWaitingRoom"
+
+const HeaderWaitingRoom = dynamic(
+  () => import("@components/organisms/HeaderWaitingRoom")
+)
 
 export interface IGameSummaryContentProps extends IHeaderWaitingRoomProp {
   children: React.ReactNode

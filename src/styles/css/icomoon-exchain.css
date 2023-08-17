@@ -1,0 +1,123 @@
+@font-face {
+  font-family: "icomoon-exchain";
+  src: url("/assets/fonts/icomoon-exchain.eot?ybhy3d");
+  src: url("/assets/fonts/icomoon-exchain.eot?ybhy3d#iefix")
+      format("embedded-opentype"),
+    url("/assets/fonts/icomoon-exchain.ttf?ybhy3d") format("truetype"),
+    url("/assets/fonts/icomoon-exchain.woff?ybhy3d") format("woff"),
+    url("/assets/fonts/icomoon-exchain.svg?ybhy3d#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-exchain"],
+[class*=" icon-exchain"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon-exchain" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-size: 1.75rem;
+}
+
+.icon-Bitmart .path1:before {
+  content: "\e900";
+  color: rgb(85, 164, 159);
+}
+.icon-Bitmart .path2:before {
+  content: "\e901";
+  margin-left: -1em;
+  color: rgb(74, 140, 137);
+}
+.icon-Bitmart .path3:before {
+  content: "\e902";
+  margin-left: -1em;
+  color: rgb(90, 171, 165);
+}
+.icon-Bitmart .path4:before {
+  content: "\e903";
+  margin-left: -1em;
+  color: rgb(74, 140, 138);
+}
+.icon-Bitmart .path5:before {
+  content: "\e904";
+  margin-left: -1em;
+  color: rgb(90, 171, 166);
+}
+.icon-Bitmart .path6:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: rgb(75, 143, 142);
+}
+.icon-Bitmart .path7:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(124, 198, 199);
+}
+.icon-Bitmart .path8:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(90, 181, 180);
+}
+.icon-Bitmart .path9:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgb(66, 137, 137);
+}
+.icon-Bitmart .path10:before {
+  content: "\e909";
+  margin-left: -1em;
+  color: rgb(84, 147, 145);
+}
+.icon-Bitmart .path11:before {
+  content: "\e90a";
+  margin-left: -1em;
+  color: rgb(48, 101, 99);
+}
+.icon-Bitmart .path12:before {
+  content: "\e90b";
+  margin-left: -1em;
+  color: rgb(100, 185, 185);
+}
+.icon-Bitmart .path13:before {
+  content: "\e90c";
+  margin-left: -1em;
+  color: rgb(127, 214, 213);
+}
+.icon-Bitmart .path14:before {
+  content: "\e90d";
+  margin-left: -1em;
+  color: rgb(85, 164, 159);
+}
+.icon-Bitmart .path15:before {
+  content: "\e90e";
+  margin-left: -1em;
+  color: rgb(74, 140, 137);
+}
+.icon-Bitmart .path16:before {
+  content: "\e90f";
+  margin-left: -1em;
+  color: rgb(90, 171, 165);
+}
+.icon-Kucoin:before {
+  content: "\e910";
+  color: #42a288;
+}
+.icon-MEXC .path1:before {
+  content: "\e911";
+  color: rgb(0, 184, 151);
+}
+.icon-MEXC .path2:before {
+  content: "\e912";
+  margin-left: -1em;
+  color: rgb(118, 252, 178);
+}

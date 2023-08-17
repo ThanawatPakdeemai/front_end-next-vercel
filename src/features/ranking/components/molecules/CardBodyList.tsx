@@ -1,5 +1,7 @@
 import React, { memo } from "react"
 import { Box, Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import { IGameReward } from "@src/types/games"
 import {
@@ -7,12 +9,21 @@ import {
   IWeeklyPoolByGameIdDataRecord
 } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { RewardType } from "@feature/notification/interfaces/INotificationService"
-import NoData from "@components/molecules/NoData"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
-import { useTranslation } from "react-i18next"
-import NumberRank from "../atoms/NumberRank"
-import PlayerList from "./PlayerList"
+
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const NumberRank = dynamic(() => import("../atoms/NumberRank"), {
+  suspense: true,
+  ssr: true
+})
+const PlayerList = dynamic(() => import("./PlayerList"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   width: string

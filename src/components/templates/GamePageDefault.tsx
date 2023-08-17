@@ -1,25 +1,67 @@
 import React, { useEffect, useState } from "react"
-import Banners from "@components/molecules/Banners"
-import BannerSingle from "@components/molecules/BannerSingle"
-import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
+import { Box } from "@mui/material"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGlobal from "@hooks/useGlobal"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
-import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useGameStore from "@stores/game"
-import Howto from "@components/molecules/HowToPlay"
-import { Box } from "@mui/material"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import LikeNoLobby from "@components/molecules/LikeNoLobby"
-import IconArrowLeft from "@components/icons/arrowLeftIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
-import Breadcrumb from "@components/molecules/Breadcrumb"
-import { useRouter } from "next/router"
 import useGameRating from "@feature/game/containers/hooks/useGameRating"
+
+// Use dynamic import for some components
+const TopPlayer = dynamic(
+  () => import("@feature/ranking/components/template/TopPlayer"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Breadcrumb = dynamic(() => import("@components/molecules/Breadcrumb"), {
+  suspense: true,
+  ssr: false
+})
+const LikeNoLobby = dynamic(() => import("@components/molecules/LikeNoLobby"), {
+  suspense: true,
+  ssr: false
+})
+const Howto = dynamic(() => import("@components/molecules/HowToPlay"), {
+  suspense: true,
+  ssr: false
+})
+const Banners = dynamic(() => import("@components/molecules/Banners"), {
+  suspense: true,
+  ssr: false
+})
+const BannerSingle = dynamic(
+  () => import("@components/molecules/BannerSingle"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StatisticGameDetail = dynamic(
+  () => import("@components/molecules/statistic/StatisticGameDetail"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -38,14 +80,12 @@ const GamePageDefault = ({
   const data = useGameStore((state) => state.data)
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
-  const { statsGameById } = useGetStatisticsGameById()
+  const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
   const router = useRouter()
   const isReward =
     router.pathname &&
     router.pathname === "/[typeGame]/[GameHome]/[typeReward]/[notification_id]"
-  const { ratingGame, ownerRating, onSubmitSendRating } = useGameRating(
-    data?._id
-  )
+  const { ratingGame, onSubmitSendRating } = useGameRating(data?._id)
   const {
     onClickedPrev,
     onClickedNext,
@@ -54,6 +94,13 @@ const GamePageDefault = ({
   } = useGameOverview(gameData?.id as string, (gameData as IGame)?.game_mode)
 
   const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
+
+  useEffect(() => {
+    if (data) {
+      fetchStatsGameById(data._id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   /**
    * @description Render statistic
@@ -83,7 +130,6 @@ const GamePageDefault = ({
                   }
                   value={ratingGame ? ratingGame.percent : 100}
                   handleClick={onSubmitSendRating}
-                  hadVote={ownerRating?.type}
                 />
                 <StatisticGameDetail statsGameById={statsGameById} />
                 <TopPlayer
@@ -100,21 +146,23 @@ const GamePageDefault = ({
                     <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
                       <button
                         type="button"
+                        aria-label="Previous"
                         className={buttonArrow}
                         onClick={() =>
                           onClickedPrev(weeklyPoolByGameId?.previous || "")
                         }
                       >
-                        <IconArrowLeft />
+                        <Icomoon className="icon-Full-Arrow-Left" />
                       </button>
                       <button
                         type="button"
+                        aria-label="Next"
                         className={`${buttonArrow} border-l-[1px] border-neutral-700`}
                         onClick={() =>
                           onClickedNext(weeklyPoolByGameId?.next || "")
                         }
                       >
-                        <IconArrowRight />
+                        <Icomoon className="icon-Full-Arrow-Right" />
                       </button>
                     </div>
                   }

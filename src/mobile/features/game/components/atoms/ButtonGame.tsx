@@ -1,11 +1,24 @@
 import { Box, Typography } from "@mui/material"
 import { memo, ReactNode } from "react"
-import Ellipse from "@components/icons/Ellipse/Ellipse"
 import { useRouter } from "next/router"
-import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
-import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+
+const ButtonPlayer = dynamic(
+  () => import("@feature/game/components/atoms/ButtonPlayer"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonCountdown = dynamic(
+  () => import("@feature/game/components/atoms/ButtonCountdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   description?: string
@@ -75,10 +88,10 @@ const ButtonGame = ({
           <ButtonPlayer
             disabled={disabled}
             startIcon={
-              <Ellipse
-                width={18}
-                height={18}
-                fill={fillIcon}
+              <span
+                className={`flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#18181C] p-[6px] before:h-[100%] before:w-[100%] before:rounded-full before:bg-[${
+                  fillIcon ? fillIcon.toString() : "#F2C94C"
+                }]`}
               />
             }
             handleClick={() => {

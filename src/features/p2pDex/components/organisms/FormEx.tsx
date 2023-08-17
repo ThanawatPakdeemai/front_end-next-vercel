@@ -1,25 +1,20 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
-import IBusd from "@components/icons/Busd"
-import INaka from "@components/icons/Naka"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Alert, Typography } from "@mui/material"
 import React, { useEffect, useMemo } from "react"
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
 
 import { useForm } from "react-hook-form"
-import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import { formatEther } from "ethers/lib/utils"
+import { Trans, useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 
 import Helper from "@utils/helper"
 import useProfileStore from "@stores/profileStore"
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import {
   IMultiData,
   IMultiTrustOrder
@@ -28,14 +23,61 @@ import {
 import { useToast } from "@feature/toast/containers"
 import CONFIGS from "@configs/index"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
-import SwitchChain from "@components/atoms/SwitchChain"
 import { chainIdConfig } from "@configs/sites"
-import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
-import { Trans, useTranslation } from "react-i18next"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useChainSupportStore from "@stores/chainSupport"
-import Input from "../atoms/Input"
-import LeftContentForm from "../molecules/LeftContentForm"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Input = dynamic(() => import("../atoms/Input"), {
+  suspense: true,
+  ssr: false
+})
+const LeftContentForm = dynamic(() => import("../molecules/LeftContentForm"), {
+  suspense: true,
+  ssr: false
+})
+const RightMenuNotLogIn = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuNotLogIn"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SwitchChain = dynamic(() => import("@components/atoms/SwitchChain"), {
+  suspense: true,
+  ssr: false
+})
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ArrowDownwardIcon = dynamic(
+  () => import("@mui/icons-material/ArrowDownward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   type?: string
@@ -362,7 +404,9 @@ const FormEx = ({
                     </Typography>
                     <Input
                       name="amount"
-                      endIcon={<INaka />}
+                      endIcon={
+                        <Icomoon className="icon-Naka text-error-main" />
+                      }
                       placeholder={String(t("enter_amount_naka"))}
                       {...formData}
                     />
@@ -391,7 +435,7 @@ const FormEx = ({
 
                     <Input
                       name="price"
-                      endIcon={<IBusd />}
+                      endIcon={<Icomoon className="icon-busd" />}
                       placeholder={String(t("enter_price"))}
                       disabled={!edit}
                       {...formData}

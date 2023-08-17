@@ -1,15 +1,29 @@
 import useGlobal from "@hooks/useGlobal"
-import { Box, Divider } from "@mui/material"
+import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   className?: string
   insideClassName?: string
   onClick: () => void
+  redTheme?: boolean
 }
 
-const ButtonClose = ({ onClick, className, insideClassName }: IProps) => {
+const ButtonClose = ({
+  onClick,
+  className,
+  insideClassName,
+  redTheme = false
+}: IProps) => {
   const { isMarketplace } = useGlobal()
+  const _redTheme = !!(redTheme || isMarketplace)
+
   return (
     <Box
       component="div"
@@ -24,11 +38,7 @@ const ButtonClose = ({ onClick, className, insideClassName }: IProps) => {
             : "bg-error-main hover:bg-error-main"
         } ${insideClassName} duration-150 ease-bounce hover:rotate-0`}
       >
-        <Divider
-          className="m-auto w-[16px] origin-center rotate-[315deg] !border !border-neutral-200 group-hover:rotate-0"
-          orientation="vertical"
-          flexItem
-        />
+        <Icomoon className="icon-Minus rotate-[315deg] !text-white-default group-hover:rotate-0" />
       </Box>
     </Box>
   )

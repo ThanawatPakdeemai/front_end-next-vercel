@@ -1,10 +1,21 @@
-import NoticeIcon from "@components/icons/NoticeBar"
-import { IQuestData } from "@feature/quest/interfaces/IQuestService"
-import useQuestStore from "@stores/quest"
 import React from "react"
 import { useTranslation } from "react-i18next"
-import ButtonClaim from "../atoms/ButtonClaim"
-import CountWithProgressBar from "./CountWithProgressBar"
+import dynamic from "next/dynamic"
+import { IQuestData } from "@feature/quest/interfaces/IQuestService"
+import useQuestStore from "@stores/quest"
+
+const ButtonClaim = dynamic(() => import("../atoms/ButtonClaim"), {
+  suspense: true,
+  ssr: false
+})
+const CountWithProgressBar = dynamic(() => import("./CountWithProgressBar"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   data: IQuestData
@@ -19,7 +30,11 @@ const MissionItem = ({ data }: IProps) => {
 
   return (
     <div className="flex w-full flex-row items-center">
-      <NoticeIcon.Left fill={data.type === "main" ? "#F42728" : "#7B5BE6"} />
+      <Icomoon
+        className={`icon-Full-Arrow-Left ${
+          data.type === "main" ? "#F42728" : "#7B5BE6"
+        }`}
+      />
       <div
         className={`h-fit w-full rounded-md border bg-neutral-780  ${
           data.type === "main" && data.hot_quest ? "border-error-main" : ""
@@ -73,6 +88,7 @@ const MissionItem = ({ data }: IProps) => {
           <div className="mr-2 flex gap-3">
             <button
               type="button"
+              aria-label="View Details"
               className="w-[108px] rounded-2xl border border-neutral-700 py-[8px] text-xs text-neutral-200"
               onClick={() => setQuestStore(data)}
             >

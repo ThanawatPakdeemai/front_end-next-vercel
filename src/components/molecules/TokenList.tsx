@@ -1,13 +1,26 @@
 import React, { ReactNode, useState } from "react"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import INaka from "@components/icons/Naka"
-import IBusd from "@components/icons/Busd"
 import { IChainList } from "@configs/chain"
 import useChainSupportStore from "@stores/chainSupport"
-import { ModalCustom } from "./Modal/ModalCustom"
-import TabMenu from "./TabMenu"
-import TokenListItem from "./TokenListItem"
+
+const ModalCustom = dynamic(() => import("./Modal/ModalCustom"), {
+  suspense: true,
+  ssr: false
+})
+const TabMenu = dynamic(() => import("./TabMenu"), {
+  suspense: true,
+  ssr: false
+})
+const TokenListItem = dynamic(() => import("./TokenListItem"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ITokenList {
   dataList: ITokenContract[]
@@ -40,9 +53,9 @@ const TokenList = ({
    */
   const tokenIcon = (): ReactNode => {
     if (currentTabChainSelected && currentTabChainSelected.link === "NAKA") {
-      return <INaka />
+      return <Icomoon className="icon-Naka text-error-main" />
     }
-    return <IBusd />
+    return <Icomoon className="icon-busd" />
   }
 
   /**

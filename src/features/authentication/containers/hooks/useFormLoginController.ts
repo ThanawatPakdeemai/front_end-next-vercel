@@ -12,6 +12,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import Web3 from "web3"
 import { useCallback } from "react"
 import { useLinkToDiscord } from "@feature/profile/containers/hook/useSyncProfileQuery"
+import { providers } from "ethers"
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 
@@ -244,16 +245,13 @@ const useFormLoginController = () => {
     } catch (_error) {
       errorToast(MESSAGES["please-connect-wallet"])
     }
-    const valueSigner = await getSignature(account || accounts[0])
-    if (
-      ((typeof valueSigner === "string" || valueSigner instanceof String) &&
-        account) ||
-      accounts[0]
-    ) {
+    if (!accounts) return
+    const valueSigner = await getSignature(accounts[0])
+    if (valueSigner.status && valueSigner.result) {
       mutateLoginMetamask({
         _account: account,
         _accounts: accounts[0],
-        _valueSigner: valueSigner
+        _valueSigner: valueSigner.result
       })
         .then(async (_res) => {
           if (_res) {
@@ -269,6 +267,48 @@ const useFormLoginController = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, errorToast, mutateLoginMetamask, successToast])
 
+  /**
+   * @description Login with Metamask
+   */
+  const okxLogin = useCallback(async () => {
+    let accounts: Array<string> = []
+    if (!window.okxwallet) return errorToast("OKX Wallet Extension not found!")
+    try {
+      await window.okxwallet
+        .send("eth_requestAccounts", [])
+        .then((response) => {
+          if (response.result.length > 0) {
+            accounts = response.result as Array<string>
+          }
+        })
+    } catch (_error) {
+      errorToast(MESSAGES["please-connect-wallet"])
+    }
+    const provider = new providers.Web3Provider(window.okxwallet)
+    const signer = provider.getSigner(accounts[0])
+
+    const _signature = await signer.signMessage(
+      `NAKAMOTO Authentication: ${accounts[0]}`
+    )
+    if (_signature) {
+      mutateLoginMetamask({
+        _account: account,
+        _accounts: accounts[0],
+        _valueSigner: _signature
+      })
+        .then(async (_res) => {
+          if (_res) {
+            successToast(MESSAGES.logged_in_successfully)
+          }
+        })
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+        })
+    } else {
+      errorToast(MESSAGES["please-connect-wallet"])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, errorToast, mutateLoginMetamask, successToast])
   return {
     register,
     isLoading,
@@ -279,7 +319,8 @@ const useFormLoginController = () => {
     googleLogin,
     twitterLogin,
     metaMarkLogin,
-    discordLogin
+    discordLogin,
+    okxLogin
   }
 }
 

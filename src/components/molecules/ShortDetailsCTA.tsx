@@ -1,8 +1,19 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import DownloadIcon from "@components/icons/DownloadIcon"
 import { CardContent, Typography } from "@mui/material"
 import React from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IShortDetailsCTA {
   description: string
@@ -40,7 +51,7 @@ const ShortDetailsCTA = ({
           href={link}
           text={t("download")}
           className="carousel-slide__item__content__link max-h-[24.5px] !min-w-0 p-0 font-neue-machina"
-          icon={linkIcon || <DownloadIcon />}
+          icon={linkIcon || <Icomoon className="icon-Download" />}
         />
       </div>
     </CardContent>

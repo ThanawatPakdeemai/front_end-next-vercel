@@ -1,11 +1,26 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import IconArrowTop from "@components/icons/arrowTopIcon"
-import DesktopIcon from "@components/icons/DesktopIcon"
-import DollarPaperIcon from "@components/icons/DollarPaperIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Link from "next/link"
 import React from "react"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const GameDeveloperFooter = () => {
   const iconArrow = {
@@ -25,7 +40,7 @@ const GameDeveloperFooter = () => {
           >
             <Link href="/game-developer">
               <ButtonToggleIcon
-                startIcon={<DesktopIcon />}
+                startIcon={<Icomoon className="icon-Screen-Text" />}
                 text="Game a NAKA Dev"
                 className={`z-[2] ${
                   isMobile ? `mb-2 h-[45px] !w-[300px]` : `h-[50px] !w-[220px]`
@@ -51,7 +66,7 @@ const GameDeveloperFooter = () => {
                 // handleClick={() =>
                 //   openInNewTab("https://main.nakamoto.games/")
                 // }
-                startIcon={<DollarPaperIcon />}
+                startIcon={<Icomoon className="icon-ATM-Dollar" />}
                 text="Game a Partner"
                 className={`z-[2] ${
                   isMobile ? `mb-2 h-[45px] !w-[300px]` : `h-[50px] !w-[220px]`
@@ -80,7 +95,9 @@ const GameDeveloperFooter = () => {
                 stiffness: 400,
                 damping: 5
               }}
-              icon={<IconArrowTop className="text-white-default" />}
+              icon={
+                <Icomoon className="icon-Full-Arrow-Up text-white-default" />
+              }
               className="h-fit cursor-pointer self-center rounded-[15px] border border-neutral-700 p-4"
             />
           </div>

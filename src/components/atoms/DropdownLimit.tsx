@@ -2,11 +2,26 @@ import React, { useState } from "react"
 import { Popover } from "@mui/material"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
-import { IMenuBase } from "@interfaces/IMenu"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { IMenuBase } from "@interfaces/IMenu"
+
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const SelectDropdown = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdown"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IProp {
   defaultValue: number

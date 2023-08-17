@@ -1,9 +1,7 @@
-import { Collapse, Typography } from "@mui/material"
 import React, { memo, useMemo, useState, useRef, useEffect } from "react"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
-import DropdownIcon from "@components/icons/DropdownIcon"
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import dynamic from "next/dynamic"
+import Typography from "@mui/material/Typography"
 import {
   MARKET_FILTER_DATE,
   MARKET_FILTER_MAP,
@@ -18,11 +16,52 @@ import useMarketCategTypes, { TCategory } from "@stores/marketCategTypes"
 import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import useGlobal from "@hooks/useGlobal"
 import Helper from "@utils/helper"
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
-import ResourceTree from "./ResourceTree"
-import FilterSearchBox from "./FilterSearchBox"
-import SearchDropDown from "./SearchDropDown"
+
+const CheckBoxNaka = dynamic(
+  () => import("@components/atoms/checkBox/CheckBoxNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MenuButtonExpandMobile = dynamic(
+  () => import("@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ResourceTree = dynamic(() => import("./ResourceTree"), {
+  suspense: true,
+  ssr: false
+})
+const FilterSearchBox = dynamic(() => import("./FilterSearchBox"), {
+  suspense: true,
+  ssr: false
+})
+const SearchDropDown = dynamic(() => import("./SearchDropDown"), {
+  suspense: true,
+  ssr: false
+})
+const Collapse = dynamic(() => import("@mui/material/Collapse"), {
+  suspense: true,
+  ssr: false
+})
+const ArrowBackIcon = dynamic(() => import("@mui/icons-material/ArrowBack"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const FilterBox = () => {
   const router: NextRouter = useRouter()
@@ -272,6 +311,7 @@ const FilterBox = () => {
         <section ref={boxRef}>
           <button
             type="button"
+            aria-label="expand"
             onClick={handleOnExpandClick}
             className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
           >
@@ -292,13 +332,13 @@ const FilterBox = () => {
               {convertNFTTypeToTType(marketType || "nft_land")}
             </span>
             <div
-              className={`${
+              className={`flex items-center justify-center ${
                 expanded === true
                   ? "rotate-180 transition-all duration-300"
                   : "rotate-0 transition-all duration-300"
               }`}
             >
-              <DropdownIcon />
+              <Icomoon className="icon-Arrow-Down !text-[14px]" />
             </div>
           </button>
           <Collapse

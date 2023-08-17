@@ -1,17 +1,14 @@
-import { Image } from "@components/atoms/image/index"
 import { Typography } from "@mui/material"
 import { useRouter } from "next/router"
-import Meta from "@src/meta"
 import React from "react"
 import dynamic from "next/dynamic"
+import Meta from "@src/meta"
+import { IMAGES } from "@constants/images"
 
-const IconArrowRight = dynamic(
-  () => import("@components/icons/arrowRightIcon"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
 const ButtonToggleIcon = dynamic(
   () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
   {
@@ -59,21 +56,25 @@ const CustomPage404 = () => {
           </Typography>
           <ButtonToggleIcon
             type="button"
-            className=" mt-5 w-[50%] bg-error-main font-bold text-error-contrastText !no-underline"
+            className="mt-5 w-[50%] bg-error-main font-bold text-error-contrastText !no-underline"
             text="Back to Home"
             startIcon={null}
             handleClick={() => {
               router.push("/")
             }}
-            endIcon={<IconArrowRight stroke="#010101" />}
+            endIcon={
+              <span className="relative">
+                <span className="icon-Full-Arrow-Left absolute top-[-9px] rotate-180 text-[#010101]" />
+              </span>
+            }
           />
         </div>
         <div className="mx-auto mt-10 max-w-md md:mx-0 md:max-w-none">
           <Image
-            src="/images/not_found.webp"
-            alt="404 Not Found"
-            width={600}
-            height={450}
+            src={IMAGES.notfound.src}
+            alt={IMAGES.notfound.alt}
+            width={IMAGES.notfound.width}
+            height={IMAGES.notfound.height}
             loading="lazy"
           />
         </div>

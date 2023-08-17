@@ -1,6 +1,7 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
 import { Box, SelectChangeEvent } from "@mui/material"
+import dynamic from "next/dynamic"
 import {
   IDevice,
   IDropdownAll,
@@ -12,14 +13,32 @@ import { IMenuBase } from "@interfaces/IMenu"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ICURRENCY } from "@interfaces/ICurrency"
 import { IList } from "@interfaces/ITransaction"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { CATEGORY_ICON } from "@constants/categoryIcon"
-import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
-import AllGamesIcon from "@components/icons/AllGamesIcon"
-import MenuItemCustom from "../MenuItemCustom"
-import { ImageCustom } from "../image/Image"
 import { IDropdownCustomSelect } from "../DropdownCustom"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   className?: string
@@ -91,7 +110,7 @@ const SelectDropdown = ({
           label={"slug" in item ? item.name : item.label}
           icon={
             CATEGORY_ICON.find((_item) => _item.id === item.slug)?.icon || (
-              <AllCategoriesIcon />
+              <Icomoon className="icon-Grid-02" />
             )
           }
           href={item.href}
@@ -119,7 +138,7 @@ const SelectDropdown = ({
                 </div>
               </div>
             ) : (
-              <AllGamesIcon />
+              <Icomoon className="icon-Grid-02" />
             )
           }
           href={item.href}

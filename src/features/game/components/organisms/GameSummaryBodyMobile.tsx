@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React from "react"
 import dayjs from "dayjs"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { ISummaryItemUsedProps } from "@feature/game/components/molecules/SummaryItemUsed"
-import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
-import { Box } from "@mui/material"
-import { ImageCustom } from "@components/atoms/image/Image"
 import { IGame } from "@feature/game/interfaces/IGameService"
+
+const CardSummaryMain = dynamic(
+  () => import("@feature/game/components/molecules/CardSummaryMain")
+)
+const ImageCustom = dynamic(() =>
+  import("@components/atoms/image/Image").then((mod) => mod.ImageCustom)
+)
 
 interface IProp extends ISummaryItemUsedProps {
   date: string | Date

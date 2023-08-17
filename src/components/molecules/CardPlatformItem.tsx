@@ -1,8 +1,13 @@
-import { ImageCustom } from "@components/atoms/image/Image"
+import { Box, SxProps, Theme } from "@mui/material"
+import dynamic from "next/dynamic"
+import Link from "next/link"
 import React from "react"
 import { IPlatformList } from "@configs/platform"
-import { Box, SxProps, Theme } from "@mui/material"
-import Link from "next/link"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface ICardPlatformItemProps extends IPlatformList {
   className?: string

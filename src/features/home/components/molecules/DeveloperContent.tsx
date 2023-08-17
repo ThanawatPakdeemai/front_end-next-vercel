@@ -1,6 +1,11 @@
 import { memo } from "react"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
 import { IMAGES } from "@constants/images"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const DeveloperContent = () => (
   <div className="developer-content relative">

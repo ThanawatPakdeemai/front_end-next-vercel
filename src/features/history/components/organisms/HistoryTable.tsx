@@ -1,27 +1,75 @@
 /* eslint-disable no-console */
 import React from "react"
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  Paper,
-  Chip,
-  Box
-} from "@mui/material"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import dayjs from "dayjs"
-import PageHeader from "@feature/table/components/molecules/PageHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import useHistoryController from "@feature/history/containers/hook/useHistoryController"
-import useGlobal from "@hooks/useGlobal"
-import useTable from "@feature/table/containers/hooks/useTable"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import { v4 as uuid } from "uuid"
-import { TRoomStatus } from "@feature/game/interfaces/IGameService"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Paper from "@mui/material/Paper"
+import TableContainer from "@mui/material/TableContainer"
+import Box from "@mui/material/Box"
+import { TRoomStatus } from "@feature/game/interfaces/IGameService"
+import useTable from "@feature/table/containers/hooks/useTable"
+import useGlobal from "@hooks/useGlobal"
+import useHistoryController from "@feature/history/containers/hook/useHistoryController"
+
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonTableWallet = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonTableWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PageHeader = dynamic(
+  () => import("@feature/table/components/molecules/PageHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const HistoryTable = () => {
   const { setSkip, totalCount, skip, hxHistory, historyIsLoading } =

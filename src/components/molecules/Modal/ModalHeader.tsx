@@ -1,14 +1,24 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
 import { Box, Divider, Typography } from "@mui/material"
 import React, { ReactNode, memo } from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose")
+)
 
 interface IProp {
   handleClose: () => void
   title: string | ReactNode
   bg?: string
+  btnCloseRed?: boolean
 }
-const ModalHeader = ({ handleClose, title, bg }: IProp) => {
+const ModalHeader = ({
+  handleClose,
+  title,
+  bg,
+  btnCloseRed = false
+}: IProp) => {
   const { t } = useTranslation()
 
   return (
@@ -27,7 +37,10 @@ const ModalHeader = ({ handleClose, title, bg }: IProp) => {
               : ""
           }`}
         >
-          <ButtonClose onClick={() => handleClose()} />
+          <ButtonClose
+            redTheme={btnCloseRed}
+            onClick={() => handleClose()}
+          />
         </div>
       </Box>
       {title === "Buy Assets" ? <></> : <Divider />}

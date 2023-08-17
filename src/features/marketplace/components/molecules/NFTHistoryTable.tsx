@@ -1,13 +1,51 @@
 import React, { useMemo } from "react"
-import { Chip, Table, TableBody, TableContainer } from "@mui/material"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
 import { Trans } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
+import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
-import CopyButton from "@components/atoms/CopyButton"
 import { IMarketHistory } from "@feature/marketplace/interfaces/IMarketService"
+
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CopyButton = dynamic(() => import("@components/atoms/CopyButton"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   history: IMarketHistory[]

@@ -1,9 +1,20 @@
 import React from "react"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import { IPlayerPlayToEarnRanking } from "@feature/ranking/interfaces/IRanking"
 import Helper from "@utils/helper"
-import NumberRank from "@feature/ranking/components/atoms/NumberRank"
-import { ImageCustom } from "@components/atoms/image/Image"
+
+const NumberRank = dynamic(
+  () => import("@feature/ranking/components/atoms/NumberRank"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   index: number

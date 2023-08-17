@@ -1,13 +1,33 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { ImageCustom } from "@components/atoms/image/Image"
-import { MESSAGES } from "@constants/messages"
-import { useToast } from "@feature/toast/containers"
 import { Chip, Typography } from "@mui/material"
-import Helper from "@utils/helper"
 import { ImageProps } from "next/image"
 import Link from "next/link"
-import CopyIcon from "@components/icons/CopyIcon"
 import React from "react"
+
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const ImageCustom = dynamic(
+  () => import("@components/atoms/image/Image").then((mod) => mod.ImageCustom),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ITagSingular {
   title: string
@@ -97,7 +117,7 @@ const TagSingular = ({
             <ButtonIcon
               onClick={copyClipboard}
               className="relative ml-2 flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-              icon={<CopyIcon />}
+              icon={<Icomoon className="icon-Copy" />}
             />
           </div>
         )}

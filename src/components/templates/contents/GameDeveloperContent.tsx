@@ -1,8 +1,19 @@
 import React from "react"
-import { ImageCustom } from "@components/atoms/image/Image"
-import Jumbotron from "@components/molecules/Jumbotron"
-import { IMAGES } from "@constants/images"
 import { Box, SxProps, Theme } from "@mui/material"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
+
+const ImageCustom = dynamic(
+  () => import("@components/atoms/image/Image").then((mod) => mod.ImageCustom),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Jumbotron = dynamic(() => import("@components/molecules/Jumbotron"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IGameDeveloperContentProps {
   id: string

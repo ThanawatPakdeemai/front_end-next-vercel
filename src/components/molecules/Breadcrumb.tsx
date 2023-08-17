@@ -1,9 +1,14 @@
-import Crumb from "@components/atoms/Crumb"
-import { ICrumb } from "@interfaces/IMenu"
 import { Breadcrumbs, Stack } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
+import dynamic from "next/dynamic"
+import { ICrumb } from "@interfaces/IMenu"
+
+const Crumb = dynamic(() => import("@components/atoms/Crumb"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   className?: string

@@ -1,14 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from "react"
-import { TableBody, Table, TableContainer, Box } from "@mui/material"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-
-import ButtonLink from "@components/atoms/button/ButtonLink"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import Helper from "@utils/helper"
-import CopyTextIcon from "@components/icons/CopyTextIcon"
-// import VerifiedIcon from "@components/icons/VerifiedIcon"
 import {
   IMultiData,
   IMultiOrderListDataServ
@@ -19,7 +14,48 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useLoadingStore from "@stores/loading"
 import useP2PDexCancel from "@feature/p2pDex/containers/hooks/useP2PDexCancel"
-import FormEdit from "./FormEdit"
+
+const FormEdit = dynamic(() => import("./FormEdit"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   data: IMultiOrderListDataServ | undefined
@@ -149,15 +185,10 @@ const MyOrderList = ({ ...props }: IProp) => {
                           Helper.copyClipboard(order.id)
                         }}
                       >
-                        <CopyTextIcon />
+                        <Icomoon className="icon-Copy" />
                       </Box>
                     </>,
                     <>
-                      {/* {order.trusted_order ? (
-                        <VerifiedIcon />
-                      ) : (
-                        <div className="mr-4" />
-                      )} */}
                       <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
                         {Helper.shortenString(order.wallet_address)}
                       </div>
@@ -168,7 +199,7 @@ const MyOrderList = ({ ...props }: IProp) => {
                           Helper.copyClipboard(order.wallet_address)
                         }}
                       >
-                        <CopyTextIcon />
+                        <Icomoon className="icon-Copy" />
                       </Box>
                     </>,
                     <>

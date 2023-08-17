@@ -1,9 +1,20 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
-import INaka from "@components/icons/Naka"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   className?: string
@@ -47,7 +58,7 @@ const SelectDropdownCurrency = ({
             <div className="game-item__image">
               {item.tokenName.toLocaleUpperCase() === "NAKA" && (
                 <div className="absolute left-0 top-0 flex h-10 w-10 flex-1 items-center justify-center rounded-lg p-[10px]">
-                  <INaka />
+                  <Icomoon className="icon-Naka text-error-main" />
                 </div>
               )}
               <p className="text-sm text-white-default">{item.tokenName}</p>
@@ -56,16 +67,6 @@ const SelectDropdownCurrency = ({
           isOpen
           hideDropdownIcon
         />
-        {/* <MenuItem
-          key={item.address}
-          aria-label={item.address}
-          sx={{
-            alignItems: "baseline"
-          }}
-        >
-          <ListItemIcon className="text-center">{item.symbol}</ListItemIcon>
-          <ListItemText className="ml-2">{item.tokenName}</ListItemText>
-        </MenuItem> */}
       </Box>
     ))}
   </MenuList>

@@ -1,13 +1,28 @@
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
-import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
-import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 import { useRouter } from "next/router"
-import NoData from "@components/molecules/NoData"
-import SkeletonItemMobile from "./mobilescreen/SkeletonItemMobile"
-import CardListContainer from "./CardListContainer"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
+import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
+
+const SkeletonItem = dynamic(
+  () => import("@feature/marketplace/components/molecules/SkeletonItem"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonItemMobile = dynamic(
+  () => import("./mobilescreen/SkeletonItemMobile")
+)
+const CardListContainer = dynamic(() => import("./CardListContainer"), {
+  suspense: true,
+  ssr: true
+})
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),

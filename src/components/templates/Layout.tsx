@@ -1,8 +1,17 @@
 import React from "react"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: true
+})
+
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: true
+})
 
 export default function Layout({
   children

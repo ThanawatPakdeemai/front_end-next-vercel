@@ -1,10 +1,20 @@
-import PlayersAmount from "@components/atoms/PlayersAmount"
-import PlayersIcon from "@components/icons/PlayersIcon"
-import StopwatchIcon from "@components/icons/StopwatchIcon"
 import { Typography } from "@mui/material"
 import React, { ReactNode } from "react"
-import Counter from "@components/atoms/timer/Counter"
+import dynamic from "next/dynamic"
 import fullConfig from "../../../../tailwindResolver"
+
+const PlayersAmount = dynamic(() => import("@components/atoms/PlayersAmount"), {
+  suspense: true,
+  ssr: false
+})
+const Counter = dynamic(() => import("@components/atoms/timer/Counter"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   timer?: {
@@ -59,7 +69,7 @@ const RoomListBox = ({
         borderColor ?? "border-neutral-700"
       } bg-neutral-900 py-2 align-baseline`}
     >
-      {showClock || <StopwatchIcon stroke={initTheme} />}
+      {showClock || <Icomoon className={`icon-Stopwatch ${initTheme}`} />}
 
       {timer && !unlimited ? (
         <Counter
@@ -81,14 +91,12 @@ const RoomListBox = ({
     <div className="player-list flex h-[40px] w-fit flex-[1_1_100%] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 px-3 align-baseline sm:flex-[1_1_50%] lg:flex-none">
       <button
         type="button"
+        aria-label="icon button"
         onClick={onClick}
       >
         {icon}
       </button>
-      <PlayersIcon
-        stroke={initTheme}
-        className="mr-[10px]"
-      />
+      <Icomoon className={`icon-Users-Group mr-[10px] ${initTheme}`} />
       {player && (
         <PlayersAmount
           currentPlayer={player.currentPlayer}

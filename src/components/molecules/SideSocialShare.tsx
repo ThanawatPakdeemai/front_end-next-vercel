@@ -1,10 +1,4 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import CONFIGS from "@configs/index"
-// import { SOCIAL_SHARE } from "@configs/socialShare"
-import { MESSAGES } from "@constants/messages"
-import { useToast } from "@feature/toast/containers"
 import { Typography } from "@mui/material"
-import Helper from "@utils/helper"
 import { useRouter } from "next/router"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
@@ -13,11 +7,25 @@ import {
   TwitterShareButton,
   TelegramShareButton
 } from "react-share"
-import LinkIcon from "@components/icons/LinkIcon"
-import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import { useTranslation } from "react-i18next"
+
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
+import CONFIGS from "@configs/index"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   hidden?: string
@@ -28,7 +36,7 @@ const SideSocialShare = ({ hidden }: IProp) => {
   const { t } = useTranslation()
   const { successToast } = useToast()
   const classStyle =
-    "my-2 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-red-card/20"
+    "my-2 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-red-card/20 text-[#F42728]"
 
   return (
     <div className={`${hidden} sticky top-[202px]`}>
@@ -56,7 +64,7 @@ const SideSocialShare = ({ hidden }: IProp) => {
                   stiffness: 400,
                   damping: 4
                 }}
-                icon={<TelegramIcon fill="#F42728" />}
+                icon={<Icomoon className="icon-telegram" />}
                 className={classStyle}
               />
             </TelegramShareButton>
@@ -73,7 +81,7 @@ const SideSocialShare = ({ hidden }: IProp) => {
                   stiffness: 400,
                   damping: 4
                 }}
-                icon={<TwitterIcon fill="#F42728" />}
+                icon={<Icomoon className="icon-twitter" />}
                 className={classStyle}
               />
             </TwitterShareButton>
@@ -90,7 +98,7 @@ const SideSocialShare = ({ hidden }: IProp) => {
                   stiffness: 400,
                   damping: 4
                 }}
-                icon={<FacebookIcon fill="#F42728" />}
+                icon={<Icomoon className="icon-Facebook" />}
                 className={classStyle}
               />
             </FacebookShareButton>
@@ -102,12 +110,7 @@ const SideSocialShare = ({ hidden }: IProp) => {
                 stiffness: 400,
                 damping: 4
               }}
-              icon={
-                <LinkIcon
-                  stroke="#F42728"
-                  className="!rotate-[-17deg] !text-error-main"
-                />
-              }
+              icon={<Icomoon className="icon-Link" />}
               onClick={() => {
                 Helper.copyClipboard(CONFIGS.BASE_URL.FRONTEND + router.asPath)
                 successToast(MESSAGES.copy)

@@ -1,6 +1,14 @@
-import IBattery from "@components/icons/Battery"
-import ISignalTube from "@components/icons/SignalTube"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+
+const IBattery = dynamic(() => import("@components/atoms/svg/Battery"), {
+  suspense: true,
+  ssr: true
+})
+const ISignalTube = dynamic(() => import("@components/atoms/svg/SignalTube"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IWalletHeaderProps {
   tokenName: string

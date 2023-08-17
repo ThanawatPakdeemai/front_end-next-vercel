@@ -1,15 +1,31 @@
 import React, { memo } from "react"
 import { Badge, Box, Button, Typography } from "@mui/material"
-import { Image } from "@components/atoms/image"
-import SelectNaka from "@components/atoms/select/SelectNaka"
 import { useTranslation } from "next-i18next"
 import Link from "next/link"
-import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
 import { MENU, MENU_MARKETPLACE } from "@configs/menu"
 import tailwindResolver from "tailwindResolver"
 import useGlobal from "@hooks/useGlobal"
-import HamburgerIcon from "@components/icons/HamburgerIcon"
+
+const SelectNaka = dynamic(
+  () => import("@components/atoms/select/SelectNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const HeadMenu = () => {
   const { t } = useTranslation()
@@ -66,16 +82,6 @@ const HeadMenu = () => {
         className="xs:my-5 m-auto grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-[5px] overflow-hidden rounded-[13px] bg-neutral-700 p-[5px] sm:flex md:order-1 md:mb-0 lg:my-0 lg:flex-none"
       >
         {MENU_DATA.map((item, _index) => {
-          // const activeHomeMarket: boolean =
-          //   router.asPath.split("/")[2] !== "p2p" &&
-          //   item.link.split("/")[2] !== "p2p" &&
-          //   router.asPath.split("/")[2] !== "map" &&
-          //   item.link.split("/")[2] !== "map"
-
-          // const activeP2p =
-          //   router.asPath.split("/")[2] === "p2p" &&
-          //   item.link.split("/")[2] === "p2p"
-
           if (!item.isChide && item.chide === undefined) {
             return (
               <Link
@@ -167,24 +173,15 @@ const HeadMenu = () => {
                             }  ${
                               router.asPath === item.link && "!text-neutral-300"
                             }`}
-
-                            // ${
-                            //   router.pathname === "marketplace/p2p" &&
-                            //   "!text-neutral-300"
-                            // }
                           >
                             {t(`${item.name}`)}
                           </Typography>
-                          <HamburgerIcon fill="#fff" />
-                          {/* <DragHandleIcon
-                            // className="ml-4"
-                            sx={styleIcon}
-                          /> */}
+                          <Icomoon className="icon-burger text-[85%] text-white-primary" />
                         </div>
                       ) : (
                         <>
-                          <Typography className="flex h-4 items-center !whitespace-nowrap !font-neue-machina-semi !text-[7px]">
-                            &#x2022; &#x2022; &#x2022;
+                          <Typography className="flex !whitespace-nowrap !font-neue-machina-semi !text-sm">
+                            Others =
                           </Typography>
                         </>
                       )}

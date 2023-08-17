@@ -1,27 +1,36 @@
+import dynamic from "next/dynamic"
 import { IMenuBase } from "@interfaces/IMenu"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
-import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
-import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonWallet = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export const SocialRegister: IMenuBase[] = [
   {
-    icon: <FacebookIcon />,
+    icon: <Icomoon className="icon-Facebook" />,
     label: "facebook",
     href: "https://www.facebook.com/play.nakamoto.games"
   },
   {
-    icon: <TwitterIcon />,
+    icon: <Icomoon className="icon-twitter" />,
     label: "twitter",
     href: "https://twitter.com/NakamotoGames"
   },
   {
-    icon: <GoogleIcon />,
+    icon: <Icomoon className="icon-Substack text-[110%]" />,
     label: "substack",
     href: "https://nakamotogames.substack.com/"
   },
   {
-    icon: <MetaMarkIcon />,
+    icon: <IcomoonWallet className="icon-Metamask" />,
     label: "metamark",
     href: "https://metamask.io/"
   }

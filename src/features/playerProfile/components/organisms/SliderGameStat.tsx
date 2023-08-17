@@ -1,8 +1,19 @@
 import React from "react"
-import CrumbCustom from "@components/atoms/CrumbCustom"
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import Divider from "@mui/material/Divider"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+
+const CrumbCustom = dynamic(() => import("@components/atoms/CrumbCustom"), {
+  suspense: true,
+  ssr: true
+})
+const CheckBoxNaka = dynamic(
+  () => import("@components/atoms/checkBox/CheckBoxNaka"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IPorp {
   openBadges: boolean

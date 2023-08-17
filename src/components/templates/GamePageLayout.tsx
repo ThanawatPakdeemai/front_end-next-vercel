@@ -1,12 +1,38 @@
-import ShapeIcon from "@components/icons/ShapeIcon"
-import Banners from "@components/molecules/Banners"
-import HeadGames from "@components/molecules/HeadGames"
-import SidebarGames from "@components/molecules/SidebarGames"
-import Tagline from "@components/molecules/tagline/Tagline"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
 import React from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Banners = dynamic(() => import("@components/molecules/Banners"), {
+  suspense: true,
+  ssr: false
+})
+const HeadGames = dynamic(() => import("@components/molecules/HeadGames"), {
+  suspense: true,
+  ssr: false
+})
+const SidebarGames = dynamic(
+  () => import("@components/molecules/SidebarGames"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
 
 const GamePageLayout = ({
   children
@@ -20,7 +46,7 @@ const GamePageLayout = ({
         bgColor="bg-neutral-800"
         textColor="text-neutral-500 font-bold"
         text={String(t("christmas_gift"))}
-        icon={<ShapeIcon fill="#4E5057" />}
+        icon={<Icomoon className="icon-require" />}
         show={false}
       />
       <Banners />

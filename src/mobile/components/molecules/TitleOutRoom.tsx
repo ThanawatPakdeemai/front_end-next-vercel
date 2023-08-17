@@ -1,5 +1,9 @@
-import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import { ReactNode } from "react"
+import dynamic from "next/dynamic"
+
+const LogoNakaBigIcon = dynamic(
+  () => import("@components/atoms/svg/LogoNakaBigIcon")
+)
 
 interface IProps {
   name: string | ReactNode

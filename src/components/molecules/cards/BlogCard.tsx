@@ -2,13 +2,27 @@ import React from "react"
 import dayjs from "dayjs"
 import { motion, Variants } from "framer-motion"
 import { v4 as uuid } from "uuid"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import FireIcon from "@components/icons/BlogIcon/FireIcon"
 import { Typography } from "@mui/material"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import Link from "next/link"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
 import { Tag } from "@feature/blog/interfaces/IBlogTagsService"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IBlogCard {
   iconmotion?: Variants
@@ -47,7 +61,7 @@ const BlogCard = ({
         <div className="relative">
           <ButtonIcon
             variants={iconmotion}
-            icon={<FireIcon />}
+            icon={<Icomoon className="icon-Fire" />}
             className="z-4 absolute right-0 top-0 m-4 flex items-center justify-center rounded-lg bg-neutral-900 p-1"
           />
 

@@ -55,6 +55,7 @@ const ButtonGame = ({
         } ${!isMobile && "mt-5 w-full"}`}
         initial="rest"
         whileHover="hover"
+        aria-label="Icon Button"
         type="button"
         disabled={disabled}
         onClick={handleClick}

@@ -8,12 +8,10 @@ import useGlobal from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import { useTranslation } from "react-i18next"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 
-const SkeletonBanner = dynamic(
-  () => import("@components/atoms/skeleton/SkeletonBanner"),
+const CardBuyItem = dynamic(
+  () => import("@feature/gameItem/components/molecules/CardBuyItem"),
   {
     suspense: true,
     ssr: false
@@ -26,6 +24,20 @@ const StoryLobby = dynamic(
     ssr: false
   }
 )
+const GameReviews = dynamic(
+  () => import("@feature/game/components/molecules/GameReviews"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonBanner = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonBanner"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const GamePageDefault = dynamic(
   () => import("@components/templates/GamePageDefault"),
   {
@@ -33,6 +45,15 @@ const GamePageDefault = dynamic(
     ssr: false
   }
 )
+
+const RightSidebarContent = dynamic(
+  () => import("@components/templates/contents/RightSidebarContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
 const RightSidebarContentEffect = dynamic(
   () => import("@components/templates/contents/RightSidebarContentEffect"),
   {
@@ -40,6 +61,7 @@ const RightSidebarContentEffect = dynamic(
     ssr: false
   }
 )
+
 const FullWidthContent = dynamic(
   () => import("@components/templates/contents/FullWidthContent"),
   {
@@ -66,6 +88,14 @@ const OverviewContent = dynamic(
 
 const GameTabsVertical = dynamic(
   () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const ButtonGame = dynamic(
+  () => import("@feature/game/components/molecules/ButtonGame"),
   {
     suspense: true,
     ssr: false
@@ -184,7 +214,7 @@ export default function ArcadeEmporiumGameDetails() {
     <GamePageDefault
       component={
         <RightSidebarContentEffect
-          className="mb-24"
+          className="mb-[64px]"
           content={
             <GameContent
               gameId={gameData.id}
@@ -218,27 +248,34 @@ export default function ArcadeEmporiumGameDetails() {
         />
       }
       component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important",
-              "&.container-fullWidth": {
-                padding: "49px"
-              }
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabsVertical
+        <RightSidebarContent
+          className="mb-[64px]"
+          content={
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
+                }
+              }}
+            >
+              <TabProvider>
+                <GameTabsVertical
+                  gameId={gameData.id}
+                  gameType={gameData.game_mode}
+                />
+              </TabProvider>
+            </FullWidthContent>
+          }
+          aside={
+            <GameReviews
+              gameType={gameData.game_mode}
               gameId={gameData.id}
-              gameType="arcade-emporium"
             />
-            {/* <GameTabs
-              gameId={gameData.id}
-              gameType="arcade-emporium"
-            /> */}
-          </TabProvider>
-        </FullWidthContent>
+          }
+        />
       }
     />
   ) : (

@@ -8,55 +8,76 @@ import {
   InputAdornment,
   Link,
   Stack,
-  styled,
   TextField,
   Typography
 } from "@mui/material"
-import { IMAGES } from "@constants/images"
-import { Image } from "@components/atoms/image/index"
-import Tagline from "@components/molecules/tagline/Tagline"
-import HeadLogo from "@components/molecules/HeadLogo"
-import VectorIcon from "@components/icons/VectorIcon"
-import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import ILock from "@components/icons/Lock"
 import { motion } from "framer-motion"
-import { Beenhere } from "@mui/icons-material"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { useForm } from "react-hook-form"
-import IEdit from "@components/icons/Edit"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
 import useCreateNewPassword from "../containers/hooks/useCreateNewPassword"
-import FormLogin from "./FormLogin"
 
-const KeyFramesClockwise = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(0deg)"
-    },
-    to: {
-      transform: "rotate(359deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FormLogin = dynamic(() => import("./FormLogin"), {
+  suspense: true,
+  ssr: false
 })
-
-const KeyFramesAnticlockwise = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(0deg)"
-    },
-    to: {
-      transform: "rotate(359deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
 })
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const HeadLogo = dynamic(() => import("@components/molecules/HeadLogo"), {
+  suspense: true,
+  ssr: false
+})
+const CreateProfile = dynamic(
+  () => import("@feature/profile/components/createProfile/CreateProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   email: string
@@ -206,7 +227,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
                 text={t("main_tagline")}
-                icon={<VectorIcon />}
+                icon={<Icomoon className="icon-require" />}
                 className="!my-[2.938rem]"
                 show={false}
               />
@@ -222,29 +243,8 @@ const FromCreatePassword = ({ email, token }: IProp) => {
               background: "#050505"
             }}
           >
-            <Box
-              component="div"
-              className="flex justify-end"
-            >
-              <div className="absolute">
-                <KeyFramesClockwise>
-                  <Image
-                    src={IMAGES.ro.src}
-                    alt={IMAGES.ro.alt}
-                    className="h-full w-full"
-                  />
-                </KeyFramesClockwise>
-              </div>
-              <div className="absolute">
-                <KeyFramesAnticlockwise>
-                  <Image
-                    src={IMAGES.vectorWorld.src}
-                    alt={IMAGES.vectorWorld.alt}
-                    className="relative h-full w-full p-[5px]"
-                  />
-                </KeyFramesAnticlockwise>
-              </div>
-            </Box>
+            {/* Remove this because CPU usage is too high */}
+            {/* <CircleSphereAnimation /> */}
             <Box
               component="div"
               sx={{
@@ -335,7 +335,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <ILock />
+                              <Icomoon className="icon-Lock" />
                             </InputAdornment>
                           ),
                           endAdornment: (
@@ -439,7 +439,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <Beenhere />
+                              <Icomoon className="icon-Shield-with-Check-02" />
                             </InputAdornment>
                           ),
                           endAdornment: (
@@ -517,7 +517,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         <ButtonToggleIcon
                           disabled={disable}
                           type="submit"
-                          startIcon={<IEdit />}
+                          startIcon={<Icomoon className="icon-Ballpen" />}
                           text="Confirm"
                           className={`${
                             disable ? "" : `btn-rainbow-theme`

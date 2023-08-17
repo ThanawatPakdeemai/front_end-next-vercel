@@ -1,40 +1,35 @@
 import React from "react"
-import { iconmotion } from "@components/organisms/Footer"
 import { v4 as uuid } from "uuid"
-import { IBlogData } from "@feature/blog/interfaces/IBlogService"
-import { Chip, Typography } from "@mui/material"
-import { IPopularTags } from "@feature/blog/interfaces/IBlogPopularTags"
 import { useTranslation } from "react-i18next"
-import BlogCardHorizontal from "@components/molecules/cards/BlogCardHorizontal"
+import dynamic from "next/dynamic"
+import { IBlogData } from "@feature/blog/interfaces/IBlogService"
+import { IPopularTags } from "@feature/blog/interfaces/IBlogPopularTags"
+import {
+  arrowMotion,
+  iconmotion,
+  imgMotion
+} from "@styles/themes/partial/motion"
+
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const BlogCardHorizontal = dynamic(
+  () => import("@components/molecules/cards/BlogCardHorizontal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IBlogReleatedProps {
   blogReleatedItems: IBlogData[]
   blogReleatedTag: IPopularTags[]
   blogReleatedTitle?: string
-}
-
-const arrowMotion = {
-  rest: {
-    opacity: 0,
-    duration: 0.2,
-    type: "spring"
-  },
-  hover: {
-    width: "full",
-    opacity: 1,
-    x: 3,
-    transition: {
-      duration: 0.4
-    }
-  }
-}
-
-const imgMotion = {
-  hover: {
-    marginLeft: "10px",
-    marginRight: "10px",
-    marginBottom: "-10px"
-  }
 }
 
 const BlogReleated = ({

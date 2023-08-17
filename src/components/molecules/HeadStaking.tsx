@@ -1,10 +1,15 @@
-import IconBarGraphOne from "@components/icons/BarGraphOne"
-import useTab from "@feature/tab/hook/useTab"
 import { Button, Grid } from "@mui/material"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
 import { Trans, useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useTab from "@feature/tab/hook/useTab"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const HeadStaking = ({ children }: { children: React.ReactNode }) => {
   const { handleChangeTab, tabValue } = useTab()
@@ -24,12 +29,12 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
     {
       id: "1",
       label: <Trans i18nKey="variable_APR">variable_APR</Trans>,
-      icon: <IconBarGraphOne stroke="#E1E2E2" />
+      icon: <Icomoon className="icon-Bar-Graph text-[#E1E2E2]" />
     },
     {
       id: "2",
       label: <Trans i18nKey="fixed_APR">fixed_APR</Trans>,
-      icon: <IconBarGraphOne stroke="#E1E2E2" />
+      icon: <Icomoon className="icon-Bar-Graph text-[#E1E2E2]" />
     }
   ]
 
@@ -68,6 +73,7 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
               {STAKING_TAB_CONTENT.map((item) => (
                 <Button
                   key={item.id}
+                  aria-label="Previous Slide"
                   onClick={() => handleChangeTab(item.id)}
                   className={`flex h-full items-center justify-center rounded-lg py-3 hover:bg-neutral-900 max-sm:!min-w-0 ${
                     item.id === tabValue
@@ -75,7 +81,7 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
                       : "bg-neutral-800"
                   }`}
                 >
-                  <IconBarGraphOne stroke="#E1E2E2" />
+                  <Icomoon className="icon-Bar-Graph text-[#E1E2E2]" />
                   <span className="ml-3">{item.label}</span>
                 </Button>
               ))}

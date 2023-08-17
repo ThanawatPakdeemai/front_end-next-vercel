@@ -1,8 +1,15 @@
-import IStickerSolid from "@components/icons/StickerSolid"
-import { KeyFramesRotate } from "@feature/wallet/components/molecules/WalletBody"
 import { Box, Skeleton } from "@mui/material"
 import React from "react"
 import { IMAGES } from "@constants/images"
+import dynamic from "next/dynamic"
+
+const IcomoonSticker = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonSticker"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const SkeletionWallet = () => (
   <div className="SkeletionWallet relative h-full w-full  p-6">
@@ -39,12 +46,9 @@ const SkeletionWallet = () => (
         className="w-[100px] rounded-2xl"
       />
       <div className="absolute right-2 top-2">
-        <KeyFramesRotate>
-          <IStickerSolid
-            width="70"
-            height="70"
-          />
-        </KeyFramesRotate>
+        {/* Remove this because CPU usage is too high */}
+        <IcomoonSticker className="icon-Circle-sphere-pink" />
+        {/* <KeyFramesRotate></KeyFramesRotate> */}
       </div>
     </div>
     <div className="mb-4 flex w-full justify-end xl:max-w-[390px]">

@@ -6,13 +6,10 @@ import React, {
   Suspense
 } from "react"
 import { useRouter } from "next/router"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import CardMyLandContent from "@feature/land/components/CardMyLandContent"
-import MyLandList from "@feature/land/components/organisms/MyLandList"
 import AddIcon from "@mui/icons-material/Add"
 import { Chip, Typography } from "@mui/material"
-import { Image } from "@components/atoms/image"
-import MiniMap from "@feature/map/components/organisms/MiniMap"
+import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
 import useMyLandController from "@feature/land/containers/hooks/useMyLandController"
 import {
@@ -20,7 +17,6 @@ import {
   useGetLandById
 } from "@feature/land/containers/hooks/useGetMyLand"
 import useProfileStore from "@stores/profileStore"
-import IconArrowRight from "@components/icons/arrowRightIcon"
 import {
   IMarketLandData,
   ILandMap
@@ -29,9 +25,58 @@ import { colorThree } from "@constants/map"
 import useLoadingStore from "@stores/loading"
 import { useToast } from "@feature/toast/containers"
 import useUpdateLand from "@feature/land/containers/hooks/useUpdateLand"
-import { motion } from "framer-motion"
-import UploadImag from "../../../components/icons/marketplace/UploadImag"
-import MenuButtonExpandMobile from "../marketplace/mobilescreen/MenuButtonExpandMobile"
+
+const UploadImageIcon = dynamic(
+  () => import("@components/atoms/svg/marketplace/UploadImageIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MenuButtonExpandMobile = dynamic(
+  () => import("../marketplace/mobilescreen/MenuButtonExpandMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardMyLandContent = dynamic(
+  () => import("@feature/land/components/CardMyLandContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MyLandList = dynamic(
+  () => import("@feature/land/components/organisms/MyLandList"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MiniMap = dynamic(
+  () => import("@feature/map/components/organisms/MiniMap"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const MyLandPage = () => {
   const { profile } = useProfileStore()
@@ -364,7 +409,7 @@ const MyLandPage = () => {
                 />
               ) : (
                 <div className="relative grid h-full w-full content-center justify-items-center">
-                  <UploadImag />
+                  <UploadImageIcon />
                   <Typography className="absolute bottom-0 mb-4 text-xs uppercase text-neutral-500">
                     Size Recommended 1,000 x 1,000 px
                   </Typography>
@@ -386,7 +431,9 @@ const MyLandPage = () => {
                 text="Upload banner"
                 className="mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-success-main font-bold capitalize text-success-contrastText"
                 startIcon={null}
-                endIcon={<IconArrowRight stroke="#010101" />}
+                endIcon={
+                  <Icomoon className="icon-Full-Arrow-Right text-[#010101]" />
+                }
                 handleClick={onSubmit}
               />
             )}

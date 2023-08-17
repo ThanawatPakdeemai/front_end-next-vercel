@@ -1,6 +1,11 @@
 import { Box, Avatar, Badge, Chip, Typography } from "@mui/material"
+import dynamic from "next/dynamic"
 import React, { memo } from "react"
-import { Image } from "@components/atoms/image"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   border?: { width: string; height: string }

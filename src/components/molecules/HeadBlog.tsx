@@ -1,12 +1,17 @@
-import SearchIcon from "@components/icons/SearchIcon"
-import { MENU_BLOG_HEADER } from "@configs/menu"
 import { Button, TextField, Typography } from "@mui/material"
-import useSearchStore from "@stores/blogFilter"
-import useSelectStore from "@stores/selector"
 import { useRouter } from "next/router"
 import { useTranslation } from "next-i18next"
 import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
 import { commonPattern } from "@constants/regex"
+import useSelectStore from "@stores/selector"
+import useSearchStore from "@stores/blogFilter"
+import { MENU_BLOG_HEADER } from "@configs/menu"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   const styleButton = {
@@ -78,7 +83,7 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
               fontFamily: "neueMachina",
               color: "#fff"
             },
-            startAdornment: <SearchIcon className="mr-4" />
+            startAdornment: <Icomoon className="icon-Search mr-4" />
           }}
         />
       </div>

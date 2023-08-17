@@ -1,25 +1,66 @@
-import React from "react"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import { Box } from "@mui/material"
-import { ImageCustom } from "@components/atoms/image/Image"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import ButtonOutlineTemplate from "@mobile/components/templates/ButtonOutlineTemplate"
-import AboutGameModal from "@mobile/components/organisms/modal/AboutGameModal"
-import CardBuyItemMobile from "@mobile/features/gameItem/components/molecules/CardBuyItemMobile"
-import ControllerIcon from "@components/icons/ControllerIcon"
-import BankIcon from "@components/icons/BankIcon"
+import React, { useEffect } from "react"
+import { Box, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
-import StatsDetailMobile from "@mobile/components/molecules/statistic/StatsDetailMobile"
-import TopPlayer from "@feature/ranking/components/template/TopPlayer"
-import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
-import IconArrowLeft from "@components/icons/arrowLeftIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
-import { StyleRanking } from "@mobile/features/game/styles/StyleRanking"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import { StyleRanking } from "@mobile/features/game/styles/StyleRanking"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonOutlineTemplate = dynamic(
+  () => import("@mobile/components/templates/ButtonOutlineTemplate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const AboutGameModal = dynamic(
+  () => import("@mobile/components/organisms/modal/AboutGameModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardBuyItemMobile = dynamic(
+  () =>
+    import("@mobile/features/gameItem/components/molecules/CardBuyItemMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StatsDetailMobile = dynamic(
+  () => import("@mobile/components/molecules/statistic/StatsDetailMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TopPlayer = dynamic(
+  () => import("@feature/ranking/components/template/TopPlayer"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameInfoCard = dynamic(
+  () => import("@mobile/features/game/components/molecules/GameInfoCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IGameDetailLayoutMobileProps {
   gameData: IGame
@@ -32,7 +73,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
   const router = useRouter()
   const { t } = useTranslation()
   const { openAboutGame, setOpenAboutGame } = useDrawerControllerMobile()
-  const { statsGameById } = useGetStatisticsGameById()
+  const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
   const { onClickedPrev, onClickedNext, weeklyPoolByGameId } = useGameOverview(
     gameData.id,
     gameData.game_mode
@@ -67,21 +108,23 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
                   <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
                     <button
                       type="button"
+                      aria-label="prev"
                       className={buttonArrow}
                       onClick={() =>
                         onClickedPrev(weeklyPoolByGameId.previous || "")
                       }
                     >
-                      <IconArrowLeft />
+                      <Icomoon className="icon-Full-Arrow-Left" />
                     </button>
                     <button
                       type="button"
                       className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                      aria-label="next"
                       onClick={() =>
                         onClickedNext(weeklyPoolByGameId.next || "")
                       }
                     >
-                      <IconArrowRight />
+                      <Icomoon className="icon-Full-Arrow-Right" />
                     </button>
                   </div>
                 }
@@ -93,6 +136,17 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         )
     }
   }
+
+  useEffect(() => {
+    let cancel = false
+    if (!cancel) {
+      fetchStatsGameById(gameData._id)
+    }
+    return () => {
+      cancel = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box
@@ -108,7 +162,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         }}
         aria-hidden="true"
       >
-        <ArrowBackIcon />
+        <Icomoon className="icon-Full-Arrow-Left" />
       </h2>
       <Box
         component="section"
@@ -124,14 +178,14 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         {/* Game Analystic */}
         <div className="game-section__analytics grid grid-cols-2">
           <StatsDetailMobile
-            icon={<ControllerIcon />}
+            icon={<Icomoon className="icon-Joystick" />}
             title={t("games_per_day")}
             type="normal"
             amount={statsGameById?.data.numnber_game_play || 0}
             unit={t("Games")}
           />
           <StatsDetailMobile
-            icon={<BankIcon />}
+            icon={<Icomoon className="icon-ATM-Dollar" />}
             title={t("costs_per_game")}
             type="range"
             amount={statsGameById?.data.cost_per_game_doller || 0}
@@ -164,12 +218,15 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
               className="rotate-180"
               onClick={() => setOpenAboutGame(true)}
             >
-              <ArrowBackIcon />
+              <Icomoon className="icon-Full-Arrow-Left" />
             </Box>
           </div>
-          <p className="game-section__description line-clamp-2">
-            {gameData.story}
-          </p>
+          <Typography
+            className="game-section__description line-clamp-2"
+            dangerouslySetInnerHTML={{
+              __html: `${gameData.story}`
+            }}
+          />
         </div>
 
         {/* Game categories */}

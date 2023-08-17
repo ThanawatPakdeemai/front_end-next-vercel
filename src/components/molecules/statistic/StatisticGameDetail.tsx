@@ -1,15 +1,55 @@
 import React from "react"
-import BankIcon from "@components/icons/BankIcon"
-import ControllerIcon from "@components/icons/ControllerIcon"
-import InvestIcon from "@components/icons/Stats/InvestIcon"
-import PlayersIcon from "@components/icons/Stats/PlayersIcon"
-import RewardIcon from "@components/icons/Stats/RewardIcon"
-import { IGameReportService } from "@feature/game/interfaces/IGameService"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { IGameReportService } from "@feature/game/interfaces/IGameService"
 import { isMobile } from "@hooks/useGlobal"
-import StatEstimatedProfit from "./StatEstimatedProfit"
-import StatsDetail from "./StatsDetail"
-import StatWithIcon from "./StatWithIcon"
+
+const RewardIcon = dynamic(
+  () => import("@components/atoms/svg/Stats/RewardIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const InvestIcon = dynamic(
+  () => import("@components/atoms/svg/Stats/InvestIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PlayersIcon = dynamic(
+  () => import("@components/atoms/svg/Stats/PlayersIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StatEstimatedProfit = dynamic(
+  () => import("@components/molecules/statistic/StatEstimatedProfit"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StatsDetail = dynamic(
+  () => import("@components/molecules/statistic/StatsDetail"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StatWithIcon = dynamic(
+  () => import("@components/molecules/statistic/StatWithIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   statsGameById?: IGameReportService
@@ -80,14 +120,14 @@ const StatisticGameDetail = ({ statsGameById }: IProp) => {
       <div className="flex w-full flex-auto flex-col justify-evenly gap-2 md:w-[269px]">
         <div className="flex gap-2">
           <StatsDetail
-            icon={<ControllerIcon />}
+            icon={<Icomoon className="icon-Joystick" />}
             title={t("games_per_day")}
             type="normal"
             amount={statsGameById?.data.numnber_game_play || 0}
             unit={t("Games")}
           />
           <StatsDetail
-            icon={<BankIcon />}
+            icon={<Icomoon className="icon-ATM-Dollar" />}
             title={t("costs_per_game")}
             type="range"
             amount={statsGameById?.data.cost_per_game_doller || 0}

@@ -2,7 +2,7 @@ import "@styles/globals.css"
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
 
-import { ReactElement, ReactNode } from "react"
+import { ReactElement, ReactNode, useEffect } from "react"
 import type { NextPage } from "next"
 import { appWithTranslation } from "next-i18next"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -52,6 +52,24 @@ const MyApp = (props) => {
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
   const customTheme = createTheme(theme as ThemeOptions)
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          // eslint-disable-next-line no-console
+          console.error(
+            "Service Worker registered with scope:",
+            registration.scope
+          )
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Service Worker registration failed:", error)
+        })
+    }
+  }, [])
 
   return (
     <>

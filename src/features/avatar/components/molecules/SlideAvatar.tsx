@@ -4,10 +4,27 @@
 import { Box } from "@mui/material"
 import React, { memo, useEffect, useMemo, useRef } from "react"
 import Slider from "react-slick"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
+import dynamic from "next/dynamic"
 import { IAvatar } from "@feature/avatar/interfaces/IAvatarService"
+
+const ArrowBackIcon = dynamic(() => import("@mui/icons-material/ArrowBack"), {
+  suspense: true,
+  ssr: false
+})
+const ArrowForwardIcon = dynamic(
+  () => import("@mui/icons-material/ArrowForward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const AvatarProfile = dynamic(
+  () => import("@components/atoms/avatar/AvatarProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   avatar: IAvatar[]
@@ -97,20 +114,22 @@ const SlideAvatar = ({
 
   return (
     <>
-      <Slider
-        ref={sliderRef}
-        {...settings}
-        className="!flex w-[350px] items-center justify-center gap-3"
-      >
-        {avatar &&
-          avatar.map((item, index) => (
-            <AvatarProfile
-              key={Number(index)}
-              borderColor="border-error-main"
-              src={item.value}
-            />
-          ))}
-      </Slider>
+      {avatar.length && (
+        <Slider
+          ref={sliderRef}
+          {...settings}
+          className="!flex w-[350px] items-center justify-center gap-3"
+        >
+          {avatar &&
+            avatar.map((item, index) => (
+              <AvatarProfile
+                key={Number(index)}
+                borderColor="border-error-main"
+                src={item.value}
+              />
+            ))}
+        </Slider>
+      )}
     </>
   )
 }

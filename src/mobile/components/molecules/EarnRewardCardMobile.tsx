@@ -1,8 +1,19 @@
 import React from "react"
-import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import useEarnRewardController from "@feature/earnReward/containers/hooks/useEarnRewardController"
-import ButtonFilledTemplate from "../templates/ButtonFilledTemplate"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const ButtonFilledTemplate = dynamic(
+  () => import("../templates/ButtonFilledTemplate"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IEarnRewardCardMobile {
   id: string

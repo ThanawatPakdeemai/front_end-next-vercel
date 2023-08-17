@@ -1,10 +1,24 @@
 import { Box } from "@mui/material"
-import GameTags from "@feature/slider/components/atoms/GameTags"
-import CardBody from "@components/molecules/CardBody"
+import React from "react"
+import dynamic from "next/dynamic"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
-import React from "react"
-import CardFooterSlide from "./CardFooterSlide"
+
+const GameTags = dynamic(
+  () => import("@feature/slider/components/atoms/GameTags"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const CardBody = dynamic(() => import("@components/molecules/CardBody"), {
+  suspense: true,
+  ssr: true
+})
+const CardFooterSlide = dynamic(() => import("./CardFooterSlide"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface ICardContentSlide {
   slide: IGame

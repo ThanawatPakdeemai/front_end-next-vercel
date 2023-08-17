@@ -1,5 +1,10 @@
-import RocketIcon from "@components/icons/RocketIcon"
 import React, { ReactNode } from "react"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   icon?: ReactNode
@@ -10,7 +15,7 @@ interface IProps {
 }
 
 const ButtonSticky = ({
-  icon = <RocketIcon />,
+  icon = <Icomoon className="icon-Rocket" />,
   notify = false,
   multi = false,
   className,
@@ -20,6 +25,7 @@ const ButtonSticky = ({
   return (
     <button
       type="button"
+      aria-label="Sticky"
       onClick={onClick}
       className={`relative mx-auto flex h-[88px] w-[88px] items-center justify-center lg:mx-0 ${className}`}
     >

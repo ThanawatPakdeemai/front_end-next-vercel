@@ -1,18 +1,48 @@
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  TableRow,
-  TableCell,
-  TableHead
-} from "@mui/material"
-import EventCardContent from "@feature/event/components/EventCardContent"
-import { INewDataPlayerScore } from "@feature/event/interface/IEventsService"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
+/* eslint-disable max-len */
+import React from "react"
 import { v4 as uuid } from "uuid"
-import { Image } from "@components/atoms/image/index"
-import NoData from "@components/molecules/NoData"
-import NakaIcon from "@components/icons/NakaIcon/NakaIcon"
+import dynamic from "next/dynamic"
+import { INewDataPlayerScore } from "@feature/event/interface/IEventsService"
+
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableRow = dynamic(() => import("@mui/material/TableRow"), {
+  suspense: true,
+  ssr: false
+})
+const TableCell = dynamic(() => import("@mui/material/TableCell"), {
+  suspense: true,
+  ssr: false
+})
+const TableHead = dynamic(() => import("@mui/material/TableHead"), {
+  suspense: true,
+  ssr: false
+})
+const EventCardContent = dynamic(
+  () => import("@feature/event/components/EventCardContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IEventShareAndPlayProps {
   users: INewDataPlayerScore[]
@@ -27,7 +57,7 @@ const EventsShareAndPlay = ({
   <div className="w-full">
     <EventCardContent
       title="Share and Play"
-      icon={<TwitterIcon />}
+      icon={<Icomoon className="icon-twitter" />}
       labels={{
         player_count: playerCount,
         transaction_count: transactionCount
@@ -55,24 +85,6 @@ const EventsShareAndPlay = ({
                         <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[4px] border-[1px] border-[#18181C] bg-[#101013] text-center font-neue-machina-bold text-[10px] text-white-primary">
                           {index + 1}
                         </div>
-                      </div>
-                      <div className="mr-2">
-                        {user.country ? (
-                          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[4px] border-[1px] border-[#18181C] bg-[#101013] p-[12px_10px]">
-                            <Image
-                              src={`/assets/flags/4x3/${user.country.toLocaleLowerCase()}.svg`}
-                              alt={user.country}
-                              width={50}
-                              height={50}
-                              title={user.country && user.country.toUpperCase()}
-                              className="rounded-[2px]"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[4px] border-[1px] border-[#18181C] bg-[#101013] p-[12px_5px]">
-                            <NakaIcon />
-                          </div>
-                        )}
                       </div>
                       <div>{user.username}</div>
                     </div>

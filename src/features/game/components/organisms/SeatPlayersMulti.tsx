@@ -1,10 +1,9 @@
 import React, { memo, useEffect, useMemo, useState } from "react"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { IGameCurrentPlayerMulti } from "@feature/game/interfaces/IGameService"
-import { Box, CircularProgress, Typography } from "@mui/material"
-import Ellipse from "@components/icons/Ellipse/Ellipse"
 import useProfileStore from "@stores/profileStore"
-import HighlightOffIcon from "@mui/icons-material/HighlightOff"
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
 import { useToast } from "@feature/toast/containers"
 import Helper from "@utils/helper"
 // import { IResGetIp } from "@interfaces/IGetIP"
@@ -13,12 +12,56 @@ import { MESSAGES } from "@constants/messages"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import useGameStore from "@stores/game"
 import CONFIGS from "@configs/index"
-import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
-import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
-import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
-import { useRouter } from "next/router"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
+
+const CircularProgress = dynamic(
+  () => import("@mui/material/CircularProgress"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const HighlightOffIcon = dynamic(
+  () => import("@mui/icons-material/HighlightOff"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HourglassEmptyIcon = dynamic(
+  () => import("@mui/icons-material/HourglassEmpty"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonCountdown = dynamic(
+  () => import("@feature/game/components/atoms/ButtonCountdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonPlayer = dynamic(
+  () => import("@feature/game/components/atoms/ButtonPlayer"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PlayerCard = dynamic(
+  () => import("@feature/game/components/molecules/PlayerCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IPropsPlayerMulti {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -42,7 +85,8 @@ const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
-  const { gameItemList, balanceofItem } = useBuyGameItemController()
+  const { gameItemList } = useBuyGameItemController()
+  const { balanceofItem } = useBalanceOfProvider()
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -495,7 +539,7 @@ const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
                 dataPlayers?.room_status !== "ready_play" && (
                   <ButtonPlayer
                     startIcon={
-                      <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
+                      <span className="h-[10px] w-[10px] rounded-full" />
                     }
                     disabled={loading}
                     handleClick={() => {
@@ -527,7 +571,9 @@ const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
                 !playerPressReady &&
                 playerMe?.status === "inroom" && (
                   <ButtonPlayer
-                    startIcon={<Ellipse fill="#A0ED61" />}
+                    startIcon={
+                      <span className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#18181C] p-[6px] before:h-[100%] before:w-[100%] before:rounded-full before:bg-green-lemon" />
+                    }
                     handleClick={onReady}
                     disabled={loading}
                     text={

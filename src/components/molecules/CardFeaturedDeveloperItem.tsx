@@ -1,6 +1,11 @@
 import React from "react"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
 import { IFeatureProps } from "@constants/features"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
 
 const CardFeaturedDeveloperItem = ({
   key,

@@ -1,13 +1,37 @@
 import React, { memo, useEffect } from "react"
 import { Box } from "@mui/material"
-import HeadLogo from "@components/molecules/HeadLogo"
-import HeadMenu from "@components/molecules/HeadMenu"
-import HeadPrice from "@components/molecules/HeadPrice"
-import { RightMenu } from "@components/molecules/rightMenu"
-import useGlobal, { isMobile } from "@hooks/useGlobal"
-import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
+import dynamic from "next/dynamic"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import useMarketCategTypes from "@stores/marketCategTypes"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
+
+// Use dynamic import for the components
+const HeadLogo = dynamic(() => import("@components/molecules/HeadLogo"), {
+  suspense: true,
+  ssr: false
+})
+const HeadMenu = dynamic(() => import("@components/molecules/HeadMenu"), {
+  suspense: true,
+  ssr: false
+})
+const HeadPrice = dynamic(() => import("@components/molecules/HeadPrice"), {
+  suspense: true,
+  ssr: false
+})
+const RightMenu = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenu"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightMenuDeveloper = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuDeveloper"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const Header = () => {
   const { isMarketplace, isDeveloperPage } = useGlobal()
@@ -52,7 +76,7 @@ const Header = () => {
   }, [isMarketplace])
 
   return (
-    <div className="header-wrapper">
+    <div className="header-wrapper z-40">
       {showHeadPrice && !isMobile && <HeadPrice />}
       {!isMobile && (
         <header className="header relative z-[999] lg:sticky lg:top-10">

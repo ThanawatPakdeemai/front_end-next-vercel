@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
-import DollarIcon from "@components/icons/Referral/DollarIcon"
 import { v4 as uuid } from "uuid"
 import React from "react"
-import PlayersIcon from "@components/icons/PlayersIcon"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   className?: string
@@ -22,7 +25,7 @@ const CardContent = ({ ...props }: IProp) => {
     children,
     title,
     className,
-    icon = <DollarIcon />,
+    icon = <Icomoon className="icon-Dollar-Coin" />,
     textColor = "text-neutral-300",
     labels
   } = props
@@ -41,7 +44,7 @@ const CardContent = ({ ...props }: IProp) => {
                   key={uuid()}
                   className="mr-2 flex w-full flex-1 items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 px-2 py-2 font-neue-machina-semi text-neutral-500 md:px-4"
                 >
-                  <PlayersIcon />
+                  <Icomoon className="icon-Users-Group" />
                   <span className="mx-2 whitespace-nowrap">total players:</span>
                   <span className="text-neutral-200">
                     {labels.player_count && `${labels.player_count}`}
@@ -51,7 +54,7 @@ const CardContent = ({ ...props }: IProp) => {
                   key={uuid()}
                   className="mr-2 flex w-full flex-1 items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 px-2 py-2 font-neue-machina-semi text-neutral-500 md:px-4"
                 >
-                  <JoinStickIcon stroke="#70727B" />
+                  <Icomoon className="icon-Joystick text-[#70727B]" />
                   <span className="whitespace-nowrap">total games played:</span>
                   <span className="ml-2 text-neutral-200">
                     {labels.transaction_count && `${labels.transaction_count}`}

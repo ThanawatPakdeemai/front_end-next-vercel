@@ -1,19 +1,41 @@
-import {
-  Alert,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography
-} from "@mui/material"
 import React, { useState } from "react"
-import CouponIcon from "@components/icons/CouponIcon"
-import { Image } from "@components/atoms/image"
+import { motion } from "framer-motion"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import { useToast } from "@feature/toast/containers"
 import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
-import { motion } from "framer-motion"
-import { useTranslation } from "react-i18next"
+
+const Alert = dynamic(() => import("@mui/material/Alert"), {
+  suspense: true,
+  ssr: false
+})
+const Button = dynamic(() => import("@mui/material/Button"), {
+  suspense: true,
+  ssr: false
+})
+const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"), {
+  suspense: true,
+  ssr: false
+})
+const TextField = dynamic(() => import("@mui/material/TextField"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface ICharacterCoupon {
   couponLength: number
@@ -104,7 +126,7 @@ const CouponPage = () => {
               },
               startAdornment: (
                 <InputAdornment position="start">
-                  <CouponIcon />
+                  <Icomoon className="icon-Ticket" />
                 </InputAdornment>
               ),
               inputProps: {

@@ -1,12 +1,41 @@
 import React from "react"
-import { Box, Chip, SxProps } from "@mui/material"
-import { IGetType } from "@feature/game/interfaces/IGameService"
-import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
-import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
-import FullWidthSlide from "@feature/slider/components/templates/FullWidthSlide"
-import ArcadeEmporiumIcon from "@components/icons/ArcadeEmporiumIcon"
-import GamePlayTime from "@feature/game/components/atoms/GamePlayTime"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { SxProps } from "@mui/material/styles"
+
+import Box from "@mui/material/Box"
+import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import { IGetType } from "@feature/game/interfaces/IGameService"
+
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const HorizontalThumbSlide = dynamic(
+  () => import("@feature/slider/components/templates/HorizontalThumbSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FullWidthSlide = dynamic(
+  () => import("@feature/slider/components/templates/FullWidthSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const GamePlayTime = dynamic(
+  () => import("@feature/game/components/atoms/GamePlayTime"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export const StartButtonCustomStyle: SxProps = {
   "& > div": {
@@ -50,7 +79,9 @@ const GameContent = ({
       >
         <div className="relative z-[1] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-800 p-4 uppercase text-neutral-300">
           <div className="flex items-center gap-3">
-            {gameType === "arcade-emporium" && <ArcadeEmporiumIcon />}
+            {gameType === "arcade-emporium" && (
+              <Icomoon className="icon-Diamond" />
+            )}
             <Chip
               label={t(
                 gameType

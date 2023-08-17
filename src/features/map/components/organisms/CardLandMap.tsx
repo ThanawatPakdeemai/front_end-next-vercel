@@ -1,11 +1,34 @@
-import { Box, Typography, IconButton } from "@mui/material"
 import React from "react"
-import CancelIcon from "@mui/icons-material/Cancel"
-import FmdGoodIcon from "@mui/icons-material/FmdGood"
-import { Image } from "@components/atoms/image/index"
-import { ILandMap } from "@feature/land/interfaces/ILandService"
 import { useTranslation } from "next-i18next"
-import CopyButton from "@components/atoms/CopyButton"
+import dynamic from "next/dynamic"
+
+import Box from "@mui/material/Box"
+import { ILandMap } from "@feature/land/interfaces/ILandService"
+
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const IconButton = dynamic(() => import("@mui/material/IconButton"), {
+  suspense: true,
+  ssr: false
+})
+const CancelIcon = dynamic(() => import("@mui/icons-material/Cancel"), {
+  suspense: true,
+  ssr: false
+})
+const FmdGoodIcon = dynamic(() => import("@mui/icons-material/FmdGood"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const CopyButton = dynamic(() => import("@components/atoms/CopyButton"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardLandMap {
   land: ILandMap

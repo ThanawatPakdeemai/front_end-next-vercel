@@ -1,16 +1,20 @@
+import { Button, Typography } from "@mui/material"
+import LoginIcon from "@mui/icons-material/Login"
+import React, { ReactNode, useCallback, useMemo, useState } from "react"
+import dynamic from "next/dynamic"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import { TMarketAction } from "@feature/marketplace/interfaces/IMarket"
 import {
   IMarketData,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { Button, Typography } from "@mui/material"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useProfileStore from "@stores/profileStore"
-import dynamic from "next/dynamic"
-import LoginIcon from "@mui/icons-material/Login"
-import React, { ReactNode, useCallback, useMemo, useState } from "react"
-import MagicIcon from "@components/icons/MagicIcon"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const ModalMarketplace = dynamic(
   () => import("@components/molecules/Modal/ModalMarket"),
@@ -123,7 +127,7 @@ const MarketplaceButton = ({
       case "mint":
         _color = nftType === "nft_naka_punk" ? "#A0ED61" : "#27F1EC"
         _textColor = "#010101"
-        _icon = <MagicIcon />
+        _icon = <Icomoon className="icon-Magic-Stick" />
         break
       case "buy":
         _color = "#A0ED61"
@@ -227,6 +231,7 @@ const MarketplaceButton = ({
           color="primary"
           startIcon={_startIcon()}
           className="!h-10 rounded-[20px] text-sm capitalize"
+          aria-label="button"
           sx={{
             width: 232,
             "&.MuiButton-contained": {
@@ -246,6 +251,7 @@ const MarketplaceButton = ({
             variant="contained"
             color="warning"
             className="!h-10 rounded-[20px] text-sm capitalize"
+            aria-label="rent out"
             sx={{
               width: 232
             }}

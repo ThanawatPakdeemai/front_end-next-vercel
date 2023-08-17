@@ -1,7 +1,11 @@
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import { IconButton, Popover } from "@mui/material"
 import React, { memo, ReactNode, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import dynamic from "next/dynamic"
+
+const CheckBoxNaka = dynamic(
+  () => import("@components/atoms/checkBox/CheckBoxNaka")
+)
 
 interface IProps {
   icon: ReactNode

@@ -19,7 +19,7 @@ const AboutGame = ({ text, title }: IAboutGameProps) => {
         </Typography>
       )}
       <div className="pb-6">
-        <p
+        <div
           dangerouslySetInnerHTML={{
             __html: text
           }}

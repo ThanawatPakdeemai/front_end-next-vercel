@@ -1,11 +1,3 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import MinusIcon from "@components/icons/CountIcon/MinusIcon"
-import LogoIcon from "@components/icons/LogoIcon"
-import {
-  TNFTType,
-  TSellerType,
-  TSellingType
-} from "@feature/marketplace/interfaces/IMarketService"
 import {
   Divider,
   InputAdornment,
@@ -14,14 +6,34 @@ import {
   Stack,
   TextField
 } from "@mui/material"
-import Helper from "@utils/helper"
 import React, { memo, useCallback, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { iconmotion } from "@components/organisms/Footer"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import dynamic from "next/dynamic"
+import {
+  TNFTType,
+  TSellerType,
+  TSellingType
+} from "@feature/marketplace/interfaces/IMarketService"
+import Helper from "@utils/helper"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
-import TextTip from "@components/atoms/TextTip"
 import { MARKET_INSTALL_PERIOD, MARKET_SELLING } from "@constants/market"
+import { iconmotion } from "@styles/themes/partial/motion"
+
+const TextTip = dynamic(() => import("@components/atoms/TextTip"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   nftType: TNFTType
@@ -109,7 +121,7 @@ const BuyActionComponent = ({
         InputProps={{
           endAdornment: (
             <InputAdornment position="start">
-              <LogoIcon />
+              <Icomoon className="icon-Naka text-error-main" />
             </InputAdornment>
           )
         }}
@@ -154,6 +166,7 @@ const BuyActionComponent = ({
             <button
               key={uuidv4()}
               type="button"
+              aria-label="period button"
               className={`flex h-[50px] w-full flex-row items-center justify-between rounded-sm border bg-neutral-800 px-4 text-sm font-bold uppercase text-neutral-300 ${
                 period === p ? "border-secondary-main" : "border-neutral-700"
               }`}
@@ -186,7 +199,7 @@ const BuyActionComponent = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  <LogoIcon />
+                  <Icomoon className="icon-Naka text-error-main" />
                 </InputAdornment>
               )
             }}
@@ -206,7 +219,7 @@ const BuyActionComponent = ({
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={<MinusIcon />}
+              icon={<Icomoon className="icon-Minus" />}
               className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
             />
             <TextField
@@ -243,7 +256,7 @@ const BuyActionComponent = ({
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={<PlusIcon />}
+              icon={<Icomoon className="icon-Plus1" />}
               className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
             />
           </div>

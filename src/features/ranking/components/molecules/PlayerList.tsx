@@ -1,10 +1,15 @@
 /* eslint-disable no-nested-ternary */
 import { Chip, Typography } from "@mui/material"
 import { memo } from "react"
-import { Image } from "@components/atoms/image/index"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import Helper from "@utils/helper"
 import Link from "next/link"
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   avatar: string

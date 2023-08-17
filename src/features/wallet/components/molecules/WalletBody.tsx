@@ -1,21 +1,19 @@
-import IStickerSolid from "@components/icons/StickerSolid"
-import { IBalanceDisplay } from "@hooks/useAllBalances"
-import { styled } from "@mui/material"
-import { ReactNode } from "react"
+import React, { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
-import WalletAddress from "../atoms/WalletAddress"
+import dynamic from "next/dynamic"
+import { IBalanceDisplay } from "@hooks/useAllBalances"
 
-export const KeyFramesRotate = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(359deg)"
-    },
-    to: {
-      transform: "rotate(0deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const WalletAddress = dynamic(() => import("../atoms/WalletAddress"), {
+  suspense: true,
+  ssr: false
 })
+const IcomoonSticker = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonSticker"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IWalletBodyProps {
   tokenSymbol: ReactNode | string
@@ -54,12 +52,8 @@ const WalletBody = ({
         <WalletAddress contractAddress={contractAddress || ""} />
       </div>
       <div className="absolute right-2 top-2">
-        <KeyFramesRotate>
-          <IStickerSolid
-            width="70"
-            height="70"
-          />
-        </KeyFramesRotate>
+        <IcomoonSticker className="icon-Circle-sphere-pink" />
+        {/* <KeyFramesRotate></KeyFramesRotate> */}
       </div>
     </div>
   )

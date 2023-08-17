@@ -1,16 +1,47 @@
 import React, { useCallback } from "react"
-import useProfileStore from "@stores/profileStore"
 import { useTranslation } from "react-i18next"
-import { PaginationNaka } from "@components/atoms/pagination"
-import ChatBoxIcon from "@components/icons/ChatBoxIcon"
 import { Button, Stack } from "@mui/material"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import ButtonLogin from "@components/molecules/rightMenu/ButtonLogin"
-import FormLogin from "@feature/authentication/components/FormLogin"
+import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
 import { useReviewProvider } from "@feature/review/containers/providers/ReviewProvider"
-import ReviewCardModal from "@feature/review/components/organisms/ReviewCardModal"
-import ModalAddReview from "./ModalAddReview"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ReviewCardModal = dynamic(
+  () => import("@feature/review/components/organisms/ReviewCardModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalAddReview = dynamic(() => import("./ModalAddReview"), {
+  suspense: true,
+  ssr: false
+})
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    ssr: false
+  }
+) // Added { ssr: false } to disable server-side rendering for pagination
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader")
+)
+const ButtonLogin = dynamic(
+  () => import("@components/molecules/rightMenu/ButtonLogin")
+)
+const FormLogin = dynamic(
+  () => import("@feature/authentication/components/FormLogin")
+)
 
 interface IProps {
   gameId: string
@@ -27,7 +58,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
     page,
     setPage,
     ownerReview,
-    reviewLoading
+    reviewOwnerStatus
   } = useReviewProvider()
   const { profile } = useProfileStore()
   const [openAdd, setOpenAdd] = React.useState<boolean>(false)
@@ -47,7 +78,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
       open={openViewAll}
       onClose={onModalClose}
     >
-      <Stack className="w-[320px] gap-y-[22px] capitalize sm:w-[366px]">
+      <Stack className="gap-y-[22px] capitalize">
         <ModalHeader
           handleClose={onModalClose}
           title="all review"
@@ -94,12 +125,17 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
           {profile.data ? (
             <Button
               type="button"
+              aria-label="add review"
               variant="contained"
               color="secondary"
               className="!h-10 rounded-[20px] text-sm capitalize"
               onClick={onOpenAddModalChange}
-              startIcon={<ChatBoxIcon />}
-              disabled={!!reviewLoading}
+              startIcon={
+                <Icomoon
+                  className="icon-Message-Text
+"
+                />
+              }
             >
               add review
             </Button>
@@ -133,7 +169,7 @@ const ModalAllReview = ({ gameId, openViewAll, setOpenViewAll }: IProps) => {
           )}
         </div>
 
-        {!reviewLoading ? (
+        {reviewOwnerStatus ? (
           <ModalAddReview
             gameId={gameId}
             method={ownerReview ? "edit" : "add"}

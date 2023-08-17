@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic"
 import {
   IMenu,
   IMenuIcon,
@@ -5,62 +6,13 @@ import {
   ISelectDropDown
 } from "@interfaces/IMenu"
 import CONFIGS from "@configs/index"
-import EditProfileIcon from "@components/icons/MenunIcon/EditProfileIcon"
-import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
-import PlayHistoryIcon from "@components/icons/MenunIcon/PlayHistoryIcon"
-import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
-import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
-import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
-import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
-import IconDollar from "@components/icons/dollarIcon"
 import { IMAGES } from "@constants/images"
-import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
-import Campfire from "@components/icons/Campfire"
-import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
-import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
-import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
-import NewIcon from "@components/icons/BlogIcon/NewIcon"
-import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
-import AccessTimeIcon from "@mui/icons-material/AccessTime"
-import Inventory from "@components/icons/Inventory"
-import Support from "@components/icons/Support"
-import Profile from "@components/icons/Profile"
-import ICoupon from "@components/icons/Coupon"
-import IReferrals from "@components/icons/Referrals"
-import IStacking from "@components/icons/Stacking"
-import IconSwap from "@components/icons/SwapIcon"
-import SwapCallsIcon from "@mui/icons-material/SwapCalls"
-import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
-import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
-import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
-import LaunchIcon from "@components/icons/MenunIcon/LaunchIcon"
-import TransactionIcon from "@components/icons/MenunIcon/TransactionIcon"
-import MyLandIcon from "@components/icons/Inventory/MyLandIcon"
-import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
-import DollarIcon from "@components/icons/Referral/DollarIcon"
-import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
-import CommissionIcon from "@components/icons/MenunIcon/CommissionIcon"
-import IDiamond from "@components/icons/Diamond"
-import CalendarSolidIcon from "@components/icons/CalendarSolidIcon"
-import GameStoryIcon from "@components/icons/GameStoryIcon"
-import FreeToEarnIcon from "@components/icons/FreeToEarnIcon"
-import DesktopIcon from "@components/icons/DesktopIcon"
-import {
-  GameItemIcon,
-  LandIcon,
-  BuildingIcon,
-  MaterialIcon,
-  NakapunkIcon,
-  ArcadeGameIcon
-} from "@components/icons/MenunIcon/MarketIcon"
 
-// TODO: Open after launch V2
-// import GlobalIcon from "@components/icons/GlobalIcon"
-// import BoltIcon from "@mui/icons-material/Bolt"
-// import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
-// import TournamentIcon from "@components/icons/TournamentIcon"
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export const MENU = [
   {
@@ -89,24 +41,24 @@ export const MENU = [
       {
         name: "Play To Earn Games",
         link: "/play-to-earn",
-        icon: <IconDollar.Ori className="stroke-neutral-300" />
+        icon: <Icomoon className="icon-Dollar" />
       },
       {
         name: "Free To Play Games",
         link: "/free-to-play",
-        icon: <IconDollar.Mask className="stroke-neutral-300" />,
+        icon: <Icomoon className="icon-Dollar-Crossed" />,
         textRight: "Free"
       },
       {
         name: "Free To Earn Games",
-        icon: <FreeToEarnIcon stroke="#E1E2E2" />,
+        icon: <Icomoon className="icon-Emoticon-Wink" />,
         link: "/free-to-earn",
         textRight: "Free"
       },
       {
         name: "Story Mode Games",
         link: "/story-mode",
-        icon: <GameStoryIcon stroke="#E1E2E2" />,
+        icon: <Icomoon className="icon-Flag-01" />,
         textRight: "Free"
       },
       // TODO: Open after launch V2
@@ -124,12 +76,12 @@ export const MENU = [
       {
         name: "Arcade Emporium",
         link: "/arcade-emporium",
-        icon: IDiamond
+        icon: <Icomoon className="icon-Diamond" />
       },
       {
         name: "Events",
         link: "/events",
-        icon: CalendarSolidIcon
+        icon: <Icomoon className="icon-Calendar-Check" />
       }
       // TODO: Open after launch V2
       // {
@@ -158,19 +110,23 @@ export const MENU = [
       {
         name: "P2P DEX",
         link: "/p2p-dex",
-        icon: SwapCallsIcon
+        icon: <Icomoon className="icon-Swap-Calls-Arrows" />
       },
       {
         name: "Staking",
         link: "/staking",
-        icon: IStacking
+        icon: <Icomoon className="icon-Safe" />
       },
       {
         name: "Referral Program",
         link: "/referral",
-        icon: IReferrals
+        icon: <Icomoon className="icon-User-ID" />
       },
-      { name: "Coupon", link: "/coupon", icon: LocalActivityOutlinedIcon }
+      {
+        name: "Coupon",
+        link: "/coupon",
+        icon: <Icomoon className="icon-Ticket-Star" />
+      }
     ]
   },
   {
@@ -188,33 +144,33 @@ export const MENU = [
       {
         name: "Marketplace",
         link: `${CONFIGS.BASE_URL.MARKETPLACE}`,
-        icon: MarketPlaceIcon
+        icon: <Icomoon className="icon-Shopping-Cart-01" />
       },
       {
         name: "Nakaverse",
         link: `${CONFIGS.BASE_URL.NAKAVERSE}`,
-        icon: NakaverseIcon
+        icon: <Icomoon className="icon-Earth" />
       },
       {
         name: "Nakapunks",
         link: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
-        icon: NakapunksIcon
+        icon: <Icomoon className="icon-Naka-2" />
       },
       {
         name: "Blog",
         link: "/blog",
-        icon: BlogIcon
+        icon: <Icomoon className="icon-Book" />
       },
       {
         name: "About Us",
         link: "https://main.nakamoto.games",
-        icon: AboutUsIcon
+        icon: <Icomoon className="icon-Naka-3" />
       },
       // TODO: Open after launch V2
       {
         name: "Game Developer",
         link: "/game-developer",
-        icon: DesktopIcon
+        icon: <Icomoon className="icon-Screen-Text" />
       }
     ]
   }
@@ -224,28 +180,28 @@ export const MENU_GUEST: IMenu[] = [
   {
     id: "play-to-earn",
     label: "Play To Earn Games",
-    icon: <IconDollar.Ori className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Dollar" />,
     href: "/play-to-earn",
     external: false
   },
   {
     id: "free-to-play",
     label: "Free To Play Games",
-    icon: <IconDollar.Mask className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Dollar-Crossed" />,
     href: "/free-to-play",
     external: false
   },
   {
     id: "free-to-earn",
     label: "Free To Earn Games",
-    icon: <FreeToEarnIcon stroke="#E1E2E2" />,
+    icon: <Icomoon className="icon-Emoticon-Wink" />,
     href: "/free-to-earn",
     external: false
   },
   {
     id: "story-mode",
     label: "Story Mode Games",
-    icon: <GameStoryIcon stroke="#E1E2E2" />,
+    icon: <Icomoon className="icon-Flag-01" />,
     href: "/story-mode",
     external: false
   },
@@ -267,14 +223,14 @@ export const MENU_GUEST: IMenu[] = [
   {
     id: "arcade-emporium",
     label: "Arcade Emporium",
-    icon: <IDiamond stroke="#E1E2E2" />,
+    icon: <Icomoon className="icon-Diamond" />,
     href: "/arcade-emporium",
     external: false
   },
   {
     id: "events",
     label: "Events",
-    icon: <CalendarSolidIcon stroke="#E1E2E2" />,
+    icon: <Icomoon className="icon-Calendar-Check" />,
     href: "/events",
     external: false
   }
@@ -293,62 +249,62 @@ export const MENU_LOGGEDIN: IMenu[] = [
     id: "edit-profile",
     label: "Edit Profile",
     href: "/profile",
-    icon: <EditProfileIcon />,
+    icon: <Icomoon className="icon-User-Pass" />,
     external: false
   },
   {
     id: "wallet",
     label: "Wallet",
     href: "/wallet",
-    icon: <WalletIcon />,
+    icon: <Icomoon className="icon-Wallet" />,
     external: false
   },
   {
     id: "my-games",
     label: "My Games",
     href: "/my-games",
-    icon: <LaunchIcon />,
+    icon: <Icomoon className="icon-Rocket" />,
     external: false
   },
   {
     id: "wishlist",
     label: "Wishlist",
     href: "/favourite-games",
-    icon: <WishlistIcon />,
+    icon: <Icomoon className="icon-Heart" />,
     external: false
   },
   {
     id: "transactions",
     label: "All Transactions",
     href: "/transactions",
-    icon: <TransactionIcon />,
+    icon: <Icomoon className="icon-Calendar" />,
     external: false
   },
   {
     id: "play-history",
     label: "All played games",
     href: "/history",
-    icon: <PlayHistoryIcon />,
+    icon: <Icomoon className="icon-Clock" />,
     external: false
   },
   {
     id: "commission",
     label: "Commission",
     href: "/commission",
-    icon: <CommissionIcon />,
+    icon: <Icomoon className="icon-Dollar-Coin" />,
     external: false
   },
   {
     id: "your-mission",
     label: "Your Mission",
     href: "/mission",
-    icon: <YourMissionIcon />,
+    icon: <Icomoon className="icon-Camp-Fire" />,
     external: false
   },
   {
     id: "inventory",
     label: "Inventory",
-    icon: <InventoryIcon />,
+    icon: <Icomoon className="icon-Box-Download" />,
     href: `${CONFIGS.BASE_URL.MARKETPLACE}/inventory/land`,
     external: true,
     hasToken: true
@@ -356,14 +312,14 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "earn-reward",
     label: "Item Reward",
-    icon: <ItemRewardIcon />,
+    icon: <Icomoon className="icon-Diamond" />,
     href: "/earn-reward",
     external: false
   },
   {
     id: "support",
     label: "Support",
-    icon: <SupportIcon />,
+    icon: <Icomoon className="icon-Headset" />,
     href: `https://t.me/NakamotoGames`,
     external: true,
     hasToken: true
@@ -408,58 +364,6 @@ export const MENU_PROFILE = [
   }
 ]
 
-export const MENU_PROFILE_Datell: IMenu[] = [
-  {
-    id: "my profile",
-    label: "My Profile",
-    icon: <Profile className="stroke-neutral-300" />,
-    href: "/",
-    external: false
-  },
-  {
-    id: "wishlist",
-    label: "Wishlist",
-    icon: <FavoriteBorderOutlinedIcon className="stroke-neutral-300" />,
-    href: "/",
-    external: false
-  },
-  {
-    id: "play history",
-    label: "All played games",
-    icon: <AccessTimeIcon className="stroke-neutral-300" />,
-    href: "/history",
-    external: false
-  },
-  {
-    id: "your mission",
-    label: "Your Mission",
-    icon: <Campfire />,
-    href: "/mission",
-    external: false
-  },
-  {
-    id: "inventory",
-    label: "Inventory",
-    icon: <Inventory className="stroke-neutral-300" />,
-    href: "/inventory",
-    external: false
-  },
-  {
-    id: "item reward",
-    label: "Item Reward",
-    icon: <ItemRewardIcon />,
-    href: "/item-reward",
-    external: false
-  },
-  {
-    id: "support",
-    label: "Support",
-    icon: <Support className="stroke-neutral-300" />,
-    href: "/profile",
-    external: false
-  }
-]
-
 export const MENU_MAIN_PC: IMenuIcon[] = [
   {
     title: "P2P Trading",
@@ -479,35 +383,35 @@ export const MENU_BLOG: IMenu[] = [
   {
     id: "about-us",
     label: "About Us",
-    icon: <AboutUsIcon className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Naka-3" />,
     href: "https://main.nakamoto.games/",
     external: false
   },
   {
     id: "marketplace",
     label: "Marketplace",
-    icon: <MarketPlaceIcon className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Shopping-Cart-01" />,
     href: CONFIGS.BASE_URL.MARKETPLACE,
     external: true
   },
   {
     id: "nakaverse",
     label: "Nakaverse",
-    icon: <NakaverseIcon className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Earth" />,
     href: `${CONFIGS.BASE_URL.NAKAVERSE}`,
     external: true
   },
   {
     id: "nakapunks",
     label: "Nakapunks",
-    icon: <NakapunksIcon className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Naka-2" />,
     href: `${CONFIGS.BASE_URL.MARKETPLACE}/nakapunks`,
     external: false
   },
   {
     id: "game-developer",
     label: "Game Developer",
-    icon: <DesktopIcon className="stroke-neutral-300" />,
+    icon: <Icomoon className="icon-Screen-Text" />,
     href: "/game-developer",
     external: false
   }
@@ -525,17 +429,13 @@ export const MENU_BLOG_HEADER = [
     link: "date_released",
     isChide: true,
     left: "120px !important",
-    icon: (
-      <NewIcon className="mr-2 stroke-black-600  group-hover:!fill-white-default group-hover:!stroke-white-default" />
-    )
+    icon: <Icomoon className="icon-Sun-Rising" />
   },
   {
     name: "Hot",
     link: "info.like",
     isChide: true,
-    icon: (
-      <FireOutLineIcon className="mr-2  stroke-black-600 group-hover:!stroke-white-default" />
-    )
+    icon: <Icomoon className="icon-Fire" />
   }
   // {
   //   name: "Discusion",
@@ -550,24 +450,14 @@ export const MENU_SERVICES = [
   {
     id: "p2p-dex",
     label: "P2P DEX",
-    icon: (
-      <IconSwap
-        className="stroke-neutral-300"
-        stroke="#E1E2E2"
-      />
-    ),
+    icon: <Icomoon className="icon-Swap-Calls-Arrows" />,
     href: "/p2p-dex",
     external: false
   },
   {
     id: "staking",
     label: "Staking",
-    icon: (
-      <IStacking
-        className="stroke-neutral-300"
-        stroke="#E1E2E2"
-      />
-    ),
+    icon: <Icomoon className="icon-Safe" />,
     href: "/staking",
     external: false
   },
@@ -575,24 +465,14 @@ export const MENU_SERVICES = [
   {
     id: "referral-program",
     label: "Referral Program",
-    icon: (
-      <IReferrals
-        className="stroke-neutral-300"
-        stroke="#E1E2E2"
-      />
-    ),
+    icon: <Icomoon className="icon-User-ID" />,
     href: "/referral",
     external: false
   },
   {
     id: "coupon",
     label: "Coupon",
-    icon: (
-      <ICoupon
-        className="stroke-neutral-300"
-        stroke="#E1E2E2"
-      />
-    ),
+    icon: <Icomoon className="icon-Ticket-Star" />,
     href: "/coupon",
     external: false
   }
@@ -614,17 +494,17 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
       {
         name: "Land",
         link: "/marketplace",
-        icon: LandIcon
+        icon: <Icomoon className="icon-Earth" />
       },
       {
         name: "Buildings",
         link: "/marketplace/building",
-        icon: BuildingIcon
+        icon: <Icomoon className="icon-Building" />
       },
       {
         name: "NAKA Punks",
         link: "/marketplace/naka-punk",
-        icon: NakapunkIcon
+        icon: <Icomoon className="icon-Naka-2" />
       }
       // {
       //   name: "Avatar Reef",
@@ -647,32 +527,32 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
       {
         name: "Game Item",
         link: "/marketplace/p2p/game-item",
-        icon: GameItemIcon
+        icon: <Icomoon className="icon-Potion" />
       },
       {
         name: "Land",
         link: "/marketplace/p2p/land",
-        icon: LandIcon
+        icon: <Icomoon className="icon-Earth" />
       },
       {
         name: "Buildings",
         link: "/marketplace/p2p/building",
-        icon: BuildingIcon
+        icon: <Icomoon className="icon-Building" />
       },
       {
         name: "Material",
         link: "/marketplace/p2p/material",
-        icon: MaterialIcon
+        icon: <Icomoon className="icon-Chicken" />
       },
       {
         name: "NAKA Punks",
         link: "/marketplace/p2p/naka-punk",
-        icon: NakapunkIcon
+        icon: <Icomoon className="icon-Naka-2" />
       },
       {
         name: "Arcade Game",
         link: "/marketplace/p2p/arcade-game",
-        icon: ArcadeGameIcon
+        icon: <Icomoon className="icon-Switch" />
       }
     ]
   },
@@ -770,42 +650,42 @@ export const MENU_MARKETPLACE_INVENTORY: IMenu[] = [
   {
     id: "inventory",
     label: "Inventory",
-    icon: <InventoryIcon />,
+    icon: <Icomoon className="icon-Box-Download" />,
     href: "/marketplace/inventory",
     external: false
   },
   {
     id: "for-sale",
     label: "For Sale",
-    icon: <DollarIcon />,
+    icon: <Icomoon className="icon-Dollar-Coin" />,
     href: "/marketplace/inventory/forsale",
     external: false
   },
   {
     id: "rental",
     label: "Rental",
-    icon: <DollarIcon />,
+    icon: <Icomoon className="icon-Dollar-Coin" />,
     href: "/marketplace/inventory/rental",
     external: false
   },
   {
     id: "process-payment",
     label: "Process Payment",
-    icon: <ProcessPaymentIcon />,
+    icon: <Icomoon className="icon-Stock-Chart" />,
     href: "/marketplace/inventory/process-payment",
     external: false
   },
   {
     id: "transaction",
     label: "Transaction",
-    icon: <TransactionIconMKP />,
+    icon: <Icomoon className="icon-Added-to-Playlist" />,
     href: "/marketplace/inventory/transaction",
     external: false
   },
   {
     id: "my-land",
     label: "My Land",
-    icon: <MyLandIcon />,
+    icon: <Icomoon className="icon-Earth" />,
     href: "/marketplace/inventory/my-land",
     external: false
   }

@@ -3,7 +3,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const LoginMobile = dynamic(
-  () => import("@src/mobile/components/templates/SignInLayout")
+  () => import("@src/mobile/components/templates/SignInLayout"),
+  {
+    suspense: true,
+    ssr: true
+  }
 )
 
 const LoginMobilePage = () => <LoginMobile />

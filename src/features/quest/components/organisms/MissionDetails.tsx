@@ -1,15 +1,38 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { ArrowBack } from "@mui/icons-material"
 import { Chip } from "@mui/material"
-import useQuestStore from "@stores/quest"
 import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { motion } from "framer-motion"
-import ClaimOnDetail from "../moleclues/ClaimOnDetail"
-import CountWithProgressBar from "../moleclues/CountWithProgressBar"
-import TaskList from "../moleclues/TaskList"
-import RewardList from "../moleclues/RewardList"
+import dynamic from "next/dynamic"
+import useQuestStore from "@stores/quest"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ClaimOnDetail = dynamic(() => import("../moleclues/ClaimOnDetail"), {
+  suspense: true,
+  ssr: true
+})
+const CountWithProgressBar = dynamic(
+  () => import("../moleclues/CountWithProgressBar"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const TaskList = dynamic(() => import("../moleclues/TaskList"), {
+  suspense: true,
+  ssr: true
+})
+const RewardList = dynamic(() => import("../moleclues/RewardList"), {
+  suspense: true,
+  ssr: true
+})
 
 const MissionDetails = () => {
   const { data: dataQuestDetails, clearQuestStore } = useQuestStore()
@@ -57,6 +80,7 @@ const MissionDetails = () => {
       <div className="mb-[14px] flex min-h-[50px] w-full flex-row justify-center gap-2 rounded-[13px] bg-neutral-700 p-1 text-sm">
         <button
           type="button"
+          aria-label="mission button"
           onClick={() => setValue("mission")}
           className={`w-1/2 rounded-2xl ${
             value === "mission" ? "bg-neutral-900" : "bg-neutral-800"
@@ -66,6 +90,7 @@ const MissionDetails = () => {
         </button>
         <button
           type="button"
+          aria-label="mission button"
           onClick={() => setValue("rewards")}
           className={`w-1/2 rounded-2xl ${
             value === "rewards" ? "bg-neutral-900" : "bg-neutral-800"

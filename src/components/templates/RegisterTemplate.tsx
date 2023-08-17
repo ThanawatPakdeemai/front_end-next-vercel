@@ -3,38 +3,24 @@ import _ from "lodash"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Image } from "@components/atoms/image/index"
-import { IMAGES } from "@constants/images"
-import { Box, Grid, styled, Typography } from "@mui/material"
-import HeadLogo from "@components/molecules/HeadLogo"
-import Tagline from "@components/molecules/tagline/Tagline"
-import VectorIcon from "@components/icons/VectorIcon"
+import { Box, Grid, Typography } from "@mui/material"
 import { useRouter } from "next/router"
-import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useRegisterAvatarStore from "@stores/registerAvater"
+import { IMAGES } from "@constants/images"
 
-const KeyFramesClockwise = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(0deg)"
-    },
-    to: {
-      transform: "rotate(359deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const HeadLogo = dynamic(() => import("@components/molecules/HeadLogo"), {
+  suspense: true,
+  ssr: false
 })
-
-const KeyFramesAnticlockwise = styled("div")({
-  "@keyframes rotation": {
-    from: {
-      transform: "rotate(0deg)"
-    },
-    to: {
-      transform: "rotate(359deg)"
-    }
-  },
-  animation: "rotation 10s infinite linear"
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
 })
 
 interface TFormData {
@@ -119,7 +105,7 @@ const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
                 text={t("main_tagline")}
-                icon={<VectorIcon />}
+                icon={<Icomoon className="icon-require" />}
                 className="!my-[2.938rem]"
                 show={false}
               />
@@ -135,29 +121,8 @@ const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
               background: "#050505"
             }}
           >
-            <Box
-              component="div"
-              className="flex justify-end"
-            >
-              <div className="absolute">
-                <KeyFramesClockwise>
-                  <Image
-                    src={IMAGES.ro.src}
-                    alt={IMAGES.ro.alt}
-                    className="h-full w-full"
-                  />
-                </KeyFramesClockwise>
-              </div>
-              <div className="absolute">
-                <KeyFramesAnticlockwise>
-                  <Image
-                    src={IMAGES.vectorWorld.src}
-                    alt={IMAGES.vectorWorld.alt}
-                    className="relative h-full w-full p-[5px]"
-                  />
-                </KeyFramesAnticlockwise>
-              </div>
-            </Box>
+            {/* Remove this because CPU usage is too high */}
+            {/* <CircleSphereAnimation /> */}
             <Box
               component="div"
               sx={{

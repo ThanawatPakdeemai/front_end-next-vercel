@@ -1,9 +1,12 @@
-import { Layout } from "@components/templates"
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
 
+const Layout = dynamic(() => import("@components/templates/Layout"), {
+  suspense: true,
+  ssr: true
+})
 const HomePage = dynamic(() => import("@feature/page/homePage"), {
   suspense: true,
   ssr: true

@@ -1,23 +1,52 @@
 import React from "react"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import ControllerIcon from "@components/icons/ControllerIcon"
 import { motion } from "framer-motion"
-import Helper from "@utils/helper"
-import { IGoalRushData } from "@feature/game/interfaces/IGameService"
-import { FLAGS } from "@constants/flags"
-import { Image } from "@components/atoms/image/index"
 import { Box } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
-import RoomListBox from "./RoomListBox"
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+import {
+  IGoalRushData,
+  TGameRoomStatus
+} from "@feature/game/interfaces/IGameService"
+import { FLAGS } from "@constants/flags"
 
-export type TRoomStatus = "played" | "full" | "join" | "unavailable"
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RoomListBox = dynamic(
+  () => import("@components/molecules/roomList/RoomListBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonFlag = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonFlag"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   roomId: string | number
   roomName: string
-  btnText?: TRoomStatus
+  btnText?: TGameRoomStatus
   timer?: {
     time: Date
     onExpire?: () => void
@@ -64,7 +93,7 @@ const RoomListBar = ({
         <ButtonIcon
           // whileHover="none"
           className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700"
-          icon={<ControllerIcon stroke="#E1E2E2" />}
+          icon={<Icomoon className="icon-Joystick" />}
         />
         <div className="flex flex-col text-center md:text-left">
           <span className="w-32 text-xs font-bold uppercase text-neutral-500">
@@ -78,32 +107,28 @@ const RoomListBar = ({
           {dataGoalRush && path === "goal-rush" ? (
             <div className="flex pt-1">
               <span className="font-bold uppercase text-neutral-300">
-                <Image
-                  src={
+                {dataGoalRush.player_team.text.toLocaleLowerCase()}
+                <IcomoonFlag
+                  className={
                     FLAGS.find(
                       (flag) =>
                         flag.code ===
                         dataGoalRush.player_team.text.toLocaleLowerCase()
-                    )?.flag_4x3 ?? "/assets/flags/4x3/us.svg"
+                    )?.name ?? ""
                   }
-                  width="20"
-                  height="20"
-                  alt="th"
                 />
               </span>
               <span className="text-md px-4 text-neutral-500">X</span>
               <span className="font-bold uppercase text-neutral-300">
-                <Image
-                  src={
+                {dataGoalRush.ai_team.text.toLocaleLowerCase()}
+                <IcomoonFlag
+                  className={
                     FLAGS.find(
                       (flag) =>
                         flag.code ===
                         dataGoalRush.ai_team.text.toLocaleLowerCase()
-                    )?.flag_4x3 ?? "/assets/flags/4x3/us.svg"
+                    )?.name ?? ""
                   }
-                  width="20"
-                  height="20"
-                  alt="th"
                 />
               </span>
             </div>
@@ -147,7 +172,7 @@ const RoomListBar = ({
         <ButtonToggleIcon
           handleClick={onClick}
           startIcon={<></>}
-          endIcon={<IconArrowRight stroke="#010101" />}
+          endIcon={<Icomoon className="icon-Full-Arrow-Right text-[#010101]" />}
           text={t(btnText as string) || t("join")}
           className={`first-letter:btn-green-rainbow z-[2] h-[40px] !w-[95px] ${
             btnText === "full" ? " bg-error-light" : "bg-green-lemon"

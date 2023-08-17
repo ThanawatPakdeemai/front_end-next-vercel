@@ -24,11 +24,7 @@ export default function EarnReward() {
 }
 
 EarnReward.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <>
-      <ProfileLayout _breadcrumb={ITEM_REWARD_CRUMB()}>{page}</ProfileLayout>
-    </>
-  )
+  return <ProfileLayout _breadcrumb={ITEM_REWARD_CRUMB()}>{page}</ProfileLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

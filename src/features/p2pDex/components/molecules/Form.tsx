@@ -2,29 +2,57 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
-import HrLine from "@components/icons/HrLine"
-import { Alert, Typography } from "@mui/material"
 import { memo, useCallback, useMemo } from "react"
-import INaka from "@components/icons/Naka"
+import { formatEther } from "ethers/lib/utils"
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
+import { useTranslation } from "next-i18next"
+import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
 import { MESSAGES } from "@constants/messages"
-import { formatEther } from "ethers/lib/utils"
 import useProfileStore from "@stores/profileStore"
-import IBusd from "@components/icons/Busd"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useAllBalances from "@hooks/useAllBalances"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
 import CONFIGS from "@configs/index"
 import { chainIdConfig } from "@configs/sites"
-import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
-import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
-import { useTranslation } from "next-i18next"
 import useChainSupportStore from "@stores/chainSupport"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import Input from "../atoms/Input"
+
+const Input = dynamic(() => import("../atoms/Input"), {
+  suspense: true,
+  ssr: false
+})
+const RightMenuNotLogIn = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuNotLogIn"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SwitchChain = dynamic(() => import("@components/atoms/SwitchChain"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Alert = dynamic(() => import("@mui/material/Alert"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   type: string
@@ -173,13 +201,19 @@ const Form = ({
             <Typography className=" font-neue-machina text-sm uppercase text-neutral-500">
               {t("create_order_buy_naka")}
             </Typography>
-            <HrLine className="my-3 w-full " />
+            {/* <HrLine className="my-3 w-full " /> */}
             <Typography className="font-neue-machina text-sm uppercase text-neutral-500">
               {t("enter_price_naka_busd")}
             </Typography>
             <Input
               name="price"
-              endIcon={type === "buy" ? <IBusd /> : <INaka />}
+              endIcon={
+                type === "buy" ? (
+                  <Icomoon className="icon-busd" />
+                ) : (
+                  <Icomoon className="icon-Naka text-error-main" />
+                )
+              }
               placeholder={String(t("enter_price_naka_busd"))}
               {...dataForm}
             />
@@ -211,7 +245,7 @@ const Form = ({
             </Typography>
             <Input
               name="amount"
-              endIcon={<INaka />}
+              endIcon={<Icomoon className="icon-Naka text-error-main" />}
               placeholder={String("enter_amount_naka")}
               {...dataForm}
             />

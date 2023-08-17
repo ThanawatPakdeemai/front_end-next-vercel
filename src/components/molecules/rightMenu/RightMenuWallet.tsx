@@ -6,20 +6,39 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import INaka from "@components/icons/Naka"
-import AllIcon from "@components/icons/DepositWithdraw/AllIcon"
-import Deposit from "@components/icons/DepositWithdraw/Deposit"
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import Withdraw from "@components/icons/DepositWithdraw/WithDraw"
+import { Trans } from "next-i18next"
+import dynamic from "next/dynamic"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useWalletContoller, {
   Method
 } from "@feature/wallet/containers/hooks/useWalletContoller"
-import { Trans } from "next-i18next"
-import { ModalCustom } from "../Modal/ModalCustom"
-import ButtonWallet from "./ButtonWallet"
-import ModalHeader from "../Modal/ModalHeader"
-import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonWallet = dynamic(() => import("./ButtonWallet"), {
+  suspense: true,
+  ssr: false
+})
+const ModalHeader = dynamic(() => import("../Modal/ModalHeader"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("../gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IRightMenuWalletProps {
   method: Method
@@ -43,17 +62,14 @@ const RightMenuWallet = ({
   const { onChangeAmount, value, disabled, onClickMaxValue, onSubmit } =
     useWalletContoller()
   return (
-    <>
-      <Box
-        component="div"
-        className="xs:flex-col items-center justify-between gap-1 lg:flex"
-      >
-        <ButtonWallet
-          title={title}
-          handleButton={() => handleOpen(tokenSelected)}
-        />
-      </Box>
-
+    <Box
+      component="div"
+      className="xs:flex-col items-center justify-between gap-1 lg:flex"
+    >
+      <ButtonWallet
+        title={title}
+        handleButton={() => handleOpen(tokenSelected)}
+      />
       <ModalCustom
         open={open}
         onClose={handleClose}
@@ -103,7 +119,7 @@ const RightMenuWallet = ({
                 },
                 startAdornment: (
                   <InputAdornment position="start">
-                    <INaka color="#70727B" />
+                    <Icomoon className="icon-Naka text-[#70727B]" />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -119,7 +135,7 @@ const RightMenuWallet = ({
                       )
                     }
                   >
-                    <AllIcon />
+                    <Icomoon className="icon-All !text-[10px]" />
                   </InputAdornment>
                 )
               }}
@@ -136,7 +152,7 @@ const RightMenuWallet = ({
             </Typography>
             {title === "withdraw" ? (
               <ButtonToggleIcon
-                startIcon={<Withdraw />}
+                startIcon={<Icomoon className="icon-Arrow-Up-with-Line" />}
                 text={<Trans i18nKey={title} />}
                 handleClick={() => onSubmit("withdraw")}
                 className="flex h-[50px] w-full items-center justify-center rounded-md bg-red-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900 disabled:bg-neutral-800 disabled:text-neutral-600"
@@ -145,8 +161,10 @@ const RightMenuWallet = ({
               />
             ) : (
               <ButtonToggleIcon
-                startIcon={<Deposit />}
-                endIcon={<IconArrowRight stroke="#010101" />}
+                startIcon={<Icomoon className="icon-Arrow-Down-with-Line" />}
+                endIcon={
+                  <Icomoon className="icon-Full-Arrow-Right text-[#010101]" />
+                }
                 text={<Trans i18nKey={title} />}
                 handleClick={() => onSubmit("deposit")}
                 className="flex h-[50px] w-full items-center justify-center rounded-md bg-varidian-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900 disabled:bg-neutral-800 disabled:text-neutral-600"
@@ -159,7 +177,7 @@ const RightMenuWallet = ({
           <></>
         )}
       </ModalCustom>
-    </>
+    </Box>
   )
 }
 

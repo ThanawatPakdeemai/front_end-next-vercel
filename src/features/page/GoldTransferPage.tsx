@@ -1,32 +1,94 @@
-import ButtonGold from "@components/atoms/gold/ButtonGold"
-import GoldAllIcon from "@components/icons/GoldAllIcon"
-import GoldIcon from "@components/icons/GoldIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { isNaN } from "lodash"
+import { useEffect, useState } from "react"
+import dayjs from "dayjs"
+import dynamic from "next/dynamic"
 import CONFIGS from "@configs/index"
 import { useGetCurrentExp } from "@feature/gold/containers/hook/useGetCurrentExp"
 
 import useTransferExpToGold from "@feature/gold/containers/hook/useTransferExpToGold"
 import useGetTransactionExpToGold from "@feature/gold/containers/hook/useGetTransactionExpToGold"
-import PageHeader from "@feature/table/components/molecules/PageHeader"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
 import { useToast } from "@feature/toast/containers"
-import { ArrowForward } from "@mui/icons-material"
-import {
-  Divider,
-  InputAdornment,
-  Table,
-  TableBody,
-  TextField
-} from "@mui/material"
-import TableContainer from "@mui/material/TableContainer"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { isNaN } from "lodash"
-import { useEffect, useState } from "react"
-import { PaginationNaka } from "@components/atoms/pagination"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import dayjs from "dayjs"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const ArrowForward = dynamic(() => import("@mui/icons-material/ArrowForward"), {
+  suspense: true,
+  ssr: false
+})
+const Divider = dynamic(() => import("@mui/material/Divider"), {
+  suspense: true,
+  ssr: false
+})
+const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TextField = dynamic(() => import("@mui/material/TextField"), {
+  suspense: true,
+  ssr: false
+})
+const PageHeader = dynamic(
+  () => import("@feature/table/components/molecules/PageHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonGold = dynamic(() => import("@components/atoms/gold/ButtonGold"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonItem = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const GoldTransferPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -191,7 +253,7 @@ const GoldTransferPage = () => {
                       position="start"
                       className="text-xs text-neutral-300"
                     >
-                      <GoldIcon />
+                      <IcomoonItem className="icon-Gold" />
                     </InputAdornment>
                   )
                 }}
@@ -217,7 +279,7 @@ const GoldTransferPage = () => {
         <div className=" w-full max-w-[230px] rounded-[24px] bg-neutral-780 p-[12px]">
           <div className=" flex flex-col gap-5 rounded-[16px] border border-neutral-800 bg-primary-main p-[15px]">
             <div className="flex items-center justify-center rounded-xl border border-neutral-710 px-[15px] py-[30px]">
-              <GoldAllIcon />
+              <IcomoonItem className="icon-Gold-2" />
             </div>
             <ButtonGold
               onClick={() => {}}
@@ -227,7 +289,7 @@ const GoldTransferPage = () => {
             />
             <div className="flex h-[49px] items-center justify-between rounded-xl bg-neutral-800 px-2">
               <p>{Helper.formatNumber(profile?.gold as number)}</p>
-              <GoldIcon className="m-auto" />
+              <IcomoonItem className="icon-Gold" />
             </div>
           </div>
         </div>

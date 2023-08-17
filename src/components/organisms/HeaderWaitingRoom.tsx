@@ -1,17 +1,35 @@
 /* eslint-disable max-len */
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import LockIcon from "@components/icons/LockIcon"
-import ModalInvite from "@components/molecules/ModalInvite"
-import RoomListBox from "@components/molecules/roomList/RoomListBox"
 import { Chip } from "@mui/material"
-import useGameStore from "@stores/game"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { MobileView } from "react-device-detect"
-// import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined"
-// import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+import useGameStore from "@stores/game"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalInvite = dynamic(() => import("@components/molecules/ModalInvite"), {
+  suspense: true,
+  ssr: false
+})
+const RoomListBox = dynamic(
+  () => import("@components/molecules/roomList/RoomListBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IHeaderWaitingRoomProp {
   roomTag: string | number
@@ -82,7 +100,7 @@ const HeaderWaitingRoom = ({
                 </span>
               ) : null}
 
-              <LockIcon />
+              <Icomoon className="icon-Lock" />
               {roomName && (
                 <span
                   className="summary-page__roomName text-default uppercase text-neutral-300"
@@ -184,7 +202,7 @@ const HeaderWaitingRoom = ({
               </span>
             ) : null}
 
-            <LockIcon />
+            <Icomoon className="icon-Lock" />
             {roomName && (
               <span
                 className="summary-page__roomName text-default uppercase text-neutral-300"

@@ -1,6 +1,3 @@
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
-import CouponIcon from "@components/icons/CouponIcon"
-import { MESSAGES } from "@constants/messages"
 import {
   Accordion,
   AccordionDetails,
@@ -11,14 +8,21 @@ import {
   Button,
   Alert
 } from "@mui/material"
-import useProfileStore from "@stores/profileStore"
 import { motion } from "framer-motion"
 import React, { memo } from "react"
 import { useTranslation } from "react-i18next"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import useRedeem from "@feature/marketplace/hooks/useRedeem"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import useLoadingStore from "@stores/loading"
+import useProfileStore from "@stores/profileStore"
+import { MESSAGES } from "@constants/messages"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICharacterCoupon {
   couponLength: number
@@ -120,7 +124,7 @@ const RedemptionCode = ({ type, token, evmAddress }: IProp) => {
                   : "rotate-0 transition-all duration-300"
               }`}
             >
-              <PlusIcon />
+              <Icomoon className="icon-Plus1" />
             </div>
           </div>
         </div>
@@ -154,7 +158,7 @@ const RedemptionCode = ({ type, token, evmAddress }: IProp) => {
               },
               startAdornment: (
                 <InputAdornment position="start">
-                  <CouponIcon />
+                  <Icomoon className="icon-Ticket" />
                 </InputAdornment>
               ),
               inputProps: {

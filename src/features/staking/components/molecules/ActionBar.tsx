@@ -1,22 +1,43 @@
 import React, { useEffect, useState } from "react"
-import ReloadIcon from "@components/icons/ReloadIcon"
-import LockIcon from "@components/icons/LockIcon"
-import IconArrowDownBorder from "@components/icons/ArrowDownBorderIcon"
+import dayjs from "dayjs"
+import { useTranslation } from "react-i18next"
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+import dynamic from "next/dynamic"
 import {
   IStakingBasicData,
   IUserStakedInfo,
   TStaking,
   TStakingStatus
 } from "@src/types/staking"
-import dayjs from "dayjs"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { iconmotion } from "@components/organisms/Footer"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { useTranslation } from "react-i18next"
 import useProfileStore from "@stores/profileStore"
 import { useWeb3Provider } from "@providers/Web3Provider"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+import { iconmotion } from "@styles/themes/partial/motion"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IStakingDate {
   buttonLabelOne?: string
@@ -52,10 +73,16 @@ const ActionBar = ({
 
   const startIconButton =
     status === "locked" ? (
-      <LockIcon stroke={`${disabledStake ? "#F1F4F4" : "#4E5057"}`} />
+      <Icomoon
+        className={`icon-Lock ${
+          disabledStake ? "text-#F1F4F4" : "text-#4E5057"
+        }`}
+      />
     ) : (
-      <IconArrowDownBorder
-        stroke={`${disabledStake ? "#F1F4F4" : "#4E5057"}`}
+      <Icomoon
+        className={`icon-Arrow-Down ${
+          disabledStake ? "text-#F1F4F4" : "text-#4E5057"
+        }`}
       />
     )
 
@@ -218,7 +245,7 @@ const ActionBar = ({
               stiffness: 400,
               damping: 4
             }}
-            icon={<ReloadIcon />}
+            icon={<Icomoon className="icon-Refresh-01" />}
             className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
         </div>

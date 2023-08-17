@@ -1,7 +1,12 @@
-import { Image } from "@components/atoms/image"
-import { BANNER_DATA } from "@constants/banner"
 import { useRouter } from "next/router"
 import React from "react"
+import dynamic from "next/dynamic"
+import { BANNER_DATA } from "@constants/banner"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   className?: string

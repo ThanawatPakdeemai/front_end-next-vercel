@@ -3,6 +3,11 @@ import Link from "next/link"
 import React, { ReactNode, useMemo } from "react"
 import dynamic from "next/dynamic"
 
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string | ReactNode
   href?: string
@@ -20,7 +25,6 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   disabledEndIcon?: boolean
   sxCustomStyled?: SxProps<Theme>
   target?: "_blank" | "_self" | "_parent" | "_top"
-  stroke?: string
 }
 
 const ButtonLink = ({
@@ -39,16 +43,8 @@ const ButtonLink = ({
   disabledStartIcon = false,
   disabledEndIcon = false,
   sxCustomStyled = {},
-  target = "_self",
-  stroke
+  target = "_self"
 }: IButtonLink) => {
-  const IconArrowRight = dynamic(
-    () => import("@components/icons/arrowRightIcon"),
-    {
-      suspense: true,
-      ssr: false
-    }
-  )
   const ButtonSelf = useMemo(
     () => (
       <Button
@@ -60,20 +56,20 @@ const ButtonLink = ({
         startIcon={
           !disabledStartIcon && (
             <div
-              className={`button-icon animation-arrow my-[5px] ${textColor}`}
+              className={`button-icon animation-arrow my-[5px] flex items-center text-[22px] ${textColor}`}
             >
               {icon}
             </div>
           )
         }
+        aria-label="button"
         className={`${className} button-global`}
         onClick={onClick}
         endIcon={
           !disabledEndIcon && (
             <div className="button-arrow animation-arrow">
-              <IconArrowRight
-                stroke={stroke}
-                className={arrowColor}
+              <Icomoon
+                className={`icon-Full-Arrow-Right relative top-[3px] ${arrowColor}`}
               />
             </div>
           )

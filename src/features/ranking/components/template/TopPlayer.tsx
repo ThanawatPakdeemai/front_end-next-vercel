@@ -1,18 +1,41 @@
 import React, { memo } from "react"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
-import CardTitle from "@components/organisms/CardTitle"
-import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
 import { v4 as uuid } from "uuid"
-import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
-import Note from "@components/molecules/Note"
-import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import { useTranslation } from "react-i18next"
-import NoData from "@components/molecules/NoData"
 import { useRouter } from "next/router"
-import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { Box } from "@mui/material"
-import CardRank from "@components/organisms/CardRank"
-import CardBodyList from "../molecules/CardBodyList"
+import dynamic from "next/dynamic"
+import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
+import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
+import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
+
+const CardTitle = dynamic(() => import("@components/organisms/CardTitle"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonTopPlayer = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonTopPlayer"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const Note = dynamic(() => import("@components/molecules/Note"), {
+  suspense: true,
+  ssr: true
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const CardRank = dynamic(() => import("@components/organisms/CardRank"), {
+  suspense: true,
+  ssr: true
+})
+const CardBodyList = dynamic(() => import("../molecules/CardBodyList"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface IPlayer {
   element?: "button" | "select"
@@ -153,6 +176,7 @@ const TopPlayer = ({
           rightContent={rightContent}
           startDate={startDate}
           endDate={endDate}
+          className="text-white-primary"
         />
 
         {(isLoading && topPlayerAllGame === undefined) || isFetching ? (

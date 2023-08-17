@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
+/* eslint-disable react/jsx-curly-brace-presence */
 import CONFIGS from "@configs/index"
 import { getBlogDetail } from "@feature/blog/containers/services/blog.service"
 import { IBlogDetailResponse } from "@feature/blog/interfaces/IBlogService"
@@ -5,6 +7,27 @@ import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.
 import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
 import { metaData } from "@src/meta/meta"
 import Document, { Html, Head, Main, NextScript } from "next/document"
+import dynamic from "next/dynamic"
+
+const GoogleTag = dynamic(() => import("@components/atoms/tags/GoogleTag"), {
+  suspense: true,
+  ssr: false
+})
+const LiveSessionTag = dynamic(
+  () => import("@components/atoms/tags/LiveSessionTag"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TiktokTag = dynamic(() => import("@components/atoms/tags/TiktokTag"), {
+  suspense: true,
+  ssr: false
+})
+const MetaPixel = dynamic(() => import("@components/atoms/tags/MetaPixel"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IMetaData {
   meta_title: string
@@ -151,7 +174,6 @@ class MyDocument extends Document {
             property="og:height"
             content="630"
           />
-
           {/* twitter */}
           <meta
             property="twitter:card"
@@ -181,13 +203,27 @@ class MyDocument extends Document {
             property="twitter:description"
             content={meta_description}
           />
-
           <meta
             name="keywords"
             content={meta_keyword}
           />
+          {/* Tags for tracking */}
+          <GoogleTag />
+          <LiveSessionTag />
+          <TiktokTag />
+          <MetaPixel />
         </Head>
+
         <body>
+          {/* Google Tag Manager noscript code */}
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=GTM-PGN7G2V`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
           <Main />
           <NextScript />
         </body>

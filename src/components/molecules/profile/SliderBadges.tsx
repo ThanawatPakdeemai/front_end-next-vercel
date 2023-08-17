@@ -1,20 +1,53 @@
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import CrumbCustom from "@components/atoms/CrumbCustom"
-import TooltipsCustom from "@components/atoms/TooltipsCustom"
-import IconArrowLeft from "@components/icons/arrowLeftIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import { Divider } from "@mui/material"
-import { Image } from "@components/atoms/image"
 import React, { useMemo, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
 import { v4 as uuid } from "uuid"
 import { motion } from "framer-motion"
-import BadgesPlacrhoder from "@components/icons/Banner/BadgesPlacrhoder"
-import { IBadge } from "@src/types/profile"
-import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import { useTranslation } from "react-i18next"
-import ButtonSticky from "../ButtonSticky"
+import dynamic from "next/dynamic"
+import { IBadge } from "@src/types/profile"
+import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
+
+const BadgePlaceholder = dynamic(
+  () => import("@components/atoms/svg/BadgePlaceholder"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonSticky = dynamic(
+  () => import("@components/molecules/ButtonSticky"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CheckBoxNaka = dynamic(
+  () => import("@components/atoms/checkBox/CheckBoxNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CrumbCustom = dynamic(() => import("@components/atoms/CrumbCustom"), {
+  suspense: true,
+  ssr: false
+})
+const TooltipsCustom = dynamic(
+  () => import("@components/atoms/TooltipsCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   _playerId: string
@@ -48,15 +81,6 @@ const SliderBadges = ({ _playerId }: IProp) => {
     dots: true,
     variableWidth: false,
     responsive: [
-      // {
-      //   breakpoint: 870,
-      //   settings: {
-      //     slidesToShow: 4,
-      //     slidesToScroll: 4,
-      //     infinite: true,
-      //     dots: true
-      //   }
-      // },
       {
         breakpoint: 600,
         settings: {
@@ -87,29 +111,9 @@ const SliderBadges = ({ _playerId }: IProp) => {
           damping: 4
         }}
       >
-        <BadgesPlacrhoder key={uuid()} />
+        <BadgePlaceholder key={uuid()} />
       </motion.div>
     ))
-    // new Array(5).fill(
-    //   <TooltipsCustom
-    //     className="uppercase"
-    //     placement="top"
-    //     title="emblem info"
-    //     color="error"
-    //   >
-    //     <motion.div
-    //       // className="!grid !h-[250px] !content-center"
-    //       whileHover={{ rotate: 15 }}
-    //       transition={{
-    //         type: "spring",
-    //         stiffness: 100,
-    //         damping: 4
-    //       }}
-    //     >
-    //       <BadgesPlacrhoder key={uuid()} />
-    //     </motion.div>
-    //   </TooltipsCustom>
-    // )
   )
 
   useMemo(() => {
@@ -157,8 +161,8 @@ const SliderBadges = ({ _playerId }: IProp) => {
             className="cursor-default bg-purple-primary"
           />
         </div>
-        <div className="md: absolute right-[-24%] top-[180%] z-[5] flex hidden flex-col items-center justify-center">
-          <ButtonSticky icon={<SupportIcon />} />
+        <div className="bottom-[20px] right-[20px] z-[5] flex flex-col items-center justify-center md:fixed">
+          <ButtonSticky icon={<Icomoon className="icon-Headset" />} />
           <ButtonSticky
             multi
             notify
@@ -169,63 +173,65 @@ const SliderBadges = ({ _playerId }: IProp) => {
       {openBadges ? null : (
         <>
           <div className="mt-[30px] flex h-[216px] !max-w-[280] items-center rounded-lg border border-neutral-700 bg-neutral-800 md:!max-w-[400] lg:!max-w-[1050px] ">
-            {isLoading ? (
-              "loading"
-            ) : (
-              <Slider
-                ref={sliderRef}
-                {...settings}
-                className="!w-full"
-              >
-                {slideArray &&
-                  slideArray.map((badge) => {
-                    if ("name" in badge) {
-                      return (
-                        <TooltipsCustom
-                          placement="top"
-                          title={badge.name}
-                          color="error"
-                          key={uuid()}
-                        >
-                          <motion.div
-                            className="!grid !h-[250px] !content-center !justify-center"
-                            key={uuid()}
-                            whileHover={{ rotate: 15 }}
-                            transition={{
-                              type: "spring",
-                              stiffness: 100,
-                              damping: 4
-                            }}
-                          >
-                            <Image
-                              src={badge.image}
-                              alt={badge.name}
-                              width={120}
-                              height={150}
-                            />
-                          </motion.div>
-                        </TooltipsCustom>
-                      )
-                    }
-                    return badge as React.ReactElement
-                  })}
-              </Slider>
-            )}
+            {isLoading
+              ? "loading"
+              : slideArray.length && (
+                  <Slider
+                    ref={sliderRef}
+                    {...settings}
+                    className="!w-full"
+                  >
+                    {slideArray &&
+                      slideArray.map((badge) => {
+                        if ("name" in badge) {
+                          return (
+                            <TooltipsCustom
+                              placement="top"
+                              title={badge.name}
+                              color="error"
+                              key={uuid()}
+                            >
+                              <motion.div
+                                className="!grid !h-[250px] !content-center !justify-center"
+                                key={uuid()}
+                                whileHover={{ rotate: 15 }}
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 100,
+                                  damping: 4
+                                }}
+                              >
+                                <Image
+                                  src={badge.image}
+                                  alt={badge.name}
+                                  width={120}
+                                  height={150}
+                                />
+                              </motion.div>
+                            </TooltipsCustom>
+                          )
+                        }
+                        return badge as React.ReactElement
+                      })}
+                  </Slider>
+                )}
           </div>
           <div className="arrow-slick-container bg-black mt-8 grid h-10 w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary">
             <button
               type="button"
+              aria-label="Previous Slide"
               className="flex h-full w-full items-center justify-center"
               onClick={onSlidePrev}
             >
-              <IconArrowLeft />
+              <Icomoon className="icon-Full-Arrow-Left" />
             </button>
             <button
               type="button"
+              aria-label="Previous Slide"
               className="flex h-full w-full items-center justify-center"
               onClick={onSlideNext}
             >
-              <IconArrowRight />
+              <Icomoon className="icon-Full-Arrow-Right" />
             </button>
           </div>
         </>

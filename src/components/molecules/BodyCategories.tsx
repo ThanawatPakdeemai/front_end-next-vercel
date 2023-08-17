@@ -2,10 +2,21 @@
 import { v4 as uuid } from "uuid"
 import React, { useEffect, useRef } from "react"
 import Slider, { Settings } from "react-slick"
+import dynamic from "next/dynamic"
 import useCategories from "@hooks/useCategories"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { CATEGORY_ICON } from "@constants/categoryIcon"
-import CategoryCard from "./cards/CategoryCard"
+
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CategoryCard = dynamic(() => import("./cards/CategoryCard"), {
+  suspense: true,
+  ssr: false
+})
 
 const BodyCategories = () => {
   const limitPage = 16
@@ -55,34 +66,27 @@ const BodyCategories = () => {
 
   return (
     <div className="my-2 w-[calc(100%)] md:my-10">
-      {/* <div className="flex h-[40px] w-[150px] justify-end">
-        <ButtonToggleIcon
-          startIcon={<AddIcon />}
-          text="view all"
-          handleClick={undefined}
-          className="flex items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
-          type="button"
-        />
-      </div> */}
-      <Slider
-        ref={sliderRef}
-        {...settings}
-      >
-        {getCategoriesAll
-          ? getCategoriesAll.slice(0, 10).map((item) => (
-              <CategoryCard
-                key={uuid()}
-                img={item.image_list}
-                text={item.name}
-                href={onHandleClickCatogory(item.slug, item.id)}
-                icon={
-                  CATEGORY_ICON.find((_item) => _item.id === item.slug)?.icon ||
-                  ""
-                }
-              />
-            ))
-          : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}
-      </Slider>
+      {getCategoriesAll?.length && (
+        <Slider
+          ref={sliderRef}
+          {...settings}
+        >
+          {getCategoriesAll
+            ? getCategoriesAll.slice(0, 10).map((item) => (
+                <CategoryCard
+                  key={uuid()}
+                  img={item.image_list}
+                  text={item.name}
+                  href={onHandleClickCatogory(item.slug, item.id)}
+                  icon={
+                    CATEGORY_ICON.find((_item) => _item.id === item.slug)
+                      ?.icon || ""
+                  }
+                />
+              ))
+            : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}
+        </Slider>
+      )}
     </div>
   )
 }

@@ -1,19 +1,46 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react"
 import { Box, Table, TableContainer } from "@mui/material"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
-import useHistory from "@feature/history/containers/hook/useHistory"
 import dayjs from "dayjs"
-import DropdownLimit from "@components/atoms/DropdownLimit"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import useHistory from "@feature/history/containers/hook/useHistory"
 import useHistoryController from "@feature/history/containers/hook/useHistoryController"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-import NoData from "@components/molecules/NoData"
-import { Image } from "@components/atoms/image/index"
-import HeaderForWardBackWardMobile from "@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"
-import { useRouter } from "next/router"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const Image = dynamic(
+  () => import("@components/atoms/image/index").then((mod) => mod.Image),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const HeaderForWardBackWardMobile = dynamic(
+  () =>
+    import("@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 const GameItem = ({ data, onClickView }) => {
   const { game_mode, createdAt, game_detail } = data

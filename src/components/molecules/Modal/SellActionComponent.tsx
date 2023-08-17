@@ -1,15 +1,3 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import TextTip from "@components/atoms/TextTip"
-import MinusIcon from "@components/icons/CountIcon/MinusIcon"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
-import LogoIcon from "@components/icons/LogoIcon"
-import { iconmotion } from "@components/organisms/Footer"
-import { MARKET_SELLING } from "@constants/market"
-import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
-import {
-  TNFTType,
-  TSellingType
-} from "@feature/marketplace/interfaces/IMarketService"
 import {
   Divider,
   InputAdornment,
@@ -19,10 +7,40 @@ import {
   Stack,
   TextField
 } from "@mui/material"
-import FormattedInputs from "@feature/marketplace/components/molecules/CurrencyTextField"
-import Helper from "@utils/helper"
 import React, { memo, useCallback, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import dynamic from "next/dynamic"
+import { MARKET_SELLING } from "@constants/market"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import {
+  TNFTType,
+  TSellingType
+} from "@feature/marketplace/interfaces/IMarketService"
+import Helper from "@utils/helper"
+import { iconmotion } from "@styles/themes/partial/motion"
+
+const FormattedInputs = dynamic(
+  () => import("@feature/marketplace/components/molecules/CurrencyTextField"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TextTip = dynamic(() => import("@components/atoms/TextTip"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   nftType: TNFTType
@@ -158,7 +176,7 @@ const SellActionComponent = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  <LogoIcon />
+                  <Icomoon className="icon-Naka text-error-main" />
                 </InputAdornment>
               )
             }}
@@ -178,7 +196,7 @@ const SellActionComponent = ({
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={<MinusIcon />}
+              icon={<Icomoon className="icon-Minus" />}
               className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
             />
             <TextField
@@ -215,7 +233,7 @@ const SellActionComponent = ({
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={<PlusIcon />}
+              icon={<Icomoon className="icon-Plus1" />}
               className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
             />
           </div>

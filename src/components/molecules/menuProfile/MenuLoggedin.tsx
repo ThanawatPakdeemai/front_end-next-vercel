@@ -1,10 +1,18 @@
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
 import { IMenu } from "@interfaces/IMenu"
 import { IProfile } from "@src/types/profile"
 import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
-import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
+
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   ele: IMenu

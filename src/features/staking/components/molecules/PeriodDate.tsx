@@ -1,9 +1,14 @@
-import LockIcon from "@components/icons/LockIcon"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
-import { TStakingStatus } from "@src/types/staking"
 import dayjs from "dayjs"
 import { t } from "i18next"
 import React from "react"
+import dynamic from "next/dynamic"
+import { TStakingStatus } from "@src/types/staking"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IPeriodDate {
   datetime: string
@@ -23,7 +28,11 @@ const PeriodDate = ({ datetime, className, lockStatus }: IPeriodDate) => (
       </div>
 
       <div className=" w-fit rounded-lg border border-neutral-700 bg-neutral-800 p-3">
-        {lockStatus === "locked" ? <LockIcon /> : <LockOpenOutlinedIcon />}
+        {lockStatus === "locked" ? (
+          <Icomoon className="icon-Lock" />
+        ) : (
+          <LockOpenOutlinedIcon />
+        )}
       </div>
     </div>
   </div>

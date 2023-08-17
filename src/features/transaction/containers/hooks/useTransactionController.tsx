@@ -1,8 +1,19 @@
-import FilterIcon from "@components/icons/FilterIcon"
-import TablePopover from "@feature/table/components/atoms/TablePopover"
-import { ITableHeader } from "@feature/table/interface/ITable"
 import { useMemo, useState } from "react"
 import { Trans } from "react-i18next"
+import dynamic from "next/dynamic"
+import { ITableHeader } from "@feature/table/interface/ITable"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const TablePopover = dynamic(
+  () => import("@feature/table/components/atoms/TablePopover"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const useTransactionController = () => {
   const [sortTime, setSortTime] = useState<number | undefined>(undefined) // 1 || -1
@@ -45,7 +56,7 @@ const useTransactionController = () => {
         filterIcon: true,
         child: (
           <TablePopover
-            icon={<FilterIcon className="text-neutral-600" />}
+            icon={<Icomoon className="icon-Arrow-Down text-neutral-600" />}
             checkboxList={["DepositNaka", "WithdrawNaka"]}
             check={typeCheck}
             setCheck={onTypeCheck}

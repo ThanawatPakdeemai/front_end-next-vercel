@@ -28,7 +28,7 @@ export interface TelegramButtonPropArg {
   children?: React.ReactNode
 }
 
-export const TelegramWidget: React.FC<TelegramButtonPropArg> = ({
+const TelegramWidget: React.FC<TelegramButtonPropArg> = ({
   botName,
   widgetVersion = 19,
   dataOnAuth,
@@ -89,14 +89,15 @@ export const TelegramWidget: React.FC<TelegramButtonPropArg> = ({
   }, [])
 
   return (
-    <>
-      <button
-        ref={telegramRef}
-        className="position-relative overflow-hidden"
-        type="button"
-      >
-        {children}
-      </button>
-    </>
+    <button
+      aria-label="telegram-button"
+      ref={telegramRef}
+      className="position-relative overflow-hidden"
+      type="button"
+    >
+      {children}
+    </button>
   )
 }
+
+export default TelegramWidget

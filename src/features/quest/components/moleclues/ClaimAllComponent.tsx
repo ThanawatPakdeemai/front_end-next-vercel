@@ -1,5 +1,3 @@
-// import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-// import AddIcon from "@mui/icons-material/Add"
 import React from "react"
 import { Trans } from "react-i18next"
 import { motion } from "framer-motion"
@@ -37,21 +35,6 @@ const ClaimAllComponent = ({ count }: IProp) => (
         {count}
       </motion.span>
     </motion.div>
-    {/* <motion.div
-      initial={{ width: 184 }}
-      animate={{
-        width: 248,
-        transition: { stiffness: 220, type: "spring", damping: 8 }
-      }}
-    >
-      <ButtonToggleIcon
-        startIcon={<AddIcon className="text-neutral-300" />}
-        text="Claim all"
-        className="w-full rounded-lg border border-neutral-700 text-neutral-300"
-        handleClick={handleClaimAll}
-        dropColor
-      />
-    </motion.div> */}
   </div>
 )
 

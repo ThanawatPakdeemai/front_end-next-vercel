@@ -1,15 +1,66 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState } from "react"
-import Jumbotron from "@components/molecules/Jumbotron"
-import CardPlatformItems from "@components/organisms/CardPlatformItems"
-import CardFeaturedDeveloperItems from "@components/organisms/CardFeaturedDeveloperItems"
-import CardTestimonialItems from "@components/organisms/CardTestimonialItems"
-import GameDeveloperContent from "@components/templates/contents/GameDeveloperContent"
-import { Chip } from "@mui/material"
-import HeroSection from "@components/templates/contents/HeroSection"
-import FullWidthContent from "@components/templates/contents/FullWidthContent"
-import ButtonScroll from "@components/atoms/button/ButtonScroll"
+import dynamic from "next/dynamic"
 import useBecomeDeveloper from "@feature/become-developer/containers/hooks/useBecomeDeveloper"
 import { IWebBecomeDevData } from "@feature/become-developer/interfaces/IWebBecome"
+
+const CardTestimonialItems = dynamic(
+  () => import("@components/organisms/CardTestimonialItems"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FullWidthContent = dynamic(
+  () => import("@components/templates/contents/FullWidthContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardPlatformItems = dynamic(
+  () => import("@components/organisms/CardPlatformItems"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonScroll = dynamic(
+  () => import("@components/atoms/button/ButtonScroll"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeroSection = dynamic(
+  () => import("@components/templates/contents/HeroSection"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameDeveloperContent = dynamic(
+  () => import("@components/templates/contents/GameDeveloperContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Jumbotron = dynamic(() => import("@components/molecules/Jumbotron"), {
+  suspense: true,
+  ssr: false
+})
+const CardFeaturedDeveloperItems = dynamic(
+  () => import("@components/organisms/CardFeaturedDeveloperItems"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
 
 const ChipStyles = {
   backgroundColor: "#A0ED61!important",

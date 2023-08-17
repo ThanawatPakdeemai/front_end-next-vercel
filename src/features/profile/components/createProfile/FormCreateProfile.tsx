@@ -1,25 +1,39 @@
 import React, { memo, useState } from "react"
 
 import { Box, InputAdornment, TextField, Typography } from "@mui/material"
-import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import SelectAllIcon from "@mui/icons-material/SelectAll"
+import { useForm } from "react-hook-form"
+import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined"
+import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import {
   getGeoInfo,
   updateProfile
 } from "@feature/profile/containers/services/profile.service"
-import { useForm } from "react-hook-form"
 import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
-import PermContactCalendarOutlinedIcon from "@mui/icons-material/PermContactCalendarOutlined"
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import { IGeoProfile } from "@feature/profile/interfaces/IProfileService"
-import SlideAvatar from "@feature/avatar/components/molecules/SlideAvatar"
 import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 import { MESSAGES } from "@constants/messages"
-import { useRouter } from "next/router"
-import { useTranslation } from "react-i18next"
 import { commonPattern } from "@constants/regex"
+
+const AvatarProfile = dynamic(
+  () => import("@components/atoms/avatar/AvatarProfile")
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const CheckBoxNaka = dynamic(
+  () => import("@components/atoms/checkBox/CheckBoxNaka")
+)
+const SlideAvatar = dynamic(
+  () => import("@feature/avatar/components/molecules/SlideAvatar")
+)
 
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -140,7 +154,7 @@ const FormCreateProfile = () => {
               id="username-create"
               placeholder="Username"
               size="medium"
-              helperText="Can modified later"
+              helperText="Can be modified later"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

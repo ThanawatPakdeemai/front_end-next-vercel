@@ -1,6 +1,11 @@
-import { ImageCustom } from "@components/atoms/image/Image"
-import { IVerticalThumbCardSlideProps } from "@feature/slider/interfaces/ISlides"
 import { CardMedia } from "@mui/material"
+import dynamic from "next/dynamic"
+import { IVerticalThumbCardSlideProps } from "@feature/slider/interfaces/ISlides"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const VerticalThumbCardSlide = ({ item }: IVerticalThumbCardSlideProps) => (
   <div className="verticalThumb-slide__item relative">

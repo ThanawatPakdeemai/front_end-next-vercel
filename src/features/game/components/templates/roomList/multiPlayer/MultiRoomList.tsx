@@ -1,8 +1,7 @@
 /* eslint-disable no-nested-ternary */
-import ReloadIcon from "@components/icons/ReloadIcon"
-import ButtonSticky from "@components/molecules/ButtonSticky"
-import RoomListBar from "@components/molecules/roomList/RoomListBar"
-import HeaderRoomList from "@components/organisms/HeaderRoomList"
+import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
@@ -10,11 +9,39 @@ import {
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
 import useGameGlobal from "@hooks/useGameGlobal"
-import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
 import useProfileStore from "@stores/profileStore"
 import helper from "@utils/helper"
-import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
+
+const Divider = dynamic(() => import("@mui/material/Divider"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonSticky = dynamic(
+  () => import("@components/molecules/ButtonSticky"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RoomListBar = dynamic(
+  () => import("@components/molecules/roomList/RoomListBar"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeaderRoomList = dynamic(
+  () => import("@components/organisms/HeaderRoomList"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -23,7 +50,6 @@ const MultiRoomList = () => {
   // const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
-  // const { balanceofItem } = useBuyGameItemController()
   const { item: item_id, gameData: data } = useGameGlobal()
 
   const propsSocketRoomlist = useMemo(
@@ -207,7 +233,7 @@ const MultiRoomList = () => {
                   )
                 })}
               <ButtonSticky
-                icon={<ReloadIcon />}
+                icon={<Icomoon className="icon-Refresh-01" />}
                 className="mt-10"
                 multi
                 // onClick={() => fetch()}

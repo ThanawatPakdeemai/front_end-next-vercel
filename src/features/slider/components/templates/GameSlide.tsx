@@ -1,8 +1,14 @@
-import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
+import dynamic from "next/dynamic"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
-import GameCardSlide from "../organisms/GameCardSlide"
+
+const SkeletonBanner = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonBanner")
+)
+const GameCardSlide = dynamic(
+  () => import("@src/features/slider/components/organisms/GameCardSlide")
+)
 
 const GameSlide = () => {
   /**
@@ -42,33 +48,35 @@ const GameSlide = () => {
       {isLoading ? (
         <SkeletonBanner />
       ) : (
-        <Slider
-          ref={sliderRef}
-          {...settings}
-        >
-          {slideGames &&
-            slideGames.slice(0, 5).map((slide, index) => (
-              <div key={slide.id}>
-                {slide[index] !== undefined ? (
-                  <GameCardSlide
-                    slide={slide}
-                    slideNext={
-                      index === 4 ? slideGames[0] : slideGames[index + 1]
-                    }
-                    gotoNext={gotoNext}
-                    gotoPrev={gotoPrev}
-                  />
-                ) : (
-                  <GameCardSlide
-                    slide={slide}
-                    slideNext={slideGames[index + 1]}
-                    gotoNext={gotoNext}
-                    gotoPrev={gotoPrev}
-                  />
-                )}
-              </div>
-            ))}
-        </Slider>
+        slideGames?.length && (
+          <Slider
+            ref={sliderRef}
+            {...settings}
+          >
+            {slideGames &&
+              slideGames.slice(0, 5).map((slide, index) => (
+                <div key={slide.id}>
+                  {slide[index] !== undefined ? (
+                    <GameCardSlide
+                      slide={slide}
+                      slideNext={
+                        index === 4 ? slideGames[0] : slideGames[index + 1]
+                      }
+                      gotoNext={gotoNext}
+                      gotoPrev={gotoPrev}
+                    />
+                  ) : (
+                    <GameCardSlide
+                      slide={slide}
+                      slideNext={slideGames[index + 1]}
+                      gotoNext={gotoNext}
+                      gotoPrev={gotoPrev}
+                    />
+                  )}
+                </div>
+              ))}
+          </Slider>
+        )
       )}
     </section>
   )

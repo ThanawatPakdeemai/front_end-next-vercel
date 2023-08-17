@@ -1,9 +1,22 @@
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import { MENU_SERVICES } from "@configs/menu"
+import React from "react"
 import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
-import Balance from "./balance/Balance"
+import dynamic from "next/dynamic"
+import { MENU_SERVICES } from "@configs/menu"
 import { StyledMenuItemCustom } from "./SidebarGames"
+
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Balance = dynamic(() => import("./balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
 
 const SidebarStaking = () => {
   const router: NextRouter = useRouter()

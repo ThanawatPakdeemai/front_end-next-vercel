@@ -49,14 +49,6 @@ export const IMAGES: {
     height: 319,
     alt: "table-com"
   },
-  nakaLogoMaster: {
-    src: "/assets/icons/logo_master.svg",
-    srcWebp: "/assets/icons/logo_master.svg",
-    blurDataURL: "/assets/icons/logo_master.svg",
-    width: 24,
-    height: 11,
-    alt: "naka-logo-master"
-  },
   nakaBand: {
     src: "/images/home/nakamoto-band.svg",
     srcWebp: "/images/home/nakamoto-band.svg",
@@ -201,30 +193,6 @@ export const IMAGES: {
     height: 172,
     alt: "nakaVerseMascot"
   },
-  nakaIconWhite: {
-    src: "/images/alert/nakaIcon.svg",
-    srcWebp: "/images/alert/nakaIcon.svg",
-    blurDataURL: "/images/alert/nakaIcon.svg",
-    width: 25,
-    height: 25,
-    alt: "nakaIcon"
-  },
-  flagIcon: {
-    src: "/images/alert/flagIcon.svg",
-    srcWebp: "/images/alert/flagIcon.svg",
-    blurDataURL: "/images/alert/flagIcon.svg",
-    width: 25,
-    height: 25,
-    alt: "flagIcon"
-  },
-  radiation: {
-    src: "/images/alert/radiation.svg",
-    srcWebp: "/images/alert/radiation.svg",
-    blurDataURL: "/images/alert/radiation.svg",
-    width: 25,
-    height: 25,
-    alt: "radiation"
-  },
   metamask: {
     src: "/images/home/metamask.svg",
     srcWebp: "/images/home/metamask.svg",
@@ -240,14 +208,6 @@ export const IMAGES: {
     width: 60.75,
     height: 60.75,
     alt: "ro-icon"
-  },
-  vectorWorld: {
-    src: "/images/home/vectorWorld.svg",
-    srcWebp: "/images/home/vectorWorld.svg",
-    blurDataURL: "/images/home/vectorWorld.svg",
-    width: 50,
-    height: 50,
-    alt: "vectorWorld"
   },
   rectagle: {
     src: "/images/home/rectagle.svg",
@@ -392,6 +352,14 @@ export const IMAGES: {
     width: 1024,
     height: 740,
     alt: "event background"
+  },
+  notfound: {
+    src: "/images/not_found.webp",
+    srcWebp: "/images/not_found.webp",
+    blurDataURL: "/images/not_found.webp",
+    width: 600,
+    height: 450,
+    alt: "404 Not Found"
   }
 }
 

@@ -53,6 +53,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
     return (
       <motion.button
         type="button"
+        aria-label="claim button"
         className="w-[108px] rounded-2xl border border-neutral-800 bg-varidian-default px-5 py-[8px] text-xs uppercase text-neutral-900"
         onClick={() => handleClaim(data.id)}
       >
@@ -75,6 +76,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
         initial={initial}
         animate={animate}
         type="button"
+        aria-label="claim button"
         className="w-[108px] rounded-2xl border border-neutral-800 px-5 py-[8px] text-xs text-neutral-600"
         disabled
       >

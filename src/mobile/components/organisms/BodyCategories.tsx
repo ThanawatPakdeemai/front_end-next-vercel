@@ -4,9 +4,20 @@
 import { v4 as uuid } from "uuid"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { Image } from "@components/atoms/image"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const BodyCategories = ({ games }: any) => {
   const limitPage = 16
@@ -53,26 +64,27 @@ const BodyCategories = ({ games }: any) => {
 
   return (
     <div className="my-2 w-[calc(100%)] md:my-10">
-      <Slider
-        ref={sliderRef}
-        {...settings}
-      >
-        {games
-          ? games.slice(0, 6).map((item, index) => (
-              <div
-                key={item._id}
-                className="relative p-2"
-                onClick={() => onGame(item)}
-              >
-                <Image
-                  src={item.image_category_list}
-                  alt={item.name}
-                  width={908}
-                  height={204}
-                  className=" h-full w-full rounded-md"
-                />
+      {games.length && (
+        <Slider
+          ref={sliderRef}
+          {...settings}
+        >
+          {games
+            ? games.slice(0, 6).map((item, index) => (
                 <div
-                  className={`absolute right-6 top-6 flex h-8 w-8  items-center justify-center rounded-[6px] text-xl text-primary-main
+                  key={item._id}
+                  className="relative p-2"
+                  onClick={() => onGame(item)}
+                >
+                  <Image
+                    src={item.image_category_list}
+                    alt={item.name}
+                    width={908}
+                    height={204}
+                    className=" h-full w-full rounded-md"
+                  />
+                  <div
+                    className={`absolute right-6 top-6 flex h-8 w-8  items-center justify-center rounded-[6px] text-xl text-primary-main
                   ${
                     index === 0
                       ? " bg-error-main "
@@ -83,14 +95,15 @@ const BodyCategories = ({ games }: any) => {
                       : "bg-[#757575]"
                   }
                 `}
-                >
-                  <p>{index + 1}</p>
+                  >
+                    <p>{index + 1}</p>
+                  </div>
+                  <p className="mt-2 text-black-default">{item.name}</p>
                 </div>
-                <p className="mt-2 text-black-default">{item.name}</p>
-              </div>
-            ))
-          : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}
-      </Slider>
+              ))
+            : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}
+        </Slider>
+      )}
     </div>
   )
 }

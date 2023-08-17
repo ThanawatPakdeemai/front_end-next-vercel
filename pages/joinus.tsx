@@ -1,10 +1,19 @@
 import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
-import RegisterTemplate from "@components/templates/RegisterTemplate"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
-const JoinUsPage = dynamic(() => import("@feature/page/JoinUsPage"))
+const RegisterTemplate = dynamic(
+  () => import("@components/templates/RegisterTemplate"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const JoinUsPage = dynamic(() => import("@feature/page/JoinUsPage"), {
+  suspense: true,
+  ssr: true
+})
 
 const JoinUs = () => <JoinUsPage />
 

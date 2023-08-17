@@ -1,17 +1,57 @@
 import React, { useEffect } from "react"
-import Sticker from "@components/icons/BlogIcon/Sticker"
-
-import Breadcrumb from "@components/molecules/Breadcrumb"
 import { motion } from "framer-motion"
-import BlogHeader from "@feature/blog/components/organisms/BlogHeader"
-import BlogContent from "@feature/blog/components/organisms/BlogContent"
-import BlogFooter from "@feature/blog/components/organisms/BlogFooter"
-import BlogReleated from "@feature/blog/components/organisms/BlogReleated"
-import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { BLOG_CRUMB } from "@configs/crumb"
 import useBlogController from "@feature/blog/containers/hook/useBlogController"
-import SkeletonBlogDetail from "@components/atoms/skeleton/SkeletonBlogDetail"
 import useCrumbStore from "@stores/crumb"
+
+const IcomoonSticker = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonSticker"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Breadcrumb = dynamic(() => import("@components/molecules/Breadcrumb"), {
+  suspense: true,
+  ssr: false
+})
+const BlogHeader = dynamic(
+  () => import("@feature/blog/components/organisms/BlogHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BlogContent = dynamic(
+  () => import("@feature/blog/components/organisms/BlogContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BlogFooter = dynamic(
+  () => import("@feature/blog/components/organisms/BlogFooter"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BlogReleated = dynamic(
+  () => import("@feature/blog/components/organisms/BlogReleated"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonBlogDetail = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonBlogDetail"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   _blogId: string
@@ -56,7 +96,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
               bounce: 2
             }}
           >
-            <Sticker />
+            <IcomoonSticker className="icon-Circle-sphere-pink" />
           </motion.div>
         </div>
       </div>

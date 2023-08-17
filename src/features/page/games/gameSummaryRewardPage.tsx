@@ -1,12 +1,24 @@
 import React from "react"
-import GameSummaryBody from "@feature/game/components/organisms/GameSummaryBody"
-import SkeletonSummaryRaward from "@components/atoms/skeleton/SkeletonSummaryRaward"
-import GameSummaryContent from "@components/templates/contents/GameSummaryContent"
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
-import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
 import useGlobal from "@hooks/useGlobal"
-import GameSummaryBodyReturnItem from "@feature/game/components/organisms/GameSummaryBodyReturnItem"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+
+const GameSummaryBody = dynamic(
+  () => import("@feature/game/components/organisms/GameSummaryBody")
+)
+const SkeletonSummaryRaward = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonSummaryRaward")
+)
+const GameSummaryContent = dynamic(
+  () => import("@components/templates/contents/GameSummaryContent")
+)
+const CardBodyList = dynamic(
+  () => import("@feature/ranking/components/molecules/CardBodyList")
+)
+const GameSummaryBodyReturnItem = dynamic(
+  () => import("@feature/game/components/organisms/GameSummaryBodyReturnItem")
+)
 
 const GameSummaryRewardPage = () => {
   const {

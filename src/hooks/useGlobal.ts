@@ -1,4 +1,5 @@
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
+import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -19,7 +20,6 @@ import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
 import { signOut } from "next-auth/react"
 import useCountPlayGame from "@feature/game/containers/hooks/useCountPlayGame"
-import useGameStore from "@stores/game"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
@@ -88,6 +88,24 @@ const useGlobal = (
   const isDeveloperPage =
     router.asPath.includes("game-developer") ||
     router.asPath.includes("developer")
+
+  const isWrongFormatURL = useCallback(
+    (url: string): boolean =>
+      url.includes("nakamoto-prod-s3.s3.eu-central-1.amazonaws.com/https://"),
+    []
+  )
+
+  const isOldPathURL = useCallback(
+    (url: string): boolean =>
+      url.includes("nakamoto-prod-new.s3.eu-central-1.amazonaws.com"),
+    []
+  )
+
+  const isWrongHttpURL = useCallback(
+    (url: string): boolean =>
+      url.includes("http://") === false || url.includes("https://") === false,
+    []
+  )
 
   /**
    * @description Set profile
@@ -349,17 +367,6 @@ const useGlobal = (
     const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${router.query.typeGame}/${gameData.path}`
     const { username, address, avatar, status } = profile
 
-    // Get url by game type
-    // address: string
-    // username: string
-    // avatar: number
-    // status: number
-    // createdAt?: string
-    // friend: IAuthServiceFriend[]
-    // banned: string[]
-    // gas: 0 | 1 | 2 | null | undefined
-    // jwtToken: string
-
     return `${gameData.game_url}?game_data=${gameData.id}?data=${btoa(
       `${address}:|:${username}:|:${avatar}:|:${status}:|:${CONFIGS.BASE_URL.API?.slice(
         0,
@@ -533,7 +540,10 @@ const useGlobal = (
     handleClickScroll,
     getURLWithEmailToken,
     getAvatarURL,
-    handleClickPlayGameStoryMode
+    handleClickPlayGameStoryMode,
+    isWrongFormatURL,
+    isOldPathURL,
+    isWrongHttpURL
   }
 }
 

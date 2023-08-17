@@ -1,27 +1,37 @@
-import { memo } from "react"
-import TournamentProfile from "@components/molecules/tournament/TournamentProfile"
-import TournamentReward from "@components/molecules/tournament/TournamentReward"
-import RoundStatus from "@components/molecules/tournament/RoundStatus"
-import StepRound from "@components/molecules/tournament/StepRound"
-import QualifyingRound from "@components/molecules/tournament/QualifyingRound"
-import TournamentRegister from "@components/molecules/tournament/TournamentRegister"
-import TournamentNewsSlide from "@feature/slider/components/templates/TournamentNewsSlide"
-import CardTournamentSlider from "@feature/slider/components/molecules/CardTournamentSlider"
+import React, { memo } from "react"
+import dynamic from "next/dynamic"
 import useGlobal from "@hooks/useGlobal"
-import TournamentList from "@feature/tournament/components/organisms/TournamentList"
-import TournamentStatusPlayer from "@components/molecules/tournament/TournamentStatusPlayer"
 
-// import { Trans, useTranslation } from "react-i18next"
-// import { ITournamentData, ITournamentRound } from "@src/types/tournament"
-// import { IGame } from "@src/types/games"
-// import useProfileStore from "@stores/profileStore"
-// import {
-//   getTournament,
-//   checkPlayerTicket
-// } from "@feature/tournament/containers/services/tournament.service"
-// import { IResponseGameById } from "@src/types/response"
-// import { getGameById } from "@feature/game/containers/services/game.service"
-// import moment from "moment"
+const TournamentProfile = dynamic(
+  () => import("@components/molecules/tournament/TournamentProfile")
+)
+const TournamentReward = dynamic(
+  () => import("@components/molecules/tournament/TournamentReward")
+)
+const RoundStatus = dynamic(
+  () => import("@components/molecules/tournament/RoundStatus")
+)
+const StepRound = dynamic(
+  () => import("@components/molecules/tournament/StepRound")
+)
+const QualifyingRound = dynamic(
+  () => import("@components/molecules/tournament/QualifyingRound")
+)
+const TournamentRegister = dynamic(
+  () => import("@components/molecules/tournament/TournamentRegister")
+)
+const TournamentNewsSlide = dynamic(
+  () => import("@feature/slider/components/templates/TournamentNewsSlide")
+)
+const CardTournamentSlider = dynamic(
+  () => import("@feature/slider/components/molecules/CardTournamentSlider")
+)
+const TournamentList = dynamic(
+  () => import("@feature/tournament/components/organisms/TournamentList")
+)
+const TournamentStatusPlayer = dynamic(
+  () => import("@components/molecules/tournament/TournamentStatusPlayer")
+)
 
 const TournamentPage = () => {
   const { stateProfile } = useGlobal()

@@ -1,5 +1,5 @@
 import CONFIGS from "@configs/index"
-import { ethers, BigNumber, Contract } from "ethers"
+import { BigNumber, Contract } from "ethers"
 import {
   useERC20,
   useBalanceVault
@@ -8,7 +8,6 @@ import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"
 import Helper from "@utils/helper"
-import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
 import { DEFAULT_TOKEN_INFO } from "@constants/defaultValues"
 import useProfileStore from "@stores/profileStore"
 // import { nodesRPCPolygon } from "@constants/rpcUrls"
@@ -165,35 +164,30 @@ const useContractVault = () => {
       )
         return
       try {
-        const { ethereum }: any = window
-        // const _provider = new ethers.providers.Web3Provider(
-        //   ethereum,
-        //   nodesRPCPolygon[random(0, nodesRPCPolygon.length - 1)]
-        // )
-        const _provider = new ethers.providers.Web3Provider(ethereum)
-        const _signer = _provider.getSigner()
-        const _balanceVaultContract = new ethers.Contract(
-          CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT,
-          BalanceVaultAbi.abi,
-          _signer
-        )
-        const vaultBalancePromise = await _balanceVaultContract.getBalance(
+        const vaultBalancePromise = await balanceVaultContract.getBalance(
           _userAddress
         )
-        const symbolPromise = await tokenContract.symbol()
-        const totalSupplyPromise = await tokenContract.totalSupply()
-        const namePromise = await tokenContract.name()
-        const decimalsPromise = await tokenContract.decimals()
-        const walletBalancePromise = await tokenContract.balanceOf(_userAddress)
+        // const symbolPromise = await tokenContract.symbol()
+        // const totalSupplyPromise = await tokenContract.totalSupply()
+        // const namePromise = await tokenContract.name()
+        // const decimalsPromise = await tokenContract.decimals()
+        // const walletBalancePromise = await tokenContract.balanceOf(_userAddress)
+
         // tokenName
-        const [tokenSymbol, totalSupply] = await Promise.all([
-          symbolPromise,
-          totalSupplyPromise,
-          namePromise,
+        const [
+          tokenSymbol,
+          totalSupply,
           decimalsPromise,
           walletBalancePromise
+        ] = await Promise.all([
+          tokenContract.symbol(),
+          tokenContract.totalSupply(),
+          tokenContract.decimals(),
+          tokenContract.balanceOf(_userAddress)
+          // namePromise,
+          // decimalsPromise,
+          // walletBalancePromise
         ])
-
         // tokenName.toString() === "NK" ? "NAKA" : tokenName.toString()
         resolve({
           symbol: tokenSymbol.toString(),

@@ -1,16 +1,33 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import RocketIcon from "@components/icons/RocketIcon"
 import { Drawer, Typography } from "@mui/material"
 import { makeStyles } from "@mui/styles"
 import React, { useEffect } from "react"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import useGetAllQuest from "@feature/quest/containers/hook/useGetAllQuest"
 import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import { useToast } from "@feature/toast/containers"
-import { useTranslation } from "react-i18next"
-import MissionList from "./MissionList"
-import MissionDetails from "./MissionDetails"
+
+const MissionList = dynamic(() => import("./MissionList"), {
+  suspense: true,
+  ssr: false
+})
+const MissionDetails = dynamic(() => import("./MissionDetails"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   open: boolean
@@ -115,7 +132,7 @@ const MissionComponent = ({ open }: IProp) => {
         {/* header */}
         <div className="flex min-h-[54px] items-center rounded-lg bg-neutral-800 pl-5">
           <div className="flex flex-1 flex-row items-center">
-            <RocketIcon />
+            <Icomoon className="icon-Rocket" />
             <Typography className="pl-[15px] uppercase text-neutral-300">
               {t("mission")}
             </Typography>

@@ -2,9 +2,14 @@
 import React, { memo } from "react"
 import { useTranslation } from "next-i18next"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
-import SettingIcon from "@components/icons/SettingIcon"
 import Link from "next/link"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   label?: string | JSX.Element | null
@@ -20,7 +25,7 @@ interface IProps {
 
 const HeaderForWardBackWardMobile = ({
   label = "",
-  forwardIcon = <SettingIcon />,
+  forwardIcon = <Icomoon className="icon-Settings" />,
   forwardHref = "/",
   backwardIcon = <ArrowBackOutlinedIcon />,
   backwardHref = "/",

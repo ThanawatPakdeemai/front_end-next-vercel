@@ -1,10 +1,34 @@
 import { Box } from "@mui/material"
-import SingleWaiting from "@src/mobile/features/game/components/templates/single/SingleWaiting"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
-import MultiWaiting from "@src/mobile/features/game/components/templates/multi/MultiWaiting"
-import PleaseLogin from "@components/atoms/PleaseLogin"
-import NoData from "@components/molecules/NoData"
+import dynamic from "next/dynamic"
+
+const SingleWaiting = dynamic(
+  () =>
+    import(
+      "@src/mobile/features/game/components/templates/single/SingleWaiting"
+    ),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MultiWaiting = dynamic(
+  () =>
+    import("@src/mobile/features/game/components/templates/multi/MultiWaiting"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PleaseLogin = dynamic(() => import("@components/atoms/PleaseLogin"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
 
 const WaitingRoomPage = () => {
   const profile = useProfileStore((state) => state.profile.data)

@@ -1,18 +1,56 @@
 import React, { memo, useEffect, useState } from "react"
-import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import { v4 as uuid } from "uuid"
+import { MobileView } from "react-device-detect"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { F2PHeaderMenu } from "@constants/gameSlide"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
-import { v4 as uuid } from "uuid"
-import GameCard from "@feature/game/components/molecules/GameCard"
-import { Box } from "@mui/material"
-import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
-import NoData from "@components/molecules/NoData"
-import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
-import BodyCategories from "@mobile/components/organisms/BodyCategories"
-import { MobileView } from "react-device-detect"
 import { IGame } from "@feature/game/interfaces/IGameService"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const CardGameSlider = dynamic(
+  () => import("@mobile/components/organisms/CardGameSlider"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BodyCategories = dynamic(
+  () => import("@mobile/components/organisms/BodyCategories"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const FreeToEarnGamesPage = () => {
   const {
@@ -28,8 +66,7 @@ const FreeToEarnGamesPage = () => {
     setLimit,
     staminaRecovery,
     cooldown,
-    setCooldown,
-    limitPage
+    setCooldown
   } = useGamePageListController("free-to-earn")
 
   const { getGameMode } = useGlobal()
@@ -99,7 +136,7 @@ const FreeToEarnGamesPage = () => {
       >
         <PaginationNaka
           totalCount={totalCount}
-          limit={limitPage.limit}
+          limit={limit}
           page={page}
           setPage={setPage}
         />

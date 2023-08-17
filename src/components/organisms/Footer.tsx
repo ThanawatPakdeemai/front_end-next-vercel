@@ -4,69 +4,53 @@ import { SOCIAL } from "@configs/socialShare"
 import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES, NAKA_SERVICES_2 } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import WineIcon from "@components/icons/WineIcon"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import NakaMask1 from "@components/icons/Footer/NaKaMask1"
-import NakaMask2 from "@components/icons/Footer/NaKaMask2"
-import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
-import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
+import {
+  arrowMotion,
+  iconmotion,
+  textMotion
+} from "@styles/themes/partial/motion"
+import dynamic from "next/dynamic"
 
-export const arrowMotion = {
-  rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
-  hover: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.4,
-      type: "spring",
-      ease: "easeIn"
-    }
-  }
-}
+const NakaMask3 = dynamic(() => import("@components/atoms/svg/NaKaMask3"), {
+  suspense: true,
+  ssr: false
+})
+const NakaMask2 = dynamic(() => import("@components/atoms/svg/NaKaMask2"), {
+  suspense: true,
+  ssr: false
+})
+const NakaMask1 = dynamic(() => import("@components/atoms/svg/NaKaMask1"), {
+  suspense: true,
+  ssr: false
+})
 
-export const textMotion = {
-  visible: {
-    scale: 0.8,
-    transition: { delay: 0.4 }
-  },
-  rest: {
-    color: "#98A0B5",
-    x: 0,
-    transition: {
-      duration: 2,
-      type: "spring",
-      stiffness: 300
-    }
-  },
-  hover: {
-    color: "#fff",
-    x: 30,
-    transition: {
-      duration: 0.4,
-      stiffness: 300,
-      type: "spring"
-    }
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
   }
-}
-
-export const iconmotion = {
-  hover: {
-    scale: 1.2,
-    rotate: 17,
-    ease: "easeIn",
-    transition: {
-      duration: 0.4,
-      stiffness: 500,
-      type: "spring"
-    }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
   }
-}
+)
+const TextLink = dynamic(() => import("@components/atoms/TextLink"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const Footer = () => {
   const { openInNewTab } = useGlobal()
@@ -198,7 +182,7 @@ const Footer = () => {
             <div className="my-8">
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
-                startIcon={<WineIcon />}
+                startIcon={<Icomoon className="icon-Wine" />}
                 text={t("join_the_revolution")}
                 className="btn-rainbow-theme b h-[50px] !w-[260px] bg-secondary-main font-bold capitalize text-white-default"
                 type="button"
@@ -216,6 +200,7 @@ const Footer = () => {
                   key={Number(index)}
                   href={item.href}
                   target="_blank"
+                  className="no-underline"
                 >
                   <ButtonIcon
                     variants={iconmotion}
@@ -226,7 +211,7 @@ const Footer = () => {
                       damping: 4
                     }}
                     icon={item.icon}
-                    className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                    className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800 text-white-primary"
                   />
                 </Link>
               ))}

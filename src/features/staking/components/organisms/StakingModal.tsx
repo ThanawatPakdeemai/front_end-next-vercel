@@ -1,8 +1,21 @@
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import { Stack } from "@mui/material"
 import { memo } from "react"
-import FormStaking from "../molecules/FormStaking"
+import dynamic from "next/dynamic"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IModalProps {
   open: boolean
@@ -23,8 +36,6 @@ const StakingModal = ({ open, handleClose }: IModalProps) => (
         handleClose={handleClose}
         title="STAKING"
       />
-
-      <FormStaking />
     </Stack>
   </ModalCustom>
 )

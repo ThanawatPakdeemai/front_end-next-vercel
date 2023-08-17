@@ -1,9 +1,20 @@
 import React from "react"
 import { Box, ModalProps, Modal, Typography } from "@mui/material"
-import CircleNakaIcon from "@components/icons/CircleNakaIcon"
-import ButtonClose from "@components/atoms/button/ButtonClose"
 import { Trans } from "next-i18next"
 import { isMobile } from "@hooks/useGlobal"
+import dynamic from "next/dynamic"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps extends ModalProps {
   bgcolor?: string
@@ -17,7 +28,7 @@ interface IProps extends ModalProps {
   hideNakaIcon?: boolean
 }
 
-export const ModalCustom = ({
+const ModalCustom = ({
   title,
   titleNode,
   onClose,
@@ -58,7 +69,9 @@ export const ModalCustom = ({
                 sx={{ height: "54px" }}
               >
                 <div className="flex flex-1 flex-row items-center">
-                  {!hideNakaIcon && <CircleNakaIcon />}
+                  {!hideNakaIcon && (
+                    <Icomoon className="icon-Naka text-error-main" />
+                  )}
                   {titleNode || (
                     <Typography className="pl-[15px] uppercase text-neutral-300">
                       <Trans i18nKey={title} />
@@ -74,3 +87,5 @@ export const ModalCustom = ({
     </Modal>
   )
 }
+
+export default ModalCustom

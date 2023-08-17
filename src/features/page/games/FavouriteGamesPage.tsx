@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import { v4 as uuid } from "uuid"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { PaginationNaka } from "@components/atoms/pagination"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import {
   F2PHeaderMenu,
   NFTHeaderMenu,
@@ -12,10 +12,36 @@ import {
 import useFilterStore from "@stores/blogFilter"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGame from "@feature/favourite/containers/hooks/useFavoriteGame"
-import NoData from "@components/molecules/NoData"
-import { Box } from "@mui/material"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import GameCard from "@feature/game/components/molecules/GameCard"
+
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const FavouriteGamesPage = () => {
   // Don't Delete this **************************

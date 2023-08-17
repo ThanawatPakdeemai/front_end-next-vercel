@@ -1,7 +1,22 @@
 import Link from "next/link"
 import dayjs from "dayjs"
-import { Chip, Typography } from "@mui/material"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
+
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const ImageCustom = dynamic(
+  () => import("@components/atoms/image/Image").then((mod) => mod.ImageCustom),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IEventCardProps {
   event_id: string

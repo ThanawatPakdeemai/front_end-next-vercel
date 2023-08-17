@@ -1,7 +1,12 @@
 import { TextField } from "@mui/material"
 import { StyledSearchInputMobile } from "@mobile/styles/muiStyleMobile"
 import { useTranslation } from "react-i18next"
-import SearchIconMobile from "../icons/SearchIconMobile"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ISearchInputMobileProps {
   searchBlog: string
@@ -23,7 +28,9 @@ const SearchInputMobile = ({
       }}
       placeholder={`${t("search_games")}...`}
       InputProps={{
-        startAdornment: <SearchIconMobile />
+        startAdornment: (
+          <Icomoon className="icon-app icon-Search text-[#F2C94C]" />
+        )
       }}
       sx={StyledSearchInputMobile}
     />

@@ -1,15 +1,33 @@
 import React from "react"
-import LogoIcon from "@components/icons/LogoIcon"
-import { Image } from "@components/atoms/image"
 import { motion } from "framer-motion"
-import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
-import Helper from "@utils/helper"
-import NumberRank from "@feature/ranking/components/atoms/NumberRank"
-import NoDataIcon from "@components/icons/NoDataIcon"
-import NoData from "@components/molecules/NoData"
-import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { Box } from "@mui/material"
 import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
+import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
+import Helper from "@utils/helper"
+import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
+
+// Use dynamic import for the components and icons
+const NumberRank = dynamic(
+  () => import("@feature/ranking/components/atoms/NumberRank"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   topPlayerGameId: IPlayerRanking[] | IWeeklyPoolByGameIdDataRecord[]
@@ -107,10 +125,7 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
             %
           </h1>
           <div className="card-ranking__naka-earn flex items-center gap-2">
-            <LogoIcon
-              fill="#232329"
-              className="mr-2"
-            />
+            <Icomoon className="icon-Naka mr-2 text-[#232329]" />
             <h1 className="font-neue-machina-semi text-[12px] text-info-main">
               {Helper.formatNumber(data.naka_earn || data.reward, {
                 maximumFractionDigits: 2
@@ -120,10 +135,7 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
         </motion.div>
       ))
     ) : (
-      <NoData
-        className="m-4 grid justify-items-center"
-        icon={<NoDataIcon />}
-      />
+      <NoData className="m-4 grid justify-items-center" />
     )}
   </Box>
 )

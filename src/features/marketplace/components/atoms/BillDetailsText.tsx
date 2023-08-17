@@ -1,7 +1,19 @@
-import CopyButton from "@components/atoms/CopyButton"
-import { Chip, Typography } from "@mui/material"
-import Helper from "@utils/helper"
 import React from "react"
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+
+const CopyButton = dynamic(() => import("@components/atoms/CopyButton"), {
+  suspense: true,
+  ssr: false
+})
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   title: string

@@ -1,10 +1,24 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Image } from "@components/atoms/image"
-import { IMAGES } from "@constants/images"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import IBookReading from "@components/icons/BookReading"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardLink {
   bgMain?: string
@@ -45,7 +59,7 @@ const CardLink = ({
   imageStyleMain,
   imageClassNameSecond,
   imageStyleSecond,
-  iconBtn = <IBookReading />,
+  iconBtn = <Icomoon className="icon-Book-Reading" />,
   textBtn = "",
   href = "/",
   onClick
@@ -200,7 +214,6 @@ const CardLink = ({
           icon={iconBtn}
           size="medium"
           className="button-global button-transparent absolute bottom-2.5 left-2.5 right-2.5 !h-[38px] !min-w-[auto] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 xl:left-2.5"
-          stroke="#010101"
         />
       </motion.div>
     </motion.div>

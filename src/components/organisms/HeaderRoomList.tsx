@@ -1,14 +1,31 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import SearchIcon from "@components/icons/SearchIcon"
 import { TextField, Typography } from "@mui/material"
-import { IGame } from "@feature/game/interfaces/IGameService"
 
-import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
-import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
-import { useSocketProviderRoom } from "@providers/SocketProviderRoom"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { useSocketProviderRoom } from "@providers/SocketProviderRoom"
+import useGameStore from "@stores/game"
+import { IGame } from "@feature/game/interfaces/IGameService"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ModalCreateRoom = dynamic(
+  () => import("@feature/rooms/components/molecules/ModalCreateRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IHeaderRoomList {
   lobby: string
@@ -72,7 +89,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
                     fontSize: "14px",
                     fontFamily: "neueMachina"
                   },
-                  startAdornment: <SearchIcon className="mr-4" />
+                  startAdornment: <Icomoon className="icon-Search mr-4" />
                 }}
                 onChange={(_event) => {
                   const search = _event?.target?.value

@@ -1,8 +1,12 @@
-import DollarIcon from "@components/icons/Referral/DollarIcon"
-import { EventType } from "@feature/event/interface/IEventsService"
 import { Box } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+import { EventType } from "@feature/event/interface/IEventsService"
 
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 interface IProp {
   className?: string
   title: string
@@ -17,7 +21,7 @@ const CardContent = ({ ...props }: IProp) => {
     children,
     title,
     className,
-    icon = <DollarIcon />,
+    icon = <Icomoon className="icon-Dollar-Coin" />,
     textColor = "text-neutral-300"
   } = props
   return (

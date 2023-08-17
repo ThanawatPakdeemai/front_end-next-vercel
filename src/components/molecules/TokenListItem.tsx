@@ -2,20 +2,9 @@ import React, { ReactNode } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
 import { Box } from "@mui/material"
+import { iconmotion } from "@styles/themes/partial/motion"
 import ButtonIcon from "../atoms/button/ButtonIcon"
 
-const iconmotion = {
-  hover: {
-    scale: 1.2,
-    rotate: 17,
-    ease: "easeIn",
-    transition: {
-      duration: 0.4,
-      stiffness: 500,
-      type: "spring"
-    }
-  }
-}
 export interface ITokenListItem {
   icon?: ReactNode
   text?: string | number | ReactNode | IBalanceDisplay

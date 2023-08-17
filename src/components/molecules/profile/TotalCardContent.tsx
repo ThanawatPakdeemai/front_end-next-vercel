@@ -1,6 +1,11 @@
 import { Typography } from "@mui/material"
-import { Image } from "@components/atoms/image"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   rank?: boolean

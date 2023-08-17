@@ -1,9 +1,16 @@
 import React from "react"
 import { Box, Grid } from "@mui/material"
-import { Image } from "@components/atoms/image/index"
 import { useTranslation } from "react-i18next"
 import Link from "next/link"
-// import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(
+  () => import("@components/atoms/image/index").then((mod) => mod.Image),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 export interface ICategoryCard {
   img: string
@@ -41,24 +48,6 @@ const MobileGameCard = ({
           <p className="flex items-start text-[8px] uppercase">{t(text)}</p>
         </Box>
       </Link>
-      {/* <ButtonToggleIcon
-        startIcon={
-          icon ? (
-            <Image
-              src={icon}
-              width={18}
-              height={18}
-              alt={text}
-            />
-          ) : null
-        }
-        type="button"
-        text={t(text)}
-        textClassName="!text-[8px]"
-        href={href}
-        handleClick={onHandleClick}
-        className="z-[2] h-[50px] w-full bg-primary-main capitalize "
-      /> */}
     </Grid>
   )
 }

@@ -1,13 +1,44 @@
 // import { useTranslation } from "next-i18next"
-import { ImageCustom } from "@components/atoms/image/Image"
-import ILogoMaster from "@components/icons/LogoMaster"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { Box, Checkbox, Chip, Typography } from "@mui/material"
 import { motion } from "framer-motion"
 import { memo } from "react"
-// import GiftIcon from "@components/icons/GiftIcon"
-import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined"
-import LockIcon from "@components/icons/LockIcon"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Checkbox = dynamic(() => import("@mui/material/Checkbox"), {
+  suspense: true,
+  ssr: false
+})
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const DoneAllOutlinedIcon = dynamic(
+  () => import("@mui/icons-material/DoneAllOutlined"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
 // import useGameStore from "@stores/game"
 // import useProfileStore from "@stores/profileStore"
 // import useGetNakaPass from "../containers/hooks/useGetNakaPass"
@@ -78,11 +109,7 @@ const NakaPassStoryMode = () => (
     <div className="flex w-full flex-row flex-wrap items-center rounded-2xl bg-neutral-780 p-2 md:h-[225px] md:flex-nowrap">
       <div className="w-full rounded-2xl border  border-neutral-700 bg-primary-main p-[10px] sm:w-[202px] md:h-[-webkit-fill-available]">
         <div className="bg-line-linear-gradient  mb-[10px] flex h-[136px] items-center justify-center rounded-sm border border-neutral-700 ">
-          <ILogoMaster
-            width="100"
-            height="48"
-            className="svg-shadow-red"
-          />
+          <Icomoon className="icon-Naka text-white-primary" />
         </div>
         <div className=" flex h-[40px] items-center justify-center rounded-sm border border-neutral-700  font-digital-7">
           <span className=" mr-2 text-2xl text-green-card">3 </span>
@@ -144,7 +171,7 @@ const NakaPassStoryMode = () => (
                     />
                   )}
                   {ele === 2 && <DoneAllOutlinedIcon />}
-                  {ele > 2 && <LockIcon fill="#4E5057" />}
+                  {ele > 2 && <Icomoon className="icon-Lock text-[#4E5057]" />}
                 </div>
               </div>
             </motion.div>

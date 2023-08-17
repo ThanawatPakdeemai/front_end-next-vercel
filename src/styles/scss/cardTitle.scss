@@ -1,11 +1,3 @@
-.card-title-page {
-  @apply rounded-default;
-  .MuiCardHeader-content {
-    span {
-      @apply font-neue-machina text-default font-[700] uppercase text-white-primary;
-    }
-  }
-}
 .hide-scroll {
   &::-webkit-scrollbar {
     width: 0;

@@ -1,10 +1,21 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
+import { Chip, Divider, Typography } from "@mui/material"
+import React from "react"
+import dynamic from "next/dynamic"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
-import { Chip, Divider, Typography } from "@mui/material"
 import Helper from "@utils/helper"
-import React from "react"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   address: string
@@ -35,7 +46,7 @@ const GotNaKAPunk = ({ address, token_id }: IProp) => {
         <ButtonIcon
           onClick={() => handleCopyClipboard(address)}
           className="flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
-          icon={<CopyMiniIcon />}
+          icon={<Icomoon className="icon-Copy" />}
         />
       </div>
       <div className="flex w-fit flex-row items-center gap-x-1">
@@ -51,7 +62,7 @@ const GotNaKAPunk = ({ address, token_id }: IProp) => {
         <ButtonIcon
           onClick={() => handleCopyClipboard(token_id)}
           className="flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
-          icon={<CopyMiniIcon />}
+          icon={<Icomoon className="icon-Copy" />}
         />
       </div>
       <Divider className="!block border-b-[1px] border-neutral-800/75 md:hidden" />

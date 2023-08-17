@@ -53,13 +53,22 @@ const MenuItemCustom = ({
     >
       <Link
         href={props.href ?? ""}
-        className={`flex w-full flex-row items-center justify-start ${
+        className={`flex w-full flex-row items-center justify-start text-white-primary ${
           active ? "active" : ""
         } ${icon ? "" : "px-4"}`}
       >
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        {icon ? (
+          <ListItemIcon className="text-white-primary">{icon}</ListItemIcon>
+        ) : null}
         <div className="flex w-full items-center">
-          <ListItemText className="w-full">
+          <ListItemText
+            className="w-full"
+            sx={{
+              ".MuiTypography-root": {
+                color: "#FFFFFF!important"
+              }
+            }}
+          >
             <Trans i18nKey={props.label as string}>
               {props.label as string}
             </Trans>

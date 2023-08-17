@@ -1,14 +1,39 @@
 import React, { memo, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { Chip, Typography } from "@mui/material"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
-import TagMultiple from "@components/molecules/TagMultiple"
-import TagSingular from "@components/molecules/TagSingular"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import useGlobal from "@hooks/useGlobal"
+
+const ButtonGame = dynamic(
+  () => import("@feature/game/components/molecules/ButtonGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const TagMultiple = dynamic(() => import("@components/molecules/TagMultiple"), {
+  suspense: true,
+  ssr: false
+})
+const TagSingular = dynamic(() => import("@components/molecules/TagSingular"), {
+  suspense: true,
+  ssr: false
+})
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IStoryLobbyProps {
   hideButtonPlay?: boolean

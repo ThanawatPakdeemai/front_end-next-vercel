@@ -1,15 +1,42 @@
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { P2EHeaderMenu } from "@constants/gameSlide"
-import useEventController from "@feature/event/containers/hooks/useEventController"
-import GameCard from "@feature/game/components/molecules/GameCard"
-import GameCardFullWidth from "@feature/game/components/molecules/GameCardFullWidth"
-import { Box, Chip } from "@mui/material"
 import React from "react"
 import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
+import { Box } from "@mui/material"
+import useEventController from "@feature/event/containers/hooks/useEventController"
+import { P2EHeaderMenu } from "@constants/gameSlide"
+import useGlobal from "@hooks/useGlobal"
+import { IMAGES } from "@constants/images"
+
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCardFullWidth = dynamic(
+  () => import("@feature/game/components/molecules/GameCardFullWidth"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const EventContent = () => {
   const { limit, currentEventData, getGameMode, onSetGameStore } =
     useEventController()
+  const { isWrongFormatURL, isOldPathURL } = useGlobal()
 
   const renderEventContent = () => {
     // SKELETON
@@ -43,7 +70,14 @@ const EventContent = () => {
     ) {
       return (
         <GameCardFullWidth
-          image={currentEventData.games_to_play[0].image_home_banner}
+          image={
+            isWrongFormatURL(
+              currentEventData.games_to_play[0].image_home_banner
+            ) ||
+            isOldPathURL(currentEventData.games_to_play[0].image_home_banner)
+              ? IMAGES.no_image.srcWebp
+              : currentEventData.games_to_play[0].image_home_banner
+          }
           name={currentEventData.games_to_play[0].name}
           gameData={currentEventData.games_to_play[0]}
         />

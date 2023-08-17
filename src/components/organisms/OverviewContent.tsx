@@ -1,16 +1,36 @@
-import OverviewIcon from "@components/icons/OverviewIcon"
-import TagMultiple from "@components/molecules/TagMultiple"
-import TagSingular from "@components/molecules/TagSingular"
+import React from "react"
 import { Box, Divider } from "@mui/material"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { iconmotion } from "@components/organisms/Footer"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import useGlobal from "@hooks/useGlobal"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import AsideLayout from "@components/templates/contents/AsideLayout"
 import useGameStore from "@stores/game"
+import { iconmotion } from "@styles/themes/partial/motion"
+
+const AsideLayout = dynamic(
+  () => import("@components/templates/contents/AsideLayout")
+)
+const TagMultiple = dynamic(() => import("@components/molecules/TagMultiple"), {
+  suspense: true,
+  ssr: false
+})
+const TagSingular = dynamic(() => import("@components/molecules/TagSingular"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IOverviewGameProps {
   gameId: string
@@ -49,7 +69,7 @@ const OverviewContent = ({
     >
       {hydrated && (
         <AsideLayout
-          icon={<OverviewIcon />}
+          icon={<Icomoon className="icon-Radar-02" />}
           title={title || t("game_overview")}
         >
           <div className="text-start text-sm text-neutral-500 lg:pl-4 lg:pr-3 lg:pt-3">

@@ -58,7 +58,11 @@ const AboutGameModal = ({
         </h2>
         <div className="flex flex-col gap-2">
           <div className="about-section about-section__description mb-6 border-b-[1px] border-b-[#35383F] pb-6">
-            {gameData.story}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: gameData.story || ""
+              }}
+            />
           </div>
           <div className="about-section about-section__how-to-play mb-6 grid grid-cols-1 gap-1 border-b-[1px] border-b-[#35383F] pb-6">
             <h3 className={classesGridTitle}>How to play</h3>

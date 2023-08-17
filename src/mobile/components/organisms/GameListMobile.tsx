@@ -1,12 +1,25 @@
 /* eslint-disable max-len */
 import React from "react"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import { v4 as uuid } from "uuid"
-// import useScrollToEndStore from "@stores/scrollToEnd"
-import NoData from "@components/molecules/NoData"
-import SkeletonCardMobile from "../atoms/skeleton/SkeletonCardMobile"
-import GameCardMobile from "../molecules/GameCardMobile"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
+
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const SkeletonCardMobile = dynamic(
+  () => import("../atoms/skeleton/SkeletonCardMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const GameCardMobile = dynamic(() => import("../molecules/GameCardMobile"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IGameList {
   gameData: IGame[]

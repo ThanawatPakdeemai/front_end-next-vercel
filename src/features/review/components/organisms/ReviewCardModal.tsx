@@ -1,10 +1,36 @@
 import React, { useCallback } from "react"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { Button, Stack } from "@mui/material"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import dynamic from "next/dynamic"
 import useReview from "@feature/review/containers/hook/useReview"
-import ReviewCard from "@feature/review/components/atoms/ReviewCard"
-import ModalAddReview from "@feature/review/components/molecules/ModalAddReview"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ReviewCard = dynamic(
+  () => import("@feature/review/components/atoms/ReviewCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalAddReview = dynamic(
+  () => import("@feature/review/components/molecules/ModalAddReview"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   gameId: string
@@ -75,6 +101,7 @@ const ReviewCardModal = ({
           <div>are you sure to delete your review?</div>
           <Button
             type="button"
+            aria-label="delete button"
             variant="contained"
             color="error"
             onClick={() => onDeleteReview(reviewId)}

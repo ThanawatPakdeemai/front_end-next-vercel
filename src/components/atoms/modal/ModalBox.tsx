@@ -1,8 +1,17 @@
 /* eslint-disable no-use-before-define */
-import { IconClose } from "@components/icons/Icons"
-import { Image } from "@components/atoms/image"
+
 import React from "react"
 import styled from "styled-components"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,7 +66,7 @@ const ModalBox: React.FC<Props> = ({
           onClick={onDismiss}
           className="button-close"
         >
-          <IconClose />
+          <Icomoon className="icon-Close" />
         </ModalClose>
       )}
     </ModalMain>

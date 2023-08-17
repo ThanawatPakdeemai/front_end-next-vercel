@@ -1,11 +1,30 @@
-// import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import React, { useState } from "react"
-import useP2PDexController from "@feature/p2pDex/containers/hooks/useP2PDexController"
-import { PaginationNaka } from "@components/atoms/pagination"
-import HeaderP2P from "@feature/p2pDex/components/atoms/HeaderP2P"
-import DropdownLimit from "@components/atoms/DropdownLimit"
 import { useTranslation } from "react-i18next"
-import OrderList from "../organisms/OrderList"
+import dynamic from "next/dynamic"
+import useP2PDexController from "@feature/p2pDex/containers/hooks/useP2PDexController"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeaderP2P = dynamic(
+  () => import("@feature/p2pDex/components/atoms/HeaderP2P"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const OrderList = dynamic(() => import("../organisms/OrderList"), {
+  suspense: true,
+  ssr: false
+})
 
 const P2PDexList = () => {
   const [type, setType] = useState<"sell" | "buy">("buy")

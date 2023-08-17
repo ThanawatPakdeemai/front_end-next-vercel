@@ -1,5 +1,13 @@
-import { PaginationNaka } from "@components/atoms/pagination"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   children: React.ReactNode

@@ -1,8 +1,13 @@
-import CheckList from "@components/icons/CheckListIcon"
-import { IQuestTaskList } from "@feature/quest/interfaces/IQuestService"
 import { Chip } from "@mui/material"
 import React from "react"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
+import { IQuestTaskList } from "@feature/quest/interfaces/IQuestService"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   dataQuestTask: IQuestTaskList
@@ -22,7 +27,7 @@ const TaskList = ({ dataQuestTask, isLast }: IProp) => (
   >
     {dataQuestTask.complete_status ? (
       <>
-        <CheckList.CheckPass />
+        <Icomoon className="icon-Checkmark1" />
         <Chip
           label={`${dataQuestTask.title}`}
           variant="outlined"
@@ -40,7 +45,7 @@ const TaskList = ({ dataQuestTask, isLast }: IProp) => (
       </>
     ) : (
       <>
-        <CheckList.CheckWrong />
+        <Icomoon className="icon-X" />
         <Chip
           label={`${dataQuestTask.title}`}
           variant="outlined"

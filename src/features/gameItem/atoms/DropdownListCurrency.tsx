@@ -5,15 +5,27 @@ import { useState } from "react"
 import { Popover } from "@mui/material"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
+import dynamic from "next/dynamic"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-// import useGlobal from "@hooks/useGlobal"
-import INaka from "@components/icons/Naka"
-import IBusd from "@components/icons/Busd"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useProfileStore from "@stores/profileStore"
-import ButtonDropdown from "./ButtonDropdown"
+
+const ButtonDropdown = dynamic(() => import("./ButtonDropdown"), {
+  suspense: true,
+  ssr: false
+})
+const SelectDropdownCurrency = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdownCurrency"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   icon?: React.ReactNode
@@ -76,11 +88,11 @@ IProp) => {
   const IconToken = (props: ITokenName) => {
     switch (props.tokenName) {
       case "NK":
-        return <INaka color="#fff" />
+        return <Icomoon className="icon-Naka text-[#fff]" />
       case "BNB":
-        return <IBusd color="#fff" />
+        return <Icomoon className="icon-busd text-[#fff]" />
       default:
-        return <INaka color="#fff" />
+        return <Icomoon className="icon-Naka text-[#fff]" />
     }
   }
 

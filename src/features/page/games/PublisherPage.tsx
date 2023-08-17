@@ -3,9 +3,23 @@ import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { publisherAllPartner } from "@feature/partner/containers/services/dropdownPartner.service"
-import GameCard from "@feature/game/components/molecules/GameCard"
-import { PaginationNaka } from "@components/atoms/pagination"
 import { P2EHeaderMenu } from "@constants/gameSlide"
+import dynamic from "next/dynamic"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const PublisherPage = () => {
   const { limit } = useGlobal()

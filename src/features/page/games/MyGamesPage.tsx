@@ -1,16 +1,39 @@
-import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { P2EHeaderMenu } from "@constants/gameSlide"
-import { getMyGameNFT } from "@feature/game/containers/services/game.service"
-import { useQueryClient } from "@tanstack/react-query"
 import React, { memo, useEffect, useRef } from "react"
 import { v4 as uuid } from "uuid"
+import { useQueryClient } from "@tanstack/react-query"
+import dynamic from "next/dynamic"
+import { P2EHeaderMenu } from "@constants/gameSlide"
+import { getMyGameNFT } from "@feature/game/containers/services/game.service"
 import useGameStore from "@stores/game/index"
 import useGlobal from "@hooks/useGlobal"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGetMyGame from "@feature/game/containers/hooks/useGetMyGame"
-import NoData from "@components/molecules/NoData"
-import GameCard from "@feature/game/components/molecules/GameCard"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const MyGamesPage = () => {
   const type: IGetType = "play-to-earn"

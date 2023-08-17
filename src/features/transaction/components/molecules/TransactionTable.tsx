@@ -1,20 +1,55 @@
 import React, { useEffect, useState } from "react"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
-import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
-import useTransactionController from "@feature/transaction/containers/hooks/useTransactionController"
 import dayjs from "dayjs"
 import { Chip, TableBody, Table, TableContainer } from "@mui/material"
-import IconArrowTop from "@components/icons/arrowTopIcon"
 import { v4 as uuid } from "uuid"
-import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
+import useTransactionController from "@feature/transaction/containers/hooks/useTransactionController"
+import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
 import useGlobal from "@hooks/useGlobal"
 import { IProfile } from "@src/types/profile"
-import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
-import TableNodata from "../atoms/TableNodata"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonTableWallet = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonTableWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableNodata = dynamic(() => import("../atoms/TableNodata"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   profile?: IProfile
@@ -127,9 +162,9 @@ export default function TransactionTable({ profile }: IProp) {
                               <div className="flex flex-row">
                                 <div className="pr-[8.35px]">
                                   {item.type && item.type === "DepositNaka" ? (
-                                    <IconArrowTop className="rotate-180" />
+                                    <Icomoon className="icon-Arrow-Down-with-Line" />
                                   ) : (
-                                    <IconArrowTop />
+                                    <Icomoon className="icon-Arrow-Up-with-Line" />
                                   )}
                                 </div>
                                 {item.amount.toFixed(2)}

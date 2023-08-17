@@ -1,14 +1,30 @@
 import React from "react"
-import { Image } from "@components/atoms/image"
-import ILogoMaster from "@components/icons/LogoMaster"
-import IMetaMask from "@components/icons/MetaMask"
-import { IMAGES } from "@constants/images"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonWallet = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IWalletFooterProps {
   address?: string
 }
 const WalletFooter = ({ address }: IWalletFooterProps) => {
+  const borderBox =
+    "flex h-[25px] w-[25px] items-center justify-center rounded-[5px] bg-neutral-800 px-0.5 py-2 border-1"
   const { t } = useTranslation()
   return (
     <div className="mt-6 hidden w-full grid-cols-12 gap-2 sm:grid">
@@ -18,11 +34,8 @@ const WalletFooter = ({ address }: IWalletFooterProps) => {
         </p>
       </div>
       <div className="col-span-5 flex  h-[35px] content-center items-center justify-between rounded-[6px] bg-black-100 px-0.5 py-2 ">
-        <div className=" border-1 mr-1 rounded-[5px] bg-neutral-800 px-0.5 py-2 ">
-          <ILogoMaster
-            width="25"
-            height="12"
-          />
+        <div className={`mr-1 ${borderBox}`}>
+          <Icomoon className="icon-Naka text-error-main" />
         </div>
         <div className="">
           {address ? (
@@ -37,12 +50,9 @@ const WalletFooter = ({ address }: IWalletFooterProps) => {
             />
           )}
         </div>
-        <div className="border-1 ml-1 rounded-[5px] bg-neutral-800 p-0.5">
+        <div className={`mr-l ${borderBox}`}>
           {address ? (
-            <IMetaMask
-              width="25"
-              height="25"
-            />
+            <IcomoonWallet className="icon-Metamask" />
           ) : (
             <Image
               src={IMAGES.MetaMaskds.src}

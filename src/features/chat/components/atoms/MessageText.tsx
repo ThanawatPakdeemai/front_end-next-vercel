@@ -1,4 +1,10 @@
-import Triangle from "@components/atoms/Triangle"
+import React from "react"
+import dynamic from "next/dynamic"
+
+const Triangle = dynamic(() => import("@components/atoms/Triangle"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IMessageTextProps {
   message: string

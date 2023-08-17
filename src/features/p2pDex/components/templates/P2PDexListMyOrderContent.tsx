@@ -1,10 +1,33 @@
 import React, { useState } from "react"
-import { PaginationNaka } from "@components/atoms/pagination"
-import HeaderP2P from "@feature/p2pDex/components/atoms/HeaderP2P"
-import DropdownLimit from "@components/atoms/DropdownLimit"
+import dynamic from "next/dynamic"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useP2PDexMyOrder from "@feature/p2pDex/containers/hooks/useP2PDexMyOrder"
-import MyOrderList from "@feature/p2pDex/components/organisms/MyOrderList"
+
+const MyOrderList = dynamic(
+  () => import("@feature/p2pDex/components/organisms/MyOrderList"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const HeaderP2P = dynamic(
+  () => import("@feature/p2pDex/components/atoms/HeaderP2P"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
 
 const P2PDexListMyOrder = () => {
   const [type, setType] = useState<"sell" | "buy">("buy")

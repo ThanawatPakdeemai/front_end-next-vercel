@@ -1,18 +1,43 @@
 import React, { useEffect } from "react"
-import WhatsNewIcon from "@components/icons/WhatsNewIcon"
-import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
-import AboutGame from "@components/organisms/AboutGame"
-import HowToPlayBody from "@feature/game/components/molecules/HowToPlayBody"
-import WhatsNewBody from "@feature/game/components/molecules/WhatsNewBody"
+import { useTranslation } from "react-i18next"
 import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
-import GameItemsBody from "@feature/game/components/molecules/GameItemsBody"
-import IDiamond from "@components/icons/Diamond"
 import useGlobal from "@hooks/useGlobal"
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import { useTranslation } from "react-i18next"
 import useGameStore from "@stores/game"
 import useTabContext from "@feature/tab/contexts/useTabContext"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
+const HowToPlayBody = dynamic(
+  () => import("@feature/game/components/molecules/HowToPlayBody"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const WhatsNewBody = dynamic(
+  () => import("@feature/game/components/molecules/WhatsNewBody"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const AboutGame = dynamic(() => import("@components/organisms/AboutGame"), {
+  suspense: true,
+  ssr: false
+})
+const GameItemsBody = dynamic(
+  () => import("@feature/game/components/molecules/GameItemsBody"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const useGameTabController = (gameType: IGetType, gameId: string) => {
   const { t } = useTranslation()
@@ -41,7 +66,7 @@ const useGameTabController = (gameType: IGetType, gameId: string) => {
       : {
           id: "game-items",
           label: t("game_items"),
-          icon: <IDiamond stroke="#70727B" />,
+          icon: <Icomoon className="icon-Diamond text-[#70727B]" />,
           component: <GameItemsBody gameItems={gameItems} />
         }
 
@@ -64,14 +89,14 @@ const useGameTabController = (gameType: IGetType, gameId: string) => {
     {
       id: "how-to-play",
       label: t("how_to_play"),
-      icon: <HowToPlayIcon stroke="#70727B" />,
+      icon: <Icomoon className="icon-Book text-[#70727B]" />,
       component: <HowToPlayBody text={gameHowToPlay} />
     },
     _gameType,
     {
       id: "whats-new",
       label: t("whats_new"),
-      icon: <WhatsNewIcon color="#70727B" />,
+      icon: <Icomoon className="icon-Book text-[#70727B]" />,
       component: (
         <WhatsNewBody
           title={newVersionData ? newVersionData.version : singleVersion || ""}

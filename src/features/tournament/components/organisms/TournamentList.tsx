@@ -12,24 +12,43 @@ import {
   Card,
   Button
 } from "@mui/material"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import dayjs from "dayjs"
-import useGlobal from "@hooks/useGlobal"
-import SearchIcon from "@components/icons/SearchIcon"
-import useFilterStore from "@stores/blogFilter"
-import { Image } from "@components/atoms/image"
-import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
-import Helper from "@utils/helper"
-import { ISortReferrals } from "@feature/referral/interface/IReferralService"
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material"
 import { v4 as uuid } from "uuid"
-import DropdownLimit from "@components/atoms/DropdownLimit"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import dynamic from "next/dynamic"
+import useGlobal from "@hooks/useGlobal"
+import Helper from "@utils/helper"
+import { ISortReferrals } from "@feature/referral/interface/IReferralService"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import NoData from "@components/molecules/NoData"
 import { TGameType } from "@feature/game/interfaces/IGameService"
 import { commonPattern } from "@constants/regex"
+import useFilterStore from "@stores/blogFilter"
+
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IMockData {
   key: string
@@ -106,7 +125,7 @@ const TournamentList = () => {
             }}
             placeholder="Search Games..."
             InputProps={{
-              startAdornment: <SearchIcon className="mr-4 lg:max-xl:mr-2" />
+              startAdornment: <Icomoon className="icon-Search mr-4" />
             }}
             className="w-[182px]"
           />
@@ -295,12 +314,13 @@ const TournamentList = () => {
                           <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
                             <button
                               type="button"
+                              aria-label="copy"
                               className="focus:outline-none"
                               onClick={() => {
                                 copyClipboard(_elm.key)
                               }}
                             >
-                              <CopyMiniIcon />
+                              <Icomoon className="icon-Copy" />
                             </button>
                           </div>
                         </div>

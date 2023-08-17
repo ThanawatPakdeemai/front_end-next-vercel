@@ -1,9 +1,14 @@
 import React, { useCallback, useMemo } from "react"
-import { Image } from "@components/atoms/image"
 import Link from "next/link"
-import { isMobile } from "@hooks/useGlobal"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import { isMobile } from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IGameItemSingleCardProp {
   itemId: string
@@ -71,7 +76,7 @@ const GameItemSingleCard = ({
       <Image
         src={image}
         alt={name}
-        width={name === "Bullet" ? 35 : width}
+        width={name.split(" ")[0] === "Bullet" ? 35 : width}
         height={height}
       />
       {description && (

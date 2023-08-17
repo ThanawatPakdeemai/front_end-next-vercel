@@ -1,41 +1,113 @@
 import React, { useEffect, useRef, useState } from "react"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import {
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from "@mui/material"
-import Helper from "@utils/helper"
-import DollarIcon from "@components/icons/Referral/DollarIcon"
-import FriendsActivitiesIcon from "@components/icons/Referral/FriendsActivitiesIcon"
-import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
-import IReferrals from "@components/icons/Referrals"
-import useGetReferral from "@feature/referral/containers/hook/useGetRefrral"
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material"
 import { v4 as uuid } from "uuid"
 import dayjs from "dayjs"
+import { useQueryClient } from "@tanstack/react-query"
+import { useTranslation } from "react-i18next"
+import { MobileView } from "react-device-detect"
+import dynamic from "next/dynamic"
+import useGetReferral from "@feature/referral/containers/hook/useGetRefrral"
 import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import CONFIGS from "@src/configs/index"
-import CopyIcon from "@components/icons/CopyIcon"
-import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
-import CardContent from "@feature/referral/components/CardContent"
-import BoxContent from "@feature/referral/components/molecules/BoxContent"
-import RadarAnimateIcon from "@components/icons/Referral/RadarAnimateIcon"
-import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
-import { useQueryClient } from "@tanstack/react-query"
-import { PaginationNaka } from "@components/atoms/pagination"
 import { getReferrals } from "@feature/referral/containers/services/referral.service"
 import { ISortReferrals } from "@feature/referral/interface/IReferralService"
-import NoData from "@components/molecules/NoData"
-import { useTranslation } from "react-i18next"
-import { MobileView } from "react-device-detect"
+import Helper from "@utils/helper"
+
+const RadarAnimateIcon = dynamic(
+  () => import("@components/atoms/svg/Referral/RadarAnimateIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const IReferrals = dynamic(() => import("@components/atoms/svg/Referrals"), {
+  suspense: true,
+  ssr: false
+})
+const KeyboardArrowDown = dynamic(
+  () => import("@mui/icons-material/KeyboardArrowDown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const KeyboardArrowUp = dynamic(
+  () => import("@mui/icons-material/KeyboardArrowUp"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TableCell = dynamic(() => import("@mui/material/TableCell"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableHead = dynamic(() => import("@mui/material/TableHead"), {
+  suspense: true,
+  ssr: false
+})
+const TableRow = dynamic(() => import("@mui/material/TableRow"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const CardContent = dynamic(
+  () => import("@feature/referral/components/CardContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BoxContent = dynamic(
+  () => import("@feature/referral/components/molecules/BoxContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const ReferralProgramPage = () => {
   const { hydrated, pager, page, setPage } = useGlobal()
@@ -136,7 +208,7 @@ const ReferralProgramPage = () => {
                     <div className="my-[30px] ml-2 mr-8 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
                       <div className="uppercase text-neutral-300">
                         <div className="flex pb-4 md:py-0 lg:py-0">
-                          <ShareIcon className="mr-4" />
+                          <Icomoon className="icon-Share mr-4" />
                           <div>{t("share_2_earn")}</div>
                         </div>
                       </div>
@@ -162,7 +234,7 @@ const ReferralProgramPage = () => {
                           <ButtonIcon
                             onClick={copyClipboard}
                             className="absolute right-0 m-1 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                            icon={<CopyIcon />}
+                            icon={<Icomoon className="icon-Copy" />}
                           />
                         </div>
                       </div>
@@ -172,7 +244,7 @@ const ReferralProgramPage = () => {
                     <CardContent
                       className="mt-4 "
                       title={t("your_earnings")}
-                      icon={<DollarIcon />}
+                      icon={<Icomoon className="icon-Dollar-Coin" />}
                     >
                       <BoxContent
                         padding="text-center"
@@ -221,7 +293,7 @@ const ReferralProgramPage = () => {
                 <CardContent
                   className="mt-8 max-w-[630px]"
                   title={t("referral_historical")}
-                  icon={<FriendsActivitiesIcon />}
+                  icon={<Icomoon className="icon-Chart-Arrow" />}
                 >
                   <TableContainer className="mt-4">
                     <Table aria-label="simple table">
@@ -347,12 +419,13 @@ const ReferralProgramPage = () => {
                                       <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
                                         <button
                                           type="button"
+                                          aria-label="Copy icon button"
                                           className="focus:outline-none"
                                           onClick={() => {
                                             copyFriendCode(referrer._id)
                                           }}
                                         >
-                                          <CopyMiniIcon />
+                                          <Icomoon className="icon-Copy" />
                                         </button>
                                       </div>
                                     </div>
@@ -422,7 +495,7 @@ const ReferralProgramPage = () => {
                   <div className="my-[30px] ml-2 mr-8 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
                     <div className="uppercase text-neutral-300">
                       <div className="flex pb-4 md:py-0 lg:py-0">
-                        <ShareIcon className="mr-4" />
+                        <Icomoon className="icon-Share mr-4" />
                         <div>{t("share_2_earn")}</div>
                       </div>
                     </div>
@@ -448,7 +521,7 @@ const ReferralProgramPage = () => {
                         <ButtonIcon
                           onClick={copyClipboard}
                           className="absolute right-0 m-1 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                          icon={<CopyIcon />}
+                          icon={<Icomoon className="icon-Copy" />}
                         />
                       </div>
                     </div>
@@ -458,7 +531,7 @@ const ReferralProgramPage = () => {
                   <CardContent
                     className="mt-4 w-full lg:ml-3 lg:mt-0"
                     title={t("your_earnings")}
-                    icon={<DollarIcon />}
+                    icon={<Icomoon className="icon-Dollar-Coin" />}
                   >
                     <BoxContent
                       padding="p-[14px]"
@@ -501,7 +574,7 @@ const ReferralProgramPage = () => {
               <CardContent
                 className="mt-8 max-w-[630px]"
                 title={t("referral_historical")}
-                icon={<FriendsActivitiesIcon />}
+                icon={<Icomoon className="icon-Chart-Arrow" />}
               >
                 <TableContainer className="mt-4">
                   <Table aria-label="simple table">
@@ -626,12 +699,13 @@ const ReferralProgramPage = () => {
                                     <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
                                       <button
                                         type="button"
+                                        aria-label="copy"
                                         className="focus:outline-none"
                                         onClick={() => {
                                           copyFriendCode(referrer._id)
                                         }}
                                       >
-                                        <CopyMiniIcon />
+                                        <Icomoon className="icon-Copy" />
                                       </button>
                                     </div>
                                   </div>

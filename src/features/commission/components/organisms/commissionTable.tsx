@@ -1,16 +1,74 @@
 import React from "react"
-import PageHeader from "@feature/table/components/molecules/PageHeader"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-import { Box, Chip, Table, TableBody, TableContainer } from "@mui/material"
 import dayjs from "dayjs"
-import IconArrowTop from "@components/icons/arrowTopIcon"
-import { PaginationNaka } from "@components/atoms/pagination"
 import { v4 as uuid } from "uuid"
-import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { Box } from "@mui/material"
 import useCommissionController from "@feature/commission/containers/hooks/useCommissionController"
+
+const PaginationNaka = dynamic(
+  () =>
+    import("@components/atoms/pagination").then((mod) => mod.PaginationNaka),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonTableWallet = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonTableWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PageHeader = dynamic(
+  () => import("@feature/table/components/molecules/PageHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const CommissionTable = () => {
   const {
@@ -89,7 +147,7 @@ const CommissionTable = () => {
                               : "text-neutral-600"
                           }`}
                         >
-                          <IconArrowTop className="rotate-180" />
+                          <Icomoon className="icon-Arrow-Down-with-Line" />
                           {item.naka_for_player.toFixed(4)}
                         </div>
                       </div>

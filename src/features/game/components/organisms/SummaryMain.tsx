@@ -1,22 +1,65 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import SaveIcon from "@components/icons/SaveIcon"
-import TableIcon from "@components/icons/TableIcon"
-import Tagline from "@components/molecules/tagline/Tagline"
-import { SOCIAL_SHARE_SUMMARY } from "@configs/socialShare"
-import { Link, Typography } from "@mui/material"
 import React from "react"
-import { Image } from "@components/atoms/image"
-import LogoIcon from "@components/icons/LogoIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import ArrowDownIcon from "@components/icons/ArrowDownIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
 import { useRouter } from "next/router"
+import dayjs from "dayjs"
+import dynamic from "next/dynamic"
+import { SOCIAL_SHARE_SUMMARY } from "@configs/socialShare"
 import Helper from "@utils/helper"
 import { IGameSummary } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
-import dayjs from "dayjs"
 import useGameStore from "@stores/game"
-import SummaryGameDetail from "../molecules/SummaryGameDetail"
+
+const SummaryGameDetail = dynamic(
+  () => import("@src/features/game/components/molecules/SummaryGameDetail"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableIcon = dynamic(() => import("@components/atoms/svg/TableIcon"), {
+  suspense: true,
+  ssr: false
+})
+const Link = dynamic(() => import("@mui/material/Link"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonSticker = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonSticker"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   summaryData: IGameSummary[]
@@ -53,7 +96,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
           <span className="pt-20 text-sm font-bold uppercase text-error-main">
             {dayjs(playerSummary.end_time).format("DD MMM YYYY h:mm a")}
           </span>
-          <SaveIcon />
+          <IcomoonSticker className="icon-Disk-pink" />
         </Typography>
         <div className="flex w-full flex-col items-center justify-center text-error-main">
           <TableIcon className="absolute z-[1] hidden sm:block" />
@@ -125,11 +168,13 @@ const SummaryMain = ({ summaryData }: IProp) => {
               <span className="mr-3 text-lg uppercase text-green-lemon">
                 {playerSummary.naka_for_player}
               </span>
-              <LogoIcon fill="#A0ED61" />
+              <Icomoon className="icon-Naka text-[#A0ED61]" />
             </div>
             <ButtonToggleIcon
-              startIcon={<ArrowDownIcon />}
-              endIcon={<IconArrowRight stroke="#010101" />}
+              startIcon={<Icomoon className="icon-Arrow-Down-with-Line" />}
+              endIcon={
+                <Icomoon className="icon-Full-Arrow-Right text-[#010101]" />
+              }
               text="Withdraw"
               className="btn-green-rainbow bg-green-lemon font-bold text-neutral-900"
               // wait for wallet page then chnage to path/wallet

@@ -23,13 +23,7 @@ export enum ELocalKey {
   telegramUser = "telegramUser"
 }
 
-export type TLocalCacheKey = "bannerSlide"
-
-export enum ELocalCacheKey {
-  bannerSlide = "bannerSlide"
-}
-
 export interface ILocal {
-  key: TLocalKey | TLocalCacheKey
+  key: TLocalKey
   value?: string
 }

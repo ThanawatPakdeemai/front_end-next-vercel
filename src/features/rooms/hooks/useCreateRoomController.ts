@@ -12,6 +12,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useCreateRoom from "@feature/rooms/hooks/useCreateRoom"
 import { useToast } from "@feature/toast/containers"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
+import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 
 interface ICreateRoomControllerProp {
   gameData: IGame
@@ -45,11 +46,8 @@ const useCreateRoomController = ({ gameData }: ICreateRoomControllerProp) => {
   const { conditionGameFree, conditionPlayToEarn } = useGameGlobal()
 
   const { mutateCreateRoom, isLoading } = useCreateRoom()
-  const { gameItemList, balanceofItem } = useBuyGameItemController()
-  // const { gameItemList } = useGamesByGameId({
-  //   _playerId: profile ? profile.id : "",
-  //   _gameId: gameData ? gameData._id : ""
-  // })
+  const { gameItemList } = useBuyGameItemController()
+  const { balanceofItem } = useBalanceOfProvider()
 
   const handleSetIsCurrent = (status: boolean) => {
     setIsPublicRoom(status)

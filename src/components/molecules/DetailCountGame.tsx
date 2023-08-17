@@ -1,7 +1,19 @@
-import CountOnPlaying from "@components/atoms/CountOnPlaying"
-import RoomAvailable from "@components/atoms/RoomAvailable"
-import { IGameRoomAvailable } from "@feature/game/interfaces/IGameService"
+import React from "react"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import { IGameRoomAvailable } from "@feature/game/interfaces/IGameService"
+
+const CountOnPlaying = dynamic(
+  () => import("@components/atoms/CountOnPlaying"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RoomAvailable = dynamic(() => import("@components/atoms/RoomAvailable"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   play_total_count?: number

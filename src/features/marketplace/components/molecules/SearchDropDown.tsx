@@ -1,8 +1,22 @@
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import DropdownIcon from "@components/icons/DropdownIcon"
-import { ISelectDropDown } from "@interfaces/IMenu"
-import { Collapse } from "@mui/material"
 import React, { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
+import { ISelectDropDown } from "@interfaces/IMenu"
+
+const Collapse = dynamic(() => import("@mui/material/Collapse"), {
+  suspense: true,
+  ssr: false
+})
+const MenuItemCustom = dynamic(
+  () => import("@components/atoms/MenuItemCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   title: string
@@ -38,6 +52,7 @@ const SearchDropDown = ({ title, dropDown, onClick }: IProps) => {
     >
       <button
         type="button"
+        aria-label="expand price"
         onClick={handleOnExpandPrice}
         className="relative mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
       >
@@ -49,7 +64,7 @@ const SearchDropDown = ({ title, dropDown, onClick }: IProps) => {
               : "rotate-0 transition-all duration-300"
           }`}
         >
-          <DropdownIcon />
+          <Icomoon className="icon-Arrow-Down" />
         </div>
       </button>
       <Collapse

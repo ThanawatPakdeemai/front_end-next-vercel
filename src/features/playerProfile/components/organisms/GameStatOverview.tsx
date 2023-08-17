@@ -1,15 +1,31 @@
 import React, { memo, useState } from "react"
 import { Chip, Typography } from "@mui/material"
-import NumberRank from "@feature/ranking/components/atoms/NumberRank"
-import { Image } from "@components/atoms/image"
 import { v4 as uuidv4 } from "uuid"
-import Helper from "@utils/helper"
-import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { motion } from "framer-motion"
-import { IPlayerInfoResponse } from "@src/types/profile"
 import { useTranslation } from "react-i18next"
-import RankIcon from "../atoms/RankIcon"
-import SliderGameStat from "./SliderGameStat"
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+import { IPlayerInfoResponse } from "@src/types/profile"
+
+const NumberRank = dynamic(
+  () => import("@feature/ranking/components/atoms/NumberRank"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const RankIcon = dynamic(() => import("../atoms/RankIcon"), {
+  suspense: true,
+  ssr: true
+})
+const SliderGameStat = dynamic(() => import("./SliderGameStat"), {
+  suspense: true,
+  ssr: true
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   data: IPlayerInfoResponse
@@ -42,20 +58,19 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
               className="grid w-full  grid-cols-4 gap-4 rounded-[18px] bg-neutral-900 p-8 sm:min-w-min md:grid-cols-8 "
             >
               {/* sm:min-w-min md:max-w-max sm:min-w-[720px] */}
-              <div className="col-span-2 md:col-span-3">
+              <div className="col-span-2 overflow-hidden md:col-span-3">
                 <NumberRank
                   className="m-0 h-6 w-8 !rounded-[4px]"
                   index={index + limit * (page - 1)}
                 />
                 <h1 className="py-5 text-neutral-300">{item.name}</h1>
-                <TooltipsCustom
-                  className="truncate text-xs text-neutral-500 hover:text-clip"
-                  placement="bottom"
-                  title={item.story}
-                  color="error"
-                >
-                  <div>{item.story}</div>
-                </TooltipsCustom>
+                <Typography
+                  variant="body1"
+                  className="truncate text-xs text-neutral-500"
+                  dangerouslySetInnerHTML={{
+                    __html: `${item.story}`
+                  }}
+                />
               </div>
               <div className="col-span-2 grid grid-cols-2 gap-2 md:gap-4">
                 <div>

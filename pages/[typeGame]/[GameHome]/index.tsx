@@ -13,10 +13,16 @@ import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 import useLoadingStore from "@stores/loading"
-import GameReviews from "@feature/game/components/molecules/GameReviews"
 import { BalanceOfProvider } from "@providers/BalanceOfProvider"
 import useProfileStore from "@stores/profileStore"
 
+const GameReviews = dynamic(
+  () => import("@feature/game/components/molecules/GameReviews"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
   {
@@ -26,6 +32,14 @@ const SkeletonBanner = dynamic(
 )
 const GamePageDefault = dynamic(
   () => import("@components/templates/GamePageDefault"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const RightSidebarContent = dynamic(
+  () => import("@components/templates/contents/RightSidebarContent"),
   {
     suspense: true,
     ssr: false
@@ -264,7 +278,7 @@ function GameLobbyDesktop() {
           />
         }
         component2={
-          <RightSidebarContentEffect
+          <RightSidebarContent
             className="mb-[64px]"
             content={
               <FullWidthContent

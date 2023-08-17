@@ -1,11 +1,16 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
-import { ImageCustom } from "@components/atoms/image/Image"
+import CheckIcon from "@mui/icons-material/Check"
+import dynamic from "next/dynamic"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import CheckIcon from "@mui/icons-material/Check"
 import { useBaseProvider } from "@providers/BaseProvider"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface ICategoriesModalProps {
   open: boolean

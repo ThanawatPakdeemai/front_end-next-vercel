@@ -1,29 +1,54 @@
 /* eslint-disable max-len */
 import React, { useState } from "react"
-import { Box, Button, Divider, Typography } from "@mui/material"
-import CardNoReward from "@feature/game/components/atoms/CardNoReward"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
-import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
+import { Box, Button, Typography } from "@mui/material"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-// import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import { signIn } from "next-auth/react"
-import useLoginTypeStore from "@stores/loginTypes"
-import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
-import LoginModal from "../organisms/modal/LoginModal"
-import CreateAccountModal from "../organisms/modal/CreateAccountModal"
+// import { signIn } from "next-auth/react"
+import dynamic from "next/dynamic"
+// import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
+// import useLoginTypeStore from "@stores/loginTypes"
+
+const CardNoReward = dynamic(
+  () => import("@feature/game/components/atoms/CardNoReward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const LoginModal = dynamic(() => import("../organisms/modal/LoginModal"), {
+  suspense: true,
+  ssr: false
+})
+const CreateAccountModal = dynamic(
+  () => import("../organisms/modal/CreateAccountModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+// const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+//   suspense: true,
+//   ssr: false
+// })
+const LogoNakaBigIcon = dynamic(
+  () => import("@components/atoms/svg/LogoNakaBigIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const SignInLayout = () => {
-  const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
+  // const { twitterLogin } = useFormLoginController()
+  // const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
     useState<boolean>(false)
 
-  const handleLogin = async (_typeLogin: string) => {
-    await setLoginTypes(_typeLogin)
-    await signIn(_typeLogin)
-  }
+  // const handleLogin = (_typeLogin: string) => {
+  //   setLoginTypes(_typeLogin)
+  //   signIn(_typeLogin)
+  // }
 
   return (
     <>
@@ -47,13 +72,13 @@ const SignInLayout = () => {
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <FacebookColorIcon />
+                <Icomoon className="icon-Facebook" />
               </span>
               <span>Sign in with Facebook</span>
             </div>
           </Button>
         </Box> */}
-        <Box component="div">
+        {/* <Box component="div">
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
@@ -61,57 +86,35 @@ const SignInLayout = () => {
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <GoogleColorIcon />
+                <Icomoon className="icon-Google" />
               </span>
               <span>Sign in with Google</span>
             </div>
           </Button>
-        </Box>
-        <Box component="div">
+        </Box> */}
+        {/* <Box component="div">
           <Button
             variant="contained"
-            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
+            className="h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
             onClick={() => handleLogin("twitter")}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <TwitterIcon
-                  fill="#1D9BF0"
-                  width={30}
-                  height={30}
-                />
+                <Icomoon className="icon-twitter text-[#1D9BF0]" />
               </span>
               <span>Sign in with Twitter</span>
             </div>
           </Button>
-        </Box>
-        <Box component="div">
-          <Button
-            variant="contained"
-            className="h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={() => handleLogin("discord")}
-          >
-            <div className="flex items-center font-urbanist text-base font-medium">
-              <span className="pr-2">
-                <DiscordIcon
-                  fill="#5765f1"
-                  width={30}
-                  height={30}
-                />
-              </span>
-              <span>Sign in with Discord</span>
-            </div>
-          </Button>
-        </Box>
+        </Box> */}
 
-        <Box
+        {/* <Box
           component="div"
           className="py-4"
         >
           <Divider className="font-urbanist font-medium text-white-default">
             or
           </Divider>
-        </Box>
+        </Box> */}
         <Box component="div">
           <Button
             variant="contained"

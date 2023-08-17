@@ -1,6 +1,11 @@
-import { LogoNaka } from "@components/atoms/logo"
 import { Box } from "@mui/material"
 import React from "react"
+
+import dynamic from "next/dynamic"
+
+const LogoNaka = dynamic(() =>
+  import("@components/atoms/logo").then((mod) => mod.LogoNaka)
+)
 
 const StyledLogoReset = {
   ".logo-naka-icon": {

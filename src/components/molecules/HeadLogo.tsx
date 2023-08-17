@@ -1,16 +1,54 @@
-import LogoNaka from "@components/atoms/logo/LogoNaka"
-import SelectNaka from "@components/atoms/select/SelectNaka"
 import { Button, Divider, Typography, Box } from "@mui/material"
 import { memo, useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { Image } from "@components/atoms/image/index"
-import { FLAGS } from "@constants/flags"
-import useGlobal from "@hooks/useGlobal"
 import Link from "next/link"
-import MarketplaceTextIcon from "@components/icons/marketplace/MarketplaceTextIcon"
-import GameDeveloperIcon from "@components/icons/GameDeveloperIcon"
-import GlobalIcon from "@components/icons/GlobalIcon"
-import HamburgerIcon from "@components/icons/HamburgerIcon"
+import dynamic from "next/dynamic"
+import useGlobal from "@hooks/useGlobal"
+import { FLAGS } from "@constants/flags"
+
+const GameDeveloperIcon = dynamic(
+  () => import("@components/atoms/svg/GameDeveloperIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const LanguageOutlinedIcon = dynamic(
+  () => import("@mui/icons-material/LanguageOutlined"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MarketplaceTextIcon = dynamic(
+  () => import("@components/atoms/svg/marketplace/MarketplaceTextIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const LogoNaka = dynamic(() => import("@components/atoms/logo/LogoNaka"), {
+  suspense: true,
+  ssr: false
+})
+const SelectNaka = dynamic(
+  () => import("@components/atoms/select/SelectNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonFlag = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonFlag"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const HeadLogo = () => {
   const router = useRouter()
@@ -43,12 +81,12 @@ const HeadLogo = () => {
    */
   const themeColor = (): string => {
     if (isMarketplace) {
-      return "!text-secondary-main !stroke-secondary-main"
+      return "!text-secondary-main"
     }
     if (isDeveloperPage) {
-      return "!text-green-lemon !stroke-green-lemon"
+      return "!text-green-lemon"
     }
-    return "text-error-main !stroke-error-main"
+    return "text-error-main"
   }
 
   /**
@@ -94,10 +132,6 @@ const HeadLogo = () => {
           >
             <LogoNaka />
           </Link>
-          {/* {scrollPage < 100 && (
-            
-          )} */}
-
           {isDeveloperPage && (
             <Box
               component="div"
@@ -121,19 +155,16 @@ const HeadLogo = () => {
           />
           <Box
             component="div"
-            className="ms:ml-0 ml-auto flex h-auto items-center gap-3"
+            className={`ms:ml-0 ml-auto flex h-auto items-center gap-3 ${themeColor().toString()}`}
           >
-            <GlobalIcon className={themeColor().toString()} />
+            <LanguageOutlinedIcon />
             <SelectNaka
               imageSelectd={
-                <Image
-                  src={
-                    FLAGS.find((flag) => flag.code === router.locale)
-                      ?.flag_4x3 ?? "/assets/flags/4x3/us.svg"
+                <IcomoonFlag
+                  className={
+                    FLAGS.find((flag) => flag.code === router.locale)?.name ??
+                    ""
                   }
-                  width="50"
-                  height="50"
-                  alt="th"
                 />
               }
               options={
@@ -141,14 +172,10 @@ const HeadLogo = () => {
                   label: item.toUpperCase(),
                   value: item,
                   icon: (
-                    <Image
-                      src={
-                        FLAGS.find((flag) => flag.code === item)?.flag_4x3 ??
-                        "/assets/flags/4x3/us.svg"
+                    <IcomoonFlag
+                      className={
+                        FLAGS.find((flag) => flag.code === item)?.name ?? ""
                       }
-                      width="20"
-                      height="20"
-                      alt="th"
                     />
                   ),
                   handelClick: () =>
@@ -167,7 +194,7 @@ const HeadLogo = () => {
                   <Typography className="!font-neue-machina-semi !text-sm !uppercase">
                     {router.locale}
                   </Typography>
-                  <HamburgerIcon />
+                  <Icomoon className="icon-burger text-[85%] font-bold" />
                 </Button>
               }
             />

@@ -1,14 +1,6 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  TextField,
-  Button
-} from "@mui/material"
 import { useRouter } from "next/router"
 import React, { useCallback, useEffect } from "react"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
 import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
@@ -17,10 +9,48 @@ import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcGame"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import Helper from "@utils/helper"
-import AmountItem from "@components/molecules/AmountItem"
 import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { MESSAGES } from "@constants/messages"
+
+const Accordion = dynamic(() => import("@mui/material/Accordion"), {
+  suspense: true,
+  ssr: false
+})
+const AccordionSummary = dynamic(
+  () => import("@mui/material/AccordionSummary"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const AccordionDetails = dynamic(
+  () => import("@mui/material/AccordionDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const TextField = dynamic(() => import("@mui/material/TextField"), {
+  suspense: true,
+  ssr: false
+})
+const Button = dynamic(() => import("@mui/material/Button"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const AmountItem = dynamic(() => import("@components/molecules/AmountItem"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   _tokenId: string
@@ -59,7 +89,10 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
       return errorToast(
         "Your wallet address and transfer address must not be the same."
       )
-    if (transAmount <= 0)
+    if (
+      (marketType === "nft_material" || marketType === "game_item") &&
+      transAmount <= 0
+    )
       return errorToast("transfer amount must be more than 0.")
     let _status: boolean = false
     if (marketType) {
@@ -173,7 +206,7 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
                   : "rotate-0 transition-all duration-300"
               }`}
             >
-              <PlusIcon />
+              <Icomoon className="icon-Plus1" />
             </div>
           </div>
         </div>
@@ -225,6 +258,7 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
             variant="contained"
             size="medium"
             onClick={handleOnTransfer}
+            aria-label="transfer"
           >
             Transfer
           </Button>

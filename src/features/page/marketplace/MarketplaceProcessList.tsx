@@ -1,10 +1,27 @@
-import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 import { useRouter } from "next/router"
 import React, { useCallback } from "react"
+import dynamic from "next/dynamic"
 import useInventoryPayment from "@feature/inventory/containers/hooks/useInventoryPayment"
 import useProfileStore from "@stores/profileStore"
-import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
-import CardListContainer from "./CardListContainer"
+
+const SkeletonMarketOwnerList = dynamic(
+  () => import("./SkeletonMarketOwnerList"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const CardListContainer = dynamic(() => import("./CardListContainer"), {
+  suspense: true,
+  ssr: true
+})
+const CardItemMarketPlace = dynamic(
+  () => import("@components/molecules/cards/CardItemMarketPlace"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 const MarketplaceProcessList = () => {
   const profile = useProfileStore()

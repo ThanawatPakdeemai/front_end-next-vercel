@@ -1,9 +1,19 @@
 import React from "react"
 import { motion } from "framer-motion"
 import { Grid } from "@mui/material"
-import { Image } from "@components/atoms/image/index"
 import { useTranslation } from "react-i18next"
-import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(
+  () => import("@components/atoms/image/index").then((mod) => mod.Image),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon")
+)
 
 export interface ICategoryCard {
   img: string

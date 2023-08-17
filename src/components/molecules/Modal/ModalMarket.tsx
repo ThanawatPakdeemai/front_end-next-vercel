@@ -1,4 +1,8 @@
-import FormLogin from "@feature/authentication/components/FormLogin"
+import { Button, Divider, Stack, Typography } from "@mui/material"
+import React, { memo, useEffect, useMemo, useRef, useState } from "react"
+import { useForm } from "react-hook-form"
+import { NextRouter, useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import useMarket from "@feature/marketplace/containers/hooks/useMarket"
 import { TMarketAction } from "@feature/marketplace/interfaces/IMarket"
 import {
@@ -6,20 +10,31 @@ import {
   TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { Button, Divider, Stack, Typography } from "@mui/material"
-import React, { memo, useEffect, useMemo, useRef, useState } from "react"
-import { useForm } from "react-hook-form"
-import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
 import { IPosition } from "@feature/land/interfaces/ILandService"
-import Video from "@components/atoms/Video"
-import { NextRouter, useRouter } from "next/router"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useInventoryProvider } from "@providers/InventoryProvider"
-import MagicIcon from "@components/icons/MagicIcon"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
-import { ModalCustom } from "./ModalCustom"
 
+const ModalCustom = dynamic(() => import("./ModalCustom"), {
+  suspense: true,
+  ssr: false
+})
+const FormLogin = dynamic(
+  () => import("@feature/authentication/components/FormLogin"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Video = dynamic(() => import("@components/atoms/Video"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 const SellActionComp = dynamic(
   () => import("@components/molecules/Modal/SellActionComponent"),
   {
@@ -226,7 +241,7 @@ const ModalMarket = ({
       case "mint":
         _color = nftType === "nft_naka_punk" ? "#A0ED61" : "#27F1EC"
         _textColor = "#010101"
-        _icon = <MagicIcon />
+        _icon = <Icomoon className="icon-Magic-Stick" />
         break
       case "sell":
         _color = "#F42728"

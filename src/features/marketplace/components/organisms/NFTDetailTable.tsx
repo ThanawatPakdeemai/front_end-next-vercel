@@ -1,6 +1,8 @@
-import BarGraph from "@components/icons/BarGraph"
-import BillsIcon from "@components/icons/BillsIcon"
-import CreditCardIcon from "@components/icons/CreditCardIcon"
+import React, { useMemo, useState } from "react"
+import { v4 as uuidv4 } from "uuid"
+import dayjs from "dayjs"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import {
   IInstallData,
   IInstallPeriod,
@@ -8,17 +10,56 @@ import {
   IRentalData,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { Box, Button, Chip, Link, Tab, Tabs } from "@mui/material"
-import React, { useMemo, useState } from "react"
-import { v4 as uuidv4 } from "uuid"
 import Helper from "@utils/helper"
-import dayjs from "dayjs"
 import useMarketNFTInstall from "@feature/marketplace/containers/hooks/useMarketNFTInstall"
 import useMarketNFTRent from "@feature/marketplace/containers/hooks/useMarketNFTRent"
 import useProfileStore from "@stores/profileStore"
-import NFTPeriodTable from "@feature/marketplace/components/molecules/NFTPeriodTable"
-import NFTHistoryTable from "@feature/marketplace/components/molecules/NFTHistoryTable"
-import BillDetailsText from "@feature/marketplace/components/atoms/BillDetailsText"
+
+const Button = dynamic(() => import("@mui/material/Button"), {
+  suspense: true,
+  ssr: false
+})
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Link = dynamic(() => import("@mui/material/Link"), {
+  suspense: true,
+  ssr: false
+})
+const Tab = dynamic(() => import("@mui/material/Tab"), {
+  suspense: true,
+  ssr: false
+})
+const Tabs = dynamic(() => import("@mui/material/Tabs"), {
+  suspense: true,
+  ssr: false
+})
+const NFTPeriodTable = dynamic(
+  () => import("@feature/marketplace/components/molecules/NFTPeriodTable"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NFTHistoryTable = dynamic(
+  () => import("@feature/marketplace/components/molecules/NFTHistoryTable"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const BillDetailsText = dynamic(
+  () => import("@feature/marketplace/components/atoms/BillDetailsText"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -129,7 +170,7 @@ const NFTDetailTable = ({
               <Tab
                 key={uuidv4()}
                 label="Bill Details"
-                icon={<BillsIcon />}
+                icon={<Icomoon className="icon-Document-with-Lines" />}
                 iconPosition="start"
                 className={`${tabClassName} mr-[5px]`}
                 sx={tabSx}
@@ -138,7 +179,7 @@ const NFTDetailTable = ({
               <Tab
                 key={uuidv4()}
                 label="Payment"
-                icon={<CreditCardIcon />}
+                icon={<Icomoon className="icon-Credit-Card" />}
                 iconPosition="start"
                 className={`${tabClassName} mr-[5px]`}
                 sx={tabSx}
@@ -151,7 +192,7 @@ const NFTDetailTable = ({
               <Tab
                 key={uuidv4()}
                 label="Rental Details"
-                icon={<BillsIcon />}
+                icon={<Icomoon className="icon-Document-with-Lines" />}
                 iconPosition="start"
                 className={`${tabClassName} mr-[5px]`}
                 sx={tabSx}
@@ -160,7 +201,7 @@ const NFTDetailTable = ({
               <Tab
                 key={uuidv4()}
                 label="Claim"
-                icon={<CreditCardIcon />}
+                icon={<Icomoon className="icon-Credit-Card" />}
                 iconPosition="start"
                 className={`${tabClassName} mr-[5px]`}
                 sx={tabSx}
@@ -170,7 +211,7 @@ const NFTDetailTable = ({
           : null}
         <Tab
           label="History"
-          icon={<BarGraph />}
+          icon={<Icomoon className="icon-Bar-Graph" />}
           iconPosition="start"
           className={`${tabClassName}`}
           sx={tabSx}

@@ -1,10 +1,21 @@
-import PlusMinus from "@components/icons/PlusMinus"
-import CONFIGS from "@configs/index"
-import useGlobal from "@hooks/useGlobal"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import { Chip } from "@mui/material"
 import Link from "next/link"
 import React from "react"
+import dynamic from "next/dynamic"
+import useGlobal from "@hooks/useGlobal"
+import CONFIGS from "@configs/index"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ArrowForwardIcon = dynamic(
+  () => import("@mui/icons-material/ArrowForward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"))
 
 interface IProp {
   id: string
@@ -68,7 +79,7 @@ const ChipsLink = ({ id, position }: IProp) => {
             label="CALCULATE MINING"
             size="small"
             color="success"
-            deleteIcon={<PlusMinus />}
+            deleteIcon={<Icomoon className="icon-Plus1" />}
             onDelete={() => null}
           />
         </a>

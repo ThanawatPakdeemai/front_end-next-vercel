@@ -12,13 +12,35 @@ import {
   Stack
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports"
-import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
-import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
+import dynamic from "next/dynamic"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const GameItemSingleCard = dynamic(
+  () => import("@components/atoms/GameItemSingleCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IItemLists {
   _id: string
@@ -51,9 +73,9 @@ type IMenuList = "game_details" | "how_to_play" | "game_items"
 
 const MoreDetailGameMobile = ({ gameDetails = "", howto, item }: IProps) => {
   const listMenu = [
-    { label: "game_details", icon: <HowToPlayIcon /> },
+    { label: "game_details", icon: <Icomoon className="icon-Book" /> },
     { label: "how_to_play", icon: <SportsEsportsIcon /> },
-    { label: "game_items", icon: <ItemRewardIcon stroke="#70727B" /> }
+    { label: "game_items", icon: <Icomoon className="icon-Dollar" /> }
   ]
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)

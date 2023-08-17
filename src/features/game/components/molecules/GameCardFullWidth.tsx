@@ -1,13 +1,29 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import { ImageCustom } from "@components/atoms/image/Image"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
-import useEventController from "@feature/event/containers/hooks/useEventController"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import { Box } from "@mui/material"
 import { useRouter } from "next/router"
-// import { useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useEventController from "@feature/event/containers/hooks/useEventController"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(
+  () => import("@components/atoms/image/Image").then((mod) => mod.ImageCustom),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IGameCardFullWidthProps {
   image: string
@@ -51,7 +67,7 @@ const GameCardFullWidth = ({
       >
         <ButtonLink
           text={t("play_now")}
-          icon={<JoinStickIcon />}
+          icon={<Icomoon className="icon-Joystick" />}
           size="large"
           color="secondary"
           variant="contained"

@@ -1,9 +1,21 @@
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Typography } from "@mui/material"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import React from "react"
 import { useTranslation } from "react-i18next"
+
+import dynamic from "next/dynamic"
+import { useWeb3Provider } from "@providers/Web3Provider"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface ISwitchChainProps {
   variant: "full" | "simple" | "mini" | "text"
@@ -45,7 +57,9 @@ const SwitchChain = ({
               network, please switch network
             </Typography>
             <ButtonToggleIcon
-              startIcon={<IconArrowRight fill="#F1F4F4" />}
+              startIcon={
+                <Icomoon className="icon-Full-Arrow-Right text-[#F1F4F4]" />
+              }
               text={submitText}
               type="button"
               className={`${className} switch-chain--label font-neue-machina-semi text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600`}
@@ -70,7 +84,9 @@ const SwitchChain = ({
             )}
 
             <ButtonToggleIcon
-              startIcon={<IconArrowRight fill="#F1F4F4" />}
+              startIcon={
+                <Icomoon className="icon-Full-Arrow-Right text-[#F1F4F4]" />
+              }
               text={submitText}
               type="button"
               className={`${className} switch-chain--label font-neue-machina-semi text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600`}
@@ -82,7 +98,9 @@ const SwitchChain = ({
       case "mini":
         return (
           <ButtonToggleIcon
-            startIcon={<IconArrowRight fill="#F1F4F4" />}
+            startIcon={
+              <Icomoon className="icon-Full-Arrow-Right text-[#F1F4F4]" />
+            }
             text={submitText}
             type="button"
             className={`${className} switch-chain--label font-neue-machina-semi text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600`}

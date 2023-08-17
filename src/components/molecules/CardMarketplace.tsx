@@ -1,11 +1,25 @@
 import React from "react"
-import { IMAGES } from "@constants/images"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { Box } from "@mui/material"
-import IShoppingCart from "@components/icons/ShoppingCart"
-import CONFIGS from "@configs/index"
 import { useTranslation } from "react-i18next"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
+import CONFIGS from "@configs/index"
+import { IMAGES } from "@constants/images"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardMarketplace {
   title?: string
@@ -43,7 +57,7 @@ const CardMarketplace = ({
           // eslint-disable-next-line no-return-assign
           onClick={() => (window.location.href = href)}
           text={t("marketplace")}
-          icon={<IShoppingCart />}
+          icon={<Icomoon className="icon-Shopping-Cart-01" />}
           size="medium"
           color="secondary"
           variant="contained"

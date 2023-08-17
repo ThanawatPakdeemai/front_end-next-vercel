@@ -1,8 +1,10 @@
 import React from "react"
-import BinanceIcon from "@components/icons/NetworkIcon/BinanceIcon"
-import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
-import EthereumIcon from "@components/icons/NetworkIcon/EthereumIcon"
+import dynamic from "next/dynamic"
 import CONFIGS from "."
+
+const IcomoonChain = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonChain")
+)
 
 export type TokenSupport = "NAKA" | "BNB" | "ETH"
 
@@ -16,14 +18,13 @@ export interface IChainList {
 export const CHAIN_SUPPORT: IChainList[] = [
   {
     title: "Polygon",
-    icon: <ChainPolygonIcon />,
+    icon: <IcomoonChain className="icon-Polygon" />,
     link: "NAKA",
     chainId: CONFIGS.CHAIN.CHAIN_ID_HEX as string
   }
-  // TODO: Open after binance smart chain is ready
   // {
   //   title: "Binance smart chain",
-  //   icon: <BinanceIcon />,
+  //   icon: <IcomoonChain className={"icon-BSC"} />,
   //   link: "BNB",
   //   chainId: CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
   // }
@@ -32,19 +33,19 @@ export const CHAIN_SUPPORT: IChainList[] = [
 export const CHAIN_LIST: IChainList[] = [
   {
     title: "Polygon",
-    icon: <ChainPolygonIcon />,
+    icon: <IcomoonChain className="icon-Polygon" />,
     link: "NAKA",
     chainId: CONFIGS.CHAIN.CHAIN_ID_HEX as string
   },
   {
     title: "Binance smart chain",
-    icon: <BinanceIcon />,
+    icon: <IcomoonChain className="icon-BSC" />,
     link: "BNB",
     chainId: CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
   },
   {
     title: "Ethereum",
-    icon: <EthereumIcon />,
+    icon: <IcomoonChain className="icon-Ethereum" />,
     link: "ETH",
     chainId: "0x1"
   }

@@ -1,8 +1,13 @@
 import React from "react"
-import { Image } from "@components/atoms/image"
 import { Skeleton } from "@mui/material"
 import { MobileView } from "react-device-detect"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IGameSummaryRewardFooterProps {
   gameImage: string

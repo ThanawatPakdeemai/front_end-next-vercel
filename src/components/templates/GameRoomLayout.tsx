@@ -1,22 +1,64 @@
-import ShineIcon from "@components/icons/ShineIcon"
-import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
-import Tagline from "@components/molecules/tagline/Tagline"
-import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import React, { useEffect, useState } from "react"
+import { unstable_batchedUpdates } from "react-dom"
+import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
-import Header from "@components/organisms/Header"
-import Footer from "@components/organisms/Footer"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import useGameStore from "@stores/game"
-import { unstable_batchedUpdates } from "react-dom"
-import Howto from "@components/molecules/HowToPlay"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import Banners from "@components/molecules/Banners"
-import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import GameTabsVertical from "@feature/game/components/templates/lobby/GameTabsVertical"
-import FullWidthContent from "./contents/FullWidthContent"
+
+const TopPlayer = dynamic(
+  () => import("@feature/ranking/components/template/TopPlayer"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FullWidthContent = dynamic(() => import("./contents/FullWidthContent"), {
+  suspense: true,
+  ssr: false
+})
+const Howto = dynamic(() => import("@components/molecules/HowToPlay"), {
+  suspense: true,
+  ssr: false
+})
+
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const StatisticGameDetail = dynamic(
+  () => import("@components/molecules/statistic/StatisticGameDetail"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const Banners = dynamic(() => import("@components/molecules/Banners"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
 
 const GameRoomLayout = ({
   children
@@ -42,7 +84,7 @@ const GameRoomLayout = ({
               bgColor="bg-neutral-800"
               textColor="text-neutral-500 font-bold"
               text="Don't miss the information analysis about this game"
-              icon={<ShineIcon />}
+              icon={<Icomoon className="icon-require" />}
               show={false}
             />
             <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">

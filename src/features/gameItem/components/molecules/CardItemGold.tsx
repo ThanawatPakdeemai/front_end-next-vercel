@@ -1,21 +1,59 @@
 import React, { useEffect, useMemo } from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import { Box } from "@mui/material"
+import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { useRouter } from "next/router"
 import { MESSAGES } from "@constants/messages"
-import { useTranslation } from "next-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGlobal from "@hooks/useGlobal"
-import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
-import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
-import { ImageCustom } from "@components/atoms/image/Image"
-import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
-import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
 import useGetProfileGolds from "@feature/gold/containers/hook/useGetProfileGolds"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightMenuNotLogIn = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuNotLogIn"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonGame = dynamic(
+  () => import("@feature/game/components/molecules/ButtonGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameItemSingleCard = dynamic(
+  () => import("@components/atoms/GameItemSingleCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const CardBuyItemHeader = dynamic(
+  () => import("@feature/gameItem/molecules/CardBuyItemHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -70,7 +108,7 @@ export default function CardItemGold({
           <ButtonLink
             text={t("join-game")}
             href={`${router.asPath}/roomlist`}
-            icon={<ArrowJoinIcon />}
+            icon={<Icomoon className="icon-Arrow-in-Box-Right" />}
             size="medium"
             color="secondary"
             variant="contained"
@@ -100,7 +138,7 @@ export default function CardItemGold({
     return (
       <ButtonLink
         text={t(MESSAGES["please_item"])}
-        icon={<ArrowJoinIcon />}
+        icon={<Icomoon className="icon-Arrow-in-Box-Right" />}
         href={`${router.asPath}`}
         size="medium"
         color="secondary"
@@ -131,7 +169,7 @@ export default function CardItemGold({
             <ButtonLink
               text={t("please_login")}
               href=""
-              icon={<ArrowJoinIcon />}
+              icon={<Icomoon className="icon-Arrow-in-Box-Right" />}
               size="medium"
               color="secondary"
               className="h-[50px] w-full whitespace-nowrap bg-secondary-main"
@@ -226,7 +264,7 @@ export default function CardItemGold({
                         <span>=</span>
                         <span className="total-price">{goldProfileComma}</span>
                       </p>
-                      {/* <DollarSolidIcon /> */}
+                      {/* <Icomoon className="icon-Dollar" /> */}
                     </div>
                     {/* {isHideOnWaitingRoom && (
                       <div className="card-buy-item__buyButton w-full">

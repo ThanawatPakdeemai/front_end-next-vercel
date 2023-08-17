@@ -1,16 +1,25 @@
 import React, { memo, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
-import GameCarouselHeader, {
-  IHeaderSlide
-} from "@components/molecules/gameSlide/GameCarouselHeader"
+import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
-import { Box } from "@mui/material"
+import { IHeaderSlide } from "./GameCarouselHeader"
+
+const GameCarouselHeader = dynamic(
+  () => import("@components/molecules/gameSlide/GameCarouselHeader")
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   menu: IHeaderSlide
@@ -142,6 +151,7 @@ const GameCarousel = ({
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         setCurType={setCurType}
+        // buttonData={{ text: menu.title, link: "/play-to-earn" }}
       />
 
       <Box
@@ -171,48 +181,50 @@ const GameCarousel = ({
               }
         }
       >
-        <Slider
-          ref={sliderRef}
-          {...settings}
-        >
-          {list &&
-            list.map((item, index) => (
-              <Box
-                component="div"
-                className={`${list.length < 3 && "px-1"}`}
-                key={item.id}
-              >
-                <GameCard
-                  key={item?.id ?? item.game_id}
-                  menu={menu}
-                  data={item}
-                  showNo={showNo}
-                  classNameImage="h-40 w-40"
-                  no={index + 1}
-                  checkTimer={checkTimer}
-                  cooldown={cooldown}
-                  setCooldown={setCooldown}
-                  staminaRecovery={staminaRecovery}
-                  href={`/${getGameMode(item)}/${item.path}${isRedirectRoomlist(
-                    item
-                  ).toString()}`}
-                  onPlaying={onPlaying}
-                  onHandleClick={() => {
-                    onHandleSetGameStore(getGameMode(item), item)
-                    if (onPlaying && item?.play_to_earn_status !== "free") {
-                      const itemSelect = gameItemList?.find(
-                        (ele) => ele.item_size === item.item_size
-                      )
-                      if (itemSelect) onSetGameItemSelectd(itemSelect)
-                    }
-                  }}
-                  gameType={getGameMode(item)}
-                  play_total_count={game?.play_total_count}
-                  room_available={game?.game_room_available}
-                />
-              </Box>
-            ))}
-        </Slider>
+        {list.length && (
+          <Slider
+            ref={sliderRef}
+            {...settings}
+          >
+            {list &&
+              list.map((item, index) => (
+                <Box
+                  component="div"
+                  className={`${list.length < 3 && "px-1"}`}
+                  key={item.id}
+                >
+                  <GameCard
+                    key={item?.id ?? item.game_id}
+                    menu={menu}
+                    data={item}
+                    showNo={showNo}
+                    classNameImage="h-40 w-40"
+                    no={index + 1}
+                    checkTimer={checkTimer}
+                    cooldown={cooldown}
+                    setCooldown={setCooldown}
+                    staminaRecovery={staminaRecovery}
+                    href={`/${getGameMode(item)}/${
+                      item.path
+                    }${isRedirectRoomlist(item).toString()}`}
+                    onPlaying={onPlaying}
+                    onHandleClick={() => {
+                      onHandleSetGameStore(getGameMode(item), item)
+                      if (onPlaying && item?.play_to_earn_status !== "free") {
+                        const itemSelect = gameItemList?.find(
+                          (ele) => ele.item_size === item.item_size
+                        )
+                        if (itemSelect) onSetGameItemSelectd(itemSelect)
+                      }
+                    }}
+                    gameType={getGameMode(item)}
+                    play_total_count={game?.play_total_count}
+                    room_available={game?.game_room_available}
+                  />
+                </Box>
+              ))}
+          </Slider>
+        )}
       </Box>
     </div>
   )

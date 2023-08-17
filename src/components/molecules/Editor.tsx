@@ -1,12 +1,15 @@
 /* eslint-disable import/no-unresolved */
-import ToolbarCustom, { formats } from "@components/atoms/ToolbarCustom"
 import React, { useEffect, useState } from "react"
 import "react-quill/dist/quill.snow.css"
 import dynamic from "next/dynamic"
 import { Typography } from "@mui/material"
-import { StyledFormLabel } from "@feature/dropdown/components/molecules/DropdownListGameType"
+import { formats } from "@src/types/wysiwyg"
+import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false })
+const ToolbarCustom = dynamic(import("@components/atoms/ToolbarCustom"), {
+  ssr: false
+})
 
 interface IProps {
   id: string

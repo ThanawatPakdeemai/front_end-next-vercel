@@ -1,9 +1,19 @@
-import { ImageCustom } from "@components/atoms/image/Image"
-import OverviewHowToPlay from "@components/organisms/OverviewHowToPlay"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import React from "react"
+import dynamic from "next/dynamic"
+import { IGame } from "@feature/game/interfaces/IGameService"
+
+const CardBuyItem = dynamic(
+  () => import("@feature/gameItem/components/molecules/CardBuyItem")
+)
+const ImageCustom = dynamic(() =>
+  import("@components/atoms/image/Image").then((mod) => mod.ImageCustom)
+)
+const OverviewHowToPlay = dynamic(
+  () => import("@components/organisms/OverviewHowToPlay")
+)
+const BuyItemBody = dynamic(
+  () => import("@components/templates/game/BuyItemBody")
+)
 
 interface IDefaultLobby {
   gameData: IGame

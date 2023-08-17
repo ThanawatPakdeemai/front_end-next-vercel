@@ -1,17 +1,68 @@
 import React from "react"
 import { useRouter } from "next/router"
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import CopyButton from "@components/atoms/CopyButton"
-import { Chip, Divider, Typography } from "@mui/material"
-import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import CONFIGS from "@configs/index"
-import MiniMap from "@feature/map/components/organisms/MiniMap"
-import RedemptionCode from "@components/molecules/RedemptionCode"
-import Video from "@components/atoms/Video"
-import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
-import ChipsLink from "../molecules/ChipsLink"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose")
+)
+const CopyButton = dynamic(() => import("@components/atoms/CopyButton"), {
+  suspense: true,
+  ssr: false
+})
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Divider = dynamic(() => import("@mui/material/Divider"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const ArrowOutwardOutlinedIcon = dynamic(
+  () => import("@mui/icons-material/ArrowOutwardOutlined"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MiniMap = dynamic(
+  () => import("@feature/map/components/organisms/MiniMap"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RedemptionCode = dynamic(
+  () => import("@components/molecules/RedemptionCode"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Video = dynamic(() => import("@components/atoms/Video"), {
+  suspense: true,
+  ssr: false
+})
+const TextfieldDetailContent = dynamic(
+  () => import("../molecules/TextfieldDetailContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ChipsLink = dynamic(() => import("../molecules/ChipsLink"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   type: TNFTType

@@ -1,17 +1,49 @@
-import { Image } from "@components/atoms/image"
-import Video from "@components/atoms/Video"
-import NakaPunkStar from "@components/icons/marketplace/NakaPunkStar"
-import CONFIGS from "@configs/index"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import { MetaData } from "@feature/marketplace/interfaces/INakaPung"
-import { Button, Divider, Typography } from "@mui/material"
-import { TSellerType } from "@feature/marketplace/interfaces/IMarketService"
 import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
-import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined"
-import useGlobal from "@hooks/useGlobal"
 import dynamic from "next/dynamic"
+import CONFIGS from "@configs/index"
+import { MetaData } from "@feature/marketplace/interfaces/INakaPung"
+import { TSellerType } from "@feature/marketplace/interfaces/IMarketService"
+import useGlobal from "@hooks/useGlobal"
 
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Button = dynamic(() => import("@mui/material/Button"), {
+  suspense: true,
+  ssr: false
+})
+const Divider = dynamic(() => import("@mui/material/Divider"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const RemoveRedEyeOutlinedIcon = dynamic(
+  () => import("@mui/icons-material/RemoveRedEyeOutlined"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Video = dynamic(() => import("@components/atoms/Video"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 const Gltf3dModel = dynamic(
   () => import("@feature/building/components/atoms/Gltf3dModel"),
   {
@@ -81,7 +113,6 @@ const CardContentDetails = ({ ...props }: IProp) => {
             marketType !== "nft_building" &&
             image && (
               <Image
-                // src="/images/not_found.webp"
                 src={image as string}
                 alt={alt as string}
                 width={marketType === "game_item" ? 120 : 563}
@@ -108,7 +139,6 @@ const CardContentDetails = ({ ...props }: IProp) => {
                 meta_data.slice(0, 3).map((item) => (
                   <div key={item.item_id}>
                     <Image
-                      // src="/images/not_found.webp"
                       src={item.image as string}
                       alt={item.item_id as string}
                       width={563}
@@ -118,8 +148,9 @@ const CardContentDetails = ({ ...props }: IProp) => {
                   </div>
                 ))}
               <div className="grid h-full w-full content-center items-center	justify-center rounded border-[1px] border-neutral-700 bg-neutral-780">
-                <NakaPunkStar />
+                <Icomoon className="icon-Naka-2" />
                 <Button
+                  aria-label="view-all"
                   onClick={handleOpen}
                   variant="outlined"
                   className="h-[50px] hover:h-[58px]"
@@ -143,7 +174,6 @@ const CardContentDetails = ({ ...props }: IProp) => {
                 meta_data.map((item) => (
                   <div key={item.item_id}>
                     <Image
-                      // src="/images/not_found.webp"
                       src={item.image as string}
                       alt={item.item_id as string}
                       width={563}

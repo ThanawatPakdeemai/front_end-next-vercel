@@ -1,9 +1,20 @@
-import ShortDetailsCTA from "@components/molecules/ShortDetailsCTA"
 import React from "react"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
 import { CardMedia } from "@mui/material"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
 import { IImageProps } from "@constants/images"
+
+const ShortDetailsCTA = dynamic(
+  () => import("@components/molecules/ShortDetailsCTA"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface CarouselCardSlideProps {
   video?: boolean

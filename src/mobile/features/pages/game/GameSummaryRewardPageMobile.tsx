@@ -1,31 +1,65 @@
 import React from "react"
-import SkeletonSummaryRaward from "@components/atoms/skeleton/SkeletonSummaryRaward"
-import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
-import useGlobal from "@hooks/useGlobal"
 import { Box, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import { Image } from "@components/atoms/image/index"
-import ClockIcon2 from "@components/icons/ClockIcon2"
-import RoomListBox from "@components/molecules/roomList/RoomListBox"
+import dayjs from "dayjs"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
+import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
+import useGlobal from "@hooks/useGlobal"
 import {
   StylePlayerMobile,
   StyleTimerMobile,
   StyleWaitingRoom
 } from "@mobile/styles/muiStyleMobile"
-import dayjs from "dayjs"
-import GameSummaryBodyMobile from "@feature/game/components/organisms/GameSummaryBodyMobile"
 import {
   classesAvatar,
   classesImage,
   classesWrapper
 } from "@mobile/features/game/components/molecules/PlayerCardMobile"
 import Helper from "@utils/helper"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import { useRouter } from "next/router"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
-import GameSummaryBodyReturnItemMobile from "@mobile/features/game/components/organisms/GameSummaryBodyReturnItemMobile"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const RoomListBox = dynamic(
+  () => import("@components/molecules/roomList/RoomListBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonSummaryRaward = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonSummaryRaward"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameSummaryBodyMobile = dynamic(
+  () => import("@feature/game/components/organisms/GameSummaryBodyMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameSummaryBodyReturnItemMobile = dynamic(
+  () =>
+    import(
+      "@mobile/features/game/components/organisms/GameSummaryBodyReturnItemMobile"
+    ),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const GameSummaryRewardPageMobile = () => {
   const {
@@ -155,7 +189,7 @@ const GameSummaryRewardPageMobile = () => {
         }}
         aria-hidden="true"
       >
-        <ArrowBackIcon />
+        <Icomoon className="icon-Full-Arrow-Left" />
         {gameData?.name}
       </h2>
       <Box
@@ -185,7 +219,7 @@ const GameSummaryRewardPageMobile = () => {
               className="section--timer ml-2 flex items-center gap-2"
               sx={StyleTimerMobile}
             >
-              <ClockIcon2 />
+              <Icomoon className="icon-Clock" />
               <RoomListBox
                 type="timer"
                 timer={{

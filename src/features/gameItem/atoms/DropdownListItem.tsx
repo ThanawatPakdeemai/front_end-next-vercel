@@ -1,19 +1,40 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import { Image } from "@components/atoms/image"
-
-import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
-import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
+import dynamic from "next/dynamic"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import useGameStore from "@stores/game"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import SycnIcon from "@components/icons/SycnIcon"
-import { ImageCustom } from "@components/atoms/image/Image"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import ButtonDropdown from "./ButtonDropdown"
+
+const ButtonDropdown = dynamic(() => import("./ButtonDropdown"), {
+  suspense: true,
+  ssr: false
+})
+const SelectDropdown = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   icon?: React.ReactNode
@@ -135,7 +156,9 @@ const DropdownListItem = ({
                         stiffness: 400,
                         damping: 4
                       }}
-                      icon={<SycnIcon />}
+                      icon={
+                        <Icomoon className="icon-Diagonal-Arrows-01 text-white-primary" />
+                      }
                       className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-red-card"
                     />
                   )}
@@ -166,7 +189,7 @@ const DropdownListItem = ({
                     title="GameItem"
                     icon={
                       <div className="opacity-40">
-                        <Image
+                        <ImageCustom
                           src={list && list?.[0]?.image_icon}
                           alt={list && list?.[0]?.name}
                           width="20"

@@ -1,17 +1,55 @@
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { P2EHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/components/molecules/GameCard"
-import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
-import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
-import BodyCategories from "@mobile/components/organisms/BodyCategories"
-import { Box } from "@mui/material"
-import NoData from "@components/molecules/NoData"
 import { memo } from "react"
 import { v4 as uuid } from "uuid"
 import { MobileView } from "react-device-detect"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import { P2EHeaderMenu } from "@constants/gameSlide"
+
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardGameSlider = dynamic(
+  () => import("@mobile/components/organisms/CardGameSlider"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const BodyCategories = dynamic(
+  () => import("@mobile/components/organisms/BodyCategories"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 const ArcadeEmporiumGamesPage = () => {
   // Hooks

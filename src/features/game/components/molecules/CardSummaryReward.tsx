@@ -1,13 +1,22 @@
-import ArrowDownIcon from "@components/icons/ArrowDownIcon"
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import LogoIcon from "@components/icons/LogoIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import CONFIGS from "@configs/index"
-import useGlobal from "@hooks/useGlobal"
-import { Box } from "@mui/material"
-import Helper from "@utils/helper"
 import React from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { Box } from "@mui/material"
+import Helper from "@utils/helper"
+import useGlobal from "@hooks/useGlobal"
+import CONFIGS from "@configs/index"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface ICardSummaryRewardProps {
   myReward?: number
@@ -31,11 +40,11 @@ const CardSummaryReward = ({ myReward, hash }: ICardSummaryRewardProps) => {
                 maximumFractionDigits: 4
               })}
           </span>
-          <LogoIcon fill="#A0ED61" />
+          <Icomoon className="icon-Naka text-[#A0ED61]" />
         </div>
         <ButtonToggleIcon
-          startIcon={<ArrowDownIcon />}
-          endIcon={<IconArrowRight stroke="#010101" />}
+          startIcon={<Icomoon className="icon-Arrow-Down-with-Line" />}
+          endIcon={<Icomoon className="icon-Full-Arrow-Right text-[#010101]" />}
           text={t("view_transaction")}
           className="btn-green-rainbow bg-green-lemon font-bold text-neutral-900"
           handleClick={() =>

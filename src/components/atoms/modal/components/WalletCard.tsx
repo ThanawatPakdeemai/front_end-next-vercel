@@ -1,9 +1,14 @@
 /* eslint-disable no-use-before-define */
 import React, { memo } from "react"
 import styled from "styled-components"
+import dynamic from "next/dynamic"
 import { connectorLocalStorageKey } from "@constants/wallets"
 import { Login, Config } from "@src/types/wallet"
-import { Image } from "@components/atoms/image"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface Props {
   walletConfig: Config

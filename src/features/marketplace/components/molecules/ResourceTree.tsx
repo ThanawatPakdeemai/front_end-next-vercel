@@ -1,8 +1,19 @@
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import DropdownIcon from "@components/icons/DropdownIcon"
+import React, { useState } from "react"
+import dynamic from "next/dynamic"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import useMarketFilterStore from "@stores/marketFilter"
-import React, { useState } from "react"
+
+const CheckBoxNaka = dynamic(
+  () => import("@components/atoms/checkBox/CheckBoxNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   _main: IGameItemListData
@@ -18,6 +29,7 @@ const ResourceTree = ({ _main, _data }: IProps) => {
       <div className="flex h-11 w-full cursor-pointer flex-row items-center justify-between">
         <button
           type="button"
+          aria-label="resource-tree"
           className="flex h-full w-full flex-row items-center gap-x-2"
           onClick={() => {}}
         >
@@ -53,6 +65,7 @@ const ResourceTree = ({ _main, _data }: IProps) => {
         </button>
         <button
           type="button"
+          aria-label="expand"
           onClick={() => setExpanded((prev: boolean) => !prev)}
         >
           <div
@@ -62,7 +75,7 @@ const ResourceTree = ({ _main, _data }: IProps) => {
                 : "rotate-0 transition-all duration-300"
             }`}
           >
-            <DropdownIcon />
+            <Icomoon className="icon-Arrow-Down" />
           </div>
         </button>
       </div>

@@ -1,13 +1,12 @@
 /* eslint-disable max-len */
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
-import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Box, Chip } from "@mui/material"
 import { motion } from "framer-motion"
 import React, { memo, useEffect, useState } from "react"
-import { Image } from "@components/atoms/image"
-import IconHourglass from "@components/icons/hourglassIcon"
-import TimerStamina from "@components/atoms/timer/TimerStamina"
+import Link from "next/link"
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import {
   IGame,
   IGameRoomAvailable,
@@ -15,19 +14,49 @@ import {
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
-import Link from "next/link"
 import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
-import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
 import useGameStore from "@stores/game"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import useProfileStore from "@stores/profileStore"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
-import { useTranslation } from "react-i18next"
-import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
-import Counter from "@components/atoms/timer/Counter"
+import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
+
+const DetailCountGame = dynamic(
+  () => import("@components/molecules/DetailCountGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Counter = dynamic(() => import("@components/atoms/timer/Counter"), {
+  suspense: true,
+  ssr: false
+})
+const TimerStamina = dynamic(
+  () => import("@components/atoms/timer/TimerStamina"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProps {
   gameType: IGetType
@@ -88,9 +117,11 @@ const GameCard = ({
     _gameId: game ? game._id : ""
   })
   const { onSetGameItemSelectd } = useGameStore()
+  const { isWrongFormatURL, isOldPathURL } = useGlobal()
 
   // hooks
-  const { getColorChipByGameType, getTypeGamePartnerPathFolder } = useGlobal()
+  const { getColorChipByGameType, getTypeGamePartnerPathFolder, hydrated } =
+    useGlobal()
 
   const btnCard = {
     init: {
@@ -240,7 +271,11 @@ const GameCard = ({
           }}
         >
           <Image
-            src={imageSrc}
+            src={
+              isWrongFormatURL(imageSrc) || isOldPathURL(imageSrc)
+                ? IMAGES.no_image.srcWebp
+                : imageSrc
+            }
             alt={getAlt()}
             width={218}
             height={218}
@@ -251,8 +286,12 @@ const GameCard = ({
           />
           <div className="absolute left-0 top-0">
             <Image
-              src={imageSrcGif}
-              alt="home-slide"
+              src={
+                isWrongFormatURL(imageSrcGif) || isOldPathURL(imageSrcGif)
+                  ? imageSrcGif
+                  : imageSrc
+              }
+              alt={getAlt()}
               width={218}
               height={218}
               className={`image-hover aspect-[3/2] rounded-3xl object-cover ${
@@ -266,7 +305,13 @@ const GameCard = ({
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
         >
           <ButtonToggleIcon
-            startIcon={cooldown ? <IconHourglass /> : <JoinStickIcon />}
+            startIcon={
+              cooldown ? (
+                <Icomoon className="icon-Clock" />
+              ) : (
+                <Icomoon className="icon-Joystick" />
+              )
+            }
             text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
@@ -280,12 +325,6 @@ const GameCard = ({
         <div className="slick-card-desc flex h-10 w-[95%] items-center justify-between">
           <p className="relative truncate uppercase hover:text-clip">
             {(data as IGame).name}
-            {/* {(data as IGame)
-              ? (data as IGame).story
-              : (data as IGame)?.story ?? (data as IGame)?.name}
-            {(data as IRoomAvaliableData)
-              ? (data as IRoomAvaliableData)?.game_name
-              : (data as IGame)?.name ?? partnerdata?.name} */}
           </p>
         </div>
         <div
@@ -358,15 +397,6 @@ const GameCard = ({
                 data.date_end_event &&
                 data.game_mode === "free-to-earn" && (
                   <Counter targetDate={new Date(data.date_end_event)} />
-                  // <RoomListBox
-                  //   type="timer"
-                  //   timer={{
-                  //     time: new Date(data.date_end_event),
-                  //     onExpire: () => null
-                  //   }}
-                  //   color="green"
-                  //   shade="lemon"
-                  // />
                 )}
             </Box>
           )}
@@ -411,39 +441,10 @@ const GameCard = ({
           room_available={room_available}
         />
       </div>
-      {/* <div className="relative z-[3]">
-        <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
-          <Chip
-            label={chipLable}
-            size="small"
-            color={onChipColor(theme)}
-            className="font-bold"
-          />
-          {partnerdata ? (
-            <Chip
-              label={
-                partnerdata.genres &&
-                partnerdata.genres.map((el) => `${el.name}, `)
-              }
-              size="small"
-              color={onChipColor("default")}
-              className="font-bold"
-            />
-          ) : (
-            ""
-          )}
-
-          {checkTimer && staminaRecovery && cooldown && setCooldown ? (
-            <TimerStamina
-              time={staminaRecovery}
-              show={cooldown}
-              setShow={setCooldown}
-            />
-          ) : null}
-        </div>
-      </div> */}
     </motion.div>
   )
+
+  if (!hydrated) return null
   return href ? (
     <Link href={href}>{renderCardContent()}</Link>
   ) : (

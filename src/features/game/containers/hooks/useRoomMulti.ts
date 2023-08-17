@@ -4,21 +4,22 @@ import { useRouter } from "next/dist/client/router"
 import {
   CurrentPlayer,
   IGameRoomListSocket,
-  IResSocketRoomList
+  IResSocketRoomList,
+  TGameRoomStatus
 } from "@feature/game/interfaces/IGameService"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import helper from "@utils/helper"
 import useGameGlobal from "@hooks/useGameGlobal"
-import { TRoomStatus } from "@components/molecules/roomList/RoomListBar"
+import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 import useSocketRoomList from "./useSocketRoomList"
 
 const useRoomMulti = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { errorToast } = useToast()
-  const { balanceofItem } = useBuyGameItemController()
+  // const { balanceofItem } = useBuyGameItemController()
+  const { balanceofItem } = useBalanceOfProvider()
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
   const {
     item: item_id,
@@ -185,7 +186,7 @@ const useRoomMulti = () => {
   /**
    * @description Get room status
    */
-  const getRoomStatus = (_data: IGameRoomListSocket): TRoomStatus => {
+  const getRoomStatus = (_data: IGameRoomListSocket): TGameRoomStatus => {
     if (!profile) return "unavailable"
 
     const _played = _data.current_player.find(

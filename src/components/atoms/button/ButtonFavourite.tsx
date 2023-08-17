@@ -1,7 +1,11 @@
 import { Button } from "@mui/material"
 import React from "react"
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
-import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IButtonFavourite {
   type?: "square" | "circle"
@@ -15,7 +19,7 @@ export interface IButtonFavourite {
 
 const ButtonFavourite = ({
   type = "circle",
-  icon = <FavoriteBorderIcon />,
+  icon = <Icomoon className="icon-Heart" />,
   variant = "contained",
   color = "primary",
   className,
@@ -29,12 +33,13 @@ const ButtonFavourite = ({
 
   return (
     <Button
+      aria-label="Favorite"
       variant={variant}
       color={color}
       className={`${className} ${typeButton[type]}`}
       onClick={handleClick}
     >
-      {favouriteStatus ? <FavouriteColorIcon /> : icon}
+      {favouriteStatus ? <Icomoon className="icon-Heart" /> : icon}
     </Button>
   )
 }

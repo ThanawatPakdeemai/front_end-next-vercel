@@ -1,43 +1,93 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from "react"
-import SettingIcon from "@components/icons/SettingIcon"
-import ShapeIcon from "@components/icons/ShapeIcon"
-import TableIcon from "@components/icons/TableIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import Tagline from "@components/molecules/tagline/Tagline"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Box, Typography } from "@mui/material"
+import { RandomReveal } from "react-random-reveal"
+import dayjs from "dayjs"
+import { v4 as uuidv4 } from "uuid"
+import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
+import FacebookLogin from "react-facebook-login"
+import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
 import { IPlayerInfoResponse } from "@src/types/profile"
-import { RandomReveal } from "react-random-reveal"
 import { CHAR_SET_JP } from "@constants/characterSet"
-import dayjs from "dayjs"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
-import Lavel from "@components/icons/Lavel"
-import { Image } from "@components/atoms/image"
 import Helper from "@utils/helper"
-import { v4 as uuidv4 } from "uuid"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import { PaginationNaka } from "@components/atoms/pagination"
 import useLoadingStore from "@stores/loading"
-import GameStatOverview from "@feature/playerProfile/components/organisms/GameStatOverview"
-import { useRouter } from "next/router"
 import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import { useTranslation } from "react-i18next"
 import CONFIGS from "@configs/index"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
-import FacebookLogin from "react-facebook-login"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import CrumbCustom from "@components/atoms/CrumbCustom"
-import TotalCardContent from "./TotalCardContent"
-import SideSocialShare from "../SideSocialShare"
-import SliderBadges from "./SliderBadges"
-import EditProfileModal from "./EditProfileModal"
+
+const TelegramWidget = dynamic(
+  () => import("@components/atoms/button/TelegramWidget"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TotalCardContent = dynamic(() => import("./TotalCardContent"), {
+  suspense: true,
+  ssr: false
+})
+const SideSocialShare = dynamic(() => import("../SideSocialShare"), {
+  suspense: true,
+  ssr: false
+})
+const SliderBadges = dynamic(() => import("./SliderBadges"), {
+  suspense: true,
+  ssr: false
+})
+const EditProfileModal = dynamic(() => import("./EditProfileModal"), {
+  suspense: true,
+  ssr: false
+})
+const LevelIcon = dynamic(() => import("@components/atoms/svg/LevelIcon"), {
+  suspense: true,
+  ssr: false
+})
+const CrumbCustom = dynamic(() => import("@components/atoms/CrumbCustom"), {
+  suspense: true,
+  ssr: false
+})
+const GameStatOverview = dynamic(
+  () => import("@feature/playerProfile/components/organisms/GameStatOverview"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {
+  suspense: true,
+  ssr: false
+})
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const ProfileContent = () => {
   const { profile: pro } = useProfileStore()
@@ -75,9 +125,17 @@ const ProfileContent = () => {
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
 
   useEffect(() => {
-    if (isError) {
-      errorToast(MESSAGES.please_login)
-      router.push("/")
+    let load = false
+
+    if (!load) {
+      if (isError) {
+        errorToast(MESSAGES.please_login)
+        router.push("/")
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [isError, errorToast, router])
 
@@ -157,11 +215,16 @@ const ProfileContent = () => {
   }
   const handleClose = () => setOpenEdit(false)
 
-  const getRankCount = (rank: string) =>
-    (getProfileInfo &&
-      getProfileInfo.data.game_data.filter((data) => data.rank === rank)
-        .length) ||
-    0
+  const getRankCount = useCallback(
+    (rank: string) =>
+      (getProfileInfo &&
+        getProfileInfo.data.game_data.filter((data) => data.rank === rank)
+          .length) ||
+      0,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getProfileInfo]
+  )
+
   const bronzeCount = getRankCount("bronze")
   const silverCount = getRankCount("silver")
   const platinumCount = getRankCount("platinum")
@@ -184,7 +247,7 @@ const ProfileContent = () => {
             <div className="absolute right-0 top-0 m-1 sm:m-4">
               <ButtonToggleIcon
                 handleClick={handleOnExpandClick}
-                startIcon={<SettingIcon />}
+                startIcon={<Icomoon className="icon-Settings" />}
                 text={t("edit_profile")}
                 className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
                 type="button"
@@ -208,7 +271,11 @@ const ProfileContent = () => {
           text={t("simple_tagline")}
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={
-            <ShapeIcon fill={platinumCount === 0 ? `#4E5057` : `#18181C`} />
+            <Icomoon
+              className={`icon-require text-${
+                platinumCount === 0 ? `#4E5057` : `#18181C`
+              }`}
+            />
           }
           textColor={`font-bold text-sm ${
             platinumCount === 0 ? "text-neutral-600" : "text-neutral-900"
@@ -217,12 +284,9 @@ const ProfileContent = () => {
         />
         <div className="flex w-full justify-center">
           <div className="absolute bottom-[-50px] z-10 h-[110px] w-[110px] rounded-3xl border-8 border-neutral-900 bg-neutral-700 sm:h-[150px] sm:w-[150px]">
-            <div
-              className="absolute right-[28px] top-[-20px]
-   z-20"
-            >
+            <div className="absolute right-[28px] top-[-20px] z-20">
               <div className="relative">
-                <Lavel className="absolute" />
+                <LevelIcon className="absolute" />
                 <Typography className="absolute flex h-[45px] w-[45px] items-center justify-center p-2 font-digital-7 text-[24px] text-white-default">
                   {profileFetched.level}
                 </Typography>
@@ -250,7 +314,7 @@ const ProfileContent = () => {
         </div>
       </div>
       <div className="flex h-full justify-center">
-        <TableIcon className="absolute" />
+        {/* <TableIcon className="absolute" /> */}
       </div>
       <div className="mt-[50px] flex w-full justify-center">
         <Typography className="font-mondwest text-[46px] uppercase  text-error-main shadow-error-main drop-shadow-xl">
@@ -337,7 +401,7 @@ const ProfileContent = () => {
             fields="name,email,picture"
             callback={handleSyncFacebookId}
             cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
-            icon={<FacebookColorIcon />}
+            icon={<Icomoon className="icon-Facebook" />}
             textButton="Sync with Facebook"
           />
         )}
@@ -357,24 +421,6 @@ const ProfileContent = () => {
           setPage={setPage}
         />
         <div className="flex">
-          {/* <TextField
-           sx={{
-             input: {
-               "&[type=text]": {
-                 paddingLeft: "15px"
-               }
-             }
-           }}
-           placeholder="Search Game..."
-           size="medium"
-           InputProps={{
-             endAdornment: (
-               <InputAdornment position="end">
-                 <SearchIcon />
-               </InputAdornment>
-             )
-           }}
-         /> */}
           <DropdownLimit
             className="ml-2"
             defaultValue={limit}

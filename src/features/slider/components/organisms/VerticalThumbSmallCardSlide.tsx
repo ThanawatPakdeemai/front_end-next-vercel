@@ -1,9 +1,14 @@
 import React from "react"
-import { IVerticalThumbCardSlideProps } from "@feature/slider/interfaces/ISlides"
 import { CardMedia } from "@mui/material"
 import PlayArrowIcon from "@mui/icons-material/PlayArrow"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
+import { IVerticalThumbCardSlideProps } from "@feature/slider/interfaces/ISlides"
 import { isMobile } from "@hooks/useGlobal"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const VerticalThumbSmallCardSlide = ({
   item

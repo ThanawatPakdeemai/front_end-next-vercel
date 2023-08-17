@@ -1,9 +1,14 @@
-import IconArrowRight from "@components/icons/arrowRightIcon"
 import { Skeleton } from "@mui/material"
-import { numberWithCommas } from "@src/helpers/addComma"
-import { TStaking } from "@src/types/staking"
 import React from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { numberWithCommas } from "@src/helpers/addComma"
+import { TStaking } from "@src/types/staking"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IStakingPeriod {
   startDatetime: string
@@ -34,10 +39,7 @@ const StakingPeriod = ({
         ) : (
           <Skeleton className="h-[15px] w-[100px] rounded-sm sm:h-[50px]" />
         )}
-        <IconArrowRight
-          stroke="#4E5057"
-          className="mx-2"
-        />
+        <Icomoon className="icon-Arrow-in-Box-Right mx-2 text-[#4E5057]" />
         {endDatetime !== "00:00:00" ? (
           <span className="text-neutral-300">{endDatetime}</span>
         ) : (

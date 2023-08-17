@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Checkbox,
-  Divider,
   FormControlLabel,
   IconButton,
   InputAdornment,
@@ -12,21 +11,26 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import VisibilityIcon from "@mui/icons-material/Visibility"
-import EmailIcon from "@components/icons/EmailIcon"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
-import ICheckMark from "@components/icons/CheckMark"
 import { useTranslation } from "react-i18next"
-import Lock2Icon from "@components/icons/Lock2Icon"
-import MoreLoginMobile from "@mobile/components/atoms/MoreLoginMobile"
+import { useForm } from "react-hook-form"
+import dynamic from "next/dynamic"
 import useFormRegisterController from "@feature/authentication/containers/hooks/useFormRegisterController"
 import useFormController from "@feature/authentication/containers/hooks/useFormController"
 
-import { useForm } from "react-hook-form"
-
+const LogoNakaBigIcon = dynamic(
+  () => import("@components/atoms/svg/LogoNakaBigIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 interface INotificationModalProps {
   open: boolean
   setOpenLogin: (_toggle: boolean) => void
@@ -79,7 +83,13 @@ const CreateAccountModal = ({
         component="div"
         className="notification-list flex flex-col p-[8px_24px_36px]"
       >
-        <ArrowBackIcon onClick={() => setOpenLogin(false)} />
+        <button
+          type="button"
+          aria-label="Back"
+          onClick={() => setOpenLogin(false)}
+        >
+          <Icomoon className="icon-Full-Arrow-Left" />
+        </button>
         <Box
           component="div"
           className="flex justify-center"
@@ -120,7 +130,7 @@ const CreateAccountModal = ({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon />
+                  <Icomoon className="icon-Mail-Closed" />
                 </InputAdornment>
               )
             }}
@@ -159,7 +169,7 @@ const CreateAccountModal = ({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Lock2Icon />
+                  <Icomoon className="icon-Lock" />
                 </InputAdornment>
               ),
               endAdornment: (
@@ -209,7 +219,7 @@ const CreateAccountModal = ({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Lock2Icon />
+                  <Icomoon className="icon-Lock" />
                 </InputAdornment>
               ),
               endAdornment: (
@@ -282,6 +292,7 @@ const CreateAccountModal = ({
                     ? "border-grey-default"
                     : "border-error-100"
                 }`}
+                aria-label="get-code"
               >
                 <div className="flex items-center font-urbanist text-base font-bold">
                   {t("get_code")}
@@ -315,13 +326,7 @@ const CreateAccountModal = ({
                     />
                   }
                   checkedIcon={
-                    <ICheckMark
-                      className="border-2 border-solid border-warning-100 bg-neutral-800 p-1 text-warning-100"
-                      style={{
-                        borderRadius: "8.5px"
-                      }}
-                      fillColor="#F2C94C"
-                    />
+                    <Icomoon className="icon-Checkmark border-2 border-solid border-warning-100 bg-neutral-800 p-1 text-warning-100" />
                   }
                   {...register("subscription")}
                 />
@@ -342,6 +347,7 @@ const CreateAccountModal = ({
           >
             <Button
               type="submit"
+              aria-label="sign-up"
               variant="contained"
               className="h-[50px] w-full rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
             >
@@ -351,7 +357,7 @@ const CreateAccountModal = ({
             </Button>
           </Box>
         </form>
-        <Box
+        {/* <Box
           component="div"
           className="py-6"
         >
@@ -359,7 +365,7 @@ const CreateAccountModal = ({
             or continue with
           </Divider>
         </Box>
-        <MoreLoginMobile />
+        <MoreLoginMobile /> */}
         <Box
           component="div"
           className="flex justify-center py-7 text-center"

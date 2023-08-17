@@ -1,6 +1,10 @@
-import { ImageCustom } from "@components/atoms/image/Image"
-import { Box } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+
+const ImageCustom = dynamic(() =>
+  import("@components/atoms/image/Image").then((mod) => mod.ImageCustom)
+)
 
 export interface ISummaryItemUsedProps {
   usedAmount?: number

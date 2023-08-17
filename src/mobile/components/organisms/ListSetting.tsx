@@ -1,10 +1,21 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Drawer } from "@mui/material"
 import React, { useState } from "react"
-import SettingsIcon from "@mui/icons-material/Settings"
 import { useRouter } from "next/router"
-import { Image } from "@components/atoms/image/index"
+import dynamic from "next/dynamic"
 import { FLAGS } from "@constants/flags"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const IcomoonFlag = dynamic(
+  () => import("@components/atoms/icomoon/IcomoonFlag"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 type Anchor = "top" | "left" | "bottom" | "right"
 const ListSetting = () => {
@@ -27,19 +38,18 @@ const ListSetting = () => {
     <>
       <div>
         <React.Fragment key="bottom">
-          <SettingsIcon
-            sx={{ fontSize: 25 }}
-            fontSize="medium"
+          <button
+            type="button"
+            aria-label=""
             onClick={toggleDrawer("bottom", true)}
-          />
+          >
+            <Icomoon className="icon-Settings" />
+          </button>
           <Drawer
             anchor="bottom"
             open={open}
             onClose={toggleDrawer("bottom", false)}
           >
-            {/* // role="presentation" // onClick={toggleDrawer("bottom", false)}
-            // onKeyDown={toggleDrawer("bottom", false)}
-            // sx={{ width: "auto" }} */}
             {router.locales?.map((item) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <div
@@ -52,14 +62,10 @@ const ListSetting = () => {
                   setOpen(false)
                 }}
               >
-                <Image
-                  src={
-                    FLAGS.find((flag) => flag.code === item)?.flag_4x3 ??
-                    "/assets/flags/4x3/us.svg"
+                <IcomoonFlag
+                  className={
+                    FLAGS.find((flag) => flag.code === item)?.name ?? ""
                   }
-                  width="20"
-                  height="20"
-                  alt="th"
                 />
                 {item}
               </div>

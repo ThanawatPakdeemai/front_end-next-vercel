@@ -74,6 +74,13 @@ const GameTabsVertical = dynamic(
     ssr: false
   }
 )
+const GameReviews = dynamic(
+  () => import("@feature/game/components/molecules/GameReviews"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export default function SummaryDetails() {
   const { getGameMode } = useGlobal()
@@ -127,23 +134,34 @@ export default function SummaryDetails() {
           />
         }
         component2={
-          <FullWidthContent
-            sxCustomStyled={{
-              "&.container": {
-                maxWidth: "100%!important",
-                "&.container-fullWidth": {
-                  padding: "49px"
-                }
-              }
-            }}
-          >
-            <TabProvider>
-              <GameTabsVertical
-                gameId={gameDataState.id}
+          <RightSidebarContent
+            className="mb-[64px]"
+            content={
+              <FullWidthContent
+                sxCustomStyled={{
+                  "&.container": {
+                    maxWidth: "100%!important",
+                    "&.container-fullWidth": {
+                      padding: "49px"
+                    }
+                  }
+                }}
+              >
+                <TabProvider>
+                  <GameTabsVertical
+                    gameId={gameDataState.id}
+                    gameType={getGameMode(gameDataState)}
+                  />
+                </TabProvider>
+              </FullWidthContent>
+            }
+            aside={
+              <GameReviews
                 gameType={getGameMode(gameDataState)}
+                gameId={gameDataState.id}
               />
-            </TabProvider>
-          </FullWidthContent>
+            }
+          />
         }
       />
     ) : (

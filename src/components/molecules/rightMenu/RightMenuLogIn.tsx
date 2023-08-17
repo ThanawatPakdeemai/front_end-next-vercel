@@ -1,8 +1,4 @@
 import React, { useState } from "react"
-import { Image } from "@components/atoms/image"
-import StateIcon from "@components/atoms/stateIcon/StateIcon"
-import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
-import Balance from "@components/molecules/balance/Balance"
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
 import {
   Typography,
@@ -11,20 +7,77 @@ import {
   Card,
   ClickAwayListener
 } from "@mui/material"
-import Helper from "@utils/helper"
-import StatProfile from "@components/molecules/statProfile/StatProfile"
-import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import useProfileStore from "@stores/profileStore"
 import Link from "next/link"
-import TooltipsCustom from "@components/atoms/TooltipsCustom"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import Helper from "@utils/helper"
+import useProfileStore from "@stores/profileStore"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useGlobal from "@hooks/useGlobal"
 import { useToast } from "@feature/toast/containers"
 import useNotiStore from "@stores/notification"
-import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
-import { useTranslation } from "react-i18next"
-import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
+
+const ButtonToggleIcon = dynamic(
+  () => import("../gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const TooltipsCustom = dynamic(
+  () => import("@components/atoms/TooltipsCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StatProfile = dynamic(
+  () => import("@components/molecules/statProfile/StatProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MenuProfile = dynamic(
+  () => import("@components/molecules/menuProfile/MenuProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const StateIcon = dynamic(
+  () => import("@components/atoms/stateIcon/StateIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const IconButtonCustom = dynamic(
+  () => import("@components/atoms/IconButtonCustom/IconButtonCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Balance = dynamic(() => import("@components/molecules/balance/Balance"), {
+  suspense: true,
+  ssr: false
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const RightMenuLogIn = () => {
   const { count } = useNotiStore()
@@ -145,7 +198,7 @@ const RightMenuLogIn = () => {
                     </Typography>
                   )}
                 </div>
-                <div className="flex">
+                <div className="ml-auto flex items-center">
                   <Link href={`/profile/${profile?.id}`}>
                     {profile && profile.avatar ? (
                       <Image
@@ -214,6 +267,17 @@ const RightMenuLogIn = () => {
               zIndex: 9998
             }}
           >
+            {/* <ButtonLink
+              onClick={() => onDisconnectWallet?.()}
+              href="/"
+              text="Disconnect"
+              icon={<AccountBalanceWalletIcon />}
+              color="error"
+              variant="contained"
+              // size="small"
+              size="medium"
+              className="m-auto h-[54px] rounded-xl"
+            /> */}
             <Balance widthBalance="w-[calc(100%-70px)]" />
             <StatProfile
               exp={{
@@ -234,7 +298,7 @@ const RightMenuLogIn = () => {
             />
             <MenuProfile />
             <ButtonToggleIcon
-              startIcon={<PlugIcon />}
+              startIcon={<Icomoon className="icon-Power" />}
               text={t("logout")}
               handleClick={async () => {
                 onClickLogout()

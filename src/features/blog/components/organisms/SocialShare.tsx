@@ -1,15 +1,27 @@
 import React from "react"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import {
   FacebookShareButton,
   TwitterShareButton,
   TelegramShareButton
 } from "react-share"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
-import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import { Typography } from "@mui/material"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface ISocialShareProps {
   shareTitle: string
@@ -62,7 +74,7 @@ const SocialShare = ({
                 stiffness: 400,
                 damping: 4
               }}
-              icon={<TwitterIcon fill={fillColor} />}
+              icon={<Icomoon className={`icon-twitter text-[${fillColor}]`} />}
               className={classes}
             />
           </TwitterShareButton>
@@ -81,7 +93,7 @@ const SocialShare = ({
                 stiffness: 400,
                 damping: 4
               }}
-              icon={<FacebookIcon fill={fillColor} />}
+              icon={<Icomoon className={`icon-Facebook text-[${fillColor}]`} />}
               className={classes}
             />
           </FacebookShareButton>
@@ -99,7 +111,7 @@ const SocialShare = ({
                 stiffness: 400,
                 damping: 4
               }}
-              icon={<TelegramIcon fill={fillColor} />}
+              icon={<Icomoon className={`icon-telegram text-[${fillColor}]`} />}
               className={classes}
             />
           </TelegramShareButton>

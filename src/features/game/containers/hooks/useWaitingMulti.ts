@@ -14,6 +14,7 @@ import CONFIGS from "@configs/index"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { MESSAGES } from "@constants/messages"
 import useGameGlobal from "@hooks/useGameGlobal"
+import { useBalanceOfProvider } from "@providers/BalanceOfProvider"
 import useSocketWaitingRoom from "./useSocketWaitingRoom"
 import useGetGameByPath from "./useFindGameByPath"
 
@@ -43,7 +44,8 @@ const useWaitingMulti = () => {
   const time = new Date()
 
   // const { errorToast } = useToast()
-  const { balanceofItem, gameItemList } = useBuyGameItemController()
+  const { gameItemList } = useBuyGameItemController()
+  const { balanceofItem } = useBalanceOfProvider()
 
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined

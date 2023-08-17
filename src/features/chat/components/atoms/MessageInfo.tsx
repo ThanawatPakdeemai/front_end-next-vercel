@@ -1,6 +1,11 @@
 import React from "react"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IMessageInfoProps {
   avatar: string

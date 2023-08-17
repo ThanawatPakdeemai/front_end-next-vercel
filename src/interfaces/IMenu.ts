@@ -1,14 +1,13 @@
+import React from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import {
   IGameItem,
   IGameItemListData
 } from "@feature/gameItem/interfaces/IGameItemService"
-import React from "react"
 import {
   IDevice,
   IGameCategory
 } from "@feature/dropdown/interfaces/IDropdownService"
-import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 
 interface ILink {
   href: string
@@ -74,7 +73,7 @@ export interface ICrumb extends ILink {
 interface IChide {
   name: string
   link: string
-  icon: typeof MarketPlaceIcon
+  icon: React.ReactNode
 }
 export interface IMenuMarketPlace {
   name: string

@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react"
-import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import dayjs from "dayjs"
-import GlobalIcon from "@components/icons/GlobalIcon"
+import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
+import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import { IMenuBase } from "@interfaces/IMenu"
-import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
-import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
-import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
-import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
 import { GAME_MOCKUP_CARD, SLIDES_GAME_MOCKUP } from "@constants/images"
-import { v4 as uuid } from "uuid"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
 import { IWeeklyPoolByGameIdData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import useCheckGameOwner from "./useCheckGameOwner"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IPlayCount {
   game_id: string
@@ -195,37 +194,37 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         partnerGames &&
           gamePartnerSocial.push(
             {
-              icon: <GlobalIcon />,
+              icon: <Icomoon className="icon-Globe" />,
               label: "Website",
               href: partnerGames?.social?.web || ""
             },
             {
-              icon: <DiscordIcon />,
+              icon: <Icomoon className="icon-Discord" />,
               label: "Discord",
               href: partnerGames?.social?.discord || ""
             },
             {
-              icon: <FacebookIcon />,
+              icon: <Icomoon className="icon-Facebook" />,
               label: "Facebook",
               href: partnerGames?.social?.facebook || ""
             },
             {
-              icon: <MediumIcon />,
+              icon: <Icomoon className="icon-Mediems" />,
               label: "Medium",
               href: partnerGames?.social?.medium || ""
             },
             {
-              icon: <TelegramIcon />,
+              icon: <Icomoon className="icon-telegram" />,
               label: "Telegram",
               href: partnerGames?.social?.telegram || ""
             },
             {
-              icon: <TiktokIcon />,
+              icon: <Icomoon className="icon-Tiktok" />,
               label: "Tiktok",
               href: partnerGames?.social?.tiktok || ""
             },
             {
-              icon: <TwitterIcon />,
+              icon: <Icomoon className="icon-twitter" />,
               label: "Twitter",
               href: partnerGames?.social?.twitter || ""
             }

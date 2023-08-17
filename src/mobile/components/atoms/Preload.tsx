@@ -1,6 +1,11 @@
 import React, { memo } from "react"
 import { Box, keyframes } from "@mui/material"
-import NakaPreload from "@components/icons/NakaPreload"
+import dynamic from "next/dynamic"
+
+const NakaPreload = dynamic(() => import("@components/atoms/svg/NakaPreload"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IPreloadProps {
   open: boolean

@@ -70,21 +70,21 @@ const FullWidthSlide = ({ items }: IFullWidthSlideProps) => {
         sx={SlickMainSlideCSS}
         className="flex h-full w-full flex-col justify-center overflow-hidden rounded-2xl"
       >
-        <Slider
-          // asNavFor={nav2 as Slider}
-          // ref={(slider1) => setNav1(slider1)}
-          {...settings}
-          className="banner"
-        >
-          {items &&
-            items.map((item, index) => (
-              <VerticalThumbCardSlide
-                item={item}
-                key={item.id}
-                index={index}
-              />
-            ))}
-        </Slider>
+        {items.length && (
+          <Slider
+            {...settings}
+            className="banner"
+          >
+            {items &&
+              items.map((item, index) => (
+                <VerticalThumbCardSlide
+                  item={item}
+                  key={item.id}
+                  index={index}
+                />
+              ))}
+          </Slider>
+        )}
       </Box>
     </Box>
   )

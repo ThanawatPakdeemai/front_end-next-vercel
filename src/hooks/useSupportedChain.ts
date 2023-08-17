@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import CONFIGS from "@configs/index"
 import useContractVaultBinance, {
   ITokenContract
@@ -12,9 +12,9 @@ import {
   DEFAULT_CURRENCY_BNB,
   DEFAULT_CURRENCY_NAKA
 } from "@constants/currency"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
 import useProfileStore from "@stores/profileStore"
+import { useWeb3Provider } from "@providers/Web3Provider"
 
 const useSupportedChain = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -27,15 +27,21 @@ const useSupportedChain = () => {
     setContractBNB,
     setCurrentTokenSelected
   } = useChainSupportStore()
+  const { chainId, provider, address, signer } = useWeb3Provider()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, address } = useWeb3Provider()
+
+  // ! NEED IMPLEMENT
+  const memoChainId = React.useMemo(() => chainId, [chainId])
+  const memoProvider = React.useMemo(() => provider, [provider])
+  const memoAddress = React.useMemo(() => address, [address])
+  const memoSigner = React.useMemo(() => signer, [signer])
 
   /**
    * @description Get default currency
    * @returns {ITokenContract[]}
    */
   const getDefaultCoin = (): ITokenContract[] => {
-    switch (chainId) {
+    switch (memoChainId) {
       case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
         return DEFAULT_CURRENCY_BNB
       default:
@@ -83,7 +89,7 @@ const useSupportedChain = () => {
    * @description Fetch BNB token address
    */
   useMemo(() => {
-    if (signer === undefined || address === undefined) return
+    if (memoSigner === undefined || memoAddress === undefined) return
     fetchContractBNB()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -92,35 +98,36 @@ const useSupportedChain = () => {
    * @description Get all token supported BSC only
    */
   const fetchAllTokenSupported = useCallback(async () => {
-    const { ethereum }: any = window
-    const _provider = new ethers.providers.Web3Provider(ethereum)
-    const _signer = _provider.getSigner()
-    const _address = await _signer.getAddress()
     const allContract: Contract[] = []
     const allTokenSupported: ITokenContract[] = []
 
     // TODO: Open after binance smart chain is ready
     // const tokens = await getAllTokenAddressInContract()
     // TODO: Delete this after binance smart chain is ready
+
     const tokens =
       currentChainSelected === "0x61"
         ? await getAllTokenAddressInContract()
         : [CONFIGS.CONTRACT_ADDRESS.BEP20]
+
     for (let index = 0; index < tokens.length; index += 1) {
       const contract = new ethers.Contract(
         tokens[index],
         BEP20Abi.abi,
-        _provider
+        memoProvider
       )
       allContract.push(contract)
     }
-    if (_address.toLocaleLowerCase() === profile?.address.toLocaleLowerCase())
+    if (
+      memoAddress &&
+      memoAddress.toLocaleLowerCase() === profile?.address.toLocaleLowerCase()
+    )
       await Promise.all(
         allContract.map(async (contract) => {
           const result = await getAllTokenInfoByContractAddress(
             contract,
             contract.address,
-            _address
+            memoAddress
           )
           allTokenSupported.push(result)
         })
@@ -145,29 +152,25 @@ const useSupportedChain = () => {
   }, [setChainSupport])
 
   const fetchNAKAToken = useCallback(async () => {
-    const { ethereum }: any = window
-    // const _provider = new ethers.providers.Web3Provider(
-    //   ethereum,
-    //   nodesRPCPolygon[random(0, nodesRPCPolygon.length - 1)]
-    // )
-    // const _address = await provider.send("eth_accounts")
-    const _provider = new ethers.providers.Web3Provider(ethereum)
-    const _signer = _provider.getSigner()
-    const _address = await _signer.getAddress()
+    if (!(memoProvider && memoSigner && memoAddress)) return
     const allContract: Contract[] = []
     const allTokenSupported: ITokenContract[] = []
     const tokens = [CONFIGS.CONTRACT_ADDRESS.ERC20]
     for (let index = 0; index < tokens.length; index += 1) {
-      const contract = new ethers.Contract(tokens[index], ERC20Abi, _provider)
+      const contract = new ethers.Contract(
+        tokens[index],
+        ERC20Abi,
+        memoProvider
+      )
       allContract.push(contract)
     }
-    if (_signer === undefined || _address === undefined) return
+    if (memoSigner === undefined || memoAddress === undefined) return
     await Promise.all(
       allContract.map(async (contract) => {
         const result = await getNAKATokenInfo(
           contract,
           contract.address,
-          _address
+          memoAddress
         )
         allTokenSupported.push(result)
       })
@@ -186,7 +189,17 @@ const useSupportedChain = () => {
     // if (currentTokenSelected && currentTokenSelected?.address !== "") return
     // if (currentTokenSelected !== chainSupport[0]) return
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setChainSupport, setCurrentTokenSelected])
+  }, [memoAddress, memoProvider, memoSigner])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      fetchNAKAToken()
+    }
+    return () => {
+      load = true
+    }
+  }, [fetchNAKAToken])
 
   return {
     getTokenSupply,

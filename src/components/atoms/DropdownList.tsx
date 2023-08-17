@@ -1,9 +1,25 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
-import DropdownIcon from "@components/icons/DropdownIcon"
-import SelectDropdownList from "@components/atoms/selectDropdown/SelectDropdown"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
+const SelectDropdownList = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdown"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   icon?: React.ReactNode
@@ -36,6 +52,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
         <div>
           <button
             type="button"
+            aria-label="list-items"
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
@@ -72,7 +89,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
                   : "rotate-0 transition-all duration-300"
               }`}
             >
-              <DropdownIcon />
+              <Icomoon className="icon-Arrow-Down" />
             </div>
           </button>
           <Collapse

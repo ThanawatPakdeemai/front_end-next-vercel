@@ -4,6 +4,7 @@ import NoteAddOutlinedIcon from "@mui/icons-material/NoteAddOutlined"
 const ButtonTournament = ({ time }: any) => (
   <button
     type="button"
+    aria-label="Register Button"
     className={`mb-4 flex w-full items-center justify-center
             rounded-[19px] p-4 ${
               time

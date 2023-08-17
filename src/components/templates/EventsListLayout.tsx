@@ -1,7 +1,21 @@
 import React from "react"
-import Header from "@components/organisms/Header"
-import Footer from "@components/organisms/Footer"
-import SidebarGames from "@components/molecules/SidebarGames"
+import dynamic from "next/dynamic"
+
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const SidebarGames = dynamic(
+  () => import("@components/molecules/SidebarGames"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const EventLayout = ({
   children

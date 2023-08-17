@@ -1,10 +1,32 @@
 import { Box } from "@mui/material"
-import SingleRoom from "@src/mobile/features/game/components/templates/single/SingleRoom"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
-import PleaseLogin from "@components/atoms/PleaseLogin"
-import NoData from "@components/molecules/NoData"
-import MultiRoom from "../../game/components/templates/multi/MultiRoom"
+import dynamic from "next/dynamic"
+
+const SingleRoom = dynamic(
+  () =>
+    import("@src/mobile/features/game/components/templates/single/SingleRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
+const PleaseLogin = dynamic(() => import("@components/atoms/PleaseLogin"), {
+  suspense: true,
+  ssr: false
+})
+const MultiRoom = dynamic(
+  () =>
+    import("@src/mobile/features/game/components/templates/multi/MultiRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const RoomListPage = () => {
   const profile = useProfileStore((state) => state.profile.data)

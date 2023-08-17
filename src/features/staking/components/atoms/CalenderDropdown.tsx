@@ -1,11 +1,24 @@
 import { Popover } from "@mui/material"
 import { useState } from "react"
 // eslint-disable-next-line import/no-extraneous-dependencies
-import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
-import CalenderIcon from "@components/icons/CalenderIcon"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import dynamic from "next/dynamic"
+
+const SelectDropdown = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/atoms/ButtonDropdown")
+)
 
 interface IProp {
   defaultValue: number
@@ -48,7 +61,7 @@ const CalenderDropdown = ({
                     leftContent={
                       <div className="flex items-center">
                         <div className="flex items-center">
-                          <CalenderIcon />
+                          <Icomoon className="icon-Calendar-Check" />
                           <p className="px-2 uppercase">Period</p>
                         </div>
                         <p className="px-2 text-[#ffffff]">

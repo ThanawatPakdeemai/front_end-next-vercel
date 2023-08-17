@@ -1,11 +1,26 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import SendIcon from "@components/icons/SendIcon"
-import useChatContext from "@feature/chat/containers/contexts/useChatContext"
-import useChat from "@feature/chat/containers/hooks/useChat"
-import { Box, TextField } from "@mui/material"
-import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import React from "react"
 import _ from "lodash"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
+import useChat from "@feature/chat/containers/hooks/useChat"
+import useChatContext from "@feature/chat/containers/contexts/useChatContext"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const TextField = dynamic(() => import("@mui/material/TextField"), {
+  suspense: true,
+  ssr: false
+})
 
 const MessageFooter = () => {
   const { handleInputChat } = useChat()
@@ -55,7 +70,7 @@ const MessageFooter = () => {
         variants={iconmotion}
         whileHover="hover"
         transition={{ type: "spring", stiffness: 400, damping: 4 }}
-        icon={<SendIcon />}
+        icon={<Icomoon className="icon-Send-to" />}
         className="absolute right-4 z-[999] flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
         onClick={() => {

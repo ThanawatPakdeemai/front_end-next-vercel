@@ -21,6 +21,7 @@ const ButtonScroll = ({ anchorLink }: IButtonScrollProps) => {
     <div className="button-scroll__wrapper">
       <button
         type="button"
+        aria-label="Scroll"
         onClick={onScroll}
         className="button-scroll__wrapper__button"
       >

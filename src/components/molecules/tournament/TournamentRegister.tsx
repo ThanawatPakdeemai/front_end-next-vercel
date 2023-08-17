@@ -1,15 +1,26 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from "react"
-import ButtonTournament from "@components/atoms/button/ButtonTournament"
-import ButtonTournamentRegister from "@components/atoms/button/ButtonTournamentRegister"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import usetournament from "@feature/tournament/containers/hooks/usetournament"
 import { Box, Stack } from "@mui/material"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import usetournament from "@feature/tournament/containers/hooks/usetournament"
+
+// Use dynamic import for the components
+const ButtonTournament = dynamic(
+  () => import("@components/atoms/button/ButtonTournament")
+)
+const ButtonTournamentRegister = dynamic(
+  () => import("@components/atoms/button/ButtonTournamentRegister")
+)
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom")
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader")
+)
 
 const TournamentRegister = () => {
   const time: boolean = true
@@ -195,6 +206,7 @@ const TournamentRegister = () => {
             bg-black-100 px-4 py-2 text-center  text-sm text-neutral-300  hover:rotate-0"
                     type="button"
                     onClick={handleOverlayDismiss}
+                    aria-label="Decline"
                   >
                     DECLINE
                   </button>
@@ -205,6 +217,7 @@ const TournamentRegister = () => {
             items-center justify-center  rounded-full bg-secondary-main px-4 py-2
              text-center  text-sm text-neutral-300  hover:rotate-0"
                     type="button"
+                    aria-label="Accept"
                     // onClick={onHandleRegister}
                   >
                     ACCEPT
@@ -217,6 +230,7 @@ const TournamentRegister = () => {
         {!time && (
           <button
             type="button"
+            aria-label="View"
             className="mb-4 flex w-full items-center
             justify-center rounded-full border-2  border-black-200 bg-black-700 p-4 text-center text-neutral-300   hover:rotate-0"
           >

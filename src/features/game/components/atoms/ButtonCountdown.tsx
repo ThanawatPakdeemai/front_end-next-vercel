@@ -1,6 +1,10 @@
-import RoomListBox from "@components/molecules/roomList/RoomListBox"
 import { motion } from "framer-motion"
 import { ReactNode, memo } from "react"
+import dynamic from "next/dynamic"
+
+const RoomListBox = dynamic(
+  () => import("@components/molecules/roomList/RoomListBox")
+)
 
 interface IProp {
   handleClick: () => void
@@ -78,6 +82,7 @@ const ButtonCountdown = ({
         initial="rest"
         whileHover="hover"
         type="button"
+        aria-label="Hover button"
         onClick={handleClick}
       >
         {endIcon ?? ""}

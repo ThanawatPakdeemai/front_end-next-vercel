@@ -11,9 +11,17 @@ import { IPlayToEarnRewardData } from "@src/types/games"
 import { INFTInfo } from "../marketplace/interfaces/IArcGameService"
 import { IPartnerGameData } from "./IPartnerGame"
 
+export type TGameRoomStatus = "played" | "full" | "join" | "unavailable"
+
 export type TDevice = "mobile" | "desktop" | "all"
 
-export type TGameType = "singleplayer" | "multiplayer" | "storymode" | "all"
+export type TGameType =
+  | "singleplayer"
+  | "multiplayer"
+  | "storymode"
+  | "all"
+  | "free2play"
+  | "survivor"
 
 export type TTypeCode =
   | "single_01"

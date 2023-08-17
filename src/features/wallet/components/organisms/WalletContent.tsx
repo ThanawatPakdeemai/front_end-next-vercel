@@ -1,21 +1,58 @@
-import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
-import SkeletionWallet from "@components/atoms/skeleton/SkeletonWallet"
-import SwitchChain from "@components/atoms/SwitchChain"
-import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
+import React, { ReactNode } from "react"
+import dynamic from "next/dynamic"
 import { TokenSupport } from "@configs/chain"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
-import React, { ReactNode } from "react"
 import CONFIGS from "@configs/index"
-import WalletHeader from "../molecules/WalletHeader"
-import WalletBody from "../molecules/WalletBody"
-import WalletLightAnimation from "../molecules/WalletLightAnimation"
-import WalletFooter from "../molecules/WalletFooter"
+
+const WalletHeader = dynamic(() => import("../molecules/WalletHeader"), {
+  suspense: true,
+  ssr: true
+})
+const WalletBody = dynamic(() => import("../molecules/WalletBody"), {
+  suspense: true,
+  ssr: true
+})
+const WalletLightAnimation = dynamic(
+  () => import("../molecules/WalletLightAnimation"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const WalletFooter = dynamic(() => import("../molecules/WalletFooter"), {
+  suspense: true,
+  ssr: true
+})
+const PleaseCheckWallet = dynamic(
+  () => import("@components/atoms/PleaseCheckWallet"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const SkeletionWallet = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonWallet"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const SwitchChain = dynamic(() => import("@components/atoms/SwitchChain"), {
+  suspense: true,
+  ssr: true
+})
+const RightMenuWallet = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuWallet"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IWalletContent {
-  handleConnectWithMetamask: (() => Promise<void>) | undefined
   isWrongNetwork: boolean
   type: TokenSupport
   handleSwitchNetwork: () => void

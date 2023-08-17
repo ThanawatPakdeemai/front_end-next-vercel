@@ -1,10 +1,31 @@
 import React from "react"
-import Banners from "@components/molecules/Banners"
-import BannerSingle from "@components/molecules/BannerSingle"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
-import Breadcrumb from "@components/molecules/Breadcrumb"
+import dynamic from "next/dynamic"
 import { ICrumb } from "@interfaces/IMenu"
+
+const Banners = dynamic(() => import("@components/molecules/Banners"), {
+  suspense: true,
+  ssr: false
+})
+const BannerSingle = dynamic(
+  () => import("@components/molecules/BannerSingle"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+
+const Breadcrumb = dynamic(() => import("@components/molecules/Breadcrumb"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IEventDetailLayoutProps {
   bannerImage?: string

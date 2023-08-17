@@ -1,7 +1,15 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { TTypeSettingProfile } from "@mobile/components/organisms/modal/ProfileSettingModal"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IProfileFooter {
   type: TTypeSettingProfile

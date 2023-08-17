@@ -3,7 +3,13 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import dynamic from "next/dynamic"
 
-const ProfileRegister = dynamic(() => import("@components/templates/Register"))
+const ProfileRegister = dynamic(
+  () => import("@components/templates/Register"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const RegisterPage = () => (
   <GoogleReCaptchaProvider

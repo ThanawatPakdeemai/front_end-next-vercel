@@ -1,10 +1,18 @@
 import React, { useEffect } from "react"
 import { Typography } from "@mui/material"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
 import useGetAllQuest from "@feature/quest/containers/hook/useGetAllQuest"
 import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
-import QuestBar from "../questBar/QuestBar"
+
+const QuestBar = dynamic(() => import("../questBar/QuestBar"), {
+  suspense: true,
+  ssr: true
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const CardDetail = ({ type, title, detail, time, image }: any) => {
   const { profile } = useProfileStore()

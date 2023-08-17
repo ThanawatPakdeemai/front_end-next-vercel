@@ -1,14 +1,40 @@
 import React from "react"
-import useProfileStore from "@stores/profileStore"
-import IconTemplate from "@mobile/components/templates/IconTemplate"
-import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
-import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
 import useNotiStore from "@stores/notification"
-import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
-import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useDrawerControllerMobileStore from "@stores/drawerControllerMobile"
+
+const IconTemplate = dynamic(
+  () => import("@mobile/components/templates/IconTemplate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: false
+})
+const NotificationModal = dynamic(
+  () => import("@mobile/components/organisms/modal/NotificationModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ProfileSettingModal = dynamic(
+  () => import("@mobile/components/organisms/modal/ProfileSettingModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export const StyledAvatar = {
   color: "#E0E0E0",
@@ -62,7 +88,7 @@ const HeadProfileMobile = () => {
             </p>
           </div>
         </Box>
-        <div className="head-profile__mobile--right flex items-center gap-4">
+        <div className="head-profile__mobile--right flex items-center gap-4 text-white-primary">
           {/* TODO: Open this when In-App purchase is ready */}
           {/* <IconTemplate>
             <WalletRoundIcon />
@@ -73,7 +99,7 @@ const HeadProfileMobile = () => {
                 count > 0 && "bg-error-main opacity-100"
               }`}
             />
-            <BellRingRoundIcon />
+            <Icomoon className="icon-app icon-Notification" />
           </IconTemplate>
         </div>
       </div>

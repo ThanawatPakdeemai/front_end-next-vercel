@@ -7,15 +7,42 @@
 /* eslint-disable no-lone-blocks */
 import React, { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { PaginationNaka } from "@components/atoms/pagination"
-import DropdownTournament from "@components/atoms/DropdownTournament"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
-import { listplays } from "@constants/listplayers"
-import SearchIcon from "@components/icons/SearchIcon"
 import { TextField } from "@mui/material"
-import BoxPlayer from "./BoxPlayer"
-import BoxLeaderShip from "./BoxLeaderShip"
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import dynamic from "next/dynamic"
+import { listplays } from "@constants/listplayers"
+
+// Use dynamic import for the components and icons
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownTournament = dynamic(
+  () => import("@components/atoms/DropdownTournament"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const BoxPlayer = dynamic(() => import("./BoxPlayer"), {
+  suspense: true,
+  ssr: false
+})
+const BoxLeaderShip = dynamic(() => import("./BoxLeaderShip"), {
+  suspense: true,
+  ssr: false
+})
 
 const TournamentStatusPlayer = () => {
   const [page, setPage] = useState<number>(1)
@@ -51,7 +78,7 @@ const TournamentStatusPlayer = () => {
                   fontFamily: "neueMachina",
                   width: "174px"
                 },
-                startAdornment: <SearchIcon className="mr-4" />
+                startAdornment: <Icomoon className="icon-Search mr-4" />
               }}
               onChange={(_event) => {
                 const search = _event?.target?.value

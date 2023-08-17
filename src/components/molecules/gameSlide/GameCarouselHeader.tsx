@@ -1,15 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { memo, useEffect, useState } from "react"
-import AddIcon from "@mui/icons-material/Add"
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import IconArrowLeft from "@components/icons/arrowLeftIcon"
-import { motion, useAnimation } from "framer-motion"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { useAnimation } from "framer-motion"
 import { Chip } from "@mui/material"
-import { IGetType } from "@feature/game/interfaces/IGameService"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import { isMobile } from "@hooks/useGlobal"
+import { IGetType } from "@feature/game/interfaces/IGameService"
+
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: IGetType
@@ -33,10 +42,7 @@ export interface IHeaderSlide {
     | undefined
   stickerRotate: number
 }
-interface IButtonData {
-  text: string
-  link: string
-}
+
 interface IProps {
   menu?: IHeaderSlide
   curType?: IGetType
@@ -47,7 +53,6 @@ interface IProps {
   hideNextPrev?: boolean
   hideViewAll?: boolean
   showTitle?: boolean
-  buttonData?: IButtonData
 }
 
 const GameCarouselHeader = ({
@@ -59,12 +64,13 @@ const GameCarouselHeader = ({
   onPlaying, // NOT SURE ABOUT THIS
   hideNextPrev,
   hideViewAll,
-  showTitle,
-  buttonData
+  showTitle
 }: IProps) => {
   const bgColor = `bg-${menu?.theme}-main`
   const bgColorHover = `hover:bg-${menu?.theme}-main`
   const titleIcon = `flex w-[142px] flex-auto items-center justify-center whitespace-nowrap font-bold md:flex-none gap-2`
+  const arrowButton =
+    "flex h-full w-full items-center justify-center text-[22px]"
 
   const { t } = useTranslation()
   const animateControls = useAnimation()
@@ -130,24 +136,28 @@ const GameCarouselHeader = ({
         isMobile ? "mb-[0.938rem]" : "mb-[1.875rem]"
       }`}
     >
-      {menu && (
-        <motion.div
-          key={`sticker_${menu.title}`}
-          className="absolute left-[-80px] top-[-80px] hidden lg:block"
-          initial={{ rotateZ: menu.stickerRotate }}
-          animate={animateControls}
-          whileHover={{ rotateZ: 0 }}
-          transition={{
-            duration: 1,
-            type: "spring",
-            stiffness: 300
-          }}
-          onHoverStart={() => setIsHover(true)}
-          onHoverEnd={() => setIsHover(false)}
-        >
-          {menu.sticker}
-        </motion.div>
-      )}
+      {
+        menu && (
+          <div className="absolute left-[-80px] top-[-80px] hidden lg:block">
+            {menu.sticker}
+          </div>
+        )
+        // Remove this because CPU usage is too high
+        // <motion.div
+        //   key={`sticker_${menu.title}`}
+        //   className="absolute left-[-80px] top-[-80px] hidden lg:block"
+        //   initial={{ rotateZ: menu.stickerRotate }}
+        //   animate={animateControls}
+        //   whileHover={{ rotateZ: 0 }}
+        //   transition={{
+        //     duration: 1,
+        //     type: "spring",
+        //     stiffness: 300
+        //   }}
+        //   onHoverStart={() => setIsHover(true)}
+        //   onHoverEnd={() => setIsHover(false)}
+        // ></motion.div>
+      }
 
       <div className={getMenuClass()}>
         {menu && (
@@ -158,7 +168,9 @@ const GameCarouselHeader = ({
           >
             {showTitle && (
               <div className={titleIcon}>
-                {menu.icon}
+                <span className="flex items-center justify-center text-[24px]">
+                  {menu.icon}
+                </span>
                 <p
                   className={`text-${menu.theme}-main text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
                 >
@@ -175,6 +187,7 @@ const GameCarouselHeader = ({
               {menu.menuList.map((item) => (
                 <button
                   type="button"
+                  aria-label="menu"
                   key={item.id}
                   className={`!cursor-pointer ${
                     item.className ? item.className : ""
@@ -205,12 +218,12 @@ const GameCarouselHeader = ({
           <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
             {!hideViewAll ? (
               <Link
-                href={buttonData?.link || "/"}
+                href={`/${curType}`}
                 className="h-full"
               >
                 <ButtonToggleIcon
-                  startIcon={<AddIcon />}
-                  text={t(`${buttonData?.text}`)}
+                  startIcon={<Icomoon className="icon-Plus1 text-[22px]" />}
+                  text={t("view_all")}
                   className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
                   type="button"
                 />
@@ -221,17 +234,19 @@ const GameCarouselHeader = ({
               <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
                 <button
                   type="button"
-                  className="flex h-full w-full items-center justify-center"
+                  aria-label="Previous Slide"
+                  className={arrowButton}
                   onClick={() => onClickedPrev()}
                 >
-                  <IconArrowLeft />
+                  <Icomoon className="icon-Full-Arrow-Left" />
                 </button>
                 <button
                   type="button"
-                  className="flex h-full w-full items-center justify-center"
+                  className={arrowButton}
+                  aria-label="Next Slide"
                   onClick={() => onClickedNext()}
                 >
-                  <IconArrowRight />
+                  <Icomoon className="icon-Full-Arrow-Right" />
                 </button>
               </div>
             )}

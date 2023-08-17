@@ -1,25 +1,79 @@
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-import {
-  Chip,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead
-} from "@mui/material"
 import React from "react"
 import { useRouter } from "next/router"
-import { IconVerify } from "@components/icons/Icons"
-import CopyButton from "@components/atoms/CopyButton"
+import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import { IMarketLandData } from "@feature/land/interfaces/ILandService"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
-import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
 import useMyLandController from "@feature/land/containers/hooks/useMyLandController"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
-import { v4 as uuid } from "uuid"
+
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Table = dynamic(() => import("@mui/material/Table"), {
+  suspense: true,
+  ssr: false
+})
+const TableBody = dynamic(() => import("@mui/material/TableBody"), {
+  suspense: true,
+  ssr: false
+})
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"), {
+  suspense: true,
+  ssr: false
+})
+const TableHead = dynamic(() => import("@mui/material/TableHead"), {
+  suspense: true,
+  ssr: false
+})
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonTableWallet = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonTableWallet"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PaginationNaka = dynamic(
+  () => import("@components/atoms/pagination/PaginationNaka"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const DropdownLimit = dynamic(() => import("@components/atoms/DropdownLimit"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const CopyButton = dynamic(() => import("@components/atoms/CopyButton"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   landData: IMarketLandData[]
@@ -93,7 +147,7 @@ const MyLandList = ({
                           key={item.land_id}
                           className="flex items-center gap-1.5"
                         >
-                          <IconVerify color="#27F1EC" />
+                          <Icomoon className="icon-Verified text-[#27F1EC]" />
                           <Chip
                             label={item.land_id}
                             size="small"

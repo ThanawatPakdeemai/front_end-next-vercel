@@ -1,12 +1,20 @@
-import CONFIGS from "@configs/index"
 import { Typography } from "@mui/material"
-import Helper from "@utils/helper"
 import React from "react"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded"
+import dynamic from "next/dynamic"
+import CONFIGS from "@configs/index"
+import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded"
 import { useWeb3Provider } from "@providers/Web3Provider"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IPleaseCheckWalletProps {
   size?: "small" | "medium" | "large" | undefined
@@ -50,6 +58,7 @@ const PleaseCheckWallet = ({ size }: IPleaseCheckWalletProps) => {
             or click{" "}
             <button
               type="button"
+              aria-label="Add Token"
               onClick={onAddToken}
               className="mt-1 underline hover:no-underline"
             >

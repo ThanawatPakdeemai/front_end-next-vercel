@@ -1,8 +1,16 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import FormEditProfile from "@feature/profile/components/FormEditProfile"
 import { Stack, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import { ModalCustom } from "../Modal/ModalCustom"
+import dynamic from "next/dynamic"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom")
+)
+const FormEditProfile = dynamic(
+  () => import("@feature/profile/components/FormEditProfile")
+)
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose")
+)
 
 interface IProp {
   openEdit: boolean

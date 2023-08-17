@@ -1,5 +1,10 @@
-import IconLiker from "@components/icons/LikeIcon"
+import dynamic from "next/dynamic"
 import React from "react"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps extends React.HTMLAttributes<HTMLButtonElement> {
   type: "like" | "unlike"
@@ -21,14 +26,17 @@ const ButtonLike = ({
     return (
       <button
         type="button"
+        aria-label="no"
         className={`${className} ${btnStyled} ${
           active ? "!border-error-main text-error-main" : "text-neutral-500"
         }`}
         onClick={onClick}
         disabled={disabled}
       >
-        <IconLiker.UnLike
-          className={`${active ? "fill-error-main" : "fill-neutral-500"} mr-2`}
+        <Icomoon
+          className={`icon-Unlike ${
+            active ? "text-error-main" : "text-neutral-500"
+          } mr-2`}
         />
         <p>no</p>
       </button>
@@ -37,6 +45,7 @@ const ButtonLike = ({
   return (
     <button
       type="button"
+      aria-label="yes"
       className={`${className} ${btnStyled} ${
         active
           ? "border-varidian-default text-varidian-default"
@@ -45,9 +54,9 @@ const ButtonLike = ({
       onClick={onClick}
       disabled={disabled}
     >
-      <IconLiker.Like
-        className={`${
-          active ? "fill-varidian-default" : "fill-neutral-500"
+      <Icomoon
+        className={`icon-Like ${
+          active ? "text-varidian-default" : "text-neutral-500"
         } mr-2`}
       />
       <p>yes</p>

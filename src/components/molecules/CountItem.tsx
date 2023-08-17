@@ -1,12 +1,21 @@
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import MinusIcon from "@components/icons/CountIcon/MinusIcon"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
-import SkullIcon from "@components/icons/CountIcon/SkullIcon"
-import { iconmotion } from "@components/organisms/Footer"
 import { TextField, Typography } from "@mui/material"
-import useCountStore from "@stores/countComponant"
 import React, { useEffect } from "react"
 import { unstable_batchedUpdates } from "react-dom"
+import dynamic from "next/dynamic"
+import useCountStore from "@stores/countComponant"
+import { iconmotion } from "@styles/themes/partial/motion"
+
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   endIcon?: React.ReactNode
@@ -69,7 +78,7 @@ const CountItem = ({
           variants={iconmotion}
           whileHover="hover"
           transition={{ type: "spring", stiffness: 400, damping: 4 }}
-          icon={<MinusIcon />}
+          icon={<Icomoon className="icon-Minus" />}
           className="count-item__decrease m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
         />
         <TextField
@@ -91,7 +100,7 @@ const CountItem = ({
           value={setItemCount && count ? count : _item || item}
           InputProps={{
             readOnly: true,
-            endAdornment: endIcon || <SkullIcon />,
+            endAdornment: endIcon || <Icomoon className="icon-Skull" />,
             style: {
               fontSize: 14,
               paddingLeft: 30,
@@ -105,7 +114,7 @@ const CountItem = ({
           variants={iconmotion}
           whileHover="hover"
           transition={{ type: "spring", stiffness: 400, damping: 4 }}
-          icon={<PlusIcon />}
+          icon={<Icomoon className="icon-Plus1" />}
           className="count-item__increase m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
         />
       </div>

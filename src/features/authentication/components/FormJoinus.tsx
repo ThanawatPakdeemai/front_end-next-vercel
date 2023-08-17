@@ -15,25 +15,50 @@ import {
 } from "@mui/material"
 import _ from "lodash"
 import { Controller } from "react-hook-form"
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import FieldItem from "@components/molecules/FieldItem"
-import PortraitIcon from "@components/icons/PortraitIcon"
-import EnvelopeIcon from "@components/icons/EnvelopeIcon"
-import DropdownListGameType from "@feature/dropdown/components/molecules/DropdownListGameType"
-import { DROPDOWN_GAMETYPE } from "@configs/gameType"
-import DropdownListCategories, {
-  StyledFormLabel
-} from "@feature/dropdown/components/molecules/DropdownListCategories"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import IEdit from "@components/icons/Edit"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
+import dynamic from "next/dynamic"
+import { DROPDOWN_GAMETYPE } from "@configs/gameType"
 import { getCategories } from "@feature/dropdown/containers/services/dropdown.service"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import { useToast } from "@feature/toast/containers"
-import Editor from "@components/molecules/Editor"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
+import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
+import DropdownListCategories from "@feature/dropdown/components/molecules/DropdownListCategories"
 import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
 import useFormController from "../containers/hooks/useFormController"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FieldItem = dynamic(() => import("@components/molecules/FieldItem"), {
+  suspense: true,
+  ssr: false
+})
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Editor = dynamic(() => import("@components/molecules/Editor"), {
+  suspense: true,
+  ssr: false
+})
+const DropdownListGameType = dynamic(
+  () => import("@feature/dropdown/components/molecules/DropdownListGameType"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export const StyledTextField = {
   "& .MuiOutlinedInput-root": {
@@ -179,7 +204,7 @@ const FormJoinus = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <PortraitIcon />
+                        <Icomoon className="icon-User-Pass" />
                       </InputAdornment>
                     )
                   }}
@@ -210,7 +235,7 @@ const FormJoinus = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <EnvelopeIcon />
+                        <Icomoon className="icon-Mail-Closed" />
                       </InputAdornment>
                     )
                   }}
@@ -244,7 +269,7 @@ const FormJoinus = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <JoinStickIcon />
+                        <Icomoon className="icon-Joystick" />
                       </InputAdornment>
                     )
                   }}
@@ -274,7 +299,7 @@ const FormJoinus = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <PortraitIcon />
+                        <Icomoon className="icon-User-Pass" />
                       </InputAdornment>
                     )
                   }}
@@ -527,7 +552,7 @@ const FormJoinus = () => {
           >
             <ButtonToggleIcon
               type="submit"
-              startIcon={<IEdit />}
+              startIcon={<Icomoon className="icon-Ballpen" />}
               text="Register"
               className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
             />

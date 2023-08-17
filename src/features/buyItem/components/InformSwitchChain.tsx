@@ -1,6 +1,19 @@
-import SwitchChain from "@components/atoms/SwitchChain"
-import { BaseToastComponent } from "@feature/toast/components"
+import React from "react"
+import dynamic from "next/dynamic"
 import { Box } from "@mui/material"
+
+const SwitchChain = dynamic(() => import("@components/atoms/SwitchChain"), {
+  suspense: true,
+  ssr: false
+})
+const BaseToastComponent = dynamic(
+  () =>
+    import("@feature/toast/components").then((mod) => mod.BaseToastComponent),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IInformSwitchChainProps {
   message: string

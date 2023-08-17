@@ -1,9 +1,16 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
-// import LoginIcon from "@mui/icons-material/Login"
-import { useWeb3Provider } from "@providers/index"
 import { memo } from "react"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
+import { useWeb3Provider } from "@providers/index"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const ButtonConnectWallet = () => {
   const { accounts, handleConnectWithMetamask } = useWeb3Provider()

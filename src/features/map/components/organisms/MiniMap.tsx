@@ -1,18 +1,53 @@
 import { Suspense, useState, useCallback, useEffect } from "react"
 import * as three from "three"
 import { Canvas } from "@react-three/fiber"
-import GpsFixedIcon from "@mui/icons-material/GpsFixed"
-import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined"
-import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined"
+import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import Box from "@mui/material/Box"
 import { cameraSetting, colorMap, colorThree } from "@constants/map"
 import { calculatePosition } from "@utils/map"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { ILandMap } from "@feature/land/interfaces/ILandService"
-import { useRouter } from "next/router"
-import CameraController from "../molecules/CameraController"
-import MapScene from "../molecules/MapScene"
-import BoxElement from "../molecules/BoxElement"
+
+const GpsFixedIcon = dynamic(() => import("@mui/icons-material/GpsFixed"), {
+  suspense: true,
+  ssr: false
+})
+const AddBoxOutlinedIcon = dynamic(
+  () => import("@mui/icons-material/AddBoxOutlined"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const IndeterminateCheckBoxOutlinedIcon = dynamic(
+  () => import("@mui/icons-material/IndeterminateCheckBoxOutlined"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonIcon = dynamic(
+  () => import("@components/atoms/button/ButtonIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CameraController = dynamic(
+  () => import("../molecules/CameraController"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const MapScene = dynamic(() => import("../molecules/MapScene"), {
+  suspense: true,
+  ssr: false
+})
+const BoxElement = dynamic(() => import("../molecules/BoxElement"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IMinimap {
   pos: {

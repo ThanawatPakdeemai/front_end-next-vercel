@@ -1,12 +1,28 @@
 import React, { useEffect } from "react"
-import PanelContent from "@components/molecules/PanelContent"
-import { Box, Chip, Tab } from "@mui/material"
+import _ from "lodash"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
 import useGlobal from "@hooks/useGlobal"
 import useTabContext from "@feature/tab/contexts/useTabContext"
 import useTab from "@feature/tab/hook/useTab"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGameTabController from "@feature/game/containers/hooks/useGameTabController"
-import _ from "lodash"
+
+const PanelContent = dynamic(
+  () => import("@components/molecules/PanelContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Chip = dynamic(() => import("@mui/material/Chip"), {
+  suspense: true,
+  ssr: false
+})
+const Tab = dynamic(() => import("@mui/material/Tab"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IGameTabsProps {
   gameType: IGetType
@@ -50,11 +66,9 @@ const GameTabs = ({ gameType, gameId }: IGameTabsProps) => {
                   <Chip
                     label={item.label}
                     size="medium"
-                    className={`bg-nuetral-800 hover:text-nuetral-100 cursor-pointer font-bold capitalize ${
-                      item.id === tabValue ? " !text-nuetral-100" : ""
-                    }`}
+                    className="bg-nuetral-800 cursor-pointer font-bold capitalize"
                     sx={
-                      item.id === tabValue ? { path: { stroke: "#fff" } } : {}
+                      item.id === tabValue ? { path: { stroke: "#bbb" } } : {}
                     }
                     icon={item.icon as React.ReactElement}
                   />

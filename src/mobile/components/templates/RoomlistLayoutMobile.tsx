@@ -1,19 +1,58 @@
 import React, { useEffect } from "react"
 import { useRouter } from "next/router"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import useProfileStore from "@stores/profileStore"
-import NoData from "@components/molecules/NoData"
-import PleaseLogin from "@components/atoms/PleaseLogin"
-import MultiRoom from "@mobile/features/game/components/templates/multi/MultiRoom"
-import SingleRoom from "@mobile/features/game/components/templates/single/SingleRoom"
-import ModalCreateRoomMobile from "@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useLoadingStore from "@stores/loading"
-import ButtonFilledTemplate from "./ButtonFilledTemplate"
-import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
+
+const ButtonFilledTemplate = dynamic(() => import("./ButtonFilledTemplate"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const LogoNakaBigIcon = dynamic(
+  () => import("@components/atoms/svg/LogoNakaBigIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: false
+})
+const PleaseLogin = dynamic(() => import("@components/atoms/PleaseLogin"), {
+  suspense: true,
+  ssr: false
+})
+const MultiRoom = dynamic(
+  () => import("@mobile/features/game/components/templates/multi/MultiRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SingleRoom = dynamic(
+  () => import("@mobile/features/game/components/templates/single/SingleRoom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalCreateRoomMobile = dynamic(
+  () =>
+    import("@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export interface IRoomlistLayoutMobileProps {
   gameData: IGame
@@ -85,7 +124,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
           onClick={() => router.push(`/${gameData.game_mode}/${gameData.path}`)}
           aria-hidden="true"
         >
-          <ArrowBackIcon />
+          <Icomoon className="icon-Full-Arrow-Left" />
         </i>
         Room List
       </h2>

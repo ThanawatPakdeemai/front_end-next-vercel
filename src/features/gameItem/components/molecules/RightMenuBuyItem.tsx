@@ -1,12 +1,36 @@
 import React, { memo } from "react"
-import { Box, Stack } from "@mui/material"
+import dynamic from "next/dynamic"
+import Box from "@mui/material/Box"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import ButtonBuyItem, {
   IButtonBuyItemProps
 } from "@feature/gameItem/atoms/ButtonBuyItem"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FormBuyItem from "@feature/buyItem/components/FormBuyItem"
-import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+
+const Stack = dynamic(() => import("@mui/material/Stack"), {
+  suspense: true,
+  ssr: false
+})
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const FormBuyItem = dynamic(
+  () => import("@feature/buyItem/components/FormBuyItem"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp extends IButtonBuyItemProps {
   disabled: boolean

@@ -1,13 +1,16 @@
 import React from "react"
 import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
 import useCategories from "@hooks/useCategories"
-import CategoryCard from "@components/molecules/cards/CategoryCard"
-import SkeletonCategoryCard from "@components/atoms/skeleton/SkeletonCategoryCard"
-// import { Box } from "@mui/material"
-// import { PaginationNaka } from "@components/atoms/pagination"
-// import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { CATEGORY_ICON } from "@constants/categoryIcon"
+
+const CategoryCard = dynamic(
+  () => import("@components/molecules/cards/CategoryCard")
+)
+const SkeletonCategoryCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCategoryCard")
+)
 
 const CatogoriesListPage = () => {
   // page, setPage, pager, setLimit, totalCount

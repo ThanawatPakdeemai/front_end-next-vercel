@@ -1,8 +1,25 @@
-import Banners from "@components/molecules/Banners"
-import SidebarServices from "@components/molecules/SidebarServices"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const Banners = dynamic(() => import("@components/molecules/Banners"), {
+  suspense: true,
+  ssr: false
+})
+const SidebarServices = dynamic(
+  () => import("@components/molecules/SidebarServices"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Footer = dynamic(() => import("@components/organisms/Footer"), {
+  suspense: true,
+  ssr: false
+})
+const Header = dynamic(() => import("@components/organisms/Header"), {
+  suspense: true,
+  ssr: false
+})
 
 const ServicesPageLayout = ({
   children

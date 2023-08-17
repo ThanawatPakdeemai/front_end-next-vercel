@@ -80,6 +80,13 @@ const RoomlistLayoutMobile = dynamic(
     ssr: false
   }
 )
+const GameReviews = dynamic(
+  () => import("@feature/game/components/molecules/GameReviews"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export default function GameRoomList() {
   const router = useRouter()
@@ -180,23 +187,34 @@ export default function GameRoomList() {
           />
         }
         component2={
-          <FullWidthContent
-            sxCustomStyled={{
-              "&.container": {
-                maxWidth: "100%!important",
-                "&.container-fullWidth": {
-                  padding: "49px"
-                }
-              }
-            }}
-          >
-            <TabProvider>
-              <GameTabsVertical
-                gameId={gameData.id}
+          <RightSidebarContent
+            className="mb-[64px]"
+            content={
+              <FullWidthContent
+                sxCustomStyled={{
+                  "&.container": {
+                    maxWidth: "100%!important",
+                    "&.container-fullWidth": {
+                      padding: "49px"
+                    }
+                  }
+                }}
+              >
+                <TabProvider>
+                  <GameTabsVertical
+                    gameId={gameData.id}
+                    gameType={getGameMode(gameData)}
+                  />
+                </TabProvider>
+              </FullWidthContent>
+            }
+            aside={
+              <GameReviews
                 gameType={getGameMode(gameData)}
+                gameId={gameData.id}
               />
-            </TabProvider>
-          </FullWidthContent>
+            }
+          />
         }
       />
     ) : (

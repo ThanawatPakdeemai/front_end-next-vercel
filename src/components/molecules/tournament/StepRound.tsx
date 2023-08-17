@@ -5,22 +5,14 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-undef */
 /* eslint-disable object-shorthand */
-import { Box, Slider } from "@mui/material"
-import React, { lazy, memo } from "react"
-import Vector from "@components/icons/Tournament/Vector"
-import VectorEnd from "@components/icons/Tournament/VectorEnd"
+import { Slider } from "@mui/material"
+import React from "react"
+import dynamic from "next/dynamic"
 
-interface IProp {
-  max?: number
-  min?: number
-  value?: number
-  data?: IPropData[]
-}
-
-interface IPropData {
-  name: string
-  active?: boolean
-}
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const StepRound = () => {
   const datas = [
@@ -94,14 +86,14 @@ const StepRound = () => {
             >
               {index + 1 === datas.length ? (
                 item.active ? (
-                  <VectorEnd color="#7B5BE6" />
+                  <Icomoon className="icon-Star text-[#7B5BE6]" />
                 ) : (
-                  <VectorEnd />
+                  <Icomoon className="icon-Star" />
                 )
               ) : item.active ? (
-                <Vector color="#7B5BE6" />
+                <Icomoon className="icon-Star text-[#7B5BE6]" />
               ) : (
-                <Vector />
+                <Icomoon className="icon-Star" />
               )}
             </div>
             <div

@@ -1,8 +1,12 @@
 import React, { ReactNode } from "react"
-import IconArrowRight from "@components/icons/arrowRightIcon"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
@@ -21,8 +25,8 @@ interface IProps {
 
 const ButtonToggleIcon = ({
   href,
-  startIcon = <JoinStickIcon />,
-  endIcon = <IconArrowRight />,
+  startIcon = <Icomoon className="icon-Joystick text-[22px]" />,
+  endIcon = <Icomoon className="icon-Full-Arrow-Right text-[22px]" />,
   text,
   handleClick,
   className,
@@ -90,15 +94,17 @@ const ButtonToggleIcon = ({
       type={type}
       onClick={handleClick}
       disabled={disabled}
+      aria-label="button-toggle-icon"
     >
       <motion.span
         variants={iconStart}
         transition={{ duration: 0.1, type: "spring", stiffness: stiffValue }}
+        className="text-[24px]"
       >
         {startIcon}
       </motion.span>
       <motion.p
-        className={`${textClassName} font-neue-machina text-sm`}
+        className={`${textClassName} whitespace-nowrap font-neue-machina text-sm`}
         variants={textBtn}
       >
         {dropColor ? (
@@ -117,7 +123,12 @@ const ButtonToggleIcon = ({
         )}
         {/* {text} */}
       </motion.p>
-      <motion.span variants={iconEnd}>{endIcon}</motion.span>
+      <motion.span
+        variants={iconEnd}
+        className="text-[24px]"
+      >
+        {endIcon}
+      </motion.span>
     </motion.button>
   )
 

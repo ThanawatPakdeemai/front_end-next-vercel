@@ -1,9 +1,26 @@
 import React, { memo, useState, useEffect } from "react"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import { Stack } from "@mui/material"
+import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
-import FormCreateProfile from "./FormCreateProfile"
+
+const FormCreateProfile = dynamic(() => import("./FormCreateProfile"), {
+  suspense: true,
+  ssr: true
+})
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const ModalHeader = dynamic(
+  () => import("@components/molecules/Modal/ModalHeader"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 const CreateProfile = () => {
   const [open, setOpen] = useState<boolean>(false)

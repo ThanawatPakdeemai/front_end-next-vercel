@@ -1,10 +1,3 @@
-import GotNaKAPunk from "@components/molecules/Inventory/GotNaKAPunk"
-import CONFIGS from "@configs/index"
-import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
-import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
-import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
-import { IPunkMetaData } from "@feature/nakapunk/interfaces/INakapunkService"
-import { useToast } from "@feature/toast/containers"
 import {
   Chip,
   Divider,
@@ -12,21 +5,72 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import useLoadingStore from "@stores/loading"
-import useProfileStore from "@stores/profileStore"
 import React, { memo, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import dynamic from "next/dynamic"
+import CONFIGS from "@configs/index"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import { IPunkMetaData } from "@feature/nakapunk/interfaces/INakapunkService"
+import { useToast } from "@feature/toast/containers"
+import useLoadingStore from "@stores/loading"
+import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import WandIcon from "@components/icons/WandIcon"
-import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
-import CouponIcon from "@components/icons/CouponIcon"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
-import RedemptionCode from "@components/molecules/RedemptionCode"
-import Breadcrumb from "@components/molecules/Breadcrumb"
 import { MESSAGES } from "@constants/messages"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
+
+const GotNaKAPunk = dynamic(
+  () => import("@components/molecules/Inventory/GotNaKAPunk"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardContentDetails = dynamic(
+  () => import("@feature/marketplace/components/organisms/CardContentDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightDetailsMarketplace = dynamic(
+  () =>
+    import("@feature/marketplace/components/organisms/RightDetailsMarketplace"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+const RightMenuNotLogIn = dynamic(
+  () => import("@components/molecules/rightMenu/RightMenuNotLogIn"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RedemptionCode = dynamic(
+  () => import("@components/molecules/RedemptionCode"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Breadcrumb = dynamic(() => import("@components/molecules/Breadcrumb"), {
+  suspense: true,
+  ssr: false
+})
 
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
@@ -282,7 +326,7 @@ const MarketplaceReefAvatar = () => {
                   },
                   startAdornment: (
                     <InputAdornment position="start">
-                      <CouponIcon />
+                      <Icomoon className="icon-Ticket" />
                     </InputAdornment>
                   ),
                   inputProps: {
@@ -305,7 +349,7 @@ const MarketplaceReefAvatar = () => {
                   textColor="text-primary-main"
                   className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
                   arrowColor="text-primary-main"
-                  icon={<WandIcon />}
+                  icon={<Icomoon className="icon-Magic-Stick" />}
                   onClick={handleMintNFTAvatar}
                 />
               ) : (

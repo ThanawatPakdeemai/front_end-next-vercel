@@ -1,7 +1,16 @@
-import { Image } from "@components/atoms/image"
-import Video from "@components/atoms/Video"
 import { Divider, Typography } from "@mui/material"
 import React from "react"
+
+import dynamic from "next/dynamic"
+
+const Video = dynamic(() => import("@components/atoms/Video"), {
+  suspense: true,
+  ssr: true
+})
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   detail?: string
@@ -20,7 +29,6 @@ const CardContentDetails = ({ ...props }: IProp) => {
         <div className="grid h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
           {image ? (
             <Image
-              // src="/images/not_found.webp"
               src={image as string}
               alt={alt as string}
               width={563}

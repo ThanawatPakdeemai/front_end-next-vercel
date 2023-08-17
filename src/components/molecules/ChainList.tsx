@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import useChainSupportStore from "@stores/chainSupport"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
-import TabMenu from "./TabMenu"
-import { ModalCustom } from "./Modal/ModalCustom"
-import TokenListItem from "./TokenListItem"
+
+const TabMenu = dynamic(() => import("@components/molecules/TabMenu"))
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom")
+)
+const TokenListItem = dynamic(
+  () => import("@components/molecules/TokenListItem")
+)
 
 const ChainList = () => {
   const { setCurrentChainConnected, currentChainSelected } =

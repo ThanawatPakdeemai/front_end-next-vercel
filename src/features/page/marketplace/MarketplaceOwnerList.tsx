@@ -1,13 +1,30 @@
-import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 import { v4 as uuidv4 } from "uuid"
 import React from "react"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import useInventoryOwner from "@feature/inventory/containers/hooks/useInventoryOwner"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
-import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
-import CardListContainer from "./CardListContainer"
+
+const CardItemMarketPlace = dynamic(
+  () => import("@components/molecules/cards/CardItemMarketPlace"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const SkeletonMarketOwnerList = dynamic(
+  () => import("./SkeletonMarketOwnerList"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const CardListContainer = dynamic(() => import("./CardListContainer"), {
+  suspense: true,
+  ssr: true
+})
 
 const MarketplaceOwnerList = () => {
   const profile = useProfileStore()

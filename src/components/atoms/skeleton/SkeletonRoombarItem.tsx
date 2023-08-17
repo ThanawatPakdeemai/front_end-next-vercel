@@ -4,7 +4,7 @@ import { Box, Skeleton } from "@mui/material"
 const SkeletonRoombarItem = () => (
   <Box
     component="div"
-    className="flex flex-col gap-2"
+    className="flex flex-col gap-3"
   >
     <Skeleton
       variant="rounded"

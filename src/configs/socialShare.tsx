@@ -1,128 +1,62 @@
 import React from "react"
-import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
-import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import SubstackIcon from "@components/icons/SocialIcon/SubstackIcon"
-import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
-import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
-import YoutubeIcon from "@components/icons/SocialIcon/YoutubeIcon"
-import LinkIcon from "@mui/icons-material/Link"
+import dynamic from "next/dynamic"
 import { IMenuBase } from "@interfaces/IMenu"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export const SOCIAL: IMenuBase[] = [
   {
-    icon: <TelegramIcon />,
+    icon: <Icomoon className="icon-telegram" />,
     label: "telegram",
     href: "https://t.me/NakamotoGames"
   },
   {
-    icon: <TwitterIcon />,
+    icon: <Icomoon className="icon-twitter" />,
     label: "twitter",
     href: "https://twitter.com/NakamotoGames"
   },
   {
-    icon: <SubstackIcon />,
+    icon: <Icomoon className="icon-Substack !text-base" />,
     label: "substack",
     href: "https://nakamotogames.substack.com/"
   },
   {
-    icon: <MediumIcon />,
+    icon: <Icomoon className="icon-Mediems" />,
     label: "medium",
     href: "https://medium.com/@nakamotogames"
   },
   {
-    icon: <FacebookIcon />,
+    icon: <Icomoon className="icon-Facebook" />,
     label: "facebook",
     href: "https://www.facebook.com/play.nakamoto.games"
   },
   {
-    icon: <DiscordIcon />,
+    icon: <Icomoon className="icon-Discord" />,
     label: "discord",
     href: "https://discord.com/invite/nakamoto-games"
   },
   {
-    icon: <TiktokIcon />,
+    icon: <Icomoon className="icon-Tiktok" />,
     label: "tiktok",
     href: "https://www.tiktok.com/@nakamotogames"
-  },
-  {
-    icon: <YoutubeIcon />,
-    label: "youtube",
-    href: "https://www.youtube.com/@nakamotogames"
   }
+  // {
+  //   icon: <YoutubeIcon />,
+  //   label: "youtube",
+  //   href: "https://www.youtube.com/@nakamotogames"
+  // }
 ]
 
-export const SOCIAL_SHARE_SUMMARY: IMenuBase[] = [
-  {
-    icon: <TelegramIcon fill="#F42728" />,
-    label: "telegram",
-    href: "https://t.me/NakamotoGames"
-  },
-  {
-    icon: <TwitterIcon fill="#F42728" />,
-    label: "twitter",
-    href: "https://twitter.com/NakamotoGames"
-  },
-  {
-    icon: <FacebookIcon fill="#F42728" />,
-    label: "facebook",
-    href: "https://www.facebook.com/play.nakamoto.games"
-  },
-  {
-    icon: <DiscordIcon fill="#F42728" />,
-    label: "discord",
-    href: "https://discord.com/invite/nakamoto-games"
-  },
-  {
-    icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
-    label: "link",
-    href: ""
-  }
-]
-
+export const SOCIAL_SHARE_SUMMARY: IMenuBase[] = SOCIAL
 export const SOCIAL_SHARE: IMenuBase[] = [
   {
-    icon: <TelegramIcon fill="#F42728" />,
-    label: "telegram",
-    href: "https://t.me/NakamotoGames"
-  },
-  {
-    icon: <TwitterIcon fill="#F42728" />,
-    label: "twitter",
-    href: "https://twitter.com/NakamotoGames"
-  },
-  {
-    icon: <FacebookIcon fill="#F42728" />,
-    label: "facebook",
-    href: "https://www.facebook.com/play.nakamoto.games"
-  },
-  {
-    icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
+    icon: <Icomoon className="icon-Link" />,
     label: "link",
-    href: "/link"
-  }
+    href: ""
+  },
+  ...SOCIAL
 ]
-
-export const SOCIAL_BLOG_SHARE: IMenuBase[] = [
-  {
-    icon: <TwitterIcon fill="#ffffff" />,
-    label: "twitter",
-    href: "https://twitter.com/NakamotoGames"
-  },
-  {
-    icon: <FacebookIcon fill="#ffffff" />,
-    label: "facebook",
-    href: "https://www.facebook.com/play.nakamoto.games"
-  },
-  {
-    icon: <TelegramIcon fill="#ffffff" />,
-    label: "telegram",
-    href: "https://t.me/NakamotoGames"
-  },
-  {
-    icon: <DiscordIcon fill="#ffffff" />,
-    label: "discord",
-    href: "https://discord.com/invite/nakamoto-games"
-  }
-]
+export const SOCIAL_BLOG_SHARE: IMenuBase[] = SOCIAL

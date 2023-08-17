@@ -1,9 +1,14 @@
 import React, { memo } from "react"
 import { Box } from "@mui/material"
 import dayjs from "dayjs"
-import { ImageCustom } from "@components/atoms/image/Image"
+import dynamic from "next/dynamic"
 import { INotificationProps } from "@mobile/types/INotification"
 import { IGameCategory } from "@feature/game/interfaces/IGameService"
+
+const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IGameInfoCardProps extends INotificationProps {
   image: string

@@ -1,13 +1,12 @@
-import * as React from "react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
-import DropdownIcon from "@components/icons/DropdownIcon"
+import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import {
   getCategories,
   getGameAssets
 } from "@feature/dropdown/containers/services/dropdown.service"
 import { useToast } from "@feature/toast/containers"
-import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
 import {
   IDevice,
   IDropdownAll,
@@ -17,14 +16,18 @@ import {
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
 import { getGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
-import { useTranslation } from "react-i18next"
-import AllGamesIcon from "@components/icons/AllGamesIcon"
-import AllDevicesIcon from "@components/icons/AllDevicesIcon"
-import MobileIcon from "@components/icons/HowToPlayIcon/MobileIcon"
-import DesktopIcon from "@components/icons/DesktopIcon"
-import MultiPlayerIcon from "@components/icons/MultiPlayerIcon"
-import SinglePlayerIcon from "@components/icons/SinglePlayerIcon"
-import SelectDropdown from "./selectDropdown/SelectDropdown"
+
+const SelectDropdown = dynamic(
+  () => import("@components/atoms/selectDropdown/SelectDropdown"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 export type IDropdownCustomSelect =
   | "All Categories"
@@ -67,16 +70,16 @@ const DropdownCustom = ({ title, className }: IProp) => {
   const getDropdownIconByTitleName = () => {
     switch (title) {
       case "All Categories":
-        return <AllCategoriesIcon />
+        return <Icomoon className="icon-Grid-02" />
       case "GameItem":
       case "All Game Assets":
-        return <AllGamesIcon />
+        return <Icomoon className="icon-Backpack" />
       case "All Devices":
-        return <AllDevicesIcon />
+        return <Icomoon className="icon-Laptop-and-Phone" />
       case "All Game Types":
-        return <MultiPlayerIcon />
+        return <Icomoon className="icon-Users-Group" />
       default:
-        return <AllCategoriesIcon />
+        return <Icomoon className="icon-Grid-02" />
     }
   }
 
@@ -166,19 +169,19 @@ const DropdownCustom = ({ title, className }: IProp) => {
       _id: "all",
       name: "All Devices",
       supported: true,
-      icon: <AllDevicesIcon />
+      icon: <Icomoon className="icon-Laptop-and-Phone" />
     },
     {
       _id: "mobile",
       name: "Mobile and Tablet",
       supported: true,
-      icon: <MobileIcon />
+      icon: <Icomoon className="icon-Phone-Notch" />
     },
     {
       _id: "desktop",
       name: "Desktop",
       supported: true,
-      icon: <DesktopIcon />
+      icon: <Icomoon className="icon-Screen-Text" />
     }
   ]
 
@@ -186,17 +189,17 @@ const DropdownCustom = ({ title, className }: IProp) => {
     {
       _id: "all",
       name: "All Game Types",
-      icon: <MultiPlayerIcon />
+      icon: <Icomoon className="icon-Users-Group" />
     },
     {
       _id: "singleplayer",
       name: "Singleplayer",
-      icon: <SinglePlayerIcon />
+      icon: <Icomoon className="icon-User" />
     },
     {
       _id: "multiplayer",
       name: "Multiplayer",
-      icon: <MultiPlayerIcon />
+      icon: <Icomoon className="icon-Users-Group" />
     }
   ]
 
@@ -279,22 +282,20 @@ const DropdownCustom = ({ title, className }: IProp) => {
         <div className="dropdown-custom__wrapper flex w-full justify-center">
           <button
             type="button"
+            aria-label="dropdown"
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
-            {/* {showIcon && <AllCategoriesIcon />} */}
             {showIcon && getDropdownIconByTitleName()}
-            <span className="">
-              {t(onTitle === undefined ? textTitle : onTitle.name)}
-            </span>
+            <span>{t(onTitle === undefined ? textTitle : onTitle.name)}</span>
             <div
-              className={`${
+              className={`flex items-center ${
                 expanded === true
                   ? "rotate-180 transition-all duration-300"
                   : "rotate-0 transition-all duration-300"
               }`}
             >
-              <DropdownIcon />
+              <Icomoon className="icon-Arrow-Down" />
             </div>
           </button>
           <Collapse
@@ -329,7 +330,6 @@ const DropdownCustom = ({ title, className }: IProp) => {
             }}
           >
             <SelectDropdown
-              // className={className}
               details={listSelect}
               setOnTitle={setOnTitle}
               setOnTitleGameType={setOnTitleGameType}

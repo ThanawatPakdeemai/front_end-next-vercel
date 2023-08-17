@@ -1,4 +1,6 @@
-import TextTip from "@components/atoms/TextTip"
+import { Divider, Stack } from "@mui/material"
+import React, { memo, useEffect, useCallback, useState } from "react"
+import dynamic from "next/dynamic"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import { TMarketAction } from "@feature/marketplace/interfaces/IMarket"
 import {
@@ -6,9 +8,12 @@ import {
   TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { Divider, Stack } from "@mui/material"
 import Helper from "@utils/helper"
-import React, { memo, useEffect, useCallback, useState } from "react"
+
+const TextTip = dynamic(() => import("@components/atoms/TextTip"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   nftType: TNFTType

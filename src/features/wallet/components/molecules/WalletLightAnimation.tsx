@@ -1,7 +1,12 @@
-import { Image } from "@components/atoms/image"
 import React from "react"
-import { IMAGES } from "@constants/images"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+import { IMAGES } from "@constants/images"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const WalletLightAnimation = () => (
   <>

@@ -1,5 +1,10 @@
 import React, { memo } from "react"
-import { Image } from "@components/atoms/image"
+import dynamic from "next/dynamic"
+
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 const Sidebar: React.FC = () => {
   const imgSrc = "/images/mocks/sidebar.png"

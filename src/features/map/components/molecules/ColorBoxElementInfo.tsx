@@ -1,9 +1,27 @@
-import { Box, IconButton, Popover, Typography } from "@mui/material"
-import { colorMap } from "@constants/map"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
 import { Trans } from "next-i18next"
-import IconInfo from "@components/icons/IconInfo"
+import dynamic from "next/dynamic"
+
+import Box from "@mui/material/Box"
+import { colorMap } from "@constants/map"
+
+const IconButton = dynamic(() => import("@mui/material/IconButton"), {
+  suspense: true,
+  ssr: false
+})
+const Popover = dynamic(() => import("@mui/material/Popover"), {
+  suspense: true,
+  ssr: false
+})
+const Typography = dynamic(() => import("@mui/material/Typography"), {
+  suspense: true,
+  ssr: false
+})
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 const ColorBoxElementInfo = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
@@ -34,7 +52,7 @@ const ColorBoxElementInfo = () => {
         disableRipple
         className="h-[46px] w-[46px] rounded-full bg-[#202025] opacity-100"
       >
-        <IconInfo />
+        <Icomoon className="icon-User-ID" />
       </IconButton>
       <Popover
         id={id}

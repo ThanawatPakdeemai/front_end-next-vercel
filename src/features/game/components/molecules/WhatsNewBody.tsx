@@ -1,8 +1,16 @@
-import TextLink from "@components/atoms/TextLink"
-import NoData from "@components/molecules/NoData"
-import { arrowMotion, textMotion } from "@components/organisms/Footer"
 import { Typography } from "@mui/material"
 import React from "react"
+import dynamic from "next/dynamic"
+import { arrowMotion, textMotion } from "@styles/themes/partial/motion"
+
+const TextLink = dynamic(() => import("@components/atoms/TextLink"), {
+  suspense: true,
+  ssr: false
+})
+const NoData = dynamic(() => import("@components/molecules/NoData"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProps {
   title: string
@@ -12,7 +20,7 @@ interface IProps {
 const WhatsNewBody = ({ title, description }: IProps) => (
   <div
     id="game--versions"
-    className="mb-4 flex gap-10"
+    className="mb-4 gap-10"
   >
     <aside
       id="version-aside"
@@ -47,7 +55,9 @@ const WhatsNewBody = ({ title, description }: IProps) => (
         />
       </div>
     ) : (
-      <NoData className="" />
+      <div className="flex">
+        <NoData className="" />
+      </div>
     )}
   </div>
 )

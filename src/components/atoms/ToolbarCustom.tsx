@@ -1,23 +1,16 @@
 import React from "react"
 import { IconButton } from "@mui/material"
-import UndoIcon from "@components/icons/UndoIcon"
-import RedoIcon from "@components/icons/RedoIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IToolbar {
   id: string
   className?: string
 }
-
-export const formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "align",
-  "list",
-  "bullet",
-  "link"
-]
 
 const ToolbarCustom = ({ id, className }: IToolbar) => (
   <div
@@ -71,10 +64,10 @@ const ToolbarCustom = ({ id, className }: IToolbar) => (
     <div className="flex w-full max-w-[80px] items-center justify-center">
       <span className="ql-formats !mr-0">
         <IconButton className="ql-undo">
-          <UndoIcon className="ql-fill" />
+          <Icomoon className="icon-Undo ql-fill" />
         </IconButton>
         <IconButton className="ql-redo">
-          <RedoIcon className="ql-fill" />
+          <Icomoon className="icon-Redo ql-fill" />
         </IconButton>
       </span>
     </div>

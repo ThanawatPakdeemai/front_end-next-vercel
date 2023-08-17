@@ -1,8 +1,14 @@
-import ProfileLayout from "@components/templates/ProfileLayout"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { ReactElement } from "react"
 
+const ProfileLayout = dynamic(
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const GoldTransferPage = dynamic(
   () => import("@feature/page/GoldTransferPage"),
   {

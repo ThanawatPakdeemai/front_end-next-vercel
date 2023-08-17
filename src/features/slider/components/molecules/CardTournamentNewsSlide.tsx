@@ -1,8 +1,19 @@
 import { Grid, Typography } from "@mui/material"
-import { Image } from "@components/atoms/image"
 import React from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import AddIcon from "@mui/icons-material/Add"
+import dynamic from "next/dynamic"
+
+const ButtonLink = dynamic(
+  () => import("@components/atoms/button/ButtonLink"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const Image = dynamic(() => import("@components/atoms/image/Image"), {
+  suspense: true,
+  ssr: true
+})
 
 export interface INewsCardDetail {
   title: string

@@ -1,5 +1,10 @@
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import React from "react"
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
+
+const ModalCustom = dynamic(
+  () => import("@components/molecules/Modal/ModalCustom")
+)
 
 interface IProps {
   open?: boolean

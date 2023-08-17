@@ -42,7 +42,7 @@ const useGamePageListController = (
   const [cooldown, setCooldown] = useState<boolean>(true)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
   const [limitPage, setLimitPage] = useState<ILimitPage>({
-    limit: 20,
+    limit: 30,
     endLimitCount: 0
   })
 
@@ -133,9 +133,13 @@ const useGamePageListController = (
         //     ? limitPage.limit
         //     : 10
         //   : limitPage.limit,
-        limit: limitPage.limit,
+        limit,
         skip: page,
-        sort: "_id",
+        sort:
+          getGameModeFilter() === "free-to-play" ||
+          getGameModeFilter() === "play-to-earn"
+            ? "hot_game_no"
+            : "_id",
         search: searchDropdown,
         category: categoryId || _categoryId || categoryDropdown,
         item: gameItemDropdown,

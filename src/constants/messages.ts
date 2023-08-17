@@ -40,6 +40,8 @@ export const MESSAGES = {
   "create_not_successful_user":
     "Login Failed. Please check your email and password and try again.",
   "reset_password_success": "Reset password success",
+  "reset_password_link":
+    "Click the reset link in the email to change your password",
   "room-timeout": "Room timeout",
   "error-something": "Error something went wrong",
   "balance_not_enough": "Balance not enough",

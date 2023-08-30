@@ -18,9 +18,6 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import dynamic from "next/dynamic"
 import { IMAGES } from "@constants/images"
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
 import useCreateNewPassword from "../containers/hooks/useCreateNewPassword"
 
 const ModalCustom = dynamic(
@@ -89,6 +86,9 @@ interface IProp {
 
 const FromCreatePassword = ({ email, token }: IProp) => {
   const { t } = useTranslation()
+  const [showPassword, setShowPassword] = useState(false)
+  const [characterUppercase, setCharacterUppercase] = useState(true)
+  const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
   const {
     watch,
     register,
@@ -100,14 +100,6 @@ const FromCreatePassword = ({ email, token }: IProp) => {
       password: ""
     }
   })
-
-  const { executeRecaptcha } = useGoogleReCaptcha()
-  const { mutateCreateNewPassword } = useCreateNewPassword()
-  const { errorToast, successToast } = useToast()
-
-  const [showPassword, setShowPassword] = useState(false)
-  const [characterUppercase, setCharacterUppercase] = useState(true)
-  const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [passwordCorrect, setPasswordCorrect] = useState(false)
   const patternPasswordUppercase = /[A-Z]/
@@ -115,6 +107,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   const [createPassword, setCreatePassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [disable, setDisable] = useState(true)
+  const { mutateCreateNewPassword } = useCreateNewPassword()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -151,45 +144,23 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   const [open, setOpen] = useState<boolean>(false)
   const handleClose = () => setOpen(false)
   const onSubmitConfirm = () => {
-    if (!executeRecaptcha) {
-      return
+    if (
+      characterUppercase &&
+      characterPasswordLength &&
+      createPassword === confirmPassword &&
+      createPassword !== "" &&
+      confirmPassword !== ""
+    ) {
+      mutateCreateNewPassword({
+        _email: email,
+        _password: createPassword,
+        _confirmPassword: confirmPassword,
+        _token: token
+      })
+      setOpen(true)
+    } else {
+      setFormSubmitErrors(true)
     }
-    let _recaptcha = ""
-    ;(async () => {
-      try {
-        _recaptcha = await executeRecaptcha("getCodeVerify")
-
-        if (
-          characterUppercase &&
-          characterPasswordLength &&
-          createPassword === confirmPassword &&
-          createPassword !== "" &&
-          confirmPassword !== ""
-        ) {
-          await mutateCreateNewPassword({
-            _email: email,
-            _password: createPassword,
-            _confirmPassword: confirmPassword,
-            _token: token,
-            _recaptcha
-          })
-            .then((_profile) => {
-              if (_profile) {
-                successToast(MESSAGES.reset_password_success)
-                setOpen(true)
-              } else {
-                setFormSubmitErrors(true)
-              }
-            })
-            .catch((error: Error) => {
-              errorToast(error.message)
-              setFormSubmitErrors(true)
-            })
-        }
-      } catch (_error) {
-        errorToast("Verify Error")
-      }
-    })()
   }
 
   const isConfirmPassword = (_password: string, _confirmPassword: string) => {

@@ -81,7 +81,7 @@ const FromForgotPassword = () => {
         await mutateForgotPassword({ _email, _recaptcha })
           .then((_profile) => {
             if (_profile) {
-              successToast(MESSAGES.reset_password_link)
+              successToast(MESSAGES.success_get_code)
               handleClose()
             }
           })

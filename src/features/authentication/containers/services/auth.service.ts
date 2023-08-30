@@ -171,8 +171,7 @@ export const createNewPassword = ({
   _email,
   _token,
   _password,
-  _confirmPassword,
-  _recaptcha
+  _confirmPassword
 }: ICreateNewPassword) =>
   new Promise<ICreateNewPasswordResponse>((resolve, reject) => {
     const data = {
@@ -182,12 +181,7 @@ export const createNewPassword = ({
       token: _token
     }
     services
-      .post<ICreateNewPasswordResponse>(`/profile/reset-password`, {
-        ...data,
-        headers: {
-          "g-recaptcha-token": _recaptcha
-        }
-      })
+      .post<ICreateNewPasswordResponse>(`/profile/reset-password`, { ...data })
       .then((response) => {
         resolve(response.data)
       })

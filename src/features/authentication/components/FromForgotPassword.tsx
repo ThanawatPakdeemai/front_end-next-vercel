@@ -14,6 +14,7 @@ import dynamic from "next/dynamic"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { isMobile } from "@hooks/useGlobal"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import useResetPassword from "../containers/hooks/useResetPassword"
 
 const ModalCustom = dynamic(
@@ -49,9 +50,14 @@ const ModalHeader = dynamic(
   }
 )
 
+interface IEmail {
+  _email: string
+}
+
 const FromForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false)
   const { t } = useTranslation()
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -64,17 +70,28 @@ const FromForgotPassword = () => {
   })
   const { mutateForgotPassword, isLoading } = useResetPassword()
 
-  const onSubmit = (data) => {
-    mutateForgotPassword(data._email)
-      .then((_data) => {
-        if (_data && _data.status) {
-          successToast(MESSAGES.reset_password_success)
-          handleClose()
-        }
-      })
-      .catch((_error) => {
-        errorToast(_error.data.message)
-      })
+  const onSubmit = ({ _email }: IEmail) => {
+    if (!executeRecaptcha) {
+      return
+    }
+    let _recaptcha = ""
+    ;(async () => {
+      try {
+        _recaptcha = await executeRecaptcha("getCodeVerify")
+        await mutateForgotPassword({ _email, _recaptcha })
+          .then((_profile) => {
+            if (_profile) {
+              successToast(MESSAGES.reset_password_link)
+              handleClose()
+            }
+          })
+          .catch((error: Error) => {
+            errorToast(error.message)
+          })
+      } catch (_error) {
+        errorToast("Verify Error")
+      }
+    })()
   }
   const onError = () => {
     errorToast(MESSAGES.please_fill)

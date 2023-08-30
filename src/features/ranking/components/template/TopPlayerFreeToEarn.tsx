@@ -6,7 +6,8 @@ import dynamic from "next/dynamic"
 import useTopPlayFreeToEarn from "@feature/ranking/containers/hook/useTopPlayFreeToEarn"
 import { IPlayerPlayToEarnRanking } from "@feature/ranking/interfaces/IRanking"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
-import { IPlayer, StyledTopPlayerContent } from "./TopPlayer"
+import { StyledTopPlayerContent } from "@feature/ranking/styles/ranking"
+import { IPlayer } from "./TopPlayer"
 
 const CardTitle = dynamic(() => import("@components/organisms/CardTitle"), {
   suspense: true,

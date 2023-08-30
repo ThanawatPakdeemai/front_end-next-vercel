@@ -1,9 +1,24 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import FormProfileSetting from "@mobile/features/profile/components/organisms/FormProfileSetting"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import dynamic from "next/dynamic"
+
+const FormProfileSetting = dynamic(
+  () =>
+    import("@mobile/features/profile/components/organisms/FormProfileSetting"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ArrowBackIcon = dynamic(
+  () => import("@mobile/components/atoms/icons/ArrowBackIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 export type TTypeSettingProfile = "create" | "edit"
 interface IProfileSettingModalProps {

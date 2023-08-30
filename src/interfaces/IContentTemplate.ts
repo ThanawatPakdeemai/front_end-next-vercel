@@ -4,4 +4,5 @@ export interface IContentTemplateProps {
   content: React.ReactNode
   aside: React.ReactNode
   className?: string
+  sidebarClassName?: string
 }

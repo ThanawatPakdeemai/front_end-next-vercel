@@ -161,22 +161,6 @@ registerRoute(
   "GET"
 )
 
-registerRoute(
-  /^https:\/\/api\.(?:nakamoto)\.games\/.*/i,
-  new NetworkFirst({
-    cacheName: "api-post-cache",
-    networkTimeoutSeconds: 10,
-    plugins: [
-      new ExpirationPlugin({
-        maxEntries: 32,
-        maxAgeSeconds: 86400, // Cache for 1 day
-        purgeOnQuotaError: true
-      })
-    ]
-  }),
-  "POST"
-)
-
 // following lines gives you control of the offline fallback strategies
 // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#comprehensive_fallbacks
 
@@ -198,9 +182,13 @@ setCatchHandler(({ event }) => {
     case "document":
       // If using precached URLs:
       return matchPrecache("/fallback")
+      // return caches.match('/fallback')
+      break
     case "image":
       // If using precached URLs:
       return matchPrecache("/static/images/fallback.png")
+      // return caches.match('/static/images/fallback.png')
+      break
     case "font":
     // If using precached URLs:
     // return matchPrecache(FALLBACK_FONT_URL);

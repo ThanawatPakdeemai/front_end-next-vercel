@@ -34,6 +34,14 @@ const Header = dynamic(() => import("@components/organisms/Header"), {
   ssr: false
 })
 
+const OfflineIndicator = dynamic(
+  () => import("@components/atoms/worker/OfflineIndicator"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
 const GamePageLayout = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
@@ -55,6 +63,7 @@ const GamePageLayout = ({
         <HeadGames>{children}</HeadGames>
       </div>
       <Footer />
+      <OfflineIndicator />
     </div>
   )
 }

@@ -7,11 +7,9 @@ interface IProps {
 const CountOnPlaying = ({ count }: IProps) => {
   const { t } = useTranslation()
   return (
-    <>
-      <div className="h-auto w-fit rounded-less border border-neutral-700 p-1 uppercase">
-        {`${t("play")}`} : {count}
-      </div>
-    </>
+    <div className="h-auto w-fit rounded-less border border-neutral-700 p-1 uppercase">
+      {`${t("play")}`} : {count}
+    </div>
   )
 }
 

@@ -1,9 +1,17 @@
 import React, { memo } from "react"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import useGlobal from "@hooks/useGlobal"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import dynamic from "next/dynamic"
+
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IGamesLobbyProps {
   _gameData: IGame[] | undefined

@@ -62,8 +62,12 @@ const EventSidebar = () => {
               <TagSingular
                 title="Rules"
                 label={
-                  <pre
-                    className="whitespace-pre-wrap break-keep leading-6"
+                  <Box
+                    component="div"
+                    sx={{
+                      fontFamily: `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`
+                    }}
+                    className="wysiwyg whitespace-pre-wrap break-keep leading-6"
                     dangerouslySetInnerHTML={{
                       __html: currentEventData.event_detail || ""
                     }}

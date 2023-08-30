@@ -2,29 +2,17 @@ import { IQuestData } from "@feature/quest/interfaces/IQuestService"
 import React from "react"
 import { motion } from "framer-motion"
 import { useTranslation } from "react-i18next"
-import ButtonClaim from "../atoms/ButtonClaim"
+import dynamic from "next/dynamic"
+import { buttonClaim, textDamping } from "@styles/themes/partial/motion"
+
+const ButtonClaim = dynamic(() => import("../atoms/ButtonClaim"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp {
   data: IQuestData
   isComplete: boolean
-}
-
-const textDamping = {
-  initial: {
-    x: -90
-  },
-  animate: {
-    x: 0,
-    transition: { stiffness: 220, type: "spring", damping: 20 }
-  }
-}
-
-const buttonClaim = {
-  initial: { width: 168 },
-  animate: {
-    width: 144,
-    transition: { stiffness: 220, type: "spring", damping: 8 }
-  }
 }
 
 const ClaimOnDetail = ({ data }: IProp) => {

@@ -51,7 +51,7 @@ const ReviewCard = ({
   return (
     <div
       key={reviewId}
-      className={`review--item flex h-auto min-h-[68px] w-full flex-row gap-x-1 rounded-default border-2 ${
+      className={`review--item flex w-full flex-row gap-x-1 rounded-default border-2 ${
         playerId && playerId === reviewUserId
           ? "border-neutral-600"
           : "border-neutral-700"
@@ -60,24 +60,26 @@ const ReviewCard = ({
       <div className="relative flex w-full flex-row items-center">
         <div
           className={`${
-            isMore ? "opacity-20" : undefined
-          } relative flex w-full flex-row items-center gap-x-2`}
+            isMore ? "opacity-20" : ""
+          } relative flex w-full flex-row gap-x-2`}
         >
-          <div className="h-[58px] w-[58px] min-w-[58px] rounded-sm">
+          <div className="h-[58px] w-[58px] min-w-[58px] overflow-hidden rounded-sm">
             <Image
               src={reviewAvatar}
               width={58}
               height={58}
               alt={reviewUsername}
-              className="h-[58px] w-[58px] rounded-sm"
+              className="h-[58px] w-[58px] scale-125 rounded-sm"
             />
           </div>
-          <div className="flex h-full w-full flex-col gap-y-2">
+          <div className="flex h-full w-full flex-col">
             <div className="flex h-6 min-h-[24px] w-full flex-row justify-between">
-              <div className="flex h-full items-center font-neue-machina font-bold uppercase text-white-primary">
-                {reviewUsername}
+              <div className="flex h-full max-w-[150px] items-center font-neue-machina font-bold uppercase">
+                <span className="truncate text-white-primary">
+                  {reviewUsername}
+                </span>
               </div>
-              <div className="review--item__content-rating flex h-full items-center gap-2">
+              <div className="review--item__content-rating mr-[5px] flex h-full items-center gap-2">
                 <Rating
                   sx={{
                     "& .MuiSvgIcon-root": {

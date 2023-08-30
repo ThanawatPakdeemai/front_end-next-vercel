@@ -12,7 +12,7 @@ import useProfileStore from "@stores/profileStore"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 
 const DropdownListItem = dynamic(
-  () => import("@feature/gameItem/atoms/DropdownListItem"),
+  () => import("@feature/gameItem/components/atoms/DropdownListItem"),
   {
     suspense: true,
     ssr: false

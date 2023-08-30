@@ -63,6 +63,14 @@ const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   ssr: false
 })
 
+const OfflineIndicator = dynamic(
+  () => import("@components/atoms/worker/OfflineIndicator"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
 interface IGamePageDefaultProps {
   component: React.ReactNode
   component2?: React.ReactNode
@@ -248,6 +256,7 @@ const GamePageDefault = ({
             <ReleatedGames _gameType={getGameMode(gameData as IGame)} />
           )} */}
         <Footer />
+        <OfflineIndicator />
       </div>
     </div>
   )

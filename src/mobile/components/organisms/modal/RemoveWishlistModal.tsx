@@ -1,7 +1,15 @@
 import React from "react"
 import { Avatar, Box, Button, SwipeableDrawer } from "@mui/material"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
-import HeartFilledIcon from "@mobile/components/atoms/icons/HeartFilledIcon"
+import dynamic from "next/dynamic"
+
+const HeartFilledIcon = dynamic(
+  () => import("@mobile/components/atoms/icons/HeartFilledIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface ICategoriesModalProps {
   open: boolean

@@ -8,6 +8,10 @@ const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
   suspense: true,
   ssr: true
 })
+const StarEXP = dynamic(() => import("@components/atoms/svg/StarEXP"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   reward: IQuestReward
@@ -15,13 +19,24 @@ interface IProp {
 }
 
 const RewardList = ({ reward, isLast }: IProp) => {
-  const defaultImage = "/assets/icons/star.svg"
   const defaultAlt = reward.type
-
-  const src = reward.image || defaultImage
   const alt = reward.name || defaultAlt
   const width = reward.image ? 55 : 45
   const height = reward.image ? 55 : 45
+
+  const getReward = () => {
+    if (reward.image && reward.name) {
+      return (
+        <ImageCustom
+          src={reward.image}
+          alt={reward.name}
+          width={width}
+          height={height}
+        />
+      )
+    }
+    return <StarEXP />
+  }
 
   return (
     <motion.div
@@ -36,12 +51,7 @@ const RewardList = ({ reward, isLast }: IProp) => {
       className={`flex ${!isLast && " border-b border-neutral-800"} py-3`}
     >
       <div className="flex h-[75px] w-[75px] items-center justify-center rounded-[8px] border border-solid border-neutral-700">
-        <ImageCustom
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-        />
+        {getReward()}
       </div>
       <div className="ml-4 mt-4 grid content-between">
         <Typography className="text-sm uppercase text-neutral-400">

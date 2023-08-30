@@ -2,10 +2,9 @@
 import React, { useState } from "react"
 import { Box, Button, Typography } from "@mui/material"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-// import { signIn } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import dynamic from "next/dynamic"
-// import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
-// import useLoginTypeStore from "@stores/loginTypes"
+import useLoginTypeStore from "@stores/loginTypes"
 
 const CardNoReward = dynamic(
   () => import("@feature/game/components/atoms/CardNoReward"),
@@ -25,10 +24,10 @@ const CreateAccountModal = dynamic(
     ssr: false
   }
 )
-// const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
-//   suspense: true,
-//   ssr: false
-// })
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
 const LogoNakaBigIcon = dynamic(
   () => import("@components/atoms/svg/LogoNakaBigIcon"),
   {
@@ -39,16 +38,16 @@ const LogoNakaBigIcon = dynamic(
 
 const SignInLayout = () => {
   // const { twitterLogin } = useFormLoginController()
-  // const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
+  const { setClickLoginTypes: setLoginTypes } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
     useState<boolean>(false)
 
-  // const handleLogin = (_typeLogin: string) => {
-  //   setLoginTypes(_typeLogin)
-  //   signIn(_typeLogin)
-  // }
+  const handleLogin = (_typeLogin: string) => {
+    setLoginTypes(_typeLogin)
+    signIn(_typeLogin)
+  }
 
   return (
     <>
@@ -78,7 +77,7 @@ const SignInLayout = () => {
             </div>
           </Button>
         </Box> */}
-        {/* <Box component="div">
+        <Box component="div">
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
@@ -91,7 +90,21 @@ const SignInLayout = () => {
               <span>Sign in with Google</span>
             </div>
           </Button>
-        </Box> */}
+        </Box>
+        <Box component="div">
+          <Button
+            variant="contained"
+            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
+            onClick={() => handleLogin("discord")}
+          >
+            <div className="flex items-center font-urbanist text-base font-medium">
+              <span className="pr-2">
+                <Icomoon className="icon-Discord" />
+              </span>
+              <span>Sign in with Discord</span>
+            </div>
+          </Button>
+        </Box>
         {/* <Box component="div">
           <Button
             variant="contained"

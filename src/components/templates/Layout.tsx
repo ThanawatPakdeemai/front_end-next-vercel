@@ -13,22 +13,31 @@ const Header = dynamic(() => import("@components/organisms/Header"), {
   ssr: true
 })
 
-export default function Layout({
+const OfflineIndicator = dynamic(
+  () => import("@components/atoms/worker/OfflineIndicator"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const Layout = ({
   children
-}: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) {
-  return (
-    <Box
-      component="div"
-      sx={{
-        ".footer-divider": {
-          display: "none"
-        }
-      }}
-      className="main-container mx-auto w-full lg:px-2"
-    >
-      <Header />
-      {children}
-      {!isMobile && <Footer />}
-    </Box>
-  )
-}
+}: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
+  <Box
+    component="div"
+    sx={{
+      ".footer-divider": {
+        display: "none"
+      }
+    }}
+    className="main-container mx-auto w-full lg:px-2"
+  >
+    <Header />
+    {children}
+    {!isMobile && <Footer />}
+    <OfflineIndicator />
+  </Box>
+)
+
+export default Layout

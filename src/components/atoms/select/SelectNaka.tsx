@@ -13,7 +13,15 @@ import {
 import { Trans, useTranslation } from "next-i18next"
 import { useRouter } from "next/router"
 import Link from "next/link"
-import ButtonClose from "../button/ButtonClose"
+import dynamic from "next/dynamic"
+
+const ButtonClose = dynamic(
+  () => import("@components/atoms/button/ButtonClose"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   button: React.ReactNode

@@ -2,8 +2,22 @@ import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { Box, SxProps } from "@mui/material"
 import React, { useState } from "react"
 import Slider, { Settings } from "react-slick"
-import VerticalThumbCardSlide from "../organisms/VerticalThumbCardSlide"
-import VerticalThumbSmallCardSlide from "../organisms/VerticalThumbSmallCardSlide"
+import dynamic from "next/dynamic"
+
+const VerticalThumbCardSlide = dynamic(
+  () => import("../organisms/VerticalThumbCardSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const VerticalThumbSmallCardSlide = dynamic(
+  () => import("../organisms/VerticalThumbSmallCardSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IVerticalThumbSlideProps {
   items: IVerticalThumbSlide[]

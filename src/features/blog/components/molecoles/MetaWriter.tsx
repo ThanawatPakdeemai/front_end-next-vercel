@@ -1,10 +1,6 @@
+import { IMetaWriter } from "@feature/blog/interfaces/IMeta"
 import React from "react"
 import { useTranslation } from "react-i18next"
-
-export interface IMetaWriter {
-  writerName: string
-  writerTitle?: string
-}
 
 const MetaWriter = ({ writerName, writerTitle = "WRITER" }: IMetaWriter) => {
   const { t } = useTranslation()

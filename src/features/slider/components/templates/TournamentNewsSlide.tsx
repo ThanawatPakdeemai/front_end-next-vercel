@@ -1,6 +1,14 @@
+import dynamic from "next/dynamic"
 import React from "react"
 import Slider, { Settings } from "react-slick"
-import TournamentNewsCardSlide from "../organisms/TournamentNewsCardSlide"
+
+const TournamentNewsCardSlide = dynamic(
+  () => import("../organisms/TournamentNewsCardSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const TournamentNewsSlide = () => {
   const mockupNews = [

@@ -31,10 +31,10 @@ const BlogCardHorizontal = ({
   >
     <div className="card--blog__horizontal-content max-w-[300px] flex-1">
       <Link href={`/blog/${blog_id}`}>
-        <Typography className="mb-0 h-[40px] font-neue-machina-semi text-default uppercase text-neutral-400 line-clamp-2">
+        <Typography className="mb-0 line-clamp-2 h-[40px] font-neue-machina-semi text-default uppercase text-neutral-400">
           {title}
         </Typography>
-        <Typography className="my-[8px] text-sm text-neutral-500 line-clamp-6">
+        <Typography className="my-[8px] line-clamp-6 text-sm text-neutral-500">
           {description}
         </Typography>
         <div className="flex flex-wrap items-center gap-2 pt-14">

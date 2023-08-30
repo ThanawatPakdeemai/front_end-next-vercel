@@ -11,6 +11,7 @@ import {
 import dynamic from "next/dynamic"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
+import SwitchCustom from "@styles/themes/partial/SwitchCustom"
 
 const ModalCustom = dynamic(
   () => import("@components/molecules/Modal/ModalCustom"),
@@ -26,10 +27,6 @@ const ButtonClose = dynamic(
     ssr: false
   }
 )
-const SwitchCustom = dynamic(() => import("@components/atoms/SwitchCustom"), {
-  suspense: true,
-  ssr: false
-})
 const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   suspense: true,
   ssr: false

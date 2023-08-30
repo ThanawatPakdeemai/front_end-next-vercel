@@ -2,9 +2,22 @@ import React, { useState } from "react"
 import { MAIN_MENU_MOBILE, TGameMenuMobile } from "@mobile/constants/menuMobile"
 import { Box } from "@mui/material"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import WishlistModal from "./modal/WishlistModal"
-import SettingModal from "./modal/SettingModal"
-import EarnRewardModal from "./modal/EarnRewardModal"
+import dynamic from "next/dynamic"
+
+const WishlistModal = dynamic(() => import("./modal/WishlistModal"), {
+  suspense: true,
+  ssr: false
+})
+
+const SettingModal = dynamic(() => import("./modal/SettingModal"), {
+  suspense: true,
+  ssr: false
+})
+
+const EarnRewardModal = dynamic(() => import("./modal/EarnRewardModal"), {
+  suspense: true,
+  ssr: false
+})
 
 const FooterMobile = () => {
   const {

@@ -3,8 +3,15 @@ import { Box, Skeleton } from "@mui/material"
 import React from "react"
 import Slider, { Settings } from "react-slick"
 import { useTranslation } from "react-i18next"
-import CarouselCardSlide from "../organisms/CarouselCardSlide"
+import dynamic from "next/dynamic"
 
+const CarouselCardSlide = dynamic(
+  () => import("../organisms/CarouselCardSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 interface ICarouselSlideProps {
   slideGames: IGameDownloadSlide[]
   isLoading: boolean

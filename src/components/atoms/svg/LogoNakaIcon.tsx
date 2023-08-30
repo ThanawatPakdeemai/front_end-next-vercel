@@ -57,11 +57,15 @@ const LogoNakaIcon = ({
       <>
         <path
           d="M213 0V1.12766H214.695V5H216.047V1.12766H217.743V0H213Z"
-          className={`${fill} logo-naka-icon__path-3 translate-x-[-45px] transition-all group-hover:translate-x-0`}
+          className={`${fill} logo-naka-icon__path-3 ${
+            hover ? "translate-x-[-45px] group-hover:translate-x-0" : ""
+          } transition-all`}
         />
         <path
           d="M218.338 5H219.697V1.88652L219.436 0.319149H219.772L220.354 5H222.976L223.573 0.319149H223.895L223.648 1.88652V5H225V0H222.348L221.856 4.68085H221.512L221.019 0H218.338V5Z"
-          className={`${fill} logo-naka-icon__path-4 translate-x-[-45px] transition-all group-hover:translate-x-0`}
+          className={`${fill} logo-naka-icon__path-4 transition-all ${
+            hover ? "translate-x-[-45px] group-hover:translate-x-0" : ""
+          }`}
         />
       </>
     )}

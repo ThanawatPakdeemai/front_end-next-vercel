@@ -15,7 +15,7 @@ import { ICURRENCY } from "@interfaces/ICurrency"
 import { IList } from "@interfaces/ITransaction"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { CATEGORY_ICON } from "@constants/categoryIcon"
-import { IDropdownCustomSelect } from "../DropdownCustom"
+import { IDropdownCustomSelect } from "@components/atoms/DropdownCustom"
 
 const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   suspense: true,
@@ -33,7 +33,7 @@ const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
   ssr: false
 })
 const ButtonDropdown = dynamic(
-  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  () => import("@feature/gameItem/components/atoms/ButtonDropdown"),
   {
     suspense: true,
     ssr: false

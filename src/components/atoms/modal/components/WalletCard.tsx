@@ -1,9 +1,9 @@
 /* eslint-disable no-use-before-define */
 import React, { memo } from "react"
-import styled from "styled-components"
 import dynamic from "next/dynamic"
 import { connectorLocalStorageKey } from "@constants/wallets"
 import { Login, Config } from "@src/types/wallet"
+import styled from "@emotion/styled"
 
 const Image = dynamic(() => import("@components/atoms/image/Image"), {
   suspense: true,
@@ -52,7 +52,6 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss }) => {
 }
 
 const Setposition = styled.div``
-
 const ButtonSelector = styled.div`
   position: relative;
   margin-bottom: 30px;

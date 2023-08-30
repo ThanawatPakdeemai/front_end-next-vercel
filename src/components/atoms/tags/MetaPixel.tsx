@@ -1,7 +1,8 @@
+import Script from "next/script"
 import React from "react"
 
 const MetaPixel = () => (
-  <script
+  <Script
     id="meta-pixel"
     dangerouslySetInnerHTML={{
       __html: `!(function (f, b, e, v, n, t, s) {

@@ -4,9 +4,23 @@ import {
 } from "@feature/quest/interfaces/IQuestService"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
-import ClaimAllComponent from "../moleclues/ClaimAllComponent"
-import MissionItem from "../moleclues/MissionItem"
-import TabControl from "../moleclues/TabControl"
+import dynamic from "next/dynamic"
+
+const ClaimAllComponent = dynamic(
+  () => import("../moleclues/ClaimAllComponent"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+const MissionItem = dynamic(() => import("../moleclues/MissionItem"), {
+  suspense: true,
+  ssr: true
+})
+const TabControl = dynamic(() => import("../moleclues/TabControl"), {
+  suspense: true,
+  ssr: true
+})
 
 interface IProp {
   value: string

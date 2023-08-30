@@ -13,10 +13,11 @@ const LogoNakaIcon = dynamic(
 
 interface IProps {
   showIconTM?: boolean
+  hover?: boolean
 }
 
 const LogoNaka = (props: IProps) => {
-  const { showIconTM } = props
+  const { showIconTM, hover } = props
   const { isMarketplace, isDeveloperPage } = useGlobal()
 
   const themeColor = (): string => {
@@ -37,6 +38,7 @@ const LogoNaka = (props: IProps) => {
       <LogoNakaIcon
         fill={themeColor().toString()}
         showIconTM={showIconTM}
+        hover={hover}
       />
     </Box>
   )

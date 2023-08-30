@@ -4,7 +4,7 @@ import {
   IGetEventResponse,
   IResponseLeaderBoard,
   IResponseTopScoreSummaryDataData
-} from "../../interface/IEventsService"
+} from "@feature/event/interface/IEventsService"
 
 export const getEventList = async ({
   limit,

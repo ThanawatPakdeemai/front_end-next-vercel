@@ -25,6 +25,7 @@ import dynamic from "next/dynamic"
 import useLoginTypeStore from "@stores/loginTypes"
 import { isMobile } from "@hooks/useGlobal"
 // import CONFIGS from "@configs/index"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
 
@@ -88,7 +89,6 @@ const FormLogin = () => {
 
   const handleLogin = async (_typeLogin: string) => {
     await setLoginTypes(_typeLogin)
-    // await signIn(_typeLogin)
     await signIn(_typeLogin)
   }
   return (
@@ -229,7 +229,18 @@ const FormLogin = () => {
           />
         </ButtonGroup>
       </form>
-      <FromForgotPassword />
+      <GoogleReCaptchaProvider
+        reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+        scriptProps={{
+          async: true,
+          defer: false,
+          appendTo: "head",
+          nonce: undefined
+        }}
+      >
+        <FromForgotPassword />
+      </GoogleReCaptchaProvider>
+
       <Grid
         item
         container
@@ -263,7 +274,7 @@ const FormLogin = () => {
                 icon={<FacebookIcon />}
                 className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
               /> */}
-            <ButtonIcon
+            {/* <ButtonIcon
               whileHover="hover"
               transition={{
                 type: "spring",
@@ -273,7 +284,7 @@ const FormLogin = () => {
               onClick={() => handleLogin("twitter")}
               icon={<Icomoon className="icon-twitter" />}
               className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-            />
+            /> */}
             <ButtonIcon
               whileHover="hover"
               transition={{

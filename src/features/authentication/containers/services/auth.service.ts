@@ -153,10 +153,14 @@ export const getVerifyCode = ({ _email, _recaptcha }: IGetVerifyCode) =>
       .catch((error) => reject(error))
   })
 
-export const forgotPassword = (_email: string) =>
+export const forgotPassword = ({ _email, _recaptcha }: IGetVerifyCode) =>
   new Promise<IForgetPasswordResponse>((resolve, reject) => {
     services
-      .get<IForgetPasswordResponse>(`/profile/reset-password/${_email}`)
+      .get<IForgetPasswordResponse>(`/profile/reset-password/${_email}`, {
+        headers: {
+          "g-recaptcha-token": _recaptcha
+        }
+      })
       .then((response) => {
         resolve(response.data)
       })
@@ -167,7 +171,8 @@ export const createNewPassword = ({
   _email,
   _token,
   _password,
-  _confirmPassword
+  _confirmPassword,
+  _recaptcha
 }: ICreateNewPassword) =>
   new Promise<ICreateNewPasswordResponse>((resolve, reject) => {
     const data = {
@@ -177,7 +182,12 @@ export const createNewPassword = ({
       token: _token
     }
     services
-      .post<ICreateNewPasswordResponse>(`/profile/reset-password`, { ...data })
+      .post<ICreateNewPasswordResponse>(`/profile/reset-password`, {
+        ...data,
+        headers: {
+          "g-recaptcha-token": _recaptcha
+        }
+      })
       .then((response) => {
         resolve(response.data)
       })

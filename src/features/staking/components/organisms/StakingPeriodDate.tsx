@@ -1,8 +1,17 @@
 import { TStaking, TStakingStatus } from "@src/types/staking"
 import Link from "next/link"
 import React from "react"
-import PeriodDate from "../molecules/PeriodDate"
-import PeriodLabel from "../molecules/PeriodLabel"
+import dynamic from "next/dynamic"
+
+const PeriodDate = dynamic(() => import("../molecules/PeriodDate"), {
+  suspense: true,
+  ssr: false
+})
+
+const PeriodLabel = dynamic(() => import("../molecules/PeriodLabel"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface IStakingDate {
   days?: number

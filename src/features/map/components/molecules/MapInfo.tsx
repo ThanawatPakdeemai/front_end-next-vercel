@@ -1,6 +1,11 @@
 import { Box } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
-import ColorBoxElementInfo from "./ColorBoxElementInfo"
+
+const ColorBoxElementInfo = dynamic(() => import("./ColorBoxElementInfo"), {
+  suspense: true,
+  ssr: false
+})
 
 const MapInfo = () => (
   <Box

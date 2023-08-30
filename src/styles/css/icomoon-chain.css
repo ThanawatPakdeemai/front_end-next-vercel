@@ -1,11 +1,10 @@
 @font-face {
   font-family: "icomoon-chain";
-  src: url("/assets/fonts/icomoon-chain.eot?ybhy3d");
-  src: url("/assets/fonts/icomoon-chain.eot?ybhy3d#iefix")
-      format("embedded-opentype"),
-    url("/assets/fonts/icomoon-chain.ttf?ybhy3d") format("truetype"),
-    url("/assets/fonts/icomoon-chain.woff?ybhy3d") format("woff"),
-    url("/assets/fonts/icomoon-chain.svg?ybhy3d#icomoon") format("svg");
+  src: url("/assets/fonts/icomoon-chain.eot");
+  src: url("/assets/fonts/icomoon-chain.eot#iefix") format("embedded-opentype"),
+    url("/assets/fonts/icomoon-chain.ttf") format("truetype"),
+    url("/assets/fonts/icomoon-chain.woff") format("woff"),
+    url("/assets/fonts/icomoon-chain.svg#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;

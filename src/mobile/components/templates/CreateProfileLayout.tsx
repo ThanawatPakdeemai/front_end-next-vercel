@@ -1,7 +1,15 @@
 import React from "react"
 import { Box, Grid, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import FormCreateProfile from "@feature/profile/components/createProfile/FormCreateProfile"
+import dynamic from "next/dynamic"
+
+const FormCreateProfile = dynamic(
+  () => import("@feature/profile/components/createProfile/FormCreateProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const CreateProfileLayout = () => {
   const { t } = useTranslation()

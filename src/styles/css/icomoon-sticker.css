@@ -1,11 +1,11 @@
 @font-face {
   font-family: "icomoon-sticker";
-  src: url("/assets/fonts/icomoon-sticker.eot?ybhy3d");
-  src: url("/assets/fonts/icomoon-sticker.eot?ybhy3d#iefix")
+  src: url("/assets/fonts/icomoon-sticker.eot");
+  src: url("/assets/fonts/icomoon-sticker.eot#iefix")
       format("embedded-opentype"),
-    url("/assets/fonts/icomoon-sticker.ttf?ybhy3d") format("truetype"),
-    url("/assets/fonts/icomoon-sticker.woff?ybhy3d") format("woff"),
-    url("/assets/fonts/icomoon-sticker.svg?ybhy3d#icomoon") format("svg");
+    url("/assets/fonts/icomoon-sticker.ttf") format("truetype"),
+    url("/assets/fonts/icomoon-sticker.woff") format("woff"),
+    url("/assets/fonts/icomoon-sticker.svg#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;

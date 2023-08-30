@@ -14,6 +14,7 @@ import dynamic from "next/dynamic"
 import { StyleCreateRoom, StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
+import SwitchCustom from "@styles/themes/partial/SwitchCustom"
 
 const ModalWithHeaderTemplate = dynamic(
   () => import("@mobile/components/templates/ModalWithHeaderTemplate"),
@@ -29,10 +30,6 @@ const GameInfoCard = dynamic(
     ssr: false
   }
 )
-const SwitchCustom = dynamic(() => import("@components/atoms/SwitchCustom"), {
-  suspense: true,
-  ssr: false
-})
 const CountItem = dynamic(() => import("@components/molecules/CountItem"), {
   suspense: true,
   ssr: false

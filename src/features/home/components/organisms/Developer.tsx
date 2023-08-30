@@ -1,7 +1,22 @@
 import { Grid } from "@mui/material"
+import dynamic from "next/dynamic"
 import { memo } from "react"
-import DeveloperContent from "@feature/home/components/molecules/DeveloperContent"
-import DeveloperTitle from "@feature/home/components/molecules/DeveloperTitle"
+
+const DeveloperContent = dynamic(
+  () => import("@feature/home/components/molecules/DeveloperContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const DeveloperTitle = dynamic(
+  () => import("@feature/home/components/molecules/DeveloperTitle"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const Developer = () => (
   <Grid

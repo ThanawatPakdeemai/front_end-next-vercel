@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material"
 import React from "react"
 import { useTranslation } from "react-i18next"
-
 import dynamic from "next/dynamic"
 import { useWeb3Provider } from "@providers/Web3Provider"
 

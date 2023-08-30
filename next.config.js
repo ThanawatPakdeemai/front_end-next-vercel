@@ -9,19 +9,18 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const withPWA = require("next-pwa")({
   dest: "public",
   disable: process.env.NEXT_PUBLIC_MODE === "development",
-  swSrc: "service-worker.js"
-  // runtimeCaching: [
-  //   {
-  //     urlPattern: /^https:\/\/api.nakamoto.games\.com\/api\//,
-  //     handler: "CacheFirst",
-  //     options: {
-  //       cacheName: "cross-origin",
-  //       expiration: {
-  //         maxAgeSeconds: 60 * 60 * 24 // Cache for 1 day
-  //       }
-  //     }
-  //   }
-  // ]
+  sw: "sw.js",
+  // Caching strategies
+  runtimeCaching: [
+    {
+      urlPattern: /\/api/, // Example API route pattern
+      handler: "CacheFirst", // Use cache first strategy
+      options: {
+        cacheName: "api-cache" // Name for this cache
+      }
+    }
+    // Add more caching strategies as needed
+  ]
 })
 
 // eslint-disable-next-line import/no-extraneous-dependencies

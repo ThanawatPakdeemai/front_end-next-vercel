@@ -97,7 +97,7 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
             average={reviewInfo ? reviewInfo.avarage.toFixed(2) : "0"}
             gameId={gameId}
           >
-            <div className="flex h-full w-full flex-col gap-y-2">
+            <div className="flex h-full w-full flex-col">
               <div
                 className={`${
                   previewList && limit && previewList.length > limit / 2
@@ -123,7 +123,7 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
                   <div className="text-center">{t("no_review")}</div>
                 )}
               </div>
-              <div className="absolute bottom-0 z-10 flex w-full flex-row items-center justify-center p-4">
+              <div className="absolute bottom-[24px] z-10 flex w-full flex-row items-center justify-center">
                 {stateProfile ? (
                   <div className="flex w-full flex-row items-center justify-center bg-transparent">
                     <Button

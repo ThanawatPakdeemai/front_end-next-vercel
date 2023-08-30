@@ -3,10 +3,12 @@ import { useState } from "react"
 import { Popover, Typography } from "@mui/material"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
 import { IChainList } from "@configs/chain"
 import dynamic from "next/dynamic"
 
+const ButtonDropdown = dynamic(
+  () => import("@feature/gameItem/components/atoms/ButtonDropdown")
+)
 const SelectDropdownChainList = dynamic(
   () => import("@components/atoms/selectDropdown/SelectDropdownChainList"),
   {

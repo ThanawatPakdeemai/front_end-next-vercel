@@ -103,7 +103,7 @@ const GameCardMobile = ({
           </Link>
         </div>
         <Link href={href}>
-          <h2 className="font-urbanist text-[20px] font-semibold text-white-primary line-clamp-2">
+          <h2 className="line-clamp-2 font-urbanist text-[20px] font-semibold text-white-primary">
             {name}
           </h2>
           <div className="flex gap-2">

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 import dynamic from "next/dynamic"
 import { Box } from "@mui/material"
 
-const GasIcon = dynamic(() => import("./tagline/GasIcon"), {
+const GasIcon = dynamic(() => import("../atoms/svg/GasIcon"), {
   suspense: true,
   ssr: false
 })

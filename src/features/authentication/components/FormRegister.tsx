@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { memo } from "react"
 import {
   Box,
@@ -23,7 +24,7 @@ import dynamic from "next/dynamic"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import { isMobile } from "@hooks/useGlobal"
 import useRegisterTypeStore from "@stores/registerTypes"
-import CONFIGS from "@configs/index"
+// import CONFIGS from "@configs/index"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -592,9 +593,9 @@ const FormRegister = () => {
               justifyContent="center"
             >
               <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
-                {CONFIGS.MODE === "production" ? undefined : (
-                  <>
-                    <ButtonIcon
+                {/* {CONFIGS.MODE === "production" ? undefined : ( */}
+                <>
+                  {/* <ButtonIcon
                       whileHover="hover"
                       transition={{
                         type: "spring",
@@ -604,21 +605,33 @@ const FormRegister = () => {
                       onClick={() => handleRegister("twitter")}
                       icon={<Icomoon className="icon-twitter" />}
                       className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                    />
-                    <ButtonIcon
-                      whileHover="hover"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 4
-                      }}
-                      // onClick={() => googleRegister(watch("referralId"))}
-                      onClick={() => handleRegister("google")}
-                      icon={<Icomoon className="icon-Google text-[110%]" />}
-                      className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                    />
-                  </>
-                )}
+                    /> */}
+                  <ButtonIcon
+                    whileHover="hover"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 4
+                    }}
+                    // onClick={() => googleRegister(watch("referralId"))}
+                    onClick={() => handleRegister("google")}
+                    icon={<Icomoon className="icon-Google text-[110%]" />}
+                    className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                  />
+                  <ButtonIcon
+                    whileHover="hover"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 4
+                    }}
+                    // onClick={() => googleRegister(watch("referralId"))}
+                    onClick={() => handleRegister("discord")}
+                    icon={<Icomoon className="icon-Discord text-[110%]" />}
+                    className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                  />
+                </>
+                {/* )} */}
                 {isMobile && (
                   <div className="absolute pt-14">
                     <Typography className="text-sm uppercase text-neutral-700">

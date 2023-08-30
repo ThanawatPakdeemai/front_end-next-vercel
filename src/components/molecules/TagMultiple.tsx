@@ -1,6 +1,15 @@
-import GameTags from "@feature/slider/components/atoms/GameTags"
+import React from "react"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import { Typography } from "@mui/material"
+import dynamic from "next/dynamic"
+
+const GameTags = dynamic(
+  () => import("@feature/slider/components/atoms/GameTags"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface ITagMultiple {
   title: string

@@ -3,7 +3,7 @@ import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
 import { CurrentPlayer } from "@feature/game/interfaces/IGameService"
 import PlayerCardMobile from "@src/mobile/features/game/components/molecules/PlayerCardMobile"
 import { useTranslation } from "react-i18next"
-import WaitingSkeleton from "@mobile/components/atoms/skelaton/WaitingSkeleton"
+import WaitingSkeleton from "@mobile/components/atoms/skeleton/WaitingSkeleton"
 import { Box } from "@mui/material"
 import { StyleWaitingRoom } from "@mobile/styles/muiStyleMobile"
 

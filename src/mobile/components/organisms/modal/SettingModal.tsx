@@ -16,7 +16,7 @@ import CONFIGS from "@configs/index"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
+import { StyledAvatar } from "@mobile/styles/muiStyleMobile"
 
 const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
   suspense: true,

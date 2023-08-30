@@ -39,7 +39,7 @@ const ReviewSection = ({ children, average, gameId }: IReviewProps) => {
   const { t } = useTranslation()
   const [openViewAll, setOpenViewAll] = React.useState<boolean>(false)
   return (
-    <div className="relative flex flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
+    <div className="relative flex flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 pb-10">
       <AsideLayout
         icon={<Icomoon className="icon-Medal" />}
         title={`${t("review_title")}`}

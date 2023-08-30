@@ -4,7 +4,7 @@ import { IGetPartnerGameService } from "@feature/game/interfaces/IPartnerGame"
 import {
   IGamePartnerNewVersionReponse,
   IGamePartnerReviewsReponse
-} from "../../interfaces/IGamePartners"
+} from "@src/features/game/partnerGames/interfaces/IGamePartners"
 
 /**
  * @description Get all partner games

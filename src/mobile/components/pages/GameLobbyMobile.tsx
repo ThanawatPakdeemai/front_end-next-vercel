@@ -3,7 +3,15 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import GameDetailLayoutMobile from "../templates/GameDetailLayoutMobile"
+import dynamic from "next/dynamic"
+
+const GameDetailLayoutMobile = dynamic(
+  () => import("../templates/GameDetailLayoutMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const GameLobbyMobile = () => {
   const router = useRouter()

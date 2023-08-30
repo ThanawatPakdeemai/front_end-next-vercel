@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getProfileByEmail } from "../../services/profile.service"
+import { getProfileByEmail } from "@src/features/profile/containers/services/profile.service"
 
 const useGetProfileByEmail = (_email: string) => {
   const {

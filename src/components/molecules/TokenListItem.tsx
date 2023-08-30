@@ -3,7 +3,12 @@ import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
 import { Box } from "@mui/material"
 import { iconmotion } from "@styles/themes/partial/motion"
-import ButtonIcon from "../atoms/button/ButtonIcon"
+import dynamic from "next/dynamic"
+
+const ButtonIcon = dynamic(() => import("../atoms/button/ButtonIcon"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface ITokenListItem {
   icon?: ReactNode

@@ -11,7 +11,8 @@ import {
   FormControlLabel,
   Radio,
   FormLabel,
-  FormControl
+  FormControl,
+  CircularProgress
 } from "@mui/material"
 import _ from "lodash"
 import { Controller } from "react-hook-form"
@@ -21,10 +22,14 @@ import { DROPDOWN_GAMETYPE } from "@configs/gameType"
 import { getCategories } from "@feature/dropdown/containers/services/dropdown.service"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import { useToast } from "@feature/toast/containers"
-import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
 import DropdownListCategories from "@feature/dropdown/components/molecules/DropdownListCategories"
-import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
-import useFormController from "../containers/hooks/useFormController"
+import useFormJoinUsController from "@src/features/authentication/containers/hooks/useFormJoinUsController"
+import useFormController from "@src/features/authentication/containers/hooks/useFormController"
+import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
+import {
+  StyledRadio,
+  StyledTextField
+} from "@src/features/authentication/styles"
 
 const ButtonClose = dynamic(
   () => import("@components/atoms/button/ButtonClose"),
@@ -60,47 +65,6 @@ const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   ssr: false
 })
 
-export const StyledTextField = {
-  "& .MuiOutlinedInput-root": {
-    width: "100%",
-    fontWeight: 400,
-    fontSize: "14px",
-    fontWight: 700,
-    fontFamily: "neueMachina"
-  },
-  "& .MuiInputLabel-root": {
-    color: "#70727B",
-    fontFamily: "neueMachina",
-    textTransform: "uppercase"
-  }
-}
-
-export const StyledTextField2 = {
-  "& .MuiOutlinedInput-root": {
-    width: "100%",
-    fontWeight: 400,
-    fontSize: "14px",
-    fontWight: 700,
-    fontFamily: "neueMachina",
-    height: "120px"
-  },
-  "& .MuiInputLabel-root": {
-    color: "#70727B",
-    fontFamily: "neueMachina",
-    textTransform: "uppercase",
-    fontSize: "14px",
-    top: "0",
-    left: "0",
-    transform: "none"
-  }
-}
-
-const StyledRadio = {
-  "&.Mui-checked": {
-    color: "#70727B"
-  }
-}
-
 const FormJoinus = () => {
   const { isEmail, isName } = useFormController()
   const [gameCategoriesData, setGameCategoriesData] = useState<IGameCategory[]>(
@@ -115,7 +79,8 @@ const FormJoinus = () => {
     register,
     setValue,
     control,
-    errors
+    errors,
+    isSubmitting
   } = useFormJoinUsController()
 
   const onCategories = () => {
@@ -553,8 +518,18 @@ const FormJoinus = () => {
             <ButtonToggleIcon
               type="submit"
               startIcon={<Icomoon className="icon-Ballpen" />}
-              text="Register"
-              className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+              text={
+                isSubmitting ? (
+                  <CircularProgress
+                    color="secondary"
+                    size={10}
+                  />
+                ) : (
+                  "Register"
+                )
+              }
+              className="btn-rainbow-theme h-[40px] !w-[209px] font-bold capitalize text-white-default"
+              disabled={isSubmitting}
             />
           </Grid>
         </Grid>

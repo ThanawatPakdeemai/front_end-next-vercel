@@ -1,0 +1,6 @@
+export { default as FormJoinus } from "./FormJoinus"
+export { default as FormLogin } from "./FormLogin"
+export { default as FormRegister } from "./FormRegister"
+export { default as FormWallet } from "./FormWallet"
+export { default as FromCreatePassword } from "./FromCreatePassword"
+export { default as FromForgotPassword } from "./FromForgotPassword"

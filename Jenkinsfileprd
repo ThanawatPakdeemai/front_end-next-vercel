@@ -10,7 +10,7 @@ pipeline {
           // sh 'mkdir -p ~/.ssh'
           // sh "ssh-keyscan naka.im >> ~/.ssh/known_hosts"
           sh "dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com"
-          sh "ssh nakator@34.22.245.210 'pm2 list'"
+          sh "ssh -o StrictHostKeyChecking=no nakator@34.22.245.210 'nvm use 16 && pm2 list'"
         }
       }
     }

@@ -5,7 +5,7 @@ interface IShakeIcone {
   second: number
 }
 
-export const ShakeIcon = ({ iconArray, second }: IShakeIcone) => {
+const ShakeIcon = ({ iconArray, second }: IShakeIcone) => {
   const [newImage, setnewImage] = useState<React.ReactNode>()
 
   const shuffle = useCallback(() => {
@@ -22,3 +22,5 @@ export const ShakeIcon = ({ iconArray, second }: IShakeIcone) => {
   }, [second, shuffle])
   return <div>{newImage}</div>
 }
+
+export default ShakeIcon

@@ -12,6 +12,8 @@ import {
 import useProfileStore from "@stores/profileStore"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { iconmotion } from "@styles/themes/partial/motion"
+import ModalConnectWallet from "@components/atoms/ModalConnectWallet"
+import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 
 const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   suspense: true,
@@ -65,11 +67,12 @@ const ActionBar = ({
   // const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const profile = useProfileStore((state) => state.profile.data)
-  const { address, handleConnectWithMetamask } = useWeb3Provider()
+  const { address } = useWeb3Provider()
 
   const [disabledClaim, setDisabledClaim] = useState<boolean>(true)
   const [disabledWithdraw, setDisabledWithdraw] = useState<boolean>(true)
   const [disabledStake, setDisabledStake] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
 
   const startIconButton =
     status === "locked" ? (
@@ -96,7 +99,12 @@ const ActionBar = ({
     userStakedInfo && userStakedInfo.comInterest > 0
 
   const buttonStake = () => {
-    if (profile && profile.address === address) {
+    if (!profile) return <RightMenuNotLogIn />
+    if (
+      profile &&
+      address &&
+      profile.address.toLowerCase() === address.toLowerCase()
+    ) {
       if (stakeEnded && interestEqualToZero && stakeAmountGreaterThanZero) {
         return (
           <ButtonToggleIcon
@@ -125,15 +133,22 @@ const ActionBar = ({
       }
     } else {
       return (
-        <ButtonLink
-          onClick={handleConnectWithMetamask}
-          text={t("Connect Wallet")}
-          icon={<AccountBalanceWalletIcon />}
-          size="medium"
-          color="secondary"
-          variant="contained"
-          className="w-full"
-        />
+        <>
+          <ButtonLink
+            onClick={() => setOpen(true)}
+            href="/"
+            text={t("Connect Wallet")}
+            icon={<AccountBalanceWalletIcon />}
+            color="secondary"
+            variant="contained"
+            size="medium"
+            className="m-auto h-[54px] rounded-xl"
+          />
+          <ModalConnectWallet
+            open={open}
+            setOpen={setOpen}
+          />
+        </>
       )
     }
     return null

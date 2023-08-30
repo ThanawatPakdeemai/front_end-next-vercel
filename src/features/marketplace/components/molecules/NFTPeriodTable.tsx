@@ -2,15 +2,37 @@ import {
   IInstallPeriod,
   IRentalPeriod
 } from "@feature/marketplace/interfaces/IMarketService"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { Chip, Table, TableBody, TableContainer } from "@mui/material"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
+import dynamic from "next/dynamic"
 import React from "react"
 import { Trans } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
+
+const TableHeader = dynamic(
+  () => import("@feature/table/components/molecules/TableHeader"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const TableRowData = dynamic(
+  () => import("@feature/table/components/molecules/TableRowData"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const TableNodata = dynamic(
+  () => import("@feature/transaction/components/atoms/TableNodata"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   periodHistory: IInstallPeriod[] | IRentalPeriod[]

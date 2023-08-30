@@ -1,11 +1,7 @@
 import React from "react"
 import dayjs from "dayjs"
 import { useTranslation } from "react-i18next"
-
-export interface IMetaDate {
-  date: string
-  dateTitle?: string
-}
+import { IMetaDate } from "@feature/blog/interfaces/IMeta"
 
 const MetaDate = ({ date, dateTitle = "RELEASE DATE" }: IMetaDate) => {
   const { t } = useTranslation()

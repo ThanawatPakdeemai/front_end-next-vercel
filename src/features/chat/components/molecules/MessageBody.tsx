@@ -1,6 +1,15 @@
 import { IChat } from "@feature/chat/interface/IChat"
-import MessageInfo from "../atoms/MessageInfo"
-import MessageText from "../atoms/MessageText"
+import dynamic from "next/dynamic"
+
+const MessageInfo = dynamic(() => import("../atoms/MessageInfo"), {
+  suspense: true,
+  ssr: false
+})
+
+const MessageText = dynamic(() => import("../atoms/MessageText"), {
+  suspense: true,
+  ssr: false
+})
 
 const MessageBody = ({ ...props }: IChat) => (
   <div className="mb-4 flex flex-col gap-2">

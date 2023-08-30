@@ -1,11 +1,22 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useFavoriteGameControllerMobile from "@mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
 import useGlobal from "@hooks/useGlobal"
-import GameListMobile from "../GameListMobile"
+import dynamic from "next/dynamic"
+
+const ArrowBackIcon = dynamic(
+  () => import("@mobile/components/atoms/icons/ArrowBackIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameListMobile = dynamic(() => import("../GameListMobile"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IWishlistModalProps {
   open: boolean

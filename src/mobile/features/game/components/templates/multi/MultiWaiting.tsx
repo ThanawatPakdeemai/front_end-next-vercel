@@ -36,7 +36,7 @@ const TitleOutRoom = dynamic(
   }
 )
 const WaitingSkeleton = dynamic(
-  () => import("@mobile/components/atoms/skelaton/WaitingSkeleton"),
+  () => import("@mobile/components/atoms/skeleton/WaitingSkeleton"),
   {
     suspense: true,
     ssr: false

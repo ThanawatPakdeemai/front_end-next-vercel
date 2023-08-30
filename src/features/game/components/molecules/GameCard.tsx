@@ -6,7 +6,6 @@ import Link from "next/link"
 import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
 import { useTranslation } from "react-i18next"
 import dynamic from "next/dynamic"
-import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import {
   IGame,
   IGameRoomAvailable,
@@ -22,6 +21,14 @@ import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
 import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
+
+const NumberRank = dynamic(
+  () => import("@feature/ranking/components/atoms/NumberRank"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const DetailCountGame = dynamic(
   () => import("@components/molecules/DetailCountGame"),

@@ -9,8 +9,15 @@ import { MESSAGES } from "@constants/messages"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGlobal from "@hooks/useGlobal"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
-import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 
+const DropdownListItem = dynamic(() => import("../atoms/DropdownListItem"), {
+  suspense: true,
+  ssr: false
+})
+const CardBuyItemHeader = dynamic(() => import("./CardBuyItemHeader"), {
+  suspense: true,
+  ssr: false
+})
 const RightMenuBuyItem = dynamic(
   () => import("@feature/gameItem/components/molecules/RightMenuBuyItem"),
   {
@@ -50,13 +57,6 @@ const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
   suspense: true,
   ssr: false
 })
-const CardBuyItemHeader = dynamic(
-  () => import("@feature/gameItem/molecules/CardBuyItemHeader"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
 const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   suspense: true,
   ssr: false

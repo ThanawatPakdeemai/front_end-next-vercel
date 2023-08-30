@@ -1,6 +1,14 @@
 import React, { memo } from "react"
 import useProfileStore from "@stores/profileStore"
-import AllTransactionTable from "../organisms/AllTransactionTable"
+import dynamic from "next/dynamic"
+
+const AllTransactionTable = dynamic(
+  () => import("../organisms/AllTransactionTable"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const AllTransactions = () => {
   const profile = useProfileStore((state) => state.profile.data)

@@ -1,9 +1,31 @@
 import React from "react"
 import _ from "lodash"
 import { ISummaryItemUsedProps } from "@feature/game/components/molecules/SummaryItemUsed"
-import CardSummaryMain from "@feature/game/components/molecules/CardSummaryMain"
-import GameSummaryRewardFooter from "@feature/game/components/templates/GameSummaryRewardFooter"
-import SummaryGameData from "@feature/game/components/molecules/SummaryGameData"
+import dynamic from "next/dynamic"
+
+const CardSummaryMain = dynamic(
+  () => import("@feature/game/components/molecules/CardSummaryMain"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const GameSummaryRewardFooter = dynamic(
+  () => import("@feature/game/components/templates/GameSummaryRewardFooter"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const SummaryGameData = dynamic(
+  () => import("@feature/game/components/molecules/SummaryGameData"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 interface IGameSummaryBodyReturnItemMobile extends ISummaryItemUsedProps {
   date: string | Date

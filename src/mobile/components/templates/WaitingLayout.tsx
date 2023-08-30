@@ -1,8 +1,20 @@
 import React, { ReactElement } from "react"
-import WaitingRoomPage from "@src/mobile/features/pages/game/WaitingRoomPage"
 import { useRouter } from "next/router"
 import { Box } from "@mui/material"
-import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
+import dynamic from "next/dynamic"
+
+const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
+  suspense: true,
+  ssr: false
+})
+
+const WaitingRoomPage = dynamic(
+  () => import("@src/mobile/features/pages/game/WaitingRoomPage"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const WaitingLayout = () => {
   const router = useRouter()
@@ -23,7 +35,7 @@ const WaitingLayout = () => {
           onClick={() => router.back()}
           aria-hidden="true"
         >
-          <ArrowBackIcon />
+          <Icomoon className="icon-Full-Arrow-Left" />
         </i>
         Waiting Room
       </h2>

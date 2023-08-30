@@ -1,8 +1,13 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-key */
+import dynamic from "next/dynamic"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
-import BoxPlayer from "./BoxPlayer"
+
+const BoxPlayer = dynamic(() => import("./BoxPlayer"), {
+  suspense: true,
+  ssr: false
+})
 
 const BoxLeaderShip = ({ data }: any) => (
   <div

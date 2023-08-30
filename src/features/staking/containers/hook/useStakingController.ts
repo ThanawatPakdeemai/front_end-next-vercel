@@ -16,7 +16,7 @@ import {
 import useProfileStore from "@stores/profileStore"
 import { useQuery } from "@tanstack/react-query"
 import dayjs from "dayjs"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { getStakingAll } from "../services/staking.service"
 
 const useGlobalStaking = () => {
@@ -24,7 +24,7 @@ const useGlobalStaking = () => {
   const _skip = 1
 
   const profile = useProfileStore((state) => state.profile.data)
-  const { address } = useWeb3Provider()
+  const { address: walletAddrs } = useWeb3Provider()
   const { errorToast, successToast } = useToast()
 
   // Hooks
@@ -37,6 +37,7 @@ const useGlobalStaking = () => {
 
   const [basicStakeInfo, setBasicStakeInfo] = useState<IStakingBasicData>()
   const [userStakedInfo, setUserStakedInfo] = useState<IUserStakedInfo>()
+  const [address, setAddress] = useState<string | undefined>(walletAddrs)
 
   // const fecthDataBasicStake = async (_staking: IStakingAll[]) => {
   //   const stakeWithInfo: IStakingBasicData[] = []
@@ -125,19 +126,26 @@ const useGlobalStaking = () => {
    */
   const fetchStakingInfo = useCallback(
     async (_contractAddress: string, _stakingTypes: TStaking) => {
-      const resultBasic = await getBasicStakingData(
-        _contractAddress,
-        _stakingTypes
-      )
-      setBasicStakeInfo(resultBasic || {})
-
-      if (profile?.address) {
-        const resultStakedInfo = await getUserStakedInfo(
+      try {
+        const resultBasic = await getBasicStakingData(
           _contractAddress,
-          profile.address,
           _stakingTypes
         )
-        setUserStakedInfo(resultStakedInfo || {})
+        setBasicStakeInfo(resultBasic || {})
+      } catch (error) {
+        console.error(error)
+      }
+      if (profile?.address) {
+        try {
+          const resultStakedInfo = await getUserStakedInfo(
+            _contractAddress,
+            profile.address,
+            _stakingTypes
+          )
+          setUserStakedInfo(resultStakedInfo || {})
+        } catch (error) {
+          console.error(error)
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,19 +172,24 @@ const useGlobalStaking = () => {
   ) => {
     if (
       profile &&
-      profile.address === address &&
+      address &&
+      profile.address.toLowerCase() === address.toLowerCase() &&
       _basicStakeInfo &&
       _userStakedInfo
     ) {
-      const result = await withdrawNaka(
-        _basicStakeInfo.addressContract,
-        _basicStakeInfo.stakeType
-      )
-      if (result) {
-        successToast(MESSAGES.withdraw_success)
-        onRefresh(_basicStakeInfo.addressContract, _basicStakeInfo.stakeType)
-      } else {
-        errorToast(MESSAGES.withdraw_error)
+      try {
+        const result = await withdrawNaka(
+          _basicStakeInfo.addressContract,
+          _basicStakeInfo.stakeType
+        )
+        if (result) {
+          successToast(MESSAGES.withdraw_success)
+          onRefresh(_basicStakeInfo.addressContract, _basicStakeInfo.stakeType)
+        } else {
+          errorToast(MESSAGES.withdraw_error)
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
@@ -190,20 +203,25 @@ const useGlobalStaking = () => {
   ) => {
     if (
       profile &&
-      profile.address === address &&
+      address &&
+      profile.address.toLowerCase() === address.toLowerCase() &&
       _basicStakeInfo &&
       _userStakedInfo
     ) {
-      const result = await claimReward(
-        _userStakedInfo.comInterestBN.toString(),
-        _basicStakeInfo.addressContract,
-        _basicStakeInfo.stakeType
-      )
-      if (result) {
-        successToast(MESSAGES.claim_success)
-        onRefresh(_basicStakeInfo.addressContract, _basicStakeInfo.stakeType)
-      } else {
-        errorToast(MESSAGES.claim_error)
+      try {
+        const result = await claimReward(
+          _userStakedInfo.comInterestBN.toString(),
+          _basicStakeInfo.addressContract,
+          _basicStakeInfo.stakeType
+        )
+        if (result) {
+          successToast(MESSAGES.claim_success)
+          onRefresh(_basicStakeInfo.addressContract, _basicStakeInfo.stakeType)
+        } else {
+          errorToast(MESSAGES.claim_error)
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
@@ -250,6 +268,16 @@ const useGlobalStaking = () => {
       }
     }
   }, [stakingAll])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      setAddress(walletAddrs)
+    }
+    return () => {
+      load = true
+    }
+  }, [walletAddrs])
 
   return {
     flexibleStaking,

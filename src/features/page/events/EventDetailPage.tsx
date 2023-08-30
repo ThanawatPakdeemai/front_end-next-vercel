@@ -1,14 +1,48 @@
 import React from "react"
 import { Box, Typography } from "@mui/material"
-import EventsShareAndPlay from "@feature/event/components/EventsShareAndPlay"
-import EventsTopScore from "@feature/event/components/EventsTopScore"
 import dynamic from "next/dynamic"
 import useEventController from "@feature/event/containers/hooks/useEventController"
-import EventContent from "@feature/event/components/organisms/EventContent"
-import EventSidebar from "@feature/event/components/organisms/EventSidebar"
 import { EVENT_CRUMB } from "@configs/crumb"
-import EventMessages from "@feature/event/components/molecules/EventMessages"
 import { IMAGES } from "@constants/images"
+
+const EventMessages = dynamic(
+  () => import("@feature/event/components/molecules/EventMessages"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const EventSidebar = dynamic(
+  () => import("@feature/event/components/organisms/EventSidebar"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const EventsShareAndPlay = dynamic(
+  () => import("@feature/event/components/EventsShareAndPlay"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const EventsTopScore = dynamic(
+  () => import("@feature/event/components/EventsTopScore"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const EventContent = dynamic(
+  () => import("@feature/event/components/organisms/EventContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -130,7 +164,7 @@ const EventDetailPage = () => {
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
                   Event Status
                 </Typography>
-                <Typography className=" text-green-default font-dogicapixel-bold text-center text-[15px] uppercase !text-error-main">
+                <Typography className="text-green-default font-dogicapixel-bold text-center text-[15px] uppercase !text-error-main">
                   [ {currentEventData.status} ]
                 </Typography>
               </div>

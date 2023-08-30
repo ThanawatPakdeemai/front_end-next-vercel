@@ -1,11 +1,10 @@
 @font-face {
   font-family: "icomoon-wallet";
-  src: url("/assets/fonts/icomoon-wallet.eot?ybhy3d");
-  src: url("/assets/fonts/icomoon-wallet.eot?ybhy3d#iefix")
-      format("embedded-opentype"),
-    url("/assets/fonts/icomoon-wallet.ttf?ybhy3d") format("truetype"),
-    url("/assets/fonts/icomoon-wallet.woff?ybhy3d") format("woff"),
-    url("/assets/fonts/icomoon-wallet.svg?ybhy3d#icomoon") format("svg");
+  src: url("/assets/fonts/icomoon-wallet.eot");
+  src: url("/assets/fonts/icomoon-wallet.eot#iefix") format("embedded-opentype"),
+    url("/assets/fonts/icomoon-wallet.ttf") format("truetype"),
+    url("/assets/fonts/icomoon-wallet.woff") format("woff"),
+    url("/assets/fonts/icomoon-wallet.svg#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;

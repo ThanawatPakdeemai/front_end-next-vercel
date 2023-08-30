@@ -1,22 +1,29 @@
 import React from "react"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import SignInModal from "@mobile/components/organisms/modal/SignInModal"
 import { Box } from "@mui/material"
-import IconTemplate from "@mobile/components/templates/IconTemplate"
-import NakaIconMobile from "../icons/NakaIconMobile"
+import { StyledAvatar } from "@mobile/styles/muiStyleMobile"
+import dynamic from "next/dynamic"
 
-export const StyledAvatar = {
-  color: "#E0E0E0",
-  ".head-profile__info--avatar": {
-    width: "48px",
-    height: "48px",
-    borderRadius: "48px",
-    overflow: "hidden"
-  },
-  "p": {
-    margin: 0
+const SignInModal = dynamic(
+  () => import("@mobile/components/organisms/modal/SignInModal"),
+  {
+    suspense: true,
+    ssr: false
   }
-}
+)
+
+const IconTemplate = dynamic(
+  () => import("@mobile/components/templates/IconTemplate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const NakaIconMobile = dynamic(() => import("../icons/NakaIconMobile"), {
+  suspense: true,
+  ssr: false
+})
 
 const HeadProfileNoLoginMobile = () => {
   const { openSignIn, setOpenSignIn } = useDrawerControllerMobile()

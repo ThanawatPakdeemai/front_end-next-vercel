@@ -8,6 +8,7 @@ import dynamic from "next/dynamic"
 import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
+import { StyledTopPlayerContent } from "@feature/ranking/styles/ranking"
 
 const CardTitle = dynamic(() => import("@components/organisms/CardTitle"), {
   suspense: true,
@@ -50,12 +51,6 @@ export interface IPlayer {
   rightContent?: React.ReactNode
   startDate?: string
   endDate?: string
-}
-
-export const StyledTopPlayerContent = {
-  "@media (max-width: 767px)": {
-    padding: "0 0 0 15px"
-  }
 }
 
 const TopPlayer = ({

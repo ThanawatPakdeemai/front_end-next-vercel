@@ -8,10 +8,23 @@ import {
   TableCell
 } from "@mui/material"
 import { useTranslation } from "next-i18next"
-import { INotification } from "../../interfaces/INotificationService"
-import NotificationItem from "./NotificationItem"
-import VectorTop from "../atoms/icons/VectorTop"
-import VectorBottom from "../atoms/icons/VectorBottom"
+import { INotification } from "@src/features/notification/interfaces/INotificationService"
+import dynamic from "next/dynamic"
+
+const VectorTop = dynamic(() => import("../atoms/icons/VectorTop"), {
+  suspense: true,
+  ssr: false
+})
+
+const VectorBottom = dynamic(() => import("../atoms/icons/VectorBottom"), {
+  suspense: true,
+  ssr: false
+})
+
+const NotificationItem = dynamic(() => import("./NotificationItem"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   page: number

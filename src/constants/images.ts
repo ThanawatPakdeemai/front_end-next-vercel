@@ -6,6 +6,7 @@ export interface IImageProps {
   height: number
   alt: string
 }
+
 export const IMAGES: {
   [key: string]: IImageProps
 } = {
@@ -346,9 +347,9 @@ export const IMAGES: {
     alt: "Free"
   },
   eventBackground: {
-    src: "/images/events/background_event/background_event.webp",
-    srcWebp: "/images/events/background_event/background_event.webp",
-    blurDataURL: "/images/events/background_event/background_event.webp",
+    src: "/images/background_system.webp",
+    srcWebp: "/images/background_system.webp",
+    blurDataURL: "/images/background_system.webp",
     width: 1024,
     height: 740,
     alt: "event background"
@@ -360,6 +361,14 @@ export const IMAGES: {
     width: 600,
     height: 450,
     alt: "404 Not Found"
+  },
+  noConnection: {
+    src: "/images/common/clock.webp",
+    srcWebp: "/images/common/clock.webp",
+    blurDataURL: "/images/common/clock.webp",
+    width: 750,
+    height: 750,
+    alt: "No Internet connection"
   }
 }
 

@@ -9,7 +9,7 @@ const SelectDropdown = dynamic(
   () => import("@components/atoms/selectDropdown/SelectDropdown")
 )
 const ButtonDropdown = dynamic(
-  () => import("@feature/gameItem/atoms/ButtonDropdown")
+  () => import("@feature/gameItem/components/atoms/ButtonDropdown")
 )
 
 interface IProp {

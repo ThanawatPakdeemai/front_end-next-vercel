@@ -1,0 +1,6 @@
+export { default as HeaderBackPageMobile } from "./HeaderBackPageMobile"
+export { default as HeaderForwardBackwardMobile } from "./HeaderForWardBackWardMobile"
+export { default as HeaderSyncAccount } from "./HeaderSyncAccount"
+export { default as HeadGameMenuMobile } from "./HeadGameMenuMobile"
+export { default as HeadProfileMobile } from "./HeadProfileMobile"
+export { default as HeadProfileNoLoginMobile } from "./HeadProfileNoLoginMobile"

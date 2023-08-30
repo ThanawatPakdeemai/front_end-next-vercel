@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"

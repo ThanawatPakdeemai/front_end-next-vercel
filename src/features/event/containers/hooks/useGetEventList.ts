@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { IGetAllEventsProps } from "../../interface/IEventsService"
+import { IGetAllEventsProps } from "@feature/event/interface/IEventsService"
 import { getEventList } from "../services/events.service"
 
 const useGetEventList = ({ limit, skip, sort, search }: IGetAllEventsProps) => {

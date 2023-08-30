@@ -1,9 +1,23 @@
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
-import ListJoinGame from "@mobile/features/game/components/molecules/ListJoinGame"
 import { v4 as uuid } from "uuid"
-import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
 import { Box } from "@mui/material"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+import dynamic from "next/dynamic"
+
+const ListJoinGame = dynamic(
+  () => import("@mobile/features/game/components/molecules/ListJoinGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const SkeletonEarnRewardMobile = dynamic(
+  () => import("@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const SingleRoom = () => {
   const {

@@ -1,6 +1,11 @@
 import { Chip, ChipProps, Typography } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
-import TooltipsCustom from "./TooltipsCustom"
+
+const TooltipsCustom = dynamic(() => import("./TooltipsCustom"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProp extends ChipProps {
   title: string

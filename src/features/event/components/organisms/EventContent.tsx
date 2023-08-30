@@ -4,8 +4,6 @@ import dynamic from "next/dynamic"
 import { Box } from "@mui/material"
 import useEventController from "@feature/event/containers/hooks/useEventController"
 import { P2EHeaderMenu } from "@constants/gameSlide"
-import useGlobal from "@hooks/useGlobal"
-import { IMAGES } from "@constants/images"
 
 const GameCard = dynamic(
   () => import("@feature/game/components/molecules/GameCard"),
@@ -36,7 +34,6 @@ const SkeletonCard = dynamic(
 const EventContent = () => {
   const { limit, currentEventData, getGameMode, onSetGameStore } =
     useEventController()
-  const { isWrongFormatURL, isOldPathURL } = useGlobal()
 
   const renderEventContent = () => {
     // SKELETON
@@ -71,13 +68,18 @@ const EventContent = () => {
       return (
         <GameCardFullWidth
           image={
-            isWrongFormatURL(
-              currentEventData.games_to_play[0].image_home_banner
-            ) ||
-            isOldPathURL(currentEventData.games_to_play[0].image_home_banner)
-              ? IMAGES.no_image.srcWebp
+            currentEventData.icon_image
+              ? currentEventData.icon_image
               : currentEventData.games_to_play[0].image_home_banner
           }
+          // image={
+          //   isWrongFormatURL(
+          //     currentEventData.games_to_play[0].image_home_banner
+          //   ) ||
+          //   isOldPathURL(currentEventData.games_to_play[0].image_home_banner)
+          //     ? IMAGES.no_image.srcWebp
+          //     : currentEventData.games_to_play[0].image_home_banner
+          // }
           name={currentEventData.games_to_play[0].name}
           gameData={currentEventData.games_to_play[0]}
         />

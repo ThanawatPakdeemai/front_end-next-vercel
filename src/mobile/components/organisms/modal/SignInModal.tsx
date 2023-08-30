@@ -1,6 +1,14 @@
-import SignInLayout from "@mobile/components/templates/SignInLayout"
 import { Box, SwipeableDrawer } from "@mui/material"
+import dynamic from "next/dynamic"
 import React from "react"
+
+const SignInLayout = dynamic(
+  () => import("@mobile/components/templates/SignInLayout"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface ISignInMobileProps {
   open: boolean

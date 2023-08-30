@@ -1,14 +1,48 @@
 import { Box } from "@mui/material"
 import React from "react"
 import useProfileStore from "@stores/profileStore"
-import HeadProfileMobile from "../atoms/headerMenu/HeadProfileMobile"
-import FooterMobile from "../organisms/FooterMobile"
-import HeadGameMenuMobile from "../atoms/headerMenu/HeadGameMenuMobile"
-import HeadProfileNoLoginMobile from "../atoms/headerMenu/HeadProfileNoLoginMobile"
+import dynamic from "next/dynamic"
 
 interface IMainLayoutMobileProps {
   children: React.ReactNode
 }
+
+const FooterMobile = dynamic(() => import("../organisms/FooterMobile"), {
+  suspense: true,
+  ssr: true
+})
+
+const HeadProfileNoLoginMobile = dynamic(
+  () => import("../atoms/headerMenu/HeadProfileNoLoginMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const HeadGameMenuMobile = dynamic(
+  () => import("../atoms/headerMenu/HeadGameMenuMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const HeadProfileMobile = dynamic(
+  () => import("../atoms/headerMenu/HeadProfileMobile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const OfflineIndicator = dynamic(
+  () => import("@components/atoms/worker/OfflineIndicator"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 const MainLayoutMobile = ({ children }: IMainLayoutMobileProps) => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -36,6 +70,7 @@ const MainLayoutMobile = ({ children }: IMainLayoutMobileProps) => {
       </Box>
       {/* Footer */}
       {profile && <FooterMobile />}
+      <OfflineIndicator />
     </Box>
   )
 }

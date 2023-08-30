@@ -1,8 +1,9 @@
-import { MenuList, SxProps, Theme } from "@mui/material"
+import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
 import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
 import { MENU_GUEST } from "@configs/menu"
+import { StyledMenuItemCustom } from "@styles/themes/partial/components/muiMenuItem"
 
 const Balance = dynamic(() => import("./balance/Balance"), {
   suspense: true,
@@ -19,52 +20,6 @@ const MenuItemCustom = dynamic(
     ssr: false
   }
 )
-
-export const StyledMenuItemCustom: SxProps<Theme> = {
-  "&.MuiList-root": {
-    background: "#18181C",
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px",
-    ".MuiMenuItem-root": {
-      display: "flex",
-      alignItems: "center",
-      padding: "10px 10px 9px",
-      gap: "16px",
-      borderRadius: "8px",
-      height: "40px",
-      margin: "0",
-      background: "transparent",
-      transition: "backgroundColor 0.3s ease",
-      boxShadow: "none!important",
-      "&.Mui-selected": {},
-      "&:hover": {
-        backgroundColor: "#010101",
-        "a .MuiTypography-root": {
-          color: "#E1E2E2"
-        }
-      },
-      "a": {
-        display: "flex",
-        alignItems: "center",
-        gap: "16px",
-        ".MuiListItemIcon-root": {
-          minWidth: "auto"
-        },
-        ".MuiTypography-root": {
-          fontSize: "12px",
-          color: "#70727B",
-          transition: "color 0.3s ease"
-        },
-        "&.active": {
-          ".MuiTypography-root": {
-            color: "#E1E2E2"
-          }
-        }
-      }
-    }
-  }
-}
 
 const SidebarGames = () => {
   const profile = useProfileStore((state) => state.profile.data)

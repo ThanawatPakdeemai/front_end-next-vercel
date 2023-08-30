@@ -1,8 +1,16 @@
 import { IStakingGroup } from "@src/types/staking"
 import dayjs from "dayjs"
+import dynamic from "next/dynamic"
 import React from "react"
 import { v4 as uuid } from "uuid"
-import StakingPeriodDate from "../organisms/StakingPeriodDate"
+
+const StakingPeriodDate = dynamic(
+  () => import("../organisms/StakingPeriodDate"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IFixedAPR {
   stakeGroupByDatetime: IStakingGroup[]

@@ -9,12 +9,11 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
-import VisibilityIcon from "@mui/icons-material/Visibility"
 import { useTranslation } from "react-i18next"
 import dynamic from "next/dynamic"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import useLoadingStore from "@stores/loading"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 const FromForgotPassword = dynamic(
   () => import("@feature/authentication/components/FromForgotPassword"),
@@ -204,9 +203,19 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
             </Button>
           </Box>
         </form>
-
         {/* Modal ForgotPassword */}
-        <FromForgotPassword />
+        <GoogleReCaptchaProvider
+          reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+          scriptProps={{
+            async: true,
+            defer: false,
+            appendTo: "head",
+            nonce: undefined
+          }}
+        >
+          <FromForgotPassword />
+        </GoogleReCaptchaProvider>
+
         {/* <Box
           component="div"
           className="py-6"

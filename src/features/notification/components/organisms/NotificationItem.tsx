@@ -3,7 +3,12 @@ import { Button, TableRow, TableCell, Chip } from "@mui/material"
 import dayjs from "dayjs"
 import { useTranslation } from "next-i18next"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
-import ChipIssue from "../atoms/ChipIssue"
+import dynamic from "next/dynamic"
+
+const ChipIssue = dynamic(() => import("../atoms/ChipIssue"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   data: INotification

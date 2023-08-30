@@ -221,9 +221,9 @@ const useWaitingSingle = () => {
             setGameUrl(gameURL)
           }
         } else {
-          const url_data = `${roomId}:|:${profile.id}:|:${item_id}:|:${
-            profile.email
-          }:|:${Helper.getLocalStorage(
+          const url_data = `${roomId}:|:${profile.id}:|:${
+            playerGameSingle?.item_id
+          }:|:${profile.email}:|:${Helper.getLocalStorage(
             "token"
           )}:|:${frontendUrl}:|:${baseUrlApi}:|:${
             isMobile ? detectDevice : gameRoomById.rank_name

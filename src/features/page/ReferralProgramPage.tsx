@@ -16,7 +16,7 @@ import { ISortReferrals } from "@feature/referral/interface/IReferralService"
 import Helper from "@utils/helper"
 
 const RadarAnimateIcon = dynamic(
-  () => import("@components/atoms/svg/Referral/RadarAnimateIcon"),
+  () => import("@components/atoms/svg/RadarAnimateIcon"),
   {
     suspense: true,
     ssr: false

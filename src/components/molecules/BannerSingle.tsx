@@ -14,7 +14,7 @@ interface IProp {
 const BannerSingle = ({ src, alt }: IProp) => (
   <Box
     component="div"
-    className="relative mb-3 flex h-[100px] flex-row items-center overflow-hidden rounded-sm border-[1px] border-neutral-800 bg-primary-main uppercase sm:h-[180px] sm:rounded-[24px] lg:h-[180px]"
+    className="relative my-3 flex h-[100px] flex-row items-center overflow-hidden rounded-sm border-[1px] border-neutral-800 bg-primary-main uppercase sm:h-[180px] sm:rounded-[24px] lg:h-[180px]"
     sx={{
       "picture": {
         width: "100%",

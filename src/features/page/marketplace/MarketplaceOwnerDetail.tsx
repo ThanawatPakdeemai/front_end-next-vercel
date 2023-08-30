@@ -1,13 +1,44 @@
 import React from "react"
-import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
-import TransferBox from "@feature/marketplace/components/molecules/TransferBox"
-import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
-import NFTDetailTable from "@feature/marketplace/components/organisms/NFTDetailTable"
-import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useProfileStore from "@stores/profileStore"
 import dynamic from "next/dynamic"
 
+const NFTDetailTable = dynamic(
+  () => import("@feature/marketplace/components/organisms/NFTDetailTable"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardContentDetails = dynamic(
+  () => import("@feature/marketplace/components/organisms/CardContentDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const TransferBox = dynamic(
+  () => import("@feature/marketplace/components/molecules/TransferBox"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const CardDetailSkeleton = dynamic(
+  () => import("@feature/marketplace/components/molecules/CardDetailSkeleton"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const RightDetailsMarketplace = dynamic(
+  () =>
+    import("@feature/marketplace/components/organisms/RightDetailsMarketplace"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const MarketplaceButton = dynamic(
   () => import("@components/molecules/MarketplaceButton"),
   {
@@ -43,7 +74,8 @@ const MarketplaceOwnerDetail = () => {
               profile.data.address.toLowerCase() ===
                 invenItemData.wallet_address.toLowerCase() &&
               !invenItemData.marketplaces_data &&
-              invenItemData.type !== "nft_avatar" && (
+              invenItemData.type !== "nft_avatar" &&
+              invenItemData.type !== "nft_material" && (
                 <div className="px-8">
                   <TransferBox
                     _tokenId={invenItemData.id}
@@ -82,7 +114,8 @@ const MarketplaceOwnerDetail = () => {
               invenItemData.wallet_address &&
               profile.data.address === invenItemData.wallet_address &&
               !invenItemData.marketplaces_data &&
-              invenItemData.type !== "nft_avatar" && (
+              invenItemData.type !== "nft_avatar" &&
+              invenItemData.type !== "nft_material" && (
                 <div className="px-8">
                   <TransferBox
                     _tokenId={invenItemData.id}

@@ -5,7 +5,6 @@ import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES, NAKA_SERVICES_2 } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
 import { useState } from "react"
-import { ShakeIcon } from "@components/atoms/LigthShake"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
@@ -16,6 +15,10 @@ import {
 } from "@styles/themes/partial/motion"
 import dynamic from "next/dynamic"
 
+const ShakeIcon = dynamic(() => import("@components/atoms/LigthShake"), {
+  suspense: true,
+  ssr: false
+})
 const NakaMask3 = dynamic(() => import("@components/atoms/svg/NaKaMask3"), {
   suspense: true,
   ssr: false

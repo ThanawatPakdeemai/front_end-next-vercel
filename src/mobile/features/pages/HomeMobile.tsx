@@ -1,18 +1,53 @@
 import React, { memo, useCallback } from "react"
 import { Box } from "@mui/material"
-import MainLayoutMobile from "@mobile/components/templates/MainLayoutMobile"
-import GameFilterMobile from "@mobile/components/molecules/GameFilterMobile"
-import SearchInputMobile from "@mobile/components/atoms/input/SearchInputMobile"
-import CategoriesModal from "@mobile/components/organisms/modal/CategoriesModal"
-import GameListMobile from "@mobile/components/organisms/GameListMobile"
 import useGameStore from "@stores/game"
 import { useBaseProvider } from "@providers/BaseProvider"
 import useGlobal from "@hooks/useGlobal"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import useDrawerControllerMobile from "../game/containers/hooks/useDrawerControllerMobile"
-import useGameControllerMobile from "../game/containers/hooks/useGameControllerMobile"
-import useGamePageListControllerMobile from "../game/containers/hooks/useGamePageListControllerMobile"
-import useFavoriteGameControllerMobile from "../game/containers/hooks/useFavoriteGameControllerMobile"
+import useDrawerControllerMobile from "@src/mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useGameControllerMobile from "@src/mobile/features/game/containers/hooks/useGameControllerMobile"
+import useGamePageListControllerMobile from "@src/mobile/features/game/containers/hooks/useGamePageListControllerMobile"
+import useFavoriteGameControllerMobile from "@src/mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
+import dynamic from "next/dynamic"
+
+const MainLayoutMobile = dynamic(
+  () => import("@mobile/components/templates/MainLayoutMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const GameFilterMobile = dynamic(
+  () => import("@mobile/components/molecules/GameFilterMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const SearchInputMobile = dynamic(
+  () => import("@mobile/components/atoms/input/SearchInputMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const CategoriesModal = dynamic(
+  () => import("@mobile/components/organisms/modal/CategoriesModal"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const GameListMobile = dynamic(
+  () => import("@mobile/components/organisms/GameListMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const HomeMobile = () => {
   const { allCategory, allGameFreeToPlay, allGameStoryMode } = useGameStore()

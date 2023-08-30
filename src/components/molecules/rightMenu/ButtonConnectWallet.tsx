@@ -13,12 +13,12 @@ const ButtonLink = dynamic(
 )
 
 const ButtonConnectWallet = () => {
-  const { accounts, handleConnectWithMetamask } = useWeb3Provider()
+  const { handleConnectWithMetamask, address } = useWeb3Provider()
   const { t } = useTranslation()
 
   return (
     <>
-      {!accounts && (
+      {!address && (
         <ButtonLink
           onClick={handleConnectWithMetamask}
           href="/"

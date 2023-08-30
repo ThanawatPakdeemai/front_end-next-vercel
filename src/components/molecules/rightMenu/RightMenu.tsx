@@ -1,11 +1,25 @@
 import React from "react"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
 import useGlobal from "@hooks/useGlobal"
 import useRefreshProfile from "@hooks/useRefreshProfile"
-import RightMenuLogIn from "./RightMenuLogIn"
-import RightMenuNotLogIn from "./RightMenuNotLogIn"
+import dynamic from "next/dynamic"
+
+const RightMenuLogIn = dynamic(() => import("./RightMenuLogIn"), {
+  suspense: true,
+  ssr: false
+})
+const RightMenuNotLogIn = dynamic(() => import("./RightMenuNotLogIn"), {
+  suspense: true,
+  ssr: false
+})
+const CreateProfile = dynamic(
+  () => import("@feature/profile/components/createProfile/CreateProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const RightMenu = () => {
   const { profile } = useProfileStore()

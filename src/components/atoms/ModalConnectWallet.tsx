@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 import { ModalHeader } from "@components/molecules/Modal"
 // import Web3 from "web3"
 import OKXWalletIcon from "./svg/OKXWalletIcon"
-import WalletConnectIcon from "./WalletConnectIcon"
+import WalletConnectIcon from "./svg/WalletConnectIcon"
 
 const ModalCustom = dynamic(
   () => import("@components/molecules/Modal/ModalCustom"),

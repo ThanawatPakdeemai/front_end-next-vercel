@@ -1,11 +1,11 @@
 @font-face {
   font-family: "icomoon-app-bold";
-  src: url("/assets/fonts/icomoon-app-bold.eot?uy2i95");
-  src: url("/assets/fonts/icomoon-app-bold.eot?uy2i95#iefix")
+  src: url("/assets/fonts/icomoon-app-bold.eot");
+  src: url("/assets/fonts/icomoon-app-bold.eot#iefix")
       format("embedded-opentype"),
-    url("/assets/fonts/icomoon-app-bold.ttf?uy2i95") format("truetype"),
-    url("/assets/fonts/icomoon-app-bold.woff?uy2i95") format("woff"),
-    url("/assets/fonts/icomoon-app-bold.svg?uy2i95#icomoon") format("svg");
+    url("/assets/fonts/icomoon-app-bold.ttf") format("truetype"),
+    url("/assets/fonts/icomoon-app-bold.woff") format("woff"),
+    url("/assets/fonts/icomoon-app-bold.svg#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;

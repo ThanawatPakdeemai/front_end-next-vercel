@@ -1,6 +1,7 @@
 import React from "react"
 import _ from "lodash"
 import dynamic from "next/dynamic"
+
 import { ISummaryItemUsedProps } from "@feature/game/components/molecules/SummaryItemUsed"
 
 const Tagline = dynamic(() => import("@components/molecules/tagline/Tagline"), {

@@ -80,6 +80,7 @@ export default function GamePartnerDetails() {
       }
       component2={
         <RightSidebarContent
+          sidebarClassName="md:max-w-[563px]"
           content={
             <TabProvider>
               <GameTabsVertical

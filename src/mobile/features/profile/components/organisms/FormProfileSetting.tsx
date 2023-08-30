@@ -3,10 +3,24 @@ import React from "react"
 import { useTranslation } from "react-i18next"
 import { StyledBaseInputMobile } from "@mobile/styles/muiStyleMobile"
 import { commonPattern } from "@constants/regex"
-import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import { TTypeSettingProfile } from "@mobile/components/organisms/modal/ProfileSettingModal"
-import ProfileFooterMobile from "../molecules/ProfileFooterMobile"
-import useProfileSettingController from "../../containers/useProfileSettingController"
+import useProfileSettingController from "@src/mobile/features/profile/containers/useProfileSettingController"
+import dynamic from "next/dynamic"
+
+const HorizontalThumbSlide = dynamic(
+  () => import("@feature/slider/components/templates/HorizontalThumbSlide"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const ProfileFooterMobile = dynamic(
+  () => import("../molecules/ProfileFooterMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IFormProfileSetting {
   type: TTypeSettingProfile

@@ -5,6 +5,7 @@ import useProfileStore from "@stores/profileStore"
 import useNotiStore from "@stores/notification"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useDrawerControllerMobileStore from "@stores/drawerControllerMobile"
+import { StyledAvatar } from "@mobile/styles/muiStyleMobile"
 
 const IconTemplate = dynamic(
   () => import("@mobile/components/templates/IconTemplate"),
@@ -35,19 +36,6 @@ const ProfileSettingModal = dynamic(
     ssr: false
   }
 )
-
-export const StyledAvatar = {
-  color: "#E0E0E0",
-  ".head-profile__info--avatar": {
-    width: "48px",
-    height: "48px",
-    borderRadius: "48px",
-    overflow: "hidden"
-  },
-  "p": {
-    margin: 0
-  }
-}
 
 const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)

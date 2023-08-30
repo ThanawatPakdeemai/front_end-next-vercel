@@ -1,8 +1,13 @@
 import { isMobile } from "@hooks/useGlobal"
-import Preload from "@mobile/components/atoms/Preload"
 import { Backdrop, Typography } from "@mui/material"
 import useLoadingStore from "@stores/loading"
+import dynamic from "next/dynamic"
 import React from "react"
+
+const Preload = dynamic(() => import("@mobile/components/atoms/Preload"), {
+  suspense: true,
+  ssr: false
+})
 
 const Loading = () => {
   const { open, message } = useLoadingStore()

@@ -176,12 +176,13 @@ const HeadMenu = () => {
                           >
                             {t(`${item.name}`)}
                           </Typography>
-                          <Icomoon className="icon-burger text-[85%] text-white-primary" />
+                          <Icomoon className="icon-burger !text-[12px] text-white-primary" />
                         </div>
                       ) : (
                         <>
-                          <Typography className="flex !whitespace-nowrap !font-neue-machina-semi !text-sm">
-                            Others =
+                          <Typography className="flex items-center gap-1 !whitespace-nowrap !font-neue-machina-semi !text-sm">
+                            Others
+                            <Icomoon className="icon-burger !text-[12px] text-white-primary" />
                           </Typography>
                         </>
                       )}

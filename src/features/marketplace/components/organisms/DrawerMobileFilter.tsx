@@ -4,7 +4,12 @@ import { styled } from "@mui/material/styles"
 import { grey } from "@mui/material/colors"
 import SwipeableDrawer from "@mui/material/SwipeableDrawer"
 import { Box } from "@mui/material"
-import FilterBox from "../molecules/FilterBox"
+import dynamic from "next/dynamic"
+
+const FilterBox = dynamic(() => import("../molecules/FilterBox"), {
+  suspense: true,
+  ssr: false
+})
 
 const drawerBleeding = 56
 
@@ -12,17 +17,6 @@ interface IProp {
   open: boolean
   setClose: (_toggle) => void
 }
-
-// const styleButton = {
-//   minWidth: "10px !important",
-//   borderRadius: "8px !important",
-//   "&:hover": {
-//     boxShadow: "none !important",
-//     "svg rect": {
-//       fill: "#E1E2E2 !important"
-//     }
-//   }
-// }
 
 const Puller = styled(Box)(() => ({
   width: 30,

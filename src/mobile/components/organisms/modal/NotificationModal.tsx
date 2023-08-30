@@ -1,10 +1,27 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
-import NotificationListMobile from "@mobile/features/notification/components/organisms/NotificationListMobile"
+import dynamic from "next/dynamic"
+
+const ArrowBackIcon = dynamic(
+  () => import("@mobile/components/atoms/icons/ArrowBackIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const NotificationListMobile = dynamic(
+  () =>
+    import(
+      "@mobile/features/notification/components/organisms/NotificationListMobile"
+    ),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface INotificationModalProps {
   open: boolean

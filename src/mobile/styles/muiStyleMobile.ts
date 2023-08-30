@@ -269,3 +269,16 @@ export const StylePlayerMobile = {
     }
   }
 }
+
+export const StyledAvatar = {
+  color: "#E0E0E0",
+  ".head-profile__info--avatar": {
+    width: "48px",
+    height: "48px",
+    borderRadius: "48px",
+    overflow: "hidden"
+  },
+  "p": {
+    margin: 0
+  }
+}

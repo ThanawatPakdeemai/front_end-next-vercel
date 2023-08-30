@@ -9,7 +9,7 @@ const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   ssr: false
 })
 const ButtonDropdown = dynamic(
-  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  () => import("@feature/gameItem/components/atoms/ButtonDropdown"),
   {
     suspense: true,
     ssr: false

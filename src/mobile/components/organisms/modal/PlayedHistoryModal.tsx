@@ -1,10 +1,27 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
-import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useHistoryController from "@feature/history/containers/hook/useHistoryController"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import PlayedHistoryListMobile from "@mobile/features/history/components/organisms/PlayedHistoryListMobile"
+import dynamic from "next/dynamic"
+
+const ArrowBackIcon = dynamic(
+  () => import("@mobile/components/atoms/icons/ArrowBackIcon"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+const PlayedHistoryListMobile = dynamic(
+  () =>
+    import(
+      "@mobile/features/history/components/organisms/PlayedHistoryListMobile"
+    ),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IPlayedHistoryModalProps {
   open: boolean

@@ -5,11 +5,34 @@ import useProfileStore from "@stores/profileStore"
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/router"
-import Balance from "./balance/Balance"
-import StatProfile from "./statProfile/StatProfile"
-import MenuLoggedin from "./menuProfile/MenuLoggedin"
-import { StyledMenuItemCustom } from "./SidebarGames"
-import ButtonGold from "../atoms/gold/ButtonGold"
+import dynamic from "next/dynamic"
+import { StyledMenuItemCustom } from "@styles/themes/partial/components/muiMenuItem"
+
+const Balance = dynamic(() => import("./balance/Balance"), {
+  suspense: true,
+  ssr: true
+})
+
+const ButtonGold = dynamic(() => import("@components/atoms/gold/ButtonGold"), {
+  suspense: true,
+  ssr: true
+})
+
+const MenuLoggedin = dynamic(
+  () => import("@components/molecules/menuProfile/MenuLoggedin"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
+
+const StatProfile = dynamic(
+  () => import("@components/molecules/statProfile/StatProfile"),
+  {
+    suspense: true,
+    ssr: true
+  }
+)
 
 const SidebarProfile = () => {
   const { profile } = useProfileStore()

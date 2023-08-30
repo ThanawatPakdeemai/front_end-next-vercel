@@ -12,14 +12,45 @@ import { Typography } from "@mui/material"
 import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
 import useMarketFilterStore from "@stores/marketFilter"
 import Helper from "@utils/helper"
-import SwipeableEdgeDrawer from "@feature/marketplace/components/organisms/DrawerMobileFilter"
 import useProfileStore from "@stores/profileStore"
-import ItemRewardDetails from "@feature/game/components/molecules/ItemRewardDetails"
-import BoxElement from "../molecules/BoxElement"
+import dynamic from "next/dynamic"
 import CameraController from "../molecules/CameraController"
-import MapScene from "../molecules/MapScene"
-import CardLandMap from "./CardLandMap"
-import MapInfo from "../molecules/MapInfo"
+
+const MapInfo = dynamic(() => import("../molecules/MapInfo"), {
+  suspense: true,
+  ssr: false
+})
+
+const CardLandMap = dynamic(() => import("./CardLandMap"), {
+  suspense: true,
+  ssr: false
+})
+
+const MapScene = dynamic(() => import("../molecules/MapScene"), {
+  suspense: true,
+  ssr: false
+})
+
+const SwipeableEdgeDrawer = dynamic(
+  () => import("@feature/marketplace/components/organisms/DrawerMobileFilter"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const ItemRewardDetails = dynamic(
+  () => import("@feature/game/components/molecules/ItemRewardDetails"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const BoxElement = dynamic(() => import("../molecules/BoxElement"), {
+  suspense: true,
+  ssr: false
+})
 
 const containerVariants = {
   initial: { x: "100vw", opacity: 0 },

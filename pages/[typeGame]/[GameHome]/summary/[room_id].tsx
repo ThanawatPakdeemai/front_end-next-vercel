@@ -136,6 +136,7 @@ export default function SummaryDetails() {
         component2={
           <RightSidebarContent
             className="mb-[64px]"
+            sidebarClassName="md:max-w-[563px]"
             content={
               <FullWidthContent
                 sxCustomStyled={{

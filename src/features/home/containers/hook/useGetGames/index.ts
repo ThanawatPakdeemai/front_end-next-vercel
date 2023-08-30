@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getHomeSlide } from "../../services/home.service"
+import { getHomeSlide } from "@src/features/home/containers/services/home.service"
 
 const useGetGames = () => {
   const {

@@ -200,7 +200,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
             alt={gameData.name}
             width={300}
             height={300}
-            className="absolute left-0 top-0 h-full w-full object-cover object-center"
+            className="absolute left-0 top-0 h-full w-full scale-105 object-cover object-center"
           />
         </div>
 

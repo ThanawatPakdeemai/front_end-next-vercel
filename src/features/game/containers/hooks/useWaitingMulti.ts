@@ -469,7 +469,7 @@ const useWaitingMulti = () => {
         let gameURL = ""
         if (gameData.type_code === "multi_02" && ip) {
           const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
-            itemSelected._id
+            dataPlayers.item_id
           }:|:${profile?.email}:|:${Helper.getLocalStorage(
             "token"
           )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
@@ -482,7 +482,7 @@ const useWaitingMulti = () => {
           )}${btoa(dataLinkGame)}`
         } else {
           const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
-            itemSelected._id
+            dataPlayers.item_id
           }:|:${profile?.email}:|:${Helper.getLocalStorage(
             "token"
           )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(

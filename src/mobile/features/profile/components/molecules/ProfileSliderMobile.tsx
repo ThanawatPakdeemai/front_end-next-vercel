@@ -1,7 +1,7 @@
 import React from "react"
 import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import { Box } from "@mui/material"
-import useProfileSettingController from "../../containers/useProfileSettingController"
+import useProfileSettingController from "@src/mobile/features/profile/containers/useProfileSettingController"
 
 const ProfileSliderMobile = () => {
   const { avatarList, avatarGoto, setDefaultAvatar } =

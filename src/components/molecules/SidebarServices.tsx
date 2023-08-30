@@ -3,7 +3,8 @@ import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
 import dynamic from "next/dynamic"
 import { MENU_SERVICES } from "@configs/menu"
-import { StyledMenuItemCustom } from "./SidebarGames"
+import useProfileStore from "@stores/profileStore"
+import { StyledMenuItemCustom } from "@styles/themes/partial/components/muiMenuItem"
 
 const MenuItemCustom = dynamic(
   () => import("@components/atoms/MenuItemCustom"),
@@ -20,6 +21,7 @@ const Balance = dynamic(() => import("./balance/Balance"), {
 
 const SidebarStaking = () => {
   const router: NextRouter = useRouter()
+  const { profile } = useProfileStore()
 
   return (
     <div className="hidden w-[200px] flex-col gap-5 lg:flex">
@@ -43,7 +45,9 @@ const SidebarStaking = () => {
             )
           })}
       </MenuList>
-      <Balance widthBalance="w-[calc(100%-70px)]" />
+      {profile.data ? (
+        <Balance widthBalance="w-[calc(100%-70px)]" />
+      ) : undefined}{" "}
     </div>
   )
 }

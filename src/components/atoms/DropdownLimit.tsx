@@ -8,7 +8,7 @@ import dynamic from "next/dynamic"
 import { IMenuBase } from "@interfaces/IMenu"
 
 const ButtonDropdown = dynamic(
-  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  () => import("@feature/gameItem/components/atoms/ButtonDropdown"),
   {
     suspense: true,
     ssr: true

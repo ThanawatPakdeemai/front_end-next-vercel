@@ -7,9 +7,22 @@ import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { v4 as uuid } from "uuid"
-import StakingTitle from "../atoms/StakingTitle"
-import RedBanner from "./RedBanner"
-import StakingDetails from "./StakingDetails"
+import dynamic from "next/dynamic"
+
+const StakingTitle = dynamic(() => import("../atoms/StakingTitle"), {
+  suspense: true,
+  ssr: false
+})
+
+const StakingDetails = dynamic(() => import("./StakingDetails"), {
+  suspense: true,
+  ssr: false
+})
+
+const RedBanner = dynamic(() => import("./RedBanner"), {
+  suspense: true,
+  ssr: false
+})
 
 const FixedAPRContent = () => {
   const [stakingStatus, setStakingStatus] = useState<boolean | undefined>(false)
@@ -71,10 +84,6 @@ const FixedAPRContent = () => {
   return (
     <section className="relative w-full overflow-hidden">
       {hydrated && (
-        // <RedBanner
-        //   message={`Fixed ${t("staking_earn_up_to")} 25% APR`}
-        //   className="mb-12"
-        // />
         <div>
           <RedBanner
             message={`${t("staking_not_available")}`}

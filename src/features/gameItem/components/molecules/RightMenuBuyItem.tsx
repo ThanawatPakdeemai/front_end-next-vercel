@@ -2,10 +2,12 @@ import React, { memo } from "react"
 import dynamic from "next/dynamic"
 import Box from "@mui/material/Box"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import ButtonBuyItem, {
-  IButtonBuyItemProps
-} from "@feature/gameItem/atoms/ButtonBuyItem"
+import { IButtonBuyItemProps } from "@feature/gameItem/style"
 
+const ButtonBuyItem = dynamic(() => import("../atoms/ButtonBuyItem"), {
+  suspense: true,
+  ssr: false
+})
 const Stack = dynamic(() => import("@mui/material/Stack"), {
   suspense: true,
   ssr: false

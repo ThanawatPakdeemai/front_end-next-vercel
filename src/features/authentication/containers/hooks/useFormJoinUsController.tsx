@@ -33,6 +33,8 @@ const useFormJoinUsController = () => {
   // States
   const [valueRadio, setValueRadio] = useState<"yes" | "no">("yes")
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const JoinUsSchema = yup
     .object({
       name: yup.string().required(),
@@ -88,6 +90,10 @@ const useFormJoinUsController = () => {
    * @param _data
    */
   const onSubmitGenaralReview = (values: IFormJoinUsData) => {
+    if (isSubmitting) return
+
+    setIsSubmitting(true)
+
     const {
       name,
       player_type,
@@ -129,7 +135,8 @@ const useFormJoinUsController = () => {
     control,
     watch,
     JoinUsSchema,
-    errors
+    errors,
+    isSubmitting
   }
 }
 

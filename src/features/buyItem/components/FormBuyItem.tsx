@@ -11,14 +11,14 @@ import { iconmotion } from "@styles/themes/partial/motion"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const DropdownListCurrency = dynamic(
-  () => import("@feature/gameItem/atoms/DropdownListCurrency"),
+  () => import("@feature/gameItem/components/atoms/DropdownListCurrency"),
   {
     suspense: true,
     ssr: false
   }
 )
 const DropdownListItem = dynamic(
-  () => import("@feature/gameItem/atoms/DropdownListItem"),
+  () => import("@feature/gameItem/components/atoms/DropdownListItem"),
   {
     suspense: true,
     ssr: false
@@ -120,7 +120,7 @@ const FormBuyItem = () => {
                 <p className={`${titleText} text-white-default`}>
                   {t("descriptions")}
                 </p>
-                <div className="overflow-hidden text-black-default line-clamp-3">
+                <div className="line-clamp-3 overflow-hidden text-black-default">
                   {game.item[0].detail}
                 </div>
               </div>

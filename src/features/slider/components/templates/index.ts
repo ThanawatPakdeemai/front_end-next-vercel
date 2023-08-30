@@ -1,0 +1,7 @@
+export { default as BannerSlide } from "./BannerSlide"
+export { default as CarouselSlide } from "./CarouselSlide"
+export { default as FullWidthSlide } from "./FullWidthSlide"
+export { default as GameSlide } from "./GameSlide"
+export { default as HorizontalThumbSlide } from "./HorizontalThumbSlide"
+export { default as TournamentNewsSlide } from "./TournamentNewsSlide"
+export { default as VerticalThumbSlide } from "./VerticalThumbSlide"

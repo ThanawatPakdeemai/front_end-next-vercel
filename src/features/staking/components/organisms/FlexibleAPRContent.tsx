@@ -5,9 +5,20 @@ import { v4 as uuid } from "uuid"
 import { Box, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
-import StakingTitle from "../atoms/StakingTitle"
-import StakingDetails from "./StakingDetails"
-import RedBanner from "./RedBanner"
+import dynamic from "next/dynamic"
+
+const StakingTitle = dynamic(() => import("../atoms/StakingTitle"), {
+  suspense: true,
+  ssr: false
+})
+const StakingDetails = dynamic(() => import("./StakingDetails"), {
+  suspense: true,
+  ssr: false
+})
+const RedBanner = dynamic(() => import("./RedBanner"), {
+  suspense: true,
+  ssr: false
+})
 
 const FlexibleAPRContent = () => {
   // TODO: Refactor this component

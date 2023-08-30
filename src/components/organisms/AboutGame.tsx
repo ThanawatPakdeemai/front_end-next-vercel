@@ -20,6 +20,7 @@ const AboutGame = ({ text, title }: IAboutGameProps) => {
       )}
       <div className="pb-6">
         <div
+          className="wysiwyg"
           dangerouslySetInnerHTML={{
             __html: text
           }}

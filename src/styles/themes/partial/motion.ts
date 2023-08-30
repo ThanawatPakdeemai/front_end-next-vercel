@@ -56,3 +56,21 @@ export const imgMotion = {
     marginBottom: "-10px"
   }
 }
+
+export const textDamping = {
+  initial: {
+    x: -90
+  },
+  animate: {
+    x: 0,
+    transition: { stiffness: 220, type: "spring", damping: 20 }
+  }
+}
+
+export const buttonClaim = {
+  initial: { width: 168 },
+  animate: {
+    width: 144,
+    transition: { stiffness: 220, type: "spring", damping: 8 }
+  }
+}

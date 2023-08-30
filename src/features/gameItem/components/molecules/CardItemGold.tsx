@@ -11,6 +11,10 @@ import useGlobal from "@hooks/useGlobal"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import useGetProfileGolds from "@feature/gold/containers/hook/useGetProfileGolds"
 
+const CardBuyItemHeader = dynamic(() => import("./CardBuyItemHeader"), {
+  suspense: true,
+  ssr: false
+})
 const ButtonLink = dynamic(
   () => import("@components/atoms/button/ButtonLink"),
   {
@@ -43,13 +47,6 @@ const ImageCustom = dynamic(() => import("@components/atoms/image/Image"), {
   suspense: true,
   ssr: false
 })
-const CardBuyItemHeader = dynamic(
-  () => import("@feature/gameItem/molecules/CardBuyItemHeader"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
 const Icomoon = dynamic(() => import("@components/atoms/icomoon/Icomoon"), {
   suspense: true,
   ssr: false

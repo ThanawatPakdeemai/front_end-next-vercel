@@ -359,7 +359,10 @@ const useCreateWeb3Provider = () => {
 
   const handleConnectWithMetamask = useCallback(
     async (_connector?: "metamask" | "okx" | "binance") => {
-      const _inject = _connector || "metamask"
+      const _getLocalConnector = Helper.getLocalStorage(
+        ELocalKey.walletConnector
+      ) as "metamask" | "okx" | "binance"
+      const _inject = _connector || _getLocalConnector || "metamask"
       setTimeout(() => {
         setDisabledConnectButton(false)
       }, 5000)

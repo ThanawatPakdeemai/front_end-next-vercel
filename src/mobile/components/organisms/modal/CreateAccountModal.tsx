@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Divider,
   FormControlLabel,
   IconButton,
   InputAdornment,
@@ -20,6 +21,13 @@ import dynamic from "next/dynamic"
 import useFormRegisterController from "@feature/authentication/containers/hooks/useFormRegisterController"
 import useFormController from "@feature/authentication/containers/hooks/useFormController"
 
+const MoreLoginMobile = dynamic(
+  () => import("@mobile/components/atoms/MoreLoginMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const LogoNakaBigIcon = dynamic(
   () => import("@components/atoms/svg/LogoNakaBigIcon"),
   {
@@ -357,7 +365,7 @@ const CreateAccountModal = ({
             </Button>
           </Box>
         </form>
-        {/* <Box
+        <Box
           component="div"
           className="py-6"
         >
@@ -365,7 +373,7 @@ const CreateAccountModal = ({
             or continue with
           </Divider>
         </Box>
-        <MoreLoginMobile /> */}
+        <MoreLoginMobile />
         <Box
           component="div"
           className="flex justify-center py-7 text-center"

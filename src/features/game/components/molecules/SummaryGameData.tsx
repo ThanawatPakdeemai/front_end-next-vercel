@@ -2,7 +2,12 @@ import Helper from "@utils/helper"
 import React from "react"
 import { MobileView } from "react-device-detect"
 import { isMobile } from "@hooks/useGlobal"
-import SummaryGameDetail from "./SummaryGameDetail"
+import dynamic from "next/dynamic"
+
+const SummaryGameDetail = dynamic(() => import("./SummaryGameDetail"), {
+  suspense: true,
+  ssr: false
+})
 
 export interface ISummaryGameDataProps {
   gameName?: string

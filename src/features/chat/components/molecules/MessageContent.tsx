@@ -1,8 +1,13 @@
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import useProfileStore from "@stores/profileStore"
+import dynamic from "next/dynamic"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
-import MessageBody from "./MessageBody"
+
+const MessageBody = dynamic(() => import("./MessageBody"), {
+  suspense: true,
+  ssr: false
+})
 
 interface IProps {
   height?: string

@@ -2,7 +2,15 @@ import { IEnergy, IExp } from "@interfaces/IProfileMenu"
 import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import React from "react"
 import useProfileStore from "@stores/profileStore"
-import InsideStatProfile from "../insideStatProfile/InsideStatProfile"
+import dynamic from "next/dynamic"
+
+const InsideStatProfile = dynamic(
+  () => import("../insideStatProfile/InsideStatProfile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProps {
   exp?: IExp

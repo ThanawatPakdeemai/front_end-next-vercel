@@ -1,11 +1,11 @@
 @font-face {
   font-family: "icomoon-exchain";
-  src: url("/assets/fonts/icomoon-exchain.eot?ybhy3d");
-  src: url("/assets/fonts/icomoon-exchain.eot?ybhy3d#iefix")
+  src: url("/assets/fonts/icomoon-exchain.eot");
+  src: url("/assets/fonts/icomoon-exchain.eot#iefix")
       format("embedded-opentype"),
-    url("/assets/fonts/icomoon-exchain.ttf?ybhy3d") format("truetype"),
-    url("/assets/fonts/icomoon-exchain.woff?ybhy3d") format("woff"),
-    url("/assets/fonts/icomoon-exchain.svg?ybhy3d#icomoon") format("svg");
+    url("/assets/fonts/icomoon-exchain.ttf") format("truetype"),
+    url("/assets/fonts/icomoon-exchain.woff") format("woff"),
+    url("/assets/fonts/icomoon-exchain.svg#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;

@@ -1,7 +1,6 @@
 import "@styles/globals.css"
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
-
 import { ReactElement, ReactNode, useEffect } from "react"
 import type { NextPage } from "next"
 import { appWithTranslation } from "next-i18next"
@@ -20,6 +19,24 @@ import createEmotionCache from "@utils/createEmotionCache"
 import { metaData } from "@src/meta/meta"
 import Head from "next/head"
 import BaseProvider from "@providers/BaseProvider"
+import GoogleTag from "@components/atoms/tags/GoogleTag"
+
+const LiveSessionTag = dynamic(
+  () => import("@components/atoms/tags/LiveSessionTag"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const TiktokTag = dynamic(() => import("@components/atoms/tags/TiktokTag"), {
+  suspense: true,
+  ssr: false
+})
+const MetaPixel = dynamic(() => import("@components/atoms/tags/MetaPixel"), {
+  suspense: true,
+  ssr: false
+})
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
@@ -55,19 +72,18 @@ const MyApp = (props) => {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then((registration) => {
-          // eslint-disable-next-line no-console
-          console.error(
+      window.addEventListener("load", async () => {
+        try {
+          const registration = await navigator.serviceWorker.register("/sw.js")
+
+          console.warn(
             "Service Worker registered with scope:",
             registration.scope
           )
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.error("Service Worker registration failed:", error)
-        })
+        } catch (error) {
+          console.warn("Service Worker registration failed:", error)
+        }
+      })
     }
   }, [])
 
@@ -81,8 +97,15 @@ const MyApp = (props) => {
           content="UsRiJhdMChniXZXa-OHistDhd4o8QZ0MunjBsx09yoQ"
         />
       </Head>
-      <Loading />
 
+      {/* TAG */}
+      <LiveSessionTag />
+      <GoogleTag />
+      <TiktokTag />
+      <MetaPixel />
+      {/* !!!! */}
+
+      <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
           <CacheProvider value={emotionCache}>

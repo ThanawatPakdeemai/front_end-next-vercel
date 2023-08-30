@@ -8,7 +8,7 @@ import { IDropdownGameType } from "@configs/gameType"
 import { StyledFormLabel } from "@styles/themes/partial/components/muiTypography"
 
 const ButtonDropdown = dynamic(
-  () => import("@feature/gameItem/atoms/ButtonDropdown"),
+  () => import("@feature/gameItem/components/atoms/ButtonDropdown"),
   {
     suspense: true,
     ssr: false

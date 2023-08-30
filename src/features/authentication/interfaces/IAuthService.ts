@@ -71,6 +71,7 @@ export interface IGetVerifyCode {
 export interface ICreateNewPassword extends ISignIn {
   _token: string
   _confirmPassword: string
+  _recaptcha: string
 }
 
 export interface ILoginWithMetamask {

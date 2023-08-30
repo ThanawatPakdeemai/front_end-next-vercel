@@ -57,6 +57,9 @@ const BannerSlide = () => {
     dots: true
   }
 
+  // eslint-disable-next-line no-console
+  console.log("test-slideGames", slideGames)
+
   return (
     <section className="relative mb-20 w-full overflow-hidden">
       <div className="absolute left-4 top-4 z-10">

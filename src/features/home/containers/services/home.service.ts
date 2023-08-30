@@ -9,6 +9,7 @@ const getHomeSlide = () =>
       .get(`/game/banner/all/new`)
       .then((res) => {
         resolve(res.data.data)
+        localStorage.setItem("homeSlide", JSON.stringify(res.data.data))
       })
       .catch((err) => {
         reject(err)

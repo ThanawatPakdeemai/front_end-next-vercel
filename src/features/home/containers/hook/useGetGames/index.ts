@@ -8,7 +8,12 @@ const useGetGames = () => {
     isLoading,
     isError
   } = useQuery(["slideGames"], getHomeSlide, {
-    staleTime: Infinity
+    staleTime: Infinity,
+    cacheTime: 5 * 60 * 1000,
+    onError: (_error) => {
+      // eslint-disable-next-line no-console
+      console.log("test-onError", _error)
+    }
   })
 
   return {

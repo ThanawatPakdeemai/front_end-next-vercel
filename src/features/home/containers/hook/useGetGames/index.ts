@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getHomeSlide } from "@src/features/home/containers/services/home.service"
 import { useOfflineNotification } from "@hooks/worker"
+import { use } from "react"
 
 const useGetGames = () => {
   // Destructure the result of useOfflineNotification directly
@@ -37,3 +38,5 @@ const useGetGames = () => {
     isError
   }
 }
+
+export default useGetGames

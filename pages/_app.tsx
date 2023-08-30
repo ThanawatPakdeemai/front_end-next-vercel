@@ -76,11 +76,13 @@ const MyApp = (props) => {
         try {
           const registration = await navigator.serviceWorker.register("/sw.js")
 
+          // eslint-disable-next-line no-console
           console.warn(
             "Service Worker registered with scope:",
             registration.scope
           )
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.warn("Service Worker registration failed:", error)
         }
       })

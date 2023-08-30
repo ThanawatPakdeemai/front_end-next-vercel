@@ -31,6 +31,9 @@ const useGetGames = () => {
 
   const slideGamesData = determineData()
 
+  // eslint-disable-next-line no-console
+  console.log("test-slideGamesData", slideGamesData)
+
   return {
     slideGames: slideGamesData,
     error,
